@@ -1,5 +1,5 @@
 const express = require('express')
-const { Nuxt/*, Builder*/ } = require('nuxt')
+const { Nuxt } = require('nuxt')
 
 const config = require('./nuxt.config.js')
 
@@ -17,12 +17,3 @@ const nuxt = new Nuxt(config)
 
 // Add nuxt middleware
 app.use(nuxt.render)
-
-// Build on start
-/*
-new Builder(nuxt).build().catch(err => {
-  console.error(err);
-  process.exit(1);
-});
-*/
-*
