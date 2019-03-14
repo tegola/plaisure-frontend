@@ -1,0 +1,104 @@
+<template>
+	<div>
+		<pg-navbar />
+
+		<div class="container my-5">
+			<div class="text-center mb-5">
+				<h2>{{ $t('pages.forgot_password.title') }}</h2>
+				<p class="lead text-muted">{{ $t('pages.forgot_password.intro') }}</p>
+			</div>
+
+			<div class="row">
+				<div class="ml-md-auto mr-md-auto col-md-6 col-xl-4">
+					<form @submit.prevent="submit">
+						<p v-if="done" class="text-success text-center">{{ $t('pages.forgot_password.submit_success') }}</p>
+						<b-form-group
+							:label="$t('pages.forgot_password.email')"
+							:state="!$v.model.email.$error"
+							:invalid-feedback="$t('pages.forgot_password.email_error')">
+							<b-input v-model="model.email" :disabled="loading" type="email" autofocus />
+						</b-form-group>
+
+						<b-form-group>
+							<pg-button
+								:loading="loading"
+								type="submit"
+								variant="primary"
+								block>
+								{{ $t('pages.forgot_password.submit') }}
+							</pg-button>
+						</b-form-group>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<pg-page-footer />
+	</div>
+</template>
+
+<script>
+import BFormGroup from 'bootstrap-vue/es/components/form-group/form-group'
+import BInput from 'bootstrap-vue/es/components/form-input/form-input'
+import PgButton from '@/components/button'
+import { validationMixin } from 'vuelidate'
+import { required, email } from 'vuelidate/lib/validators'
+
+export default {
+	name: 'PgResetPasswordPage',
+
+	middleware: 'redirect-if-authenticated',
+
+	components: {
+		BFormGroup,
+		BInput,
+		PgButton
+	},
+
+	mixins: [validationMixin],
+
+	data() {
+		return {
+			loading: false,
+			done: false,
+			model: {
+				email: ''
+			}
+		}
+	},
+
+	head() {
+		return {
+			title: this.$t('pages.forgot_password.title')
+		}
+	},
+
+	validations: {
+		model: {
+			email: {
+				email,
+				required
+			}
+		}
+	},
+
+	methods: {
+		async submit() {
+			// Validate
+			this.$v.$touch()
+
+			// Stop on validation errors
+			if (this.$v.$error) return
+
+			this.loading = true
+
+			await this.$axios.post('/auth/password/forgot', this.model)
+
+			this.model.email = ''
+			this.$v.$reset()
+			this.done = true
+			this.loading = false
+		}
+	}
+}
+</script>
