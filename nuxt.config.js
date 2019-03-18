@@ -73,6 +73,7 @@ module.exports = {
 	** Plugins to load before mounting the App
 	*/
 	plugins: [
+		'@/plugins/axios-disable-https-check.js',
 		'@/plugins/i18n-region.js',
 		'@/plugins/constants.js',
 		'@/plugins/components.js',

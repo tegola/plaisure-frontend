@@ -30,7 +30,7 @@ export default ({ app, env }, inject) => {
 			sw: { lat: 36.323503, lng: -3.435973 }
 		},
 
-		MAP_DEFAULT_ZOOM_GB: 5,
+		MAP_DEFAULT_ZOOM_GB: 6,
 		MAP_DEFAULT_ZOOM_IT: 6
 	})
 }

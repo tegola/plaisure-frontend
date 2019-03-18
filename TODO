@@ -203,18 +203,32 @@ NUXT:
  ☐ ssl / https
  ☐ deploy
 
-Dopo il deploy:
+Dopo il primo deploy:
   ☐ Aggiornare i file .env
   ☐ Creare le chiavi (artisan passport:keys)
   ☐ Crere il client oauth (artisan passport:client --password)
   ☐ Aggiornare il file .env con l'id e la chiave del client oauth
   ☐ Rimandare la sitemap a google (/sitemap.xml invece di /sitemap)
+  ☐ Mapping della cartella storage
+  ☐ artisan migrate
 
-  ☐ tabella venues: country passa da "Italia" a "IT"
-  ☐ tabella users: country viene riempito con "IT"
-  ☐ tabelle concessionaires/pay_per_view_platforms/venue_categories/vlt_platforms: country viene riempito con "IT"
-  ☐ Tabella categories: rinominare betting_agency in betting_shop
-  ☐ Aggiungere le categorie GB: adult_gaming_center (Adult gaming centre), family_entertainment_center (Family entertainment centre)
+ ☐ Migrazione manuale dei dati:
+   UPDATE venues SET country = 'IT'
+   UPDATE concessionaires SET country = 'IT'
+   UPDATE pay_per_view_platforms SET country = 'IT'
+   UPDATE vlt_platforms SET country = 'IT'
+   UPDATE venue_categories SET country = 'IT' WHERE machine_name = 'vlt'
+   UPDATE venue_categories SET machine_name = 'betting_shop' WHERE machine_name = 'betting_agency'
+   INSERT INTO venue_categories (machine_name, name, country) VALUES ('adult_gaming_center', 'Adult gaming centre', 'GB')
+   INSERT INTO venue_categories (machine_name, name, country) VALUES ('family_entertainment_center', 'Family entertainment centre', 'GB');
+
   ☐ Lanciare gli importer
   ☐ Lanciare la creazione
   ☐ Svuotare la cache della home page (per evitare che le query usino il nome vecchio delle categorie)
+
+Dopo OGNI deploy backend:
+  ☐ chmod -R 777 storage
+  ☐ artisan migrate
+  ☐ controllare che ci sia env
+  ☐ composer install (/opt/plesk/php/7.1/bin/php /usr/lib64/plesk-9.0/composer.phar install)
+  ☐ storage link (non so ancora come)

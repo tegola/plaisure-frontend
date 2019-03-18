@@ -121,7 +121,7 @@ export default {
 		},
 
 		uploaderUrl() {
-			return `${process.env.BACKEND_URL}/api/files`
+			return `${process.env.API_URL}/files`
 		},
 
 		uploaderHeaders() {
