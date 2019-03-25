@@ -6,8 +6,8 @@
 			:auto-submit="false"
 			variant="dark"
 			@place-changed="onPlaceChanged">
-			<no-ssr>
-				<template slot="right">
+			<template slot="searchAppend">
+				<no-ssr>
 					<pg-button
 						v-if="$geolocation.supported"
 						:loading="locating"
@@ -15,11 +15,11 @@
 						:title="$t('pages.explore.location')"
 						:aria-label="$t('pages.explore.location')"
 						variant="naked"
-						class="navbar__location-btn"
+						class="navbar__search-btn"
 						@click="findUserLocation"
 					/>
-				</template>
-			</no-ssr>
+				</no-ssr>
+			</template>
 		</pg-navbar>
 
 		<!-- Filters -->
@@ -69,11 +69,11 @@
 		<div class="wrapper">
 			<div v-if="showList" class="venue-list px-0 col col-md-7 col-lg-6 col-xl-5">
 				<!-- Loader -->
-				<div v-if="loading" v-cloak key="loader" class="list-group-item venue-list-placeholder-item text-muted">
+				<div v-if="loading" key="loader" class="list-group-item venue-list-placeholder-item text-muted">
 					<pg-icon icon="circle-outline-notch" spinning />
 					<h4 class="mb-0">{{ $t('common.status.loading') }}&hellip;</h4>
 				</div>
-				<template v-else v-cloak>
+				<template v-else>
 					<!-- Empty list -->
 					<div v-if="!venues.length" key="no-items" class="list-group-item venue-list-placeholder-item text-muted">
 						<pg-icon icon="search" class="pg-icon--3x" />
@@ -112,13 +112,13 @@
 				@bounds_changed="onMapBoundsChange">
 				<pg-map-marker v-if="userLocation" :position="userLocation" icon="/img/map/pin-user.svg" title="La tua posizione" />
 				<pg-map-marker v-for="(venue, index) in venues" :key="venue.id" :position="venue.coords" :icon="mapMarkerIcon(venue, index)" @click="select(venue)">
-					<pg-map-info-window v-cloak :opened="venue.id === selectedVenueId" @closeclick="select(null)">
+					<pg-map-info-window :opened="venue.id === selectedVenueId" @closeclick="select(null)">
 						<div class="map-infowindow">
 							<div>
 								<h5 class="mb-0 font-weight-bold">
 									<nuxt-link :to="`/venues/${venue.id}`">{{ venue.name }}</nuxt-link>
 								</h5>
-								<p v-if="venue.categories && venue.categories.length" class="mt-1 mb-0 small text-uppercase text-muted">{{ venue.categories[0].name }}</p>
+								<p v-if="venue.categories && venue.categories.length" class="mt-1 mb-0 small text-uppercase text-muted">{{ $t(`data.categories.${venue.categories[0].machine_name}`) }}</p>
 								<p class="mt-1 mb-0">{{ venue.address.short }}</p>
 							</div>
 						</div>
@@ -143,7 +143,7 @@
 							{{ $t('pages.explore.search_area') }}
 						</b-tooltip>
 					</template>
-					<div v-if="$mq == 'xs' && $mq == 'constrained' && mapNeedsRefresh" v-cloak class="container-fluid map-floating-controls">
+					<div v-if="$mq == 'xs' && $mq == 'constrained' && mapNeedsRefresh" class="container-fluid map-floating-controls">
 						<pg-button variant="accent" block @click="onSearchBoundsClick">{{ $t('pages.explore.search_area') }}</pg-button>
 					</div>
 				</template>
@@ -165,6 +165,8 @@ import PgButton from '@/components/button'
 import PgVenueListItem from './list-item'
 import PgFilterButton from './filter-button'
 
+const searchRadiuses = [10, 20, 30, 50, 100]
+
 export default {
 	name: 'PgExplorePage',
 
@@ -179,27 +181,31 @@ export default {
 	},
 
 	data() {
-		const searchRadiuses = [10, 20, 30, 50, 100]
 		const queryParams = this.$route.query
 		let searchMode = 'center'
 
 		// Prepare map center
-		let mapCenter = extend(
-			{},
-			this.$constants[`MAP_DEFAULT_CENTER_${this.$i18n.region}`]
-		)
-		if (['c_lat', 'c_lng'].every(key => key in queryParams)) {
+		const gotMapCenter = ['c_lat', 'c_lng'].every(key => key in queryParams)
+		let mapCenter
+
+		if (gotMapCenter) {
 			mapCenter = {
 				lat: parseFloat(queryParams.c_lat),
 				lng: parseFloat(queryParams.c_lng)
 			}
+		} else {
+			mapCenter = extend(
+				{},
+				this.$constants[`MAP_DEFAULT_CENTER_${this.$i18n.region}`]
+			)
 		}
 
 		// Prepare map bounds and change search mode
-		let mapBounds = null
-		if (
-			['ne_lat', 'ne_lng', 'sw_lat', 'sw_lng'].every(key => key in queryParams)
-		) {
+		const gotMapBounds = ['ne_lat', 'ne_lng', 'sw_lat', 'sw_lng'].every(
+			key => key in queryParams
+		)
+		let mapBounds
+		if (gotMapBounds) {
 			mapBounds = {
 				north: parseFloat(queryParams.ne_lat),
 				east: parseFloat(queryParams.ne_lng),
@@ -207,8 +213,11 @@ export default {
 				west: parseFloat(queryParams.sw_lng)
 			}
 			searchMode = 'bounds'
+		} else {
+			mapBounds = null
 		}
 
+		// Prepare map zoom
 		const mapZoom = parseInt(queryParams.zoom) || 13
 
 		// Prepare default search params
@@ -230,17 +239,9 @@ export default {
 
 		searchParams.radius = parseInt(searchParams.radius)
 
-		// Prepare filter options
-		const radiusOptions = searchRadiuses.map(radius => ({
-			value: radius,
-			label: `${radius} km`
-		}))
-
 		return {
 			categories: [],
 			// amenities: [],
-
-			radiusOptions,
 
 			loading: false,
 			locating: false,
@@ -284,11 +285,26 @@ export default {
 			}
 		},
 
-		categoryOptions() {
-			return this.categories.map(category => ({
-				value: category.id,
-				label: this.$t(`data.categories.${category.machine_name}`)
+		radiusOptions() {
+			return searchRadiuses.map(radius => ({
+				value: radius,
+				label: `${radius} km`
 			}))
+		},
+
+		categoryOptions() {
+			return this.categories
+				.slice() // make immutable
+				.sort((a, b) => {
+					a = this.$t(`data.categories.${a.machine_name}`)
+					b = this.$t(`data.categories.${b.machine_name}`)
+
+					return a > b ? 1 : -1
+				})
+				.map(category => ({
+					value: category.id,
+					label: this.$t(`data.categories.${category.machine_name}`)
+				}))
 		},
 
 		/*

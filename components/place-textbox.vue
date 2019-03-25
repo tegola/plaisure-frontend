@@ -48,9 +48,11 @@ export default {
 			this.$emit('focus', e)
 		},
 
-		onBlur() {
+		onBlur(e) {
 			// Remove place if there's no text
 			if (!this.value) this.$emit('place-changed', null)
+
+			this.$emit('blur', e)
 		},
 
 		onInput(e) {

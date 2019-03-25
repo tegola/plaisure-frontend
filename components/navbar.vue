@@ -20,20 +20,26 @@
 				<pg-logo class="navbar__logo" />
 			</nuxt-link>
 
-			<div v-if="search" class="navbar__search">
-				<span class="navbar__search-icon-container">
-					<pg-icon icon="search" />
-				</span>
+			<b-input-group v-if="search" :class="searchClasses">
+				<template #prepend>
+					<b-input-group-text class="navbar__search-icon-addon">
+						<pg-icon icon="search" />
+					</b-input-group-text>
+				</template>
 				<pg-place-textbox
 					:placeholder="placeholder"
 					:value="mutableQuery"
 					:options="{ types: ['geocode'] }"
-					class="form-control form-control-lg navbar__search-textbox"
+					class="form-control navbar__search-input"
 					name="query"
-					@focus="toggleDrawer(false)"
+					@focus="onSearchFocus"
+					@blur="onSearchBlur"
 					@place-changed="onPlaceChanged"
 				/>
-			</div>
+				<b-input-group-append v-if="$slots.searchAppend">
+					<slot name="searchAppend" />
+				</b-input-group-append>
+			</b-input-group>
 
 			<div class="ml-auto d-flex">
 				<slot name="right" />
@@ -73,6 +79,9 @@
 </template>
 
 <script>
+import BInputGroup from 'bootstrap-vue/es/components/input-group/input-group'
+import BInputGroupText from 'bootstrap-vue/es/components/input-group/input-group-text'
+import BInputGroupAppend from 'bootstrap-vue/es/components/input-group/input-group-append'
 import BNav from 'bootstrap-vue/es/components/nav/nav'
 import BNavbarNav from 'bootstrap-vue/es/components/navbar/navbar-nav'
 import BNavItem from 'bootstrap-vue/es/components/nav/nav-item'
@@ -85,6 +94,9 @@ export default {
 	name: 'PgNavbar',
 
 	components: {
+		BInputGroup,
+		BInputGroupText,
+		BInputGroupAppend,
 		BNav,
 		BNavbarNav,
 		BNavItem,
@@ -126,7 +138,8 @@ export default {
 		return {
 			mutableQuery: this.query,
 			mutableCenter: this.center,
-			drawerOpen: false
+			drawerOpen: false,
+			searchFocused: false
 		}
 	},
 
@@ -140,10 +153,19 @@ export default {
 				'navbar-expand'
 			]
 		},
+
+		searchClasses() {
+			return {
+				navbar__search: true,
+				'navbar__search--focused': this.searchFocused
+			}
+		},
+
 		lat() {
 			const center = this.mutableCenter
 			return center && center.lat ? center.lat : null
 		},
+
 		lng() {
 			const center = this.mutableCenter
 			return center && center.lng ? center.lng : null
@@ -170,6 +192,16 @@ export default {
 
 		toggleOverflow(open) {
 			document.body.classList.toggle('pg--pg-overlay-open', open)
+		},
+
+		onSearchFocus() {
+			this.searchFocused = true
+
+			this.toggleDrawer(false)
+		},
+
+		onSearchBlur() {
+			this.searchFocused = false
 		},
 
 		onPlaceChanged(place) {

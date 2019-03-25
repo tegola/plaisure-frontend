@@ -14,10 +14,10 @@
 	padding: $dropdown-padding-y 0;
 	background-clip: padding-box;
 	border: $dropdown-border-width solid $dropdown-border-color;
-	border-radius: $border-radius;
+	border-radius: $dropdown-border-radius;
 	box-shadow: $dropdown-box-shadow;
 	margin-top: 2px; // Align to normal dropdowns
-	z-index: $zindex-fixed;
+	z-index: $zindex-modal; // Stay above fixed navbar
 }
 .pac-icon {
 	display: none;

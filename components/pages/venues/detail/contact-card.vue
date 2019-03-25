@@ -32,7 +32,7 @@
 					<a :class="isOpen ? 'text-success' : 'text-danger'" href="#" @click.prevent="toggleHours">
 						{{ isOpen ? $t('pages.venue_detail.card.open_now') : $t('pages.venue_detail.card.closed_now') }}<pg-icon :icon="hoursExpanded ? 'chevron-up' : 'chevron-down'" class="ml-1 contact-card-chevron-icon" />
 					</a>
-					<table v-if="hoursExpanded" v-cloak>
+					<table v-if="hoursExpanded">
 						<tr v-for="row in businessHoursRows" :key="row.day">
 							<td class="align-top pr-3">{{ row.day }}</td>
 							<td>

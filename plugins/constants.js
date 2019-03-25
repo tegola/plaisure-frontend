@@ -22,12 +22,12 @@ export default ({ app, env }, inject) => {
 		MAP_DEFAULT_CENTER_IT: { lat: 41.909, lng: 12.255 },
 
 		MAP_DEFAULT_BOUNDS_GB: {
-			ne: { lat: 60.9157, lng: 33.9165 },
-			sw: { lat: 34.5614, lng: -8.8988 }
+			ne: { lat: 59.1492, lng: 3.1577 },
+			sw: { lat: 49.945, lng: -8.6659 }
 		},
 		MAP_DEFAULT_BOUNDS_IT: {
-			ne: { lat: 47.375636, lng: 18.710002 },
-			sw: { lat: 36.323503, lng: -3.435973 }
+			ne: { lat: 46.7256, lng: 19.7275 },
+			sw: { lat: 36.0912, lng: 6.472 }
 		},
 
 		MAP_DEFAULT_ZOOM_GB: 6,
