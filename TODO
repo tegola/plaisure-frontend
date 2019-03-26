@@ -232,3 +232,8 @@ Dopo OGNI deploy backend:
   ☐ controllare che ci sia env
   ☐ composer install (/opt/plesk/php/7.1/bin/php /usr/lib64/plesk-9.0/composer.phar install)
   ☐ storage link (non so ancora come)
+
+Dopo OGNI deploy frontend:
+  ☐ npm install
+  ☐ npm run build
+  ☐ touch tmp/restart.txt
