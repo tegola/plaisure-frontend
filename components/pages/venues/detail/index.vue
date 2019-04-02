@@ -70,11 +70,11 @@
 						<template v-if="!venue.has_owner || hasJackpots">
 							<div class="row my-5 pt-2">
 								<div v-for="(jackpot, index) in venue.jackpots" :key="index" class="col-md-4">
-									<div :class="['jackpot', index < 3 ? 'mb-3 mb-md-0' : null]">
+									<div v-if="jackpot.label && jackpot.value" :class="['jackpot', index < 3 ? 'mb-3 mb-md-0' : null]">
 										<img :src="`/img/detail/jackpot-${index}.svg`" class="jackpot-icon">
 										<div>
 											<div class="jackpot-name">{{ jackpot.label && jackpot.value ? jackpot.label : `Jackpot ${index}` }}</div>
-											<div class="jackpot-value">{{ jackpot.value | formatCurrency }}</div>
+											<div class="jackpot-value">{{ formatCurrency(jackpot.value) }}</div>
 											<div v-if="showEditAction"><nuxt-link :to="editRoute">{{ $t('pages.venue_detail.common.edit') }}</nuxt-link></div>
 										</div>
 									</div>
@@ -296,6 +296,7 @@
 
 <script>
 import extend from 'lodash/extend'
+import { getAllInfoByISO } from 'iso-country-currency'
 import isVenueOpen from '@/utilities/is-venue-open'
 
 import PgLightbox from '@/components/lightbox'
@@ -311,16 +312,6 @@ export default {
 		PgButton,
 		PgVenueDetailPageContactCard,
 		PgVenueDetailPageNearbyItem
-	},
-
-	filters: {
-		formatCurrency(number) {
-			return number.toLocaleString(undefined, {
-				style: 'currency',
-				currency: 'EUR',
-				minimumFractionDigits: 2
-			})
-		}
 	},
 
 	data() {
@@ -503,6 +494,14 @@ export default {
 				.join(', ')
 		},
 
+		currencySymbol() {
+			if (!this.venue.country) return null
+
+			const { symbol } = getAllInfoByISO(this.venue.country)
+
+			return symbol
+		},
+
 		hasJackpots() {
 			const j = this.venue.jackpots
 
@@ -530,6 +529,17 @@ export default {
 
 		closeLightbox() {
 			this.lightboxOpen = false
+		},
+
+		formatCurrency(number) {
+			const { currency } = getAllInfoByISO(this.venue.country)
+
+			// FIXME: usare vue18n number formatter
+			return number.toLocaleString(undefined, {
+				style: 'currency',
+				currency,
+				minimumFractionDigits: 2
+			})
 		},
 
 		prepareEmailLink(address, subject) {

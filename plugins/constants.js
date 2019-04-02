@@ -15,9 +15,6 @@ export default ({ app, env }, inject) => {
 
 		STRIPE_KEY: env.STRIPE_KEY,
 
-		APP_CURRENCY_GB: 'GBP',
-		APP_CURRENCY_IT: 'EUR',
-
 		MAP_DEFAULT_CENTER_GB: { lat: 55.378, lng: -3.4359 },
 		MAP_DEFAULT_CENTER_IT: { lat: 41.909, lng: 12.255 },
 

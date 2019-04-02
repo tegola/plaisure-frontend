@@ -36,7 +36,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import getSymbolFromCurrency from 'currency-symbol-map'
+import { getAllInfoByISO } from 'iso-country-currency'
 
 import BFormGroup from 'bootstrap-vue/es/components/form-group/form-group'
 import BInput from 'bootstrap-vue/es/components/form-input/form-input'
@@ -63,8 +63,11 @@ export default {
 		...mapState('venueForm', ['venue']),
 
 		currencySymbol() {
-			const currencyKey = `APP_CURRENCY_${this.$i18n.region}`
-			return getSymbolFromCurrency(this.$constants[currencyKey])
+			if (!this.venue.country) return null
+
+			const { symbol } = getAllInfoByISO(this.venue.country)
+
+			return symbol
 		}
 	},
 

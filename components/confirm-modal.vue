@@ -1,6 +1,5 @@
 <template>
 	<b-modal
-		v-model="open"
 		:header-text-variant="variant"
 		:ok-variant="variant"
 		:cancel-title="cancelTitle"
@@ -9,6 +8,8 @@
 		centered
 		hide-header-close
 		cancel-variant="light"
+		:value="value"
+		@input="$emit('input', $event)"
 		v-on="$listeners">
 		<p v-if="$slots.message" class="mb-0">
 			<slot name="message" />
@@ -42,17 +43,6 @@ export default {
 			type: String,
 			default: function() {
 				return this.$t('common.actions.cancel')
-			}
-		}
-	},
-
-	computed: {
-		open: {
-			get() {
-				return this.value
-			},
-			set(val) {
-				this.$emit('input', val)
 			}
 		}
 	}

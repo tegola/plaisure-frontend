@@ -388,6 +388,26 @@ export default {
 			}
 		},
 
+		venue_plan: {
+			billing: {
+				title: 'Fatturazione',
+				legal_name: "Denominazione legale dell'azienda",
+				legal_name_error: "Inserisci la denominazione legale dell'azienda.",
+				address: 'Indirizzo',
+				address_error: "Inserisci l'indirizzo.",
+				postcode: 'CAP',
+				postcode_error: 'Inserisci il CAP.',
+				city: 'Città',
+				city_error: 'Inserisci la città.',
+				region: 'Provincia',
+				region_error: 'Inserisci la provincia.',
+				country: 'Paese',
+				country_error: 'Scegli il paese.',
+				vat_number: 'Partita IVA',
+				vat_number_error: 'Inserisci la partita IVA.'
+			}
+		},
+
 		user: {
 			meta_title: 'Gestione utente',
 			title: 'Ciao {name}!',

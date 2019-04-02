@@ -17,7 +17,7 @@
 	border-radius: $dropdown-border-radius;
 	box-shadow: $dropdown-box-shadow;
 	margin-top: 2px; // Align to normal dropdowns
-	z-index: $zindex-modal; // Stay above fixed navbar
+	z-index: $zindex-modal-backdrop; // Stay above fixed navbar
 }
 .pac-icon {
 	display: none;

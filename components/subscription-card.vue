@@ -1,90 +1,67 @@
 <template>
-	<div class="card">
-		<div class="card-body d-flex flex-column">
-			<div>
-				<span v-if="highlightText" class="badge badge-primary initialism">{{ highlightText }}</span>
-				<h3 class="card-title">{{ $t(`data.subscriptions.${subscription.name}`) }}</h3>
-				<p class="card-text lead">€ {{ price }}/mese</p>
-				<p v-if="endDate" class="text-info">Attivo fino al {{ endDate }}</p>
-				<ul class="list-unstyled">
-					<li v-for="(line, index) in subscription.lines" :key="index">{{ line }}</li>
-				</ul>
-			</div>
-			<div class="mt-auto text-center">
-				<pg-button
-					v-bind="buttonProps"
-					block
-					class="mt-auto"
-					@click="$emit('select')"
-				/>
-			</div>
+	<div :class="classes" @click="onClick">
+		<div class="card-body">
+			<span v-if="highlightText" class="badge badge-primary initialism">{{ highlightText }}</span>
+			<h3 class="card-title">{{ $t(`data.subscriptions.${subscription.name}`) }}</h3>
+			<p class="card-text lead">€ {{ price }}/mese</p>
+			<ul class="list-unstyled card-text">
+				<li v-for="(line, index) in subscription.lines" :key="index">{{ line }}</li>
+			</ul>
 		</div>
+		<template v-if="lastUpdateDate && endDate" class="card-body">
+			<hr class="my-0">
+			<div class="card-body">
+				<div class="d-flex align-items-center">
+					<pg-icon icon="info" class="mr-3 text-info" />
+					<p class="mb-0 small flex-fill">
+						Hai disattivato il {{ formatDate(lastUpdateDate) }}.<br>
+						Sarà funzionante fino al {{ formatDate(endDate) }}
+					</p>
+				</div>
+			</div>
+		</template>
+		<slot />
 	</div>
 </template>
 
 <script>
-import PgButton from './button'
-
 export default {
 	name: 'PgSubscriptionCard',
-
-	components: {
-		PgButton
-	},
 
 	props: {
 		subscription: {
 			type: Object,
 			required: true
 		},
-		currentSubscription: {
-			type: Object,
+		lastUpdateDate: {
+			type: String,
 			default: null
 		},
-		selectedSubscription: {
-			type: Object,
+		endDate: {
+			type: String,
 			default: null
 		},
 		highlight: {
 			type: String,
 			default: null
 		},
-		asDisplay: {
+		clickable: {
+			type: Boolean,
+			default: false
+		},
+		selected: {
 			type: Boolean,
 			default: false
 		}
 	},
 
 	computed: {
-		isCurrent() {
-			const current = this.currentSubscription
-
-			if (current) {
-				// Venue has subscription data
-				if (current.ends_at) {
-					// It's the default one since it will end soon
-					return this.subscription.name === 'default'
-				} else {
-					// It's the current one
-					return this.subscription.name === current.name
-				}
-			} else {
-				// Venue has no subscription, so it's the default one
-				return this.subscription.name === 'default'
+		classes() {
+			return {
+				card: true,
+				'pg-subscription-card--clickable': this.clickable,
+				'pg-subscription-card--selected': this.selected
 			}
-		},
-
-		isSelected() {
-			const selected = this.selectedSubscription
-			return selected ? selected.name === this.subscription.name : false
-		},
-
-		isOnGracePeriod() {
-			const current = this.currentSubscription
-
-			if (!current) return false
-			if (current.name === this.subscription.name) return false
-			return Boolean(current.ends_at)
 		},
 
 		price() {
@@ -92,49 +69,27 @@ export default {
 			return this.subscription.price.toFixed(2).replace('.', ',')
 		},
 
-		endDate() {
-			const endDate = this.isOnGracePeriod
-				? this.currentSubscription.ends_at.date
-				: null
+		highlightText() {
+			return this.highlight || this.subscription.highlight
+		}
+	},
 
-			// No end date available
-			if (!endDate) return null
+	methods: {
+		formatDate(date) {
+			if (!date) return
 
 			// FIXME: usare i18n date formatter
-			return new Date(endDate).toLocaleDateString(this.$i18n.locale, {
+			return new Date(date).toLocaleDateString(this.$i18n.isoCode, {
 				day: 'numeric',
 				month: '2-digit',
 				year: 'numeric'
 			})
 		},
 
-		highlightText() {
-			return this.highlight || this.subscription.highlight
-		},
+		onClick() {
+			if (!this.clickable) return
 
-		buttonProps() {
-			if (this.asDisplay) {
-				return {
-					variant: 'secondary',
-					label: this.$t('Cambia')
-				}
-			} else if (this.isCurrent) {
-				return {
-					disabled: true,
-					variant: 'neutral',
-					label: this.$t('Piano corrente')
-				}
-			} else if (this.isSelected) {
-				return {
-					variant: 'secondary',
-					label: this.$t('Cambia')
-				}
-			} else {
-				return {
-					variant: 'primary',
-					label: this.$t('Scegli')
-				}
-			}
+			this.$emit('select')
 		}
 	}
 }

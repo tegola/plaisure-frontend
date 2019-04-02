@@ -280,6 +280,11 @@ export default {
 						// Hide points of interest
 						featureType: 'poi',
 						stylers: [{ visibility: 'off' }]
+					},
+					{
+						// Hide public transit
+						featureType: 'transit.station',
+						stylers: [{ visibility: 'off' }]
 					}
 				]
 			}
@@ -339,30 +344,36 @@ export default {
 		}
 	},
 
-	mounted() {
-		// Load initial data then search
-		this.loadData().then(this.search)
+	async mounted() {
+		await this.loadData()
+		this.search()
 	},
 
 	methods: {
 		loadData() {
 			this.loading = true
 
-			return this.$axios.get('/venues/explore/data').then(response => {
-				// Fill data
-				this.categories = response.data.categories
-				// this amenities = response.data.amenities;
+			return this.$axios
+				.get('/venues/explore', {
+					params: {
+						country: this.$i18n.region
+					}
+				})
+				.then(response => {
+					// Fill data
+					this.categories = response.data.categories
+					// this amenities = response.data.amenities;
 
-				// Fill categories in search params
-				if (!this.searchParams.categories.length) {
-					this.searchParams.categories = this.categories.map(
-						category => category.id
-					)
-				}
+					// Fill categories in search params
+					if (!this.searchParams.categories.length) {
+						this.searchParams.categories = this.categories.map(
+							category => category.id
+						)
+					}
 
-				// Stop loading
-				this.loading = false
-			})
+					// Stop loading
+					this.loading = false
+				})
 		},
 
 		// Location search ----------------------------------------------------
@@ -559,16 +570,18 @@ export default {
 		},
 
 		// Search -------------------------------------------------------------
-		search() {
+		async search() {
 			// Load venues
 			this.loading = true
 
-			this.$axios
-				.post('/venues/explore/search', this.searchParams)
-				.then(response => {
-					this.venues = response.data
-					this.loading = false
-				})
+			try {
+				this.venues = await this.$axios.$post(
+					'/venues/explore',
+					this.searchParams
+				)
+			} finally {
+				this.loading = false
+			}
 
 			// Update URL
 			this.$router.replace({

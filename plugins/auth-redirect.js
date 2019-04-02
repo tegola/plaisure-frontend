@@ -1,10 +1,10 @@
-export default function({ $axios, $router, app }) {
+export default function({ $axios, app, redirect }) {
 	$axios.onError(error => {
 		const code = parseInt(error.response && error.response.status)
 
 		if ([401, 403].includes(code)) {
 			app.$auth.logout()
-			$router.replace('/login')
+			redirect('/login')
 		}
 
 		return Promise.reject(error)

@@ -55,11 +55,21 @@
 						<pg-subscription-card
 							v-if="venue.id"
 							:subscription="venue.subscription"
-							as-display
-							highlight="Abbonamento corrente"
-							class="my-5"
-							@select="$router.push(`/venues/${venue.id}/select-plan`)"
-						/>
+							:highlight="$t('Abbonamento corrente')"
+							:last-update-date="venue.subscription.updated_at"
+							:end-date="venue.subscription.ends_at"
+							class="my-5">
+							<hr class="my-0">
+							<div class="card-body">
+								<!-- FIXME: Non dare troppa evidenze se è già all'abbonamento più costoso -->
+								<pg-button
+									variant="primary"
+									block
+									:to="`/venues/${venue.id}/select-plan`">
+									Cambia
+								</pg-button>
+							</div>
+						</pg-subscription-card>
 					</div>
 				</div>
 			</div>
@@ -72,7 +82,7 @@
 <script>
 import { mapState, mapGetters } from 'vuex'
 import { validationMixin } from 'vuelidate'
-import anime from 'animejs'
+import scrollIntoView from '@/utilities/scroll-into-view'
 
 import BNav from 'bootstrap-vue/es/components/nav/nav'
 import BNavItem from 'bootstrap-vue/es/components/nav/nav-item'
@@ -164,19 +174,12 @@ export default {
 			const href = e.target.getAttribute('href')
 			const el = href ? document.querySelector(href) : null
 			const offset = this.$refs.sectionNavWrapper.offsetHeight
-			const container =
-				document.scrollingElement || document.body || document.documentElement
+
+			if (!el) return
 
 			e.preventDefault()
 
-			if (!el || !container) return
-
-			anime({
-				targets: container,
-				scrollTop: el.offsetTop + offset,
-				duration: 400,
-				easing: 'easeInOutQuad'
-			})
+			scrollIntoView(el, { offset })
 		},
 
 		async submit() {

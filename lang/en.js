@@ -209,7 +209,7 @@ export default {
 				title: 'Details',
 				concessionaire: 'Concessionaire',
 				surface_size: 'Surface size',
-				vlt_machine_count: 'VLC machines',
+				vlt_machine_count: 'VLT machines',
 				vlt_platforms: 'VLT platforms',
 				awp_machine_count: 'AWP machines',
 				arcade_roulette: 'Arcade roulette',
@@ -326,7 +326,7 @@ export default {
 				virtual_betting: 'Virtual betting',
 				horse_betting: 'Horse betting',
 				arcade_roulette: 'Arcade roulette',
-				vlt_machine_count: 'VLC machines',
+				vlt_machine_count: 'VLT machines',
 				awp_machine_count: 'AWP machines',
 				seating_capacity: 'Seatings',
 				parking_capacity: 'Parking spots',
@@ -382,6 +382,26 @@ export default {
 				name: 'Jackpot {number}',
 				name_placeholder: 'Name',
 				amount_placeholder: 'Amount'
+			}
+		},
+
+		venue_plan: {
+			billing: {
+				title: 'Billing',
+				legal_name: 'Legal name',
+				legal_name_error: 'Please type your company legal name.',
+				address: 'Address',
+				address_error: 'Please type the address.',
+				postcode: 'Postal code',
+				postcode_error: 'Please type the postal code.',
+				city: 'City',
+				city_error: 'Please type the city name.',
+				region: 'Region',
+				region_error: 'Please type the region.',
+				country: 'Country',
+				country_error: 'Please select the country.',
+				vat_number: 'VAT number',
+				vat_number_error: 'Please type the VAT number.'
 			}
 		},
 

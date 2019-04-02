@@ -1,5 +1,5 @@
 .navbar {
-	z-index: $zindex-modal; // Stay above fullscreen menu
+	z-index: $zindex-modal-backdrop; // Stay above fullscreen menu
 	transition:
 		background-color $navbar-transition-duration,
 		color $navbar-transition-duration;
@@ -50,6 +50,7 @@
 	border-radius: $input-border-radius-lg;
 	transition: $navbar-transition-duration;
 	margin-right: $navbar-padding-x / 2; // Same spacing between it and the brand
+	max-width: 30rem; // Avoid full width search
 }
 .navbar__search-icon-addon {
 	display: none;
