@@ -149,10 +149,11 @@ export default {
 
 			store.commit('venueForm/setVenue', data.venue)
 			store.commit('venueForm/setOriginalVenue', data.venue)
+			// store.commit('venueForm/setAmenities', data.amenities) // Taken out of venue object for now
 			store.commit('venueForm/setCategories', data.categories)
 			store.commit('venueForm/setConcessionaires', data.concessionaires)
-			store.commit('venueForm/setVltPlatforms', data.payPerViewPlatforms)
-			store.commit('venueForm/setPayPerViewPlatforms', data.vltPlatforms)
+			store.commit('venueForm/setPayPerViewPlatforms', data.payPerViewPlatforms)
+			store.commit('venueForm/setVltPlatforms', data.vltPlatforms)
 		} catch (err) {
 			this.error = true
 		}

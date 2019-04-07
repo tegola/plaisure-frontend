@@ -1,4 +1,3 @@
-Importanti:
   ☐ Far rifunzionare le checkbox "amenities"
   ✔ Icone per le categorie GB sulla mappa @done (19-02-18 23:21)
   ✔ Solo categorie GB nel sito GB, solo IT nel sito IT @done (19-02-11 21:32)
@@ -7,6 +6,12 @@ Importanti:
   ✔ Rimuovere e fermate degli autobus (?) dalle mappe @done (19-04-02 22:51)
   ✔ Aggiustare le valute dei jackpot. Ogni sala dovrebbe avere la sua valuta in base al paese in cui si trova (es. GB => GBP => £) @done (19-04-02 23:32)
 
+ ☐ Testo della pagina della scelta piani
+ ☐ Traduzione della pagina di scelta piani
+ ☐ Rimuovere il pulsante "aggiungi" nella lista attività dell'utente, usare un box alla fine
+ ☐ Email di benvenuto (verifica) all'utente dopo la registrazione
+ ☐ Aggiungere i link a terms of service e privacy policy (footer e registrazione utente)
+ ☐ Aggiungere pezzi per permettere alle sale premium di salire nella ricerca o essere più visibili
  ✔ Far funzionare la ricerca in home page @done (18-06-20 22:12)
  ✔ tracking analytics @done (18-06-09 01:35)
  ✔ Convertire login in componenti vue @done (18-07-09 21:49)
@@ -20,18 +25,15 @@ Importanti:
  ✔ Edit utente: lato client permette di continuare senza dati, ma lato server no @done (18-12-15 14:20)
  ☐ Dettaglio: scorrimento foto come sale in home page + "altre foto"
  ✔ Controllare il salvataggio dell'orario, sembra che l'array sia sballato @done (19-02-06 23:58)
- ☐ Riattivare la validazione degli orari una volta che il gruppo di campi riempie un array di ore solo per i giorni dove ci sono effettivamente
  ☐ Porting delle funzionalità di localizzazione in home nella pagina explore
  ✔ Personalizzare il template dell'email @done (19-04-02 23:34)
- ☐ Email di benvenuto (verifica) all'utente dopo la registrazione
  ✔ Dettaglio: usare una mappa statica, che costa meno su google maps @done (18-12-10 21:52)
  ✔ Edit sala: Il menu utente appare sotto alla navbar secondaria @done (18-09-03 22:53)
  ✔ Importante: rimuovere il geocoder in home page, che ora è a pagamento (e dà errori CORS) e a noi non serve granché @done (18-10-10 19:50)
  ✔ Pagine di recupero password @done (18-09-14 17:34)
- ☐ Aggiungere i link a terms of service e privacy policy (footer e registrazione utente)
  ✔ Spostare le icone svg (views/site/components/vectors.blade.php) in javascript @done (18-10-10 19:50)
  ☐ Ottimizzare la pagina di ricerca per i cellulari
- ☐ Aggiustare la place textbox con le conoscenze migliori di vue
+ ☐ Riattivare la validazione degli orari una volta che il gruppo di campi riempie un array di ore solo per i giorni dove ci sono effettivamente
  ☐ Edit sala: focus all'elemento giusto quando c'è errore
  ☐ Edit sala: drag della mappa più che del marker
  ☐ Sottoscrizioni: email appena scelto un nuovo abbonamento
@@ -50,6 +52,7 @@ Importanti:
  ☐ Controllare il reload della pagina explore dopo esserci arrivato da un pulsante in home page
  ☐ Passare la lingua selezionata al client @low
  ☐ Modifica dati utente: aggiungere validazioni lato client in cui non si possono nullare i campi di fatturazione se ci sono sottoscrizioni attive @low
+ ☐ Aggiustare la place textbox con le conoscenze migliori di vue @low
 
  ✔ L'indirizzo deve avere una riga unica, nessun campo per numero civico (+ codice per la migrazione del db) @done (18-12-16 01:59)
  ✔ Deploy con la modifica dell'indirizzo riga 1 e 2 @done (18-12-16 11:53)
@@ -60,8 +63,7 @@ Importanti:
  ☐ Sistema di importazione dati
  ☐ Cookie law + GDPR
  ☐ Fatturazione utente (IVA) per nazione
- ☐ Rimuovere la richiesta del codice di censimento aams prima della rivendicazione di una sala
- ☐ Testo della pagina della scelta piani
+ ✔ Rimuovere la richiesta del codice di censimento aams prima della rivendicazione di una sala @done (19-04-07 15:53)
  ☐ Prezzi, limiti e bonus iniziali
  ☐ Piani: prezzi, nomi e nomi piani stripe per nazione
 

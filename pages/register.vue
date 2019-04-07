@@ -89,7 +89,8 @@ export default {
 			model: {
 				name: '',
 				email: '',
-				password: ''
+				password: '',
+				locale: this.$i18n.isoCode
 			}
 		}
 	},

@@ -147,8 +147,8 @@ export default {
 	computed: {
 		...mapState('venueForm', [
 			'venue',
-			'vltPlatforms',
 			'amenities',
+			'vltPlatforms',
 			'payPerViewPlatforms'
 		]),
 

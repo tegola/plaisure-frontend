@@ -5,6 +5,7 @@ import isEqual from 'lodash/isEqual'
 const initialState = {
 	venue: null,
 	originalVenue: null,
+	amenities: [],
 	categories: [],
 	concessionaires: [],
 	vltPlatforms: [],
@@ -24,10 +25,18 @@ export const mutations = {
 
 	setVenue: (state, venue) => {
 		state.venue = venue
+
+		// Fill amenities with venue fields
+		// FIXME: Move to separate table
+		state.amenities = Object.keys(venue.amenities)
 	},
 
 	setOriginalVenue: (state, originalVenue) => {
 		state.originalVenue = cloneDeep(originalVenue)
+	},
+
+	setAmenities: (state, amenities) => {
+		state.amenities = amenities
 	},
 
 	setCategories: (state, categories) => {
