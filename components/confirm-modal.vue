@@ -8,8 +8,8 @@
 		centered
 		hide-header-close
 		cancel-variant="light"
-		:value="value"
-		@input="$emit('input', $event)"
+		:visible="value"
+		@change="$emit('input', $event)"
 		v-on="$listeners">
 		<p v-if="$slots.message" class="mb-0">
 			<slot name="message" />

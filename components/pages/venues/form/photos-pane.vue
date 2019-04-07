@@ -6,16 +6,43 @@
 			<!-- Current photos -->
 			<div v-for="photo in venuePhotos" :key="photo.id" :class="photoItemClass">
 				<a :href="photo.resized_url" target="_blank">
-					<pg-image-frame :src="photo.thumbnail_url" ratio="1:1" class="rounded" />
+					<pg-image-frame
+						:src="photo.thumbnail_url"
+						ratio="1:1"
+						class="rounded"
+						content-class="d-flex align-items-end justify-content-end">
+						<pg-button
+							v-b-tooltip.hover.bottom
+							size="sm"
+							variant="danger"
+							class="mr-1 mb-1"
+							icon="trash"
+							:title="$t('common.actions.delete')"
+							@click.prevent="deletePhoto(photo)"
+						/>
+					</pg-image-frame>
 				</a>
-				<pg-button size="sm" variant="danger" block class="mt-2" @click="deletePhoto(photo)">{{ $t('common.actions.delete') }}</pg-button>
 			</div>
 
 			<!-- Current uploads -->
 			<div v-for="(file, index) in uploaderFiles" :key="index" :class="photoItemClass">
 				<div class="embed-responsive embed-responsive-1by1 rounded border">
 					<div class="embed-responsive-item d-flex flex-column align-items-center justify-content-center text-center">
-						<span v-if="file.error" class="text-danger small"><strong>{{ $t('common.status.error') }}</strong><br>{{ file.error }}</span>
+						<template v-if="file.error">
+							<div class="text-danger small">
+								<strong>{{ $t('common.status.error') }}</strong><br>
+								{{ file.error }}
+							</div>
+							<pg-button
+								v-b-tooltip.hover.bottom
+								size="sm"
+								variant="danger"
+								class="mt-2"
+								icon="trash"
+								:title="$t('common.actions.delete')"
+								@click.prevent="$refs.uploader.remove(file)"
+							/>
+						</template>
 						<template v-else>
 							{{ $t('common.status.loading') }}
 							<b-progress :value="parseFloat(file.progress)" class="w-75 my-2" style="height: 2px" />
@@ -23,15 +50,6 @@
 						</template>
 					</div>
 				</div>
-				<pg-button
-					v-if="file.error"
-					size="sm"
-					variant="danger"
-					block
-					class="mt-2"
-					@click="$refs.uploader.remove(file)">
-					{{ $t('common.actions.remove') }}
-				</pg-button>
 			</div>
 
 			<!-- Uploader -->
@@ -58,12 +76,12 @@
 
 		<pg-confirm-modal
 			v-model="confirmDeleteOpen"
-			:title="$t('pages.venue_form.photos.remove.title')"
-			:ok-title="$t('common.actions.remove')"
+			:title="$t('pages.venue_form.photos.delete.title')"
+			:ok-title="$t('common.actions.delete')"
 			variant="danger"
 			@ok="confirmDeletePhoto">
-			<i18n tag="p" path="pages.venue_form.photos.remove.intro">
-				<strong class="text-danger" place="action">{{ $t('pages.venue_form.photos.remove.intro_action') }}</strong>
+			<i18n tag="p" path="pages.venue_form.photos.delete.intro">
+				<strong class="text-danger" place="action">{{ $t('pages.venue_form.photos.delete.intro_action') }}</strong>
 			</i18n>
 			<div v-if="currentPhoto" class="text-center">
 				<img :src="currentPhoto.thumbnail_url" class="img-fluid rounded">

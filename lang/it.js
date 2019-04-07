@@ -373,11 +373,11 @@ export default {
 			photos: {
 				title: 'Foto',
 				upload: 'Carica foto',
-				remove: {
-					title: 'Rimuovi foto',
+				delete: {
+					title: 'Elimina foto',
 					intro:
-						"Stai per {action}. Essa verrà effettivamente eliminata dalla galleria una volta salvati i dati dell'attività.",
-					intro_action: 'rimuovere questa foto'
+						"Vuoi {action}? Essa verrà rimossa dalla galleria ma sarà effettivamente eliminata solo dopo il salvataggio dei dati dell'attività.",
+					intro_action: 'eliminare questa foto'
 				}
 			},
 			jackpots: {

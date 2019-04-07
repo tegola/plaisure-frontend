@@ -370,11 +370,11 @@ export default {
 			photos: {
 				title: 'Photos',
 				upload: 'Upload photo',
-				remove: {
-					title: 'Remove photo',
+				delete: {
+					title: 'Delete photo',
 					intro:
-						"You're about to {action}. It will be actually removed from the gallery once you save this venue data.",
-					intro_action: 'remove this photo'
+						'Do you want to {action}?. It will be removed from the gallery but will be really deleted only once you save this venue.',
+					intro_action: 'delete this photo'
 				}
 			},
 			jackpots: {
