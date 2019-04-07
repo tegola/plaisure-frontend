@@ -10,7 +10,7 @@
 				<pg-button size="sm" @click="$auth.logout()">{{ $t('pages.user.actions.logout') }}</pg-button>
 			</div>
 
-			<div v-if="!venues.length" class="row mt-5">
+			<div v-if="venues.length" class="row mt-5">
 				<div v-for="venue in venues" :key="venue.id" class="col-md-6 col-xl-4 mb-4">
 					<nuxt-link :to="`/venues/${venue.id}`" class="text-inherit">
 						<pg-venue-grid-item
@@ -37,7 +37,7 @@
 				</div>
 			</div>
 
-			<pg-no-items v-if="venues.length" :title="$t('pages.user.no_items.title')" class="py-5 my-5">
+			<pg-no-items v-if="!venues.length" :title="$t('pages.user.no_items.title')" class="py-5 my-5">
 				<i18n path="pages.user.no_items.message">
 					<nuxt-link to="/venues/add" place="action">
 						<strong>{{ $t('pages.user.no_items.message_action') }}</strong>
