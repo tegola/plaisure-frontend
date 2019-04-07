@@ -408,8 +408,8 @@ export default {
 		user: {
 			meta_title: 'User profile',
 			title: 'Hello {name}!',
+			intro: 'Here you can manage your profile and your venues.',
 			actions: {
-				add_venue: 'Add a venue',
 				edit_profile: 'Edit your profile',
 				logout: 'Logout'
 			},
@@ -417,7 +417,8 @@ export default {
 				title: 'No venues',
 				message: '{action} to add your first one now!',
 				message_action: 'Click here'
-			}
+			},
+			add_another: 'Add another venue'
 		},
 
 		user_form: {

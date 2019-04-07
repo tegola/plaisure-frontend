@@ -411,8 +411,8 @@ export default {
 		user: {
 			meta_title: 'Gestione utente',
 			title: 'Ciao {name}!',
+			intro: 'Da qui puoi gestire il tuo profilo e le tue attività',
 			actions: {
-				add_venue: 'Aggiungi attività',
 				edit_profile: 'Modifica i tuoi dati',
 				logout: 'Esci'
 			},
@@ -420,7 +420,8 @@ export default {
 				title: 'Nessuna attività',
 				message: '{action} per aggiungere la tua prima attività!',
 				message_action: 'Clicca qui'
-			}
+			},
+			add_another: "Aggiungi un'altra attività"
 		},
 
 		user_form: {

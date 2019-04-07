@@ -1,6 +1,6 @@
 <template>
 	<div class="text-muted text-center">
-		<h4>{{ title }}</h4>
+		<h5>{{ title }}</h5>
 		<p v-if="$slots.default || subtitle" class="mb-0">
 			<slot>{{ subtitle }}</slot>
 		</p>

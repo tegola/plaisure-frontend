@@ -1,4 +1,4 @@
-  ☐ Far rifunzionare le checkbox "amenities"
+  ✔ Far rifunzionare le checkbox "amenities" @done (19-04-07 16:32)
   ✔ Icone per le categorie GB sulla mappa @done (19-02-18 23:21)
   ✔ Solo categorie GB nel sito GB, solo IT nel sito IT @done (19-02-11 21:32)
   ✔ Errore: si può scegliere il piano free su una sala appena reclamata @done (19-03-09 23:54)
@@ -6,11 +6,10 @@
   ✔ Rimuovere e fermate degli autobus (?) dalle mappe @done (19-04-02 22:51)
   ✔ Aggiustare le valute dei jackpot. Ogni sala dovrebbe avere la sua valuta in base al paese in cui si trova (es. GB => GBP => £) @done (19-04-02 23:32)
 
- ☐ Testo della pagina della scelta piani
- ☐ Traduzione della pagina di scelta piani
- ☐ Rimuovere il pulsante "aggiungi" nella lista attività dell'utente, usare un box alla fine
+ ☐ Testo + traduzione della pagina della scelta piani
+ ✔ Rimuovere il pulsante "aggiungi" nella lista attività dell'utente, usare un box alla fine @done (19-04-07 17:48)
  ☐ Email di benvenuto (verifica) all'utente dopo la registrazione
- ☐ Aggiungere i link a terms of service e privacy policy (footer e registrazione utente)
+ ☐ Aggiungere i link a terms of service e privacy policy (footer, registrazione utente e modifica piano)
  ☐ Aggiungere pezzi per permettere alle sale premium di salire nella ricerca o essere più visibili
  ✔ Far funzionare la ricerca in home page @done (18-06-20 22:12)
  ✔ tracking analytics @done (18-06-09 01:35)
