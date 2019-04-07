@@ -351,7 +351,7 @@ export default {
 			return (
 				this.model.new_billing &&
 				this.hasExistingBilling &&
-				this.user.venue_ids.length === 1
+				this.user.venue_ids.length > 1
 			)
 		},
 
@@ -359,7 +359,7 @@ export default {
 			return (
 				this.model.new_payment &&
 				this.hasExistingPayment &&
-				this.user.venue_ids.length === 1
+				this.user.venue_ids.length > 1
 			)
 		},
 
@@ -562,12 +562,16 @@ export default {
 
 				// Save subscription
 				try {
+					// Save
 					await this.$axios.post(
 						`/venues/${this.venue.id}/subscribe`,
 						this.model
 					)
 
 					// FIXME: Add notification of saved subscription
+
+					// Reload user, in case its billing info has changed
+					await this.$auth.fetchUser()
 
 					// Back to venue detail
 					this.$router.push(`/venues/${this.venue.id}`)

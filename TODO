@@ -1,4 +1,5 @@
 Importanti:
+  ☐ Far rifunzionare le checkbox "amenities"
   ✔ Icone per le categorie GB sulla mappa @done (19-02-18 23:21)
   ✔ Solo categorie GB nel sito GB, solo IT nel sito IT @done (19-02-11 21:32)
   ✔ Errore: si può scegliere il piano free su una sala appena reclamata @done (19-03-09 23:54)
@@ -33,9 +34,11 @@ Importanti:
  ☐ Aggiustare la place textbox con le conoscenze migliori di vue
  ☐ Edit sala: focus all'elemento giusto quando c'è errore
  ☐ Edit sala: drag della mappa più che del marker
+ ☐ Sottoscrizioni: email appena scelto un nuovo abbonamento
+ ☐ Sottoscrizioni: email 7 giorni prima della scadenza
  ✔ Aggiustare gli spazi per il "notch" di iPhone X* @done (18-10-22 00:07)
- ☐ Modifica dati utente: non si devono poter nullare i campi di fatturazione se ci sono sottoscrizioni attive.
- ☐ Modifica dati utente: al salvataggio, aggiornare i dati su Stripe.
+ ✔ Modifica dati utente: non si devono poter nullare i campi di fatturazione se ci sono sottoscrizioni attive. @done (19-04-07 15:10)
+ ✔ Modifica dati utente: al salvataggio, aggiornare i dati su Stripe. @done (19-04-06 11:52)
  ☐ Spostare i css nelle pagine
  ✔ Modifica attività: spostare caricamento e salvataggio nello store @done (18-10-22 00:08)
  ✔ Edit sala: il link all'edit quando una sala non ha proprietario ma l'utente è già registrato deve rimandare alla richiesta del codice dell'AAMS @done (19-03-10 00:02)
@@ -46,6 +49,7 @@ Importanti:
  ☐ Porting di Fractal a Laravel API Resources
  ☐ Controllare il reload della pagina explore dopo esserci arrivato da un pulsante in home page
  ☐ Passare la lingua selezionata al client @low
+ ☐ Modifica dati utente: aggiungere validazioni lato client in cui non si possono nullare i campi di fatturazione se ci sono sottoscrizioni attive @low
 
  ✔ L'indirizzo deve avere una riga unica, nessun campo per numero civico (+ codice per la migrazione del db) @done (18-12-16 01:59)
  ✔ Deploy con la modifica dell'indirizzo riga 1 e 2 @done (18-12-16 11:53)
