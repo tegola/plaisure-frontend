@@ -217,7 +217,9 @@ Dopo il primo deploy backend:
   ☐ Aggiornare il file .env con l'id e la chiave del client oauth
   ☐ Rimandare la sitemap a google (/sitemap.xml invece di /sitemap)
   ☐ Mapping della cartella storage
+  ☐ Copia della cartella dei dati da prontogioco.it
   ☐ artisan migrate
+  ☐ Aggiungere redirect da prontogioco.it a plaisure.com
 
  ☐ Migrazione manuale dei dati:
    UPDATE venues SET country = 'IT'
@@ -230,8 +232,13 @@ Dopo il primo deploy backend:
    INSERT INTO venue_categories (machine_name, name, country) VALUES ('family_entertainment_center', 'Family entertainment centre', 'GB');
 
   ☐ Lanciare gli importer
-  ☐ Lanciare la creazione
+  ☐ Lanciare la creazione (occhio manca William Hill)
   ☐ Svuotare la cache della home page (per evitare che le query usino il nome vecchio delle categorie)
+
+Per andare online su plaisure.com:
+  ☐ Cambiare le chiavi di stripe (frontend e backend)
+  ☐ Cambiare le chiavi di google maps (frontend)
+  ☐ Disabilitare mailtrap
 
 Dopo OGNI deploy backend:
   ☐ chmod -R 777 storage

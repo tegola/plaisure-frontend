@@ -386,6 +386,7 @@ export default {
 		},
 
 		venue_plan: {
+			title: 'Select plan',
 			billing: {
 				title: 'Billing',
 				legal_name: 'Legal name',

@@ -389,6 +389,7 @@ export default {
 		},
 
 		venue_plan: {
+			title: 'Scegli abbonamento',
 			billing: {
 				title: 'Fatturazione',
 				legal_name: "Denominazione legale dell'azienda",

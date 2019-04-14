@@ -2,230 +2,218 @@
 	<div class="pg-select-venue-plan-page">
 		<pg-navbar variant="dark" />
 
-		<div v-if="loading || error" class="container d-flex text-muted text-center" style="height: 50vh">
-			<div class="m-auto">
-				<template v-if="loading">
-					<pg-icon icon="circle-outline-notch" spinning />
-					<h5 class="m-0">{{ $t('common.status.loading') }}&hellip;</h5>
-				</template>
-				<h4 v-if="error" class="text-danger mb-0">C'è stato un errore nel caricamento dei dati</h4>
+		<div class="container my-5">
+			<h2 class="h4">{{ $t('pages.venue_plan.title') }}</h2>
+			<p>
+				<nuxt-link :to="`/venues/${venue.id}/edit`">
+					<pg-icon icon="arrow-left" />
+					<strong class="font-weight-bold">{{ venue.name }}</strong>
+				</nuxt-link>
+				<span class="text-muted">({{ address }})</span>
+			</p>
+
+			<!-- Selection -->
+			<div class="row my-5">
+				<div
+					v-for="subscription in subscriptions"
+					:key="subscription.name"
+					class="col-md-4 d-flex">
+					<pg-subscription-card
+						:subscription="subscription"
+						:selected="isSubscriptionSelected(subscription)"
+						:last-update-date="lastUpdateDateForSubscription(subscription)"
+						:end-date="endDateForSubscription(subscription)"
+						clickable
+						class="flex-fill mb-3 mb-md-0"
+						@select="onSubscriptionSelect(subscription.name)"
+					/>
+				</div>
+			</div>
+
+			<!-- Form -->
+			<div v-if="model.subscription_name" ref="controls" class="row">
+				<div class="col-lg-7 mx-lg-auto">
+					<!-- Back to default subscription -->
+					<template v-if="model.subscription_name == 'default'">
+						<p>Hai scelto l'abbonamento gratuito. Questo annullerà il rinnovo mensile e non ti verrà addebitato nessun altro costo. L'attuale abbonamento rimarrà comunque attivo fino allo scadere del periodo già pagato, ovvero fino al {{ formatDate(venue.subscription.current_period_ends_at) }}.</p>
+					</template>
+
+					<!-- All other subscriptions -->
+					<template v-else>
+						<p>
+							Hai scelto un abbonamento a pagamento.
+							<template v-if="hasExistingBilling">Assicurati che le tue informazioni di fatturazione e pagamento siano corretti.</template>
+							<template v-else>Inserisci qui di seguito le tue informazioni di fatturazione e pagamento.</template>
+						</p>
+
+						<!-- Billing -->
+						<div class="pt-4">
+							<h5>{{ $t('pages.venue_plan.billing.title') }}</h5>
+							<hr>
+						</div>
+
+						<template v-if="hasExistingBilling">
+							<b-form-group>
+								<b-radio v-model="model.new_billing" :value="false">
+									Indirizzo registrato
+									<b-collapse id="existing-billing-collapse" :visible="!model.new_billing">
+										<div class="pt-2 small">
+											<div>{{ user.legal_name }}</div>
+											<div>{{ user.address_line1 }}</div>
+											<div v-if="user.address_line2">{{ user.address_line2 }}</div>
+											<div>
+												{{ user.address_city }},
+												{{ user.address_region }},
+												{{ user.address_postcode }},
+												{{ user.country }}
+											</div>
+											<div>P. IVA: {{ user.vat_number }}</div>
+										</div>
+									</b-collapse>
+								</b-radio>
+							</b-form-group>
+							<b-form-group>
+								<b-radio v-model="model.new_billing" :value="true">
+									Nuovo indirizzo di fatturazione
+									<b-collapse id="new-billing-collapse" :visible="showNewBillingWarning">
+										<div class="pt-2 small">
+											<strong class="text-danger">Attenzione:</strong> se hai abbonamenti attivi sulle altre attività, esse verranno aggiornate le nuove informazioni di fatturazione.
+										</div>
+									</b-collapse>
+								</b-radio>
+							</b-form-group>
+						</template>
+
+						<b-collapse id="new-billing-form" :visible="showBillingForm">
+							<b-form-group
+								:state="!$v.model.legal_name.$error"
+								:label="$t('pages.venue_plan.billing.legal_name')"
+								:invalid-feedback="$t('pages.venue_plan.billing.legal_name_error')">
+								<b-input
+									v-model="model.legal_name"
+									type="text"
+									autocomplete="organization"
+									autofocus
+								/>
+							</b-form-group>
+							<b-form-group
+								:state="!$v.model.address_line1.$error"
+								:label="$t('pages.venue_plan.billing.address')"
+								:invalid-feedback="$t('pages.venue_plan.billing.address_error')">
+								<b-input v-model="model.address_line1" type="text" autocomplete="address-line1" class="mb-2" />
+								<b-input v-model="model.address_line2" type="text" autocomplete="address-line2" />
+							</b-form-group>
+							<div class="form-row">
+								<div class="col-sm-4">
+									<b-form-group
+										:state="!$v.model.address_postcode.$error"
+										:label="$t('pages.venue_plan.billing.postcode')"
+										:invalid-feedback="$t('pages.venue_plan.billing.postcode_error')">
+										<b-input v-model="model.address_postcode" type="text" autocomplete="postal-code" />
+									</b-form-group>
+								</div>
+								<div class="col-sm-8">
+									<b-form-group
+										:state="!$v.model.address_city.$error"
+										:label="$t('pages.venue_plan.billing.city')"
+										:invalid-feedback="$t('pages.venue_plan.billing.city_error')">
+										<b-input v-model="model.address_city" type="text" autocomplete="address-level2" />
+									</b-form-group>
+								</div>
+							</div>
+							<div class="form-row">
+								<div class="col-sm">
+									<b-form-group
+										:state="!$v.model.address_region.$error"
+										:label="$t('pages.venue_plan.billing.region')"
+										:invalid-feedback="$t('pages.venue_plan.billing.region_error')">
+										<b-input v-model="model.address_region" type="text" autocomplete="address-level1" />
+									</b-form-group>
+								</div>
+								<div class="col-sm">
+									<b-form-group
+										:state="!$v.model.country.$error"
+										:label="$t('pages.venue_plan.billing.country')"
+										:invalid-feedback="$t('pages.venue_plan.billing.country_error')">
+										<b-select v-model="model.country" :options="$countrySelectOptions" />
+									</b-form-group>
+								</div>
+							</div>
+							<b-form-group
+								:state="!$v.model.vat_number.$error"
+								:label="$t('pages.venue_plan.billing.vat_number')"
+								:invalid-feedback="$t('pages.venue_plan.billing.vat_number_error')">
+								<b-input v-model="model.vat_number" type="text" />
+							</b-form-group>
+						</b-collapse>
+
+						<!-- Payment -->
+						<div class="pt-4">
+							<h5>Pagamento</h5>
+							<hr>
+						</div>
+
+						<template v-if="hasExistingPayment">
+							<b-form-group>
+								<b-radio v-model="model.new_payment" :value="false">
+									Carta di credito registrata
+									<b-collapse id="existing-payment-collapse" :visible="!model.new_payment">
+										<div class="pt-2 small">
+											<div>{{ user.card_brand }} &bull;&bull;&bull;&bull; {{ user.card_last_four }}</div>
+											<div>{{ user.card_holder_name }}</div>
+											<div>Scadenza: {{ user.card_expiry_month }}/{{ user.card_expiry_year }}</div>
+										</div>
+									</b-collapse>
+								</b-radio>
+							</b-form-group>
+							<b-form-group>
+								<b-radio v-model="model.new_payment" :value="true">
+									Nuova carta di credito
+									<b-collapse id="new-payment-collapse" :visible="showNewPaymentWarning">
+										<div class="pt-2 small">
+											<strong class="text-danger">Attenzione:</strong> se hai abbonamenti attivi sulle altre attività, esse verranno aggiornate con le nuove informazioni di pagamento.
+										</div>
+									</b-collapse>
+								</b-radio>
+							</b-form-group>
+						</template>
+
+						<b-collapse id="new-payment-form" :visible="showPaymentForm">
+							<b-form-group
+								:state="!cardError"
+								:label="$t('Carta di credito')"
+								:invalid-feedback="cardError">
+								<stripe-card
+									:stripe="$constants.STRIPE_KEY"
+									:options="stripeOptions"
+									@change="onCardChange"
+								/>
+							</b-form-group>
+							<b-form-group
+								:state="!$v.model.card_holder_name.$error"
+								:label="$t('Nome e cognome intestatario')"
+								:invalid-feedback="$t('Inserisci il nome dell\'intestatario come mostrato sulla carta')">
+								<b-input v-model="model.card_holder_name" type="text" autocomplete="cc-name" />
+							</b-form-group>
+						</b-collapse>
+
+						<p class="small">Stai per attivare un abbonamento costante. Se fai clic su "Conferma abbonamento", autorizzi {{ $constants.APP_NAME }} ad addebitarti mensilmente il costo dell'abbonamento (attualmente pari a 1,99 €/mese). Puoi annullare l'abbonamento in qualsiasi momento. Ulteriori informazioni.</p>
+						<p class="small">Se fai clic su "Conferma abbonamento" accetti i Termini di servizio di {{ $constants.APP_NAME }} l'Informativa sulla privacy. Accetti inoltre che il tuo acquisto sarà subito disponibile e di rinunciare al diritto di recesso previsto dalla legge (ad eccezione dei servizi).</p>
+					</template>
+
+					<!-- Confirm change -->
+					<div class="text-right">
+						<pg-button
+							:loading="saving"
+							:block="$mq == 'xs' || $mq == 'constrained'"
+							variant="primary"
+							@click="submit">
+							{{ model.subscription_name === 'default' ? $t('Disattiva abbonamento') : $t('Conferma abbonamento') }}
+						</pg-button>
+					</div>
+				</div>
 			</div>
 		</div>
-
-		<template v-if="!loading && venue">
-			<div class="container my-5">
-				<h2 class="h4">{{ $t('Scegli abbonamento') }}</h2>
-				<p>
-					<nuxt-link :to="`/venues/${venue.id}/edit`">
-						<pg-icon icon="arrow-left" />
-						<strong class="font-weight-bold">{{ venue.name }}</strong>
-					</nuxt-link>
-					<span class="text-muted">({{ address }})</span>
-				</p>
-
-				<!-- Selection -->
-				<div class="row my-5">
-					<div
-						v-for="subscription in subscriptions"
-						:key="subscription.name"
-						class="col-md-4 d-flex">
-						<pg-subscription-card
-							:subscription="subscription"
-							:selected="isSubscriptionSelected(subscription)"
-							:last-update-date="lastUpdateDateForSubscription(subscription)"
-							:end-date="endDateForSubscription(subscription)"
-							clickable
-							class="flex-fill mb-3 mb-md-0"
-							@select="onSubscriptionSelect(subscription.name)"
-						/>
-					</div>
-				</div>
-
-				<!-- Form -->
-				<div v-if="hasNewSubscription" ref="controls" class="row">
-					<div class="col-lg-7 mx-lg-auto">
-						<!-- Back to default subscription -->
-						<template v-if="model.subscription_name == 'default'">
-							<p>Hai scelto l'abbonamento gratuito. Questo annullerà il rinnovo mensile e non ti verrà addebitato nessun altro costo. L'attuale abbonamento rimarrà comunque attivo fino allo scadere del periodo già pagato.</p>
-						</template>
-
-						<!-- All other subscriptions -->
-						<template v-else>
-							<p>
-								Hai scelto un abbonamento a pagamento.
-								<template v-if="!hasExistingBilling">Inserisci qui di seguito le tue informazioni di fatturazione e pagamento.</template>
-								<template v-if="hasExistingBilling">Assicurati che le tue informazioni di fatturazione e pagamento siano corretti.</template>
-							</p>
-
-							<!-- Billing -->
-							<div class="pt-4">
-								<h5>{{ $t('pages.venue_plan.billing.title') }}</h5>
-								<hr>
-							</div>
-
-							<template v-if="hasExistingBilling">
-								<b-form-group>
-									<b-radio v-model="model.new_billing" :value="false">
-										Indirizzo registrato
-										<b-collapse id="existing-billing-collapse" :visible="!model.new_billing">
-											<div class="pt-2 small">
-												<div>{{ user.legal_name }}</div>
-												<div>{{ user.address_line1 }}</div>
-												<div v-if="user.address_line2">{{ user.address_line2 }}</div>
-												<div>
-													{{ user.address_city }},
-													{{ user.address_region }},
-													{{ user.address_postcode }},
-													{{ user.country }}
-												</div>
-												<div>P. IVA: {{ user.vat_number }}</div>
-											</div>
-										</b-collapse>
-									</b-radio>
-								</b-form-group>
-								<b-form-group>
-									<b-radio v-model="model.new_billing" :value="true">
-										Nuovo indirizzo di fatturazione
-										<b-collapse id="new-billing-collapse" :visible="showNewBillingWarning">
-											<div class="pt-2 small">
-												<strong class="text-danger">Attenzione:</strong> se hai abbonamenti attivi sulle altre attività, esse verranno aggiornate le nuove informazioni di fatturazione.
-											</div>
-										</b-collapse>
-									</b-radio>
-								</b-form-group>
-							</template>
-
-							<b-collapse id="new-billing-form" :visible="showBillingForm">
-								<b-form-group
-									:state="!$v.model.legal_name.$error"
-									:label="$t('pages.venue_plan.billing.legal_name')"
-									:invalid-feedback="$t('pages.venue_plan.billing.legal_name_error')">
-									<b-input
-										v-model="model.legal_name"
-										type="text"
-										autocomplete="organization"
-										autofocus
-									/>
-								</b-form-group>
-								<b-form-group
-									:state="!$v.model.address_line1.$error"
-									:label="$t('pages.venue_plan.billing.address')"
-									:invalid-feedback="$t('pages.venue_plan.billing.address_error')">
-									<b-input v-model="model.address_line1" type="text" autocomplete="address-line1" class="mb-2" />
-									<b-input v-model="model.address_line2" type="text" autocomplete="address-line2" />
-								</b-form-group>
-								<div class="form-row">
-									<div class="col-sm-4">
-										<b-form-group
-											:state="!$v.model.address_postcode.$error"
-											:label="$t('pages.venue_plan.billing.postcode')"
-											:invalid-feedback="$t('pages.venue_plan.billing.postcode_error')">
-											<b-input v-model="model.address_postcode" type="text" autocomplete="postal-code" />
-										</b-form-group>
-									</div>
-									<div class="col-sm-8">
-										<b-form-group
-											:state="!$v.model.address_city.$error"
-											:label="$t('pages.venue_plan.billing.city')"
-											:invalid-feedback="$t('pages.venue_plan.billing.city_error')">
-											<b-input v-model="model.address_city" type="text" autocomplete="address-level2" />
-										</b-form-group>
-									</div>
-								</div>
-								<div class="form-row">
-									<div class="col-sm">
-										<b-form-group
-											:state="!$v.model.address_region.$error"
-											:label="$t('pages.venue_plan.billing.region')"
-											:invalid-feedback="$t('pages.venue_plan.billing.region_error')">
-											<b-input v-model="model.address_region" type="text" autocomplete="address-level1" />
-										</b-form-group>
-									</div>
-									<div class="col-sm">
-										<b-form-group
-											:state="!$v.model.country.$error"
-											:label="$t('pages.venue_plan.billing.country')"
-											:invalid-feedback="$t('pages.venue_plan.billing.country_error')">
-											<b-select v-model="model.country" :options="$countrySelectOptions" />
-										</b-form-group>
-									</div>
-								</div>
-								<b-form-group
-									:state="!$v.model.vat_number.$error"
-									:label="$t('pages.venue_plan.billing.vat_number')"
-									:invalid-feedback="$t('pages.venue_plan.billing.vat_number_error')">
-									<b-input v-model="model.vat_number" type="text" />
-								</b-form-group>
-							</b-collapse>
-
-							<!-- Payment -->
-							<div class="pt-4">
-								<h5>Pagamento</h5>
-								<hr>
-							</div>
-
-							<template v-if="hasExistingPayment">
-								<b-form-group>
-									<b-radio v-model="model.new_payment" :value="false">
-										Carta di credito registrata
-										<b-collapse id="existing-payment-collapse" :visible="!model.new_payment">
-											<div class="pt-2 small">
-												<div>{{ user.card_brand }} &bull;&bull;&bull;&bull; {{ user.card_last_four }}</div>
-												<div>{{ user.card_holder_name }}</div>
-												<div>Scadenza: {{ user.card_expiry_month }}/{{ user.card_expiry_year }}</div>
-											</div>
-										</b-collapse>
-									</b-radio>
-								</b-form-group>
-								<b-form-group>
-									<b-radio v-model="model.new_payment" :value="true">
-										Nuova carta di credito
-										<b-collapse id="new-payment-collapse" :visible="showNewPaymentWarning">
-											<div class="pt-2 small">
-												<strong class="text-danger">Attenzione:</strong> se hai abbonamenti attivi sulle altre attività, esse verranno aggiornate con le nuove informazioni di pagamento.
-											</div>
-										</b-collapse>
-									</b-radio>
-								</b-form-group>
-							</template>
-
-							<b-collapse id="new-payment-form" :visible="showPaymentForm">
-								<b-form-group
-									:state="!cardError"
-									:label="$t('Carta di credito')"
-									:invalid-feedback="cardError">
-									<stripe-card
-										:stripe="$constants.STRIPE_KEY"
-										:options="stripeOptions"
-										@change="onCardChange"
-									/>
-								</b-form-group>
-								<b-form-group
-									:state="!$v.model.card_holder_name.$error"
-									:label="$t('Nome e cognome intestatario')"
-									:invalid-feedback="$t('Inserisci il nome dell\'intestatario come mostrato sulla carta')">
-									<b-input v-model="model.card_holder_name" type="text" autocomplete="cc-name" />
-								</b-form-group>
-							</b-collapse>
-
-							<p class="small">Stai per attivare un abbonamento costante. Se fai clic su "Conferma abbonamento", autorizzi {{ $constants.APP_NAME }} ad addebitarti mensilmente il costo dell'abbonamento (attualmente pari a 1,99 €/mese). Puoi annullare l'abbonamento in qualsiasi momento. Ulteriori informazioni.</p>
-							<p class="small">Se fai clic su "Conferma abbonamento" accetti i Termini di servizio di {{ $constants.APP_NAME }} l'Informativa sulla privacy. Accetti inoltre che il tuo acquisto sarà subito disponibile e di rinunciare al diritto di recesso previsto dalla legge (ad eccezione dei servizi).</p>
-						</template>
-
-						<!-- Confirm change -->
-						<div class="text-right">
-							<pg-button
-								:loading="saving"
-								:block="$mq == 'xs' || $mq == 'constrained'"
-								variant="primary"
-								@click="submit">
-								{{ model.subscription_name === 'default' ? $t('Disattiva abbonamento') : $t('Conferma abbonamento') }}
-							</pg-button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</template>
 
 		<pg-page-footer />
 	</div>
@@ -285,8 +273,6 @@ export default {
 		}
 
 		return {
-			loading: false,
-			error: false,
 			saving: false,
 			stripeOptions,
 			cardError: null,
@@ -312,13 +298,6 @@ export default {
 	computed: {
 		user() {
 			return this.$store.$auth.user
-		},
-
-		hasNewSubscription() {
-			return (
-				this.model.subscription_name &&
-				this.model.subscription_name !== this.venue.subscription.name
-			)
 		},
 
 		hasExistingBilling() {
@@ -411,10 +390,7 @@ export default {
 
 	head() {
 		return {
-			title:
-				this.venue && this.venue.id
-					? this.$t('pages.venue_form.title.edit')
-					: this.$t('pages.venue_form.title.add')
+			title: this.$t('pages.venue_plan.title')
 		}
 	},
 
@@ -469,6 +445,17 @@ export default {
 	},
 
 	methods: {
+		formatDate(date) {
+			if (!date) return
+
+			// FIXME: usare i18n date formatter
+			return new Date(date).toLocaleDateString(this.$i18n.isoCode, {
+				day: 'numeric',
+				month: '2-digit',
+				year: 'numeric'
+			})
+		},
+
 		isSubscriptionSelected(subscription) {
 			const current = this.venue.subscription
 
@@ -500,14 +487,15 @@ export default {
 		},
 
 		async onSubscriptionSelect(name) {
-			this.model.subscription_name = name
+			this.model.subscription_name =
+				name === this.venue.subscription.name ? null : name
 
 			// Reset need for new billing and payment
 			this.model.new_billing = false
 			this.model.new_payment = false
 
-			// Stop if it's not a new subscription
-			if (!this.hasNewSubscription) return
+			// Stop if a new subscription has been picked
+			if (!this.model.subscription_name) return
 
 			await this.$nextTick()
 
