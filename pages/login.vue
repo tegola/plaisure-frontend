@@ -37,10 +37,10 @@
 						</b-form-group>
 
 						<p class="text-center">
-							<nuxt-link to="/password/forgot">{{ $t('pages.login.forgot') }}</nuxt-link><br>
+							<nuxt-link :to="localePath('password-forgot')">{{ $t('pages.login.forgot') }}</nuxt-link><br>
 							<i18n path="pages.login.register1">
 								<span place="link">
-									<nuxt-link to="/register">{{ $t('pages.login.register2') }}</nuxt-link>
+									<nuxt-link :to="localePath('register')">{{ $t('pages.login.register2') }}</nuxt-link>
 								</span>
 							</i18n>
 						</p>

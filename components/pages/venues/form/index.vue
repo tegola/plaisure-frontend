@@ -65,7 +65,7 @@
 								<pg-button
 									variant="primary"
 									block
-									:to="`/venues/${venue.id}/select-plan`">
+									:to="localePath({ name: 'venues-id-select-plan', params: { id: venue.id }})">
 									Cambia
 								</pg-button>
 							</div>
@@ -212,7 +212,7 @@ export default {
 			}
 
 			// Go back to the user profile
-			this.$router.push('/user')
+			this.$router.push(this.localePath('user'))
 		}
 	}
 }

@@ -1,7 +1,7 @@
 <template>
 	<li class="pg-venue-detail-page__nearby-item mb-2">
 		<nuxt-link
-			:to="`/venues/${venue.id}`"
+			:to="localePath({ name: 'venues-id', params: { id: venue.id }})"
 			class="text-inherit d-flex align-items-start">
 			<div
 				:is="iconComponent"

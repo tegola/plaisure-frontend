@@ -142,7 +142,7 @@ export default {
 				})
 
 				// Go to the next page
-				this.$router.push('/')
+				this.$router.push(this.localePath('index'))
 			} catch (err) {
 				this.error = true
 				this.loading = false

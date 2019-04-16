@@ -74,7 +74,7 @@ module.exports = {
 	*/
 	plugins: [
 		'@/plugins/axios-disable-https-check.js',
-		'@/plugins/i18n-region.js',
+		'@/plugins/i18n.js',
 		'@/plugins/constants.js',
 		'@/plugins/components.js',
 		'@/plugins/country-select-options.js',

@@ -3,16 +3,16 @@
 		<div class="container">
 			<ul v-if="$mq == 'comfortable'" class="list-inline">
 				<li class="list-inline-item">
-					<nuxt-link to="/venues/explore">{{ $t('components.footer.search') }}</nuxt-link>
+					<nuxt-link :to="localePath('venues-explore')">{{ $t('components.footer.search') }}</nuxt-link>
 				</li>
 				<li class="list-inline-item">
-					<nuxt-link to="/promote">{{ $t('components.footer.promote') }}</nuxt-link>
+					<nuxt-link :to="localePath('promote')">{{ $t('components.footer.promote') }}</nuxt-link>
 				</li>
 				<li class="list-inline-item">
-					<nuxt-link to="/about">{{ $t('components.footer.about') }}</nuxt-link>
+					<nuxt-link :to="localePath('about')">{{ $t('components.footer.about') }}</nuxt-link>
 				</li>
 				<li class="list-inline-item">
-					<nuxt-link to="/play-responsibly">{{ $t('components.footer.responsible_gaming') }}</nuxt-link>
+					<nuxt-link :to="localePath('play-responsibly')">{{ $t('components.footer.responsible_gaming') }}</nuxt-link>
 				</li>
 			</ul>
 

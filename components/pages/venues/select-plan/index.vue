@@ -5,7 +5,7 @@
 		<div class="container my-5">
 			<h2 class="h4">{{ $t('pages.venue_plan.title') }}</h2>
 			<p>
-				<nuxt-link :to="`/venues/${venue.id}/edit`">
+				<nuxt-link :to="localePath({ name: 'venues-id-edit', params: { id: venue.id }})">
 					<pg-icon icon="arrow-left" />
 					<strong class="font-weight-bold">{{ venue.name }}</strong>
 				</nuxt-link>
@@ -562,7 +562,12 @@ export default {
 					await this.$auth.fetchUser()
 
 					// Back to venue detail
-					this.$router.push(`/venues/${this.venue.id}`)
+					this.$router.push(
+						this.localePath({
+							name: 'venues-id',
+							params: { id: this.venue.id }
+						})
+					)
 				} catch (err) {
 					alert(msg)
 					this.saving = false

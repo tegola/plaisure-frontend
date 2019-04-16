@@ -16,7 +16,7 @@
 				v-if="$mq == 'comfortable'"
 				:aria-label="$constants.APP_NAME"
 				class="navbar-brand"
-				to="/">
+				:to="localePath('index')">
 				<pg-logo class="navbar__logo" />
 			</nuxt-link>
 
@@ -45,11 +45,11 @@
 				<slot name="right" />
 				<b-navbar-nav v-if="$mq == 'comfortable'">
 					<template v-if="!$auth.loggedIn">
-						<b-nav-item to="/promote">{{ $t('components.navbar.promote') }}</b-nav-item>
-						<b-nav-item to="/register">{{ $t('components.navbar.register') }}</b-nav-item>
-						<b-nav-item to="/login">{{ $t('components.navbar.login') }}</b-nav-item>
+						<b-nav-item :to="localePath('promote')">{{ $t('components.navbar.promote') }}</b-nav-item>
+						<b-nav-item :to="localePath('register')">{{ $t('components.navbar.register') }}</b-nav-item>
+						<b-nav-item :to="localePath('login')">{{ $t('components.navbar.login') }}</b-nav-item>
 					</template>
-					<b-nav-item v-if="$auth.user" to="/user" exact>
+					<b-nav-item v-if="$auth.user" :to="localePath('user')" exact>
 						<pg-icon icon="user" />
 						{{ $auth.user.name }}
 					</b-nav-item>
@@ -60,18 +60,18 @@
 		<transition>
 			<div v-if="drawerOpen" class="navbar__drawer" @click.self="toggleDrawer()">
 				<b-nav vertical class="navbar__drawer-nav">
-					<b-nav-item to="/" exact>{{ $t('components.navbar.home') }}</b-nav-item>
-					<b-nav-item v-if="$auth.user" to="/user" exact>
+					<b-nav-item :to="localePath('index')" exact>{{ $t('components.navbar.home') }}</b-nav-item>
+					<b-nav-item v-if="$auth.user" :to="localePath('user')" exact>
 						{{ $auth.user.name }}
 						<pg-icon icon="user" />
 					</b-nav-item>
 					<template v-if="!$auth.loggedIn">
-						<b-nav-item to="/register">{{ $t('components.navbar.register') }}</b-nav-item>
-						<b-nav-item to="/login">{{ $t('components.navbar.login') }}</b-nav-item>
+						<b-nav-item :to="localePath('register')">{{ $t('components.navbar.register') }}</b-nav-item>
+						<b-nav-item :to="localePath('login')">{{ $t('components.navbar.login') }}</b-nav-item>
 					</template>
-					<b-nav-item to="/promote">{{ $t('components.navbar.promote') }}</b-nav-item>
-					<b-nav-item to="/about">{{ $t('components.navbar.company') }}</b-nav-item>
-					<b-nav-item to="/play-responsibly">{{ $t('components.navbar.responsible') }}</b-nav-item>
+					<b-nav-item :to="localePath('promote')">{{ $t('components.navbar.promote') }}</b-nav-item>
+					<b-nav-item :to="localePath('about')">{{ $t('components.navbar.company') }}</b-nav-item>
+					<b-nav-item :to="localePath('play-responsibly')">{{ $t('components.navbar.responsible') }}</b-nav-item>
 				</b-nav>
 			</div>
 		</transition>
@@ -224,14 +224,16 @@ export default {
 
 				// Autosubmit if choosen to
 				if (this.autoSubmit) {
-					this.$router.push({
-						path: '/venues/explore',
-						query: {
-							query: this.mutableQuery,
-							c_lat: this.lat,
-							c_lng: this.lng
-						}
-					})
+					this.$router.push(
+						this.localePath({
+							path: '/venues/explore',
+							query: {
+								query: this.mutableQuery,
+								c_lat: this.lat,
+								c_lng: this.lng
+							}
+						})
+					)
 				}
 			} else {
 				this.mutableQuery = null

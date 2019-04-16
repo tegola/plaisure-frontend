@@ -246,8 +246,8 @@
 						<div v-if="!venue.has_owner" class="card bg-light my-4 text-center">
 							<div class="card-body">
 								<h4 class="card-title">{{ $t('pages.venue_detail.claim.title') }}</h4>
-								<p class="card-text">{{ $t('pages.venue_detail.claim.intro') }} <nuxt-link to="/promote">{{ $t('pages.venue_detail.claim.more') }}&hellip;</nuxt-link></p>
-								<pg-button :to="`/venues/${venue.id}/claim`" variant="primary">{{ $t('pages.venue_detail.claim.action') }}</pg-button>
+								<p class="card-text">{{ $t('pages.venue_detail.claim.intro') }} <nuxt-link :to="localePath('promote')">{{ $t('pages.venue_detail.claim.more') }}&hellip;</nuxt-link></p>
+								<pg-button :to="localePath({ name: 'venues-id-claim', params: { id: venue.id }})" variant="primary">{{ $t('pages.venue_detail.claim.action') }}</pg-button>
 							</div>
 						</div>
 					</div>

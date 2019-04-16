@@ -16,7 +16,7 @@
 			<div class="col-9">
 				<div class="d-flex w-100 justify-content-between">
 					<p class="mb-0 font-weight-bold">
-						<nuxt-link :to="`/venues/${venue.id}`" class="text-inherit">{{ venue.name }}</nuxt-link>
+						<nuxt-link :to="localePath({ name: 'venues-id', params: { id: venue.id }})" class="text-inherit">{{ venue.name }}</nuxt-link>
 					</p>
 					<div v-if="venue.distance" class="text-muted ml-3 text-nowrap">
 						{{ venue.distance | formatDistance }}<br>

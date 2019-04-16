@@ -102,7 +102,7 @@
 							<b-input v-model="model.new_password_confirmation" type="password" autocomplete="new-password" />
 						</b-form-group>
 						<b-form-group class="mt-3 text-right">
-							<pg-button :block="$mq == 'constrained'" to="/user">{{ $t('common.actions.cancel') }}</pg-button>
+							<pg-button :block="$mq == 'constrained'" :to="localePath('user')">{{ $t('common.actions.cancel') }}</pg-button>
 							<pg-button :block="$mq == 'constrained'" :loading="loading" type="submit" variant="primary">{{ $t('common.actions.save') }}</pg-button>
 						</b-form-group>
 					</form>
@@ -276,7 +276,10 @@ export default {
 			try {
 				await this.$axios.post('/user', this.model)
 				await this.$auth.fetchUser()
-				this.$router.push('/user')
+
+				const language = this.$auth.user.locale.split(/-|_/)[0]
+
+				this.$router.push(this.localePath('user', language))
 			} catch (err) {
 				alert(this.$t('common.status.save_error'))
 			} finally {

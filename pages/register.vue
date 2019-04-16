@@ -50,7 +50,7 @@
 						<p class="text-center">
 							<i18n path="pages.register.login1">
 								<span place="link">
-									<nuxt-link to="/login">{{ $t('pages.register.login2') }}</nuxt-link>
+									<nuxt-link :to="localePath('login')">{{ $t('pages.register.login2') }}</nuxt-link>
 								</span>
 							</i18n>
 						</p>
@@ -142,7 +142,7 @@ export default {
 				const redirect = this.$auth.$storage.getUniversal('redirect')
 				this.$auth.$storage.setUniversal('redirect', null)
 
-				this.$router.push(redirect || '/')
+				this.$router.push(redirect || this.localePath('index'))
 			} catch (err) {
 				const data = err.response.data
 

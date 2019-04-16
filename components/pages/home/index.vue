@@ -110,7 +110,7 @@
 				<div class="container">
 					<div class="row pg-home-page__scrollable-pane-row">
 						<div v-for="venue in highlightedVenues" :key="venue.id" class="col-11 col-md-6 mb-4">
-							<nuxt-link :to="`/venues/${venue.id}`" class="text-inherit">
+							<nuxt-link :to="localePath({ name: 'venues-id', params: { id: venue.id }})" class="text-inherit">
 								<pg-venue-grid-item :venue="venue" />
 							</nuxt-link>
 						</div>
@@ -131,7 +131,7 @@
 							:key="venue.id"
 							:class="index == newVenues.length - 1 ? 'd-xl-none' : null"
 							class="col-7 col-md-4 col-xl-3 mb-4">
-							<nuxt-link :to="`/venues/${venue.id}`" class="text-inherit">
+							<nuxt-link :to="localePath({ name: 'venues-id', params: { id: venue.id }})" class="text-inherit">
 								<pg-venue-grid-item :venue="venue" />
 							</nuxt-link>
 						</div>
@@ -163,7 +163,7 @@
 								{{ promoteButton.label }}
 							</pg-button>
 							<pg-button
-								to="/promote"
+								:to="localePath('promote')"
 								:block="$mq == 'xs'"
 								variant="link"
 								class="text-dark-green">
@@ -237,8 +237,8 @@ export default {
 					value: category.machine_name,
 					icon: category.machine_name.replace(/_/g, '-'),
 					label: this.$t(`data.categories.${category.machine_name}`),
-					route: {
-						path: '/venues/explore',
+					route: this.localePath({
+						name: 'venues-explore',
 						query: {
 							categories: [category.id],
 							ne_lat: this.$constants[defaultBoundsKey].ne.lat,
@@ -247,7 +247,7 @@ export default {
 							sw_lng: this.$constants[defaultBoundsKey].sw.lng,
 							zoom: this.$constants[defaultZoomKey]
 						}
-					}
+					})
 				})
 			})
 
@@ -272,7 +272,7 @@ export default {
 			// Unregistered user
 			if (!this.$auth.user) {
 				return {
-					route: '/register',
+					route: this.localePath('register'),
 					label: this.$t('pages.home.promote.register')
 				}
 			}
@@ -280,14 +280,14 @@ export default {
 			// Logged in user with no venues
 			if (!this.$auth.user.venue_ids.length) {
 				return {
-					route: '/venues/add',
+					route: this.localePath('venues-add'),
 					label: this.$t('pages.home.promote.add')
 				}
 			}
 
 			// Logged in user with at least a venue
 			return {
-				route: '/user',
+				route: this.localePath('user'),
 				label: this.$t('pages.home.promote.manage')
 			}
 		}
@@ -388,10 +388,12 @@ export default {
 		},
 
 		submit() {
-			this.$router.push({
-				path: '/venues/explore',
-				query: this.searchParams
-			})
+			this.$router.push(
+				this.localePath({
+					name: 'venues-explore',
+					query: this.searchParams
+				})
+			)
 		}
 	}
 }

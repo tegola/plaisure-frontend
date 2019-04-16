@@ -116,7 +116,7 @@
 						<div class="map-infowindow">
 							<div>
 								<h5 class="mb-0 font-weight-bold">
-									<nuxt-link :to="`/venues/${venue.id}`">{{ venue.name }}</nuxt-link>
+									<nuxt-link :to="localePath({ name: 'venues-id', params: { id: venue.id }})">{{ venue.name }}</nuxt-link>
 								</h5>
 								<p v-if="venue.categories && venue.categories.length" class="mt-1 mb-0 small text-uppercase text-muted">{{ $t(`data.categories.${venue.categories[0].machine_name}`) }}</p>
 								<p class="mt-1 mb-0">{{ venue.address.short }}</p>

@@ -61,7 +61,7 @@
 
 					<hr class="mt-4">
 
-					<nuxt-link :to="`/venues/${venue.id}`">{{ $t('pages.venue_claim.back') }}</nuxt-link>
+					<nuxt-link :to="localePath({ name: 'venues-id', params: { id: venue.id }})">{{ $t('pages.venue_claim.back') }}</nuxt-link>
 				</div>
 
 				<div class="col-md-4 mt-4 mt-md-0">
@@ -70,7 +70,7 @@
 							<h5 class="card-title text-accent">{{ $t('pages.venue_claim.infobox.title') }}</h5>
 							<p class="card-text">{{ $t('pages.venue_claim.infobox.body') }}</p>
 							<p class="card-text font-weight-semibold">
-								<nuxt-link to="/promote" class="text-accent">
+								<nuxt-link :to="localePath('promote')" class="text-accent">
 									{{ $t('pages.venue_claim.infobox.action') }}
 									<pg-icon icon="arrow-right" />
 								</nuxt-link>
@@ -172,7 +172,7 @@ export default {
 				await this.$auth.fetchUser()
 
 				// Go to user page
-				this.$router.replace('/user')
+				this.$router.replace(this.localePath('user'))
 			} catch (err) {
 				this.saving = false
 				this.$refs.input.focus()

@@ -3,7 +3,7 @@
 		<div class="card-body">
 			<span v-if="highlightText" class="badge badge-primary initialism">{{ highlightText }}</span>
 			<h3 class="card-title">{{ $t(`data.subscriptions.${subscription.name}`) }}</h3>
-			<p class="card-text lead">€ {{ price }}/mese</p>
+			<p class="card-text lead">{{ currencySymbol }}{{ price }}/mese</p>
 			<ul class="list-unstyled card-text">
 				<li v-for="(line, index) in subscription.lines" :key="index">{{ line }}</li>
 			</ul>
@@ -25,6 +25,8 @@
 </template>
 
 <script>
+import { getAllInfoByISO } from 'iso-country-currency'
+
 export default {
 	name: 'PgSubscriptionCard',
 
@@ -62,6 +64,12 @@ export default {
 				'pg-subscription-card--clickable': this.clickable,
 				'pg-subscription-card--selected': this.selected
 			}
+		},
+
+		currencySymbol() {
+			const { symbol } = getAllInfoByISO(this.$i18n.region)
+
+			return symbol
 		},
 
 		price() {
