@@ -122,8 +122,8 @@ module.exports = {
 				lazy: true,
 				langDir: 'lang/',
 				locales: [
-					{ code: 'en', iso: 'en-GB', file: 'en' },
-					{ code: 'it', iso: 'it-IT', file: 'it' }
+					{ code: 'en', iso: 'en-GB', file: 'en', name: 'English' },
+					{ code: 'it', iso: 'it-IT', file: 'it', name: 'Italiano' }
 				],
 				defaultLocale: 'en'
 			}

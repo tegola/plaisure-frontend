@@ -40,10 +40,17 @@
 			</div>
 
 			<pg-logo :text="false" class="pg-footer__logo" />
-			<p class="mb-0">
+			<p class="small">
 				{{ $t('components.footer.copyright', { year, company: $constants.COMPANY_NAME }) }}<br>
 				{{ $t('components.footer.vat', { number: $constants.COMPANY_VAT_NUMBER }) }}
 			</p>
+
+			<ul class="list-inline small mb-0">
+				<li v-for="locale in $i18n.locales" :key="locale.code" class="list-inline-item">
+					<nuxt-link v-if="locale.code != $i18n.locale" :to="switchLocalePath(locale.code)">{{ locale.name }}</nuxt-link>
+					<strong v-else>{{ locale.name }}</strong>
+				</li>
+			</ul>
 		</div>
 	</footer>
 </template>
