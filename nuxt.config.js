@@ -26,7 +26,7 @@ module.exports = {
 			// Verifications
 			{
 				name: 'google-site-verification',
-				content: 'KOtwsto-b3doO3NsrSsETD-ci_02n8wKCO0dzZfL_bk'
+				content: '5RpnwI3P8jO3RUSEQXOrW-DU00eOti_4VlYFmIkSEFM'
 			},
 			{
 				name: 'msvalidate.01',
@@ -74,11 +74,11 @@ module.exports = {
 	*/
 	plugins: [
 		'@/plugins/axios-disable-https-check.js',
-		'@/plugins/i18n.js',
-		'@/plugins/constants.js',
 		'@/plugins/components.js',
+		'@/plugins/constants.js',
 		'@/plugins/country-select-options.js',
 		'@/plugins/directives.js',
+		'@/plugins/i18n.js',
 		'@/plugins/maps.js'
 	],
 

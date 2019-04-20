@@ -65,6 +65,8 @@
  ✔ Rimuovere la richiesta del codice di censimento aams prima della rivendicazione di una sala @done (19-04-07 15:53)
  ☐ Prezzi, limiti e bonus iniziali
  ☐ Piani: prezzi, nomi e nomi piani stripe per nazione
+ ☐ Validazione google e ms
+ ✔ Controllare che funzioni analytics @done (19-04-20 10:25)
 
  ✔ Limitare le categorie per nazione (ma una categoria può anche essere non essere limitata per nazione, quindi country = null) @done (18-12-18 00:07)
  ✔ Piattaforme VLT/Pay per view/concessionari, come le categorie, devono essere limitate per nazione (anche se in UK non ci sono concessionari) @done (18-12-18 00:07)
