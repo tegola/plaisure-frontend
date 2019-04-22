@@ -69,6 +69,24 @@ export default {
 				new: 'New!',
 				open: 'Open now!'
 			}
+		},
+
+		subscription_card: {
+			price: '{currency}{price}/month',
+			highlight: 'Most popular',
+			perks: {
+				presence: 'Get more visibility for your business',
+				details: 'Add photos, business hours and amenities',
+				list: 'List your venue in the search results',
+				as_free: 'All the perks of the free plan, plus:',
+				distance_bonus: '{amount}% bonus in search results',
+				home_page_presence: 'Recurrent presence on the home page',
+				hide_nearby_venues: "Hide nearby venues in your business's page"
+			},
+			unsubscribed: {
+				line1: 'Hai disattivato il {unsubscribeDate}',
+				line2: 'Sarà funzionante fino al {endDate}'
+			}
 		}
 	},
 
@@ -387,8 +405,22 @@ export default {
 
 		venue_plan: {
 			title: 'Select plan',
+			selected_free:
+				'You selected the free plan. This will deactivate your current subscription and your credit card will not be charged anymore. The subscription will keep working till the end of the period, on {date}.',
+			selected_paid: 'You selected a paid plan.',
+			selected_paid_input_data:
+				'Please insert you billing information and payment method.',
+			selected_paid_review_data:
+				'Make sure your billing information and payment method are up to date.',
 			billing: {
 				title: 'Billing',
+				current: 'Use the currently registered billing address',
+				new: 'Use a new address',
+				new_warning: {
+					message:
+						'{warning} if you have an active subscription on your other venues, they will be updated to use the new billing information.',
+					warning: 'Warning:'
+				},
 				legal_name: 'Legal name',
 				legal_name_error: 'Please type your company legal name.',
 				address: 'Address',
@@ -403,7 +435,26 @@ export default {
 				country_error: 'Please select the country.',
 				vat_number: 'VAT number',
 				vat_number_error: 'Please type the VAT number.'
-			}
+			},
+			payment: {
+				title: 'Payment method',
+				current: 'Use the currently registered credit card',
+				new: 'Use a new credit card',
+				new_warning: {
+					message:
+						'{warning} if you have an active subscription on your other venues, they will be updated to use the new payment method.',
+					warning: 'Warning:'
+				},
+				card: 'Credit card',
+				card_expiration: 'Expiration date',
+				card_holder_name: 'Card holder name',
+				card_holder_name_error:
+					'Please type the card holder name as shown on the card itself'
+			},
+			confirm: 'Save subscription',
+			deactivate: 'Deactivate my subscription',
+			submit_error:
+				'There was an error while trying to setup your subscription. Please try again later'
 		},
 
 		user: {

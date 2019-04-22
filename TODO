@@ -58,14 +58,15 @@
  ✔ indirizzo line 1 e line 2 anche per informazioni legali dell'utente @done (18-12-16 12:31)
  ✔ country invece di address_country @done (18-12-16 12:49)
 
- ☐ Trovare un nuovo nome per UK + dominio e vari account Twitter, Facebook, ecc.
+ ✔ Trovare un nuovo nome per UK + dominio @done (19-04-20 23:52)
+ ☐ Configurare Account Twitter, Facebook, ecc.
  ☐ Sistema di importazione dati
  ☐ Cookie law + GDPR
  ☐ Fatturazione utente (IVA) per nazione
  ✔ Rimuovere la richiesta del codice di censimento aams prima della rivendicazione di una sala @done (19-04-07 15:53)
  ☐ Prezzi, limiti e bonus iniziali
  ☐ Piani: prezzi, nomi e nomi piani stripe per nazione
- ☐ Validazione google e ms
+ ✔ Validazione google e ms @done (19-04-20 11:13)
  ✔ Controllare che funzioni analytics @done (19-04-20 10:25)
 
  ✔ Limitare le categorie per nazione (ma una categoria può anche essere non essere limitata per nazione, quindi country = null) @done (18-12-18 00:07)

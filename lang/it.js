@@ -70,6 +70,25 @@ export default {
 				new: 'Nuovo!',
 				open: 'Aperto ora!'
 			}
+		},
+
+		subscription_card: {
+			price: '{currency}{price}/mese',
+			highlight: 'Il più acquistato',
+			perks: {
+				presence: 'Dai visibilità alla tua attività',
+				details:
+					'Carica le foto, mostra gli orari di apertura e i servizi disponibli',
+				list: 'Mostra la tua attività nei risultati di ricerca',
+				as_free: 'Le funzionalità del piano gratuito, più:',
+				distance_bonus: 'Bonus del {amount}% nei risultati di ricerca',
+				home_page_presence: 'Visibilità ricorrente in home page',
+				hide_nearby_venues: 'Nasconde le attività nelle vicinanze'
+			},
+			unsubscribed: {
+				line1: 'Hai disattivato il {unsubscribeDate}',
+				line2: 'Sarà funzionante fino al {endDate}'
+			}
 		}
 	},
 
@@ -390,8 +409,22 @@ export default {
 
 		venue_plan: {
 			title: 'Scegli abbonamento',
+			selected_free:
+				"Hai scelto l'abbonamento gratuito. Questo annullerà il rinnovo mensile e non ti verrà addebitato nessun altro costo. L'attuale abbonamento rimarrà comunque attivo fino allo scadere del periodo già pagato, ovvero fino al {date}.",
+			selected_paid: 'Hai scelto un abbonamento a pagamento.',
+			selected_paid_input_data:
+				'Inserisci qui di seguito le tue informazioni di fatturazione e pagamento.',
+			selected_paid_review_data:
+				'Assicurati che le tue informazioni di fatturazione e pagamento siano corretti.',
 			billing: {
 				title: 'Fatturazione',
+				current: "Usa l'indirizzo registrato",
+				new: 'Inserisci un nuovo indirizzo',
+				new_warning: {
+					message:
+						'{warning} se hai abbonamenti attivi sulle altre attività, esse verranno aggiornate le nuove informazioni di fatturazione.',
+					warning: 'Attenzione:'
+				},
 				legal_name: "Denominazione legale dell'azienda",
 				legal_name_error: "Inserisci la denominazione legale dell'azienda.",
 				address: 'Indirizzo',
@@ -406,7 +439,26 @@ export default {
 				country_error: 'Scegli il paese.',
 				vat_number: 'Partita IVA',
 				vat_number_error: 'Inserisci la partita IVA.'
-			}
+			},
+			payment: {
+				title: 'Payment method',
+				current: 'Usa la carta di credito registrata',
+				new: 'Usa una carta di credito diversa',
+				new_warning: {
+					message:
+						'{warning} se hai abbonamenti attivi sulle altre attività, esse verranno aggiornate con le nuove informazioni di pagamento.',
+					warning: 'Attenzione:'
+				},
+				card: 'Carda di credito',
+				card_expiration: 'Scadenza',
+				card_holder_name: 'Nome e cognome intestatario',
+				card_holder_name_error:
+					"Inserisci il nome e cognome dell'intestatario così come mostrati sulla carta stessa"
+			},
+			confirm: 'Conferma abbonamento',
+			deactivate: 'Disattiva abbonamento',
+			submit_error:
+				'È avvenuto un errore nel tentativo di modificare il tuo abbonamento. Ti preghiamo di riprovare più tardi.'
 		},
 
 		user: {
@@ -434,8 +486,8 @@ export default {
 				email: 'Indirizzo e-mail',
 				newsletter:
 					'Voglio essere informato sulle nuove offerte e funzionalità',
-				locale: 'Language and region',
-				locale_error: 'Please select your preferred language and region'
+				locale: 'Lingua e zona',
+				locale_error: 'Scegli la tua lingua.'
 			},
 			billing: {
 				title: 'Fatturazione',

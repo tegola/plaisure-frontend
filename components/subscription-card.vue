@@ -1,9 +1,9 @@
 <template>
 	<div :class="classes" @click="onClick">
 		<div class="card-body">
-			<span v-if="highlightText" class="badge badge-primary initialism">{{ highlightText }}</span>
+			<span v-if="highlight" class="badge badge-primary initialism">{{ highlight }}</span>
 			<h3 class="card-title">{{ $t(`data.subscriptions.${subscription.name}`) }}</h3>
-			<p class="card-text lead">{{ currencySymbol }}{{ price }}/mese</p>
+			<p class="card-text lead">{{ price }}</p>
 			<ul class="list-unstyled card-text">
 				<li v-for="(line, index) in subscription.lines" :key="index">{{ line }}</li>
 			</ul>
@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { getAllInfoByISO } from 'iso-country-currency'
+import { getParamByParam } from 'iso-country-currency'
 
 export default {
 	name: 'PgSubscriptionCard',
@@ -67,18 +67,22 @@ export default {
 		},
 
 		currencySymbol() {
-			const { symbol } = getAllInfoByISO(this.$i18n.region)
-
-			return symbol
+			return getParamByParam('currency', this.subscription.currency, 'symbol')
 		},
 
 		price() {
+			const currency = getParamByParam(
+				'currency',
+				this.subscription.currency,
+				'symbol'
+			)
 			// FIXME: usare vue i18n number formatter
-			return this.subscription.price.toFixed(2).replace('.', ',')
-		},
+			const price = this.subscription.price.toFixed(2).replace('.', ',')
 
-		highlightText() {
-			return this.highlight || this.subscription.highlight
+			return this.$t('components.subscription_card.price', {
+				currency,
+				price
+			})
 		}
 	},
 
