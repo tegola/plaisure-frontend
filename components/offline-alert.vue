@@ -1,19 +1,15 @@
 <template>
 	<transition appear>
-		<b-alert v-if="$nuxt.isOffline" show variant="danger" class="pg-offline-alert">
-			{{ $t('components.offline_alert.offline') }}
-		</b-alert>
+		<div v-if="$nuxt.isOffline" class="pg-offline-alert">
+			<div class="pg-offline-alert__inner">
+				{{ $t('components.offline_alert.offline') }}
+			</div>
+		</div>
 	</transition>
 </template>
 
 <script>
-import BAlert from 'bootstrap-vue/es/components/alert/alert'
-
 export default {
-	name: 'PgOfflineAlert',
-
-	components: {
-		BAlert
-	}
+	name: 'PgOfflineAlert'
 }
 </script>

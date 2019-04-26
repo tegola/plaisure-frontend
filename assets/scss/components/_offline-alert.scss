@@ -1,26 +1,27 @@
 .pg-offline-alert {
-	border: 0;
-	box-shadow: $box-shadow-lg;
 	position: fixed;
 	top: 0;
 	left: 0;
 	right: 0;
-	z-index: $zindex-fixed;
-	text-align: center;
+	z-index: $zindex-modal-backdrop;
+	display: flex;
+	justify-content: center;
 
-	// Small screens
-	@include media-breakpoint-down(sm) {
-		border-radius: 0;
-	}
-
-	// Large screens
-	@include media-breakpoint-up(md) {
-		margin: 1rem 1rem auto;
+	&__inner {
+		margin: 1rem auto;
+		background-color: rgba(#fff, 0.85);
+		color: theme-color(danger);
+		font-size: $font-size-sm;
+		padding: 0.3rem 0.75rem;
+		border-radius: $border-radius;
+		backdrop-filter: blur(20px) saturate(180%);
+		background-clip: padding-box;
+		box-shadow: 0 0 1px rgba($black, 0.1), $box-shadow;
 	}
 
 	&.v-enter-active,
 	&.v-leave-active {
-		transition: .15s ease-in-out;
+		transition: 0.15s ease-in-out;
 	}
 
 	&.v-enter,
