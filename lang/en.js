@@ -557,7 +557,7 @@ export default {
 			company: {
 				title: 'About {name}',
 				paragraph1:
-					"{name} è una start-up che combina le capacità tecnologiche di web e di design da un lato, e l'esperienza nel settore gioco a livello italiano e mondiale dall'altro.", // FIXME
+					"{name} è una startup che combina le capacità tecnologiche di web e di design da un lato, e l'esperienza nel settore gioco a livello italiano e mondiale dall'altro.", // FIXME
 				paragraph2:
 					'Nel panorama mondiale del settore gioco mancava un servizio come {name}, dove si fanno incontrare i due attori della filiera — chi cerca e chi offre gioco lecito — garantendo un livello sempre più alto per gli ospiti delle case da gioco, che potranno scegliere, anche attraverso {name}, dove passare il proprio prezioso tempo libero.', // FIXME
 				paragraph3:
@@ -572,7 +572,8 @@ export default {
 				intro:
 					"Drop us a line at one of the email addresses below. We'll do our best to reply as soon as possible.",
 				info: 'For generic information:',
-				venues: 'To add a new venue or claim an existing one:',
+				help:
+					'To receive support for managing your account, venue or subscription:',
 				report: 'To report an issue:'
 			}
 		},

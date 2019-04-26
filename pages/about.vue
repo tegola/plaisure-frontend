@@ -20,8 +20,8 @@
 							<a :href="`mailto:${$constants.EMAIL_GENERIC}`"><strong>{{ $constants.EMAIL_GENERIC }}</strong></a>
 						</p>
 						<p>
-							{{ $t('pages.about.contact.venues') }}<br>
-							<a :href="`mailto:${$constants.EMAIL_VENUES}`"><strong>{{ $constants.EMAIL_VENUES }}</strong></a>
+							{{ $t('pages.about.contact.help') }}<br>
+							<a :href="`mailto:${$constants.EMAIL_HELP}`"><strong>{{ $constants.EMAIL_HELP }}</strong></a>
 						</p>
 						<p>
 							{{ $t('pages.about.contact.report') }}<br>

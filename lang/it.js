@@ -562,7 +562,7 @@ export default {
 			company: {
 				title: "Che cos'è {name}",
 				paragraph1:
-					"{name} è una start-up che combina le capacità tecnologiche di web e di design da un lato, e l'esperienza nel settore gioco a livello italiano e mondiale dall'altro.",
+					"{name} è una startup che combina le capacità tecnologiche di web e di design da un lato, e l'esperienza nel settore gioco a livello italiano e mondiale dall'altro.",
 				paragraph2:
 					'Nel panorama mondiale del settore gioco mancava un servizio come {name}, dove si fanno incontrare i due attori della filiera — chi cerca e chi offre gioco lecito — garantendo un livello sempre più alto per gli ospiti delle case da gioco, che potranno scegliere, anche attraverso {name}, dove passare il proprio prezioso tempo libero.',
 				paragraph3:
@@ -577,7 +577,8 @@ export default {
 				intro:
 					'Scrivici a uno dei seguenti indirizzi. Sarà nostra cura risponderti al più presto.',
 				info: 'Per informazioni generiche:',
-				venues: "Per aggiungere o rivendicare un'attività:",
+				help:
+					'Per ricevere aiuto riguardo la gestione del tuo account, della tua attività o di un abbonamento:',
 				report: 'Per segnalare un errore:'
 			}
 		},

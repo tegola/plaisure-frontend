@@ -8,7 +8,7 @@ export default ({ app, env }, inject) => {
 		COMPANY_VAT_NUMBER: '02554710695',
 
 		EMAIL_GENERIC: `info@${env.APP_HOST}`,
-		EMAIL_VENUES: `venues@${env.APP_HOST}`,
+		EMAIL_HELP: `help@${env.APP_HOST}`,
 		EMAIL_REPORT: `report@${env.APP_HOST}`,
 
 		GOOGLE_MAPS_KEY: env.GOOGLE_MAPS_KEY,
