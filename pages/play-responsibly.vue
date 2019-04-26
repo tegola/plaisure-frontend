@@ -117,6 +117,10 @@ export default {
 		return {
 			title: this.$t('pages.play_responsibly.meta_title')
 		}
+	},
+
+	nuxtI18n: {
+		locales: ['it']
 	}
 }
 </script>

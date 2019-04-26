@@ -71,7 +71,11 @@
 					</template>
 					<b-nav-item :to="localePath('promote')">{{ $t('components.navbar.promote') }}</b-nav-item>
 					<b-nav-item :to="localePath('about')">{{ $t('components.navbar.company') }}</b-nav-item>
-					<b-nav-item :to="localePath('play-responsibly')">{{ $t('components.navbar.responsible') }}</b-nav-item>
+					<b-nav-item
+						v-if="$i18n.locale == 'it'"
+						:to="localePath('play-responsibly')">
+						{{ $t('components.navbar.responsible') }}
+					</b-nav-item>
 				</b-nav>
 			</div>
 		</transition>

@@ -11,7 +11,7 @@
 				<li class="list-inline-item">
 					<nuxt-link :to="localePath('about')">{{ $t('components.footer.about') }}</nuxt-link>
 				</li>
-				<li class="list-inline-item">
+				<li class="list-inline-item" v-if="$i18n.locale == 'it'">
 					<nuxt-link :to="localePath('play-responsibly')">{{ $t('components.footer.responsible_gaming') }}</nuxt-link>
 				</li>
 			</ul>
