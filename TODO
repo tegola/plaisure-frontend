@@ -7,6 +7,8 @@
   ✔ Aggiustare le valute dei jackpot. Ogni sala dovrebbe avere la sua valuta in base al paese in cui si trova (es. GB => GBP => £) @done (19-04-02 23:32)
 
  ☐ Testo + traduzione della pagina della scelta piani
+ ☐ Rivedere e tradurre testi della pagina about
+ ☐ Rivedere e tradurre testi della pagina "gioca responsabilmente"
  ✔ Rimuovere il pulsante "aggiungi" nella lista attività dell'utente, usare un box alla fine @done (19-04-07 17:48)
  ☐ Email di benvenuto (verifica) all'utente dopo la registrazione
  ☐ Aggiungere i link a terms of service e privacy policy (footer, registrazione utente e modifica piano)
@@ -36,7 +38,7 @@
  ☐ Edit sala: focus all'elemento giusto quando c'è errore
  ☐ Edit sala: drag della mappa più che del marker
  ☐ Sottoscrizioni: email appena scelto un nuovo abbonamento
- ☐ Sottoscrizioni: email 7 giorni prima della scadenza
+ ✔ Sottoscrizioni: email 7 giorni prima della scadenza @done (19-04-24 18:47)
  ✔ Aggiustare gli spazi per il "notch" di iPhone X* @done (18-10-22 00:07)
  ✔ Modifica dati utente: non si devono poter nullare i campi di fatturazione se ci sono sottoscrizioni attive. @done (19-04-07 15:10)
  ✔ Modifica dati utente: al salvataggio, aggiornare i dati su Stripe. @done (19-04-06 11:52)
@@ -59,7 +61,7 @@
  ✔ country invece di address_country @done (18-12-16 12:49)
 
  ✔ Trovare un nuovo nome per UK + dominio @done (19-04-20 23:52)
- ☐ Configurare Account Twitter, Facebook, ecc.
+ ✔ Configurare Account Twitter, Facebook, ecc. @done (19-04-24 19:39)
  ☐ Sistema di importazione dati
  ☐ Cookie law + GDPR
  ☐ Fatturazione utente (IVA) per nazione
@@ -77,7 +79,7 @@
  ☐ Configurazione deploy (shared dir multidominio)
 
  ✔ Completare configurazione stripe (fatturazione, logo) @done (18-12-16 23:50)
- ☐ Aggiungere configurazione stripe live
+ ✔ Aggiungere configurazione stripe live @done (19-04-23 00:19)
  ☐ Controllare che succede quando il charge della carta non va a buon fine
 
  ✔ Tutte le sale attuali devono avere la categoria "Sala VLT" @done (17-11-04 20:03)
@@ -240,16 +242,17 @@ Dopo il primo deploy backend:
   ☐ Svuotare la cache della home page (per evitare che le query usino il nome vecchio delle categorie)
 
 Per andare online su plaisure.com:
-  ☐ Cambiare le chiavi di stripe (frontend e backend)
+  ☐ Cambiare le chiavi di stripe (frontend, backend e webhook)
   ☐ Cambiare le chiavi di google maps (frontend)
-  ☐ Disabilitare mailtrap
+  ☐ Cambiare env da test a production (così vengono usati i piani di produzione in stripe)
+  ✔ Disabilitare mailtrap @done (19-04-22 19:21)
 
 Dopo OGNI deploy backend:
   ☐ chmod -R 777 storage
   ☐ artisan migrate
   ☐ controllare che ci sia env
   ☐ composer install (/opt/plesk/php/7.1/bin/php /usr/lib64/plesk-9.0/composer.phar install)
-  ☐ storage link (non so ancora come)
+  ☐ storage link
 
 Dopo OGNI deploy frontend:
   ☐ npm install

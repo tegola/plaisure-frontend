@@ -518,18 +518,18 @@ export default {
 			hero: {
 				title: "Promote your venue, it's free!",
 				paragraph:
-					"You're the owner of a game-related business looking for new ways to promote it? Your venue is already listed on {name} and you would like to show more information to visitors? In both cases, {strong}",
+					'Are you the owner of a game-related business looking for new ways to promote it? Your venue is already listed on {name} and you would like to show more information to visitors? In both cases, {strong}',
 				paragraph_strong: "you're in the right place!"
 			},
 			example: {
 				paragraph1:
-					'Adding or claiming an existing venue will allow you to reach to future clients by just adding basic information like business hours, photos, machine count and machine types, benefits, venue description and more.',
+					'Adding your business or claiming an existing venue will allow you to reach to future clients by just adding basic information like business hours, photos, machine count and machine types, benefits, venue description and more.',
 				paragraph2:
 					'Here you an example venue with additional information, like photos {1}, custom jackpots {2}, details and services {3}, and contact information {4}.',
 				paragraph3:
 					"The more the information, the more you'll gather visitors. For example, displaying the business hours allows night owls to know if your venue is open in less canon hours.",
 				paragraph4:
-					'{name} is often consulted by players that want to spend their free time, and they could be choosing you!'
+					'{name} is often consulted by players that are looking where to spend their free time, and they could be choosing your place!'
 			},
 			cost: {
 				title: 'How much will it cost?',
@@ -538,20 +538,18 @@ export default {
 				paragraph1_strong:
 					'adding a venue or claiming it to add basic information is completely free',
 				paragraph2:
-					'Instead, if you wish to highlight and make your business easier to find, {contact} to try one of our premium plans at special launch prices.',
-				paragraph2_contact: 'contact us'
+					"Once in {name}'s catalog, you may choose to highlight your business and make it easier to find by simply buying a monthly subscription which you could disable anytime. No hidden costs!"
 			},
 			start: {
 				title: 'What are you waiting? Start now!',
 				paragraph1:
-					"If you're still doubtful, you really shouldn't. Adding or claiming your venue will only bring benfits. Our team will deal with the necessary work to update your business information, and soon you will be able to make changes by yourself!",
+					"If you're still doubtful, you really shouldn't. Adding or claiming your venue will only bring benefits. You will be able to customize your business' presence on {name} and autonomously update its information.",
 				paragraph2:
-					'If you already found your business on {name}, click on “{strong1}” in the business detail page to contact us. Otherwise just drop us a line at {email} specifying the venue name and the physical addreess. {strong2}',
-				paragraph2_strong1: 'Claim this venue',
-				paragraph2_strong2:
-					'In both cases, our team will get in touch as soon as possible.'
+					"If you already found your business on {name}, click on “{strong}” in the business detail page to continue. If you haven't already, you will need to register.",
+				paragraph2_strong: 'Claim this venue'
 			},
-			contact: 'Contact us'
+			manage: 'Manage your venue',
+			register: 'Register now'
 		},
 
 		about: {

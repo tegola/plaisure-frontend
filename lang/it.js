@@ -534,7 +534,7 @@ export default {
 				paragraph3:
 					'Più informazioni la tua pagina offre, più potenziali clienti potrebbero essere interessati a frequentare la tua sala. Ad esempio, specificare gli orari di apertura permette a chi fa una vita notturna di sapere se la sala è aperta anche in orari meno canonici.',
 				paragraph4:
-					'{name} viene consultato dai giocatori che vogliono decidere dove passare il proprio tempo libero, e questi potrebbero scegliere proprio la tua sala!'
+					'{name} viene consultato dai giocatori che stanno decidendo dove passare il proprio tempo libero, e potrebbero scegliere proprio la tua sala!'
 			},
 			cost: {
 				title: 'Quanto costa?',
@@ -543,20 +543,18 @@ export default {
 				paragraph1_strong:
 					"aggiungere un'attività o rivendicarla per inserire le informazioni essenziali è assolutamente gratuito",
 				paragraph2:
-					'Se invece desideri evidenziare la tua attività e farla trovare più facilmente di quelle dei tuoi concorrenti, {contact} per provare uno dei nostri piani premium a prezzi di lancio molto vantaggiosi.',
-				paragraph2_contact: 'scrivici'
+					'Una volta presente nel catalogo di {name}, potrai evidenziare la tua attività e farla trovare più facilmente di quelle dei tuoi concorrenti semplicemente sottoscrivendo un abbonamento mensile che potrai disattivare quando vorrai. Non ci sono costi nascosti!'
 			},
 			start: {
 				title: 'Che aspetti? Inizia subito!',
 				paragraph1:
-					'Se sei ancora indeciso, non dovresti esserlo. Aggiungere o rivendicare la tua attività porterà soltanto benefici. Il nostro staff si occuperà di tutto il necessario per aggiornare i dati, e in futuro potrai anche modificarli in autonomia!',
+					'Se sei ancora indeciso, non dovresti esserlo. Aggiungere o rivendicare la tua attività porterà soltanto benefici. Potrai personalizzare la tua presenza su {name} e aggiornare i suoi dati in totale autonomia.',
 				paragraph2:
-					"Se hai già trovato la tua attività su {name}, fai click su “{strong1}” nella pagina con i dettagli dell'attività per contattarci. Altrimenti scrivi all'indirizzo {email} ricordandoti di specificare il nome dell'attività e l'indirizzo. {strong2}",
-				paragraph2_strong1: 'Rivendica attività',
-				paragraph2_strong2:
-					'In entrambi i casi sarai ricontattato prima possibile dal nostro staff.'
+					"Se hai già trovato la tua attività su {name}, fai click su “{strong}” nella pagina con i dettagli dell'attività per continuare. Se non l'hai già fatto, dovrai registrarti.",
+				paragraph2_strong: 'Rivendica attività'
 			},
-			contact: 'Contattaci'
+			manage: 'Gestisci la tua attività',
+			register: 'Registrati'
 		},
 
 		about: {

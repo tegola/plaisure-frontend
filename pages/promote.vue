@@ -31,7 +31,7 @@
 				<div class="row">
 					<div class="col-md-10 mx-md-auto col-lg-9">
 						<i18n tag="p" path="pages.promote.example.paragraph2">
-							<span v-for="n in 4" :key="n" :place="n" class="badge badge-pill badge-primary">{{ n }}</span>
+							<span v-for="n in 4" :key="n" :place="n" class="badge badge-pill badge-accent">{{ n }}</span>
 						</i18n>
 					</div>
 				</div>
@@ -52,22 +52,19 @@
 							<span place="name">{{ $constants.APP_NAME }}</span>
 							<strong place="strong">{{ $t('pages.promote.cost.paragraph1_strong') }}</strong>
 						</i18n>
-						<i18n tag="p" path="pages.promote.cost.paragraph2">
-							<a :href="`mailto:${$constants.EMAIL_VENUES}`" place="contact">{{ $t('pages.promote.cost.paragraph2_contact') }}</a>
-						</i18n>
+						<p>{{ $t('pages.promote.cost.paragraph2', { name: $constants.APP_NAME }) }}</p>
 					</div>
 
 					<div class="section my-5">
 						<h2 class="section-title text-center">{{ $t('pages.promote.start.title') }}</h2>
-						<p>{{ $t('pages.promote.start.paragraph1') }}</p>
+						<p>{{ $t('pages.promote.start.paragraph1', { name: $constants.APP_NAME }) }}</p>
 						<i18n tag="p" path="pages.promote.start.paragraph2">
 							<span place="name">{{ $constants.APP_NAME }}</span>
-							<strong place="strong1">{{ $t('pages.promote.start.paragraph2_strong1') }}</strong>
-							<a :href="`mailto:${$constants.EMAIL_VENUES}`" place="email"><strong>{{ $constants.EMAIL_VENUES }}</strong></a>
-							<strong place="strong2">{{ $t('pages.promote.start.paragraph2_strong2') }}</strong>
+							<strong place="strong">{{ $t('pages.promote.start.paragraph2_strong') }}</strong>
 						</i18n>
 						<p class="text-center my-5">
-							<a :href="`mailto:${$constants.EMAIL_VENUES}`" class="btn btn-lg btn-primary">{{ $t('pages.promote.contact') }}</a>
+							<nuxt-link v-if="$auth.user" :to="localePath('user')" class="btn btn-lg btn-primary">{{ $t('pages.promote.manage') }}</nuxt-link>
+							<nuxt-link v-else :to="localePath('register')" class="btn btn-lg btn-primary">{{ $t('pages.promote.register') }}</nuxt-link>
 						</p>
 					</div>
 				</div>
