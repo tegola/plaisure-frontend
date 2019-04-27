@@ -182,7 +182,7 @@
 <script>
 // import { mapState } from 'vuex'
 import extend from 'lodash/extend'
-import shuffle from 'lodash/shuffle'
+import sortBy from 'lodash/sortBy'
 import formatResult from '@/utilities/format-google-maps-result'
 import PgButton from '@/components/button'
 import PgPlaceTextbox from '@/components/place-textbox'
@@ -265,7 +265,7 @@ export default {
 				})
 			})
 
-			return shuffle(presets)
+			return sortBy(presets, 'label')
 		},
 
 		promoteButton() {
