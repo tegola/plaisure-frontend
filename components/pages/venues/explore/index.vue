@@ -113,15 +113,10 @@
 				<pg-map-marker v-if="userLocation" :position="userLocation" icon="/img/map/pin-user.svg" title="La tua posizione" />
 				<pg-map-marker v-for="(venue, index) in venues" :key="venue.id" :position="venue.coords" :icon="mapMarkerIcon(venue, index)" @click="select(venue)">
 					<pg-map-info-window :opened="venue.id === selectedVenueId" @closeclick="select(null)">
-						<div class="map-infowindow">
-							<div>
-								<h5 class="mb-0 font-weight-bold">
-									<nuxt-link :to="localePath({ name: 'venues-id', params: { id: venue.id }})">{{ venue.name }}</nuxt-link>
-								</h5>
-								<p v-if="venue.categories && venue.categories.length" class="mt-1 mb-0 small text-uppercase text-muted">{{ $t(`data.categories.${venue.categories[0].machine_name}`) }}</p>
-								<p class="mt-1 mb-0">{{ venue.address.short }}</p>
-							</div>
-						</div>
+						<pg-venue-infowindow-item
+							class="map-infowindow-content"
+							:venue="venue"
+						/>
 					</pg-map-info-window>
 				</pg-map-marker>
 				<template slot="visible">
@@ -163,6 +158,7 @@ import {
 import BTooltip from 'bootstrap-vue/es/components/tooltip/tooltip'
 import PgButton from '@/components/button'
 import PgVenueListItem from './list-item'
+import PgVenueInfowindowItem from './infowindow-item'
 import PgFilterButton from './filter-button'
 
 const searchRadiuses = [10, 20, 30, 50, 100]
@@ -177,6 +173,7 @@ export default {
 		BTooltip,
 		PgButton,
 		PgVenueListItem,
+		PgVenueInfowindowItem,
 		PgFilterButton
 	},
 

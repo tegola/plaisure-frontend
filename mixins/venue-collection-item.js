@@ -1,4 +1,5 @@
 import isVenueOpen from '@/utilities/is-venue-open'
+import formatDistance from '@/utilities/format-distance'
 
 export default {
 	props: {
@@ -6,6 +7,10 @@ export default {
 			type: Object,
 			required: true
 		}
+	},
+
+	filters: {
+		formatDistance
 	},
 
 	computed: {

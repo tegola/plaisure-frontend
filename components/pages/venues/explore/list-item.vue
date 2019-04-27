@@ -32,15 +32,10 @@
 <script>
 import PgVenueItemMixin from '@/mixins/venue-collection-item'
 import PgImageFrame from '@/components/image-frame'
-import formatDistance from '@/utilities/format-distance'
 
 export default {
 	components: {
 		PgImageFrame
-	},
-
-	filters: {
-		formatDistance: formatDistance
 	},
 
 	mixins: [PgVenueItemMixin],

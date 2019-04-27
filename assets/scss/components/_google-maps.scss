@@ -1,9 +1,21 @@
 // Base elements
 .gm-style {
 	font: inherit !important;
-}
-.gm-style-iw {
-	font-weight: inherit;
+
+	// Info window
+	.gm-style-iw {
+		font: inherit;
+	}
+	.gm-style-iw-c {
+		border-radius: $border-radius;
+		box-shadow:
+			0 0 0 1px rgba($black, 0.1),
+			$box-shadow;
+		padding: 0;
+	}
+	.gm-style-iw-d {
+		overflow: auto !important;
+	}
 }
 
 // Autocomplete
