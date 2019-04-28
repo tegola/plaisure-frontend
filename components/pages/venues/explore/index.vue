@@ -109,7 +109,8 @@
 				:bounds="mapBounds"
 				:options="mapOptions"
 				class="map"
-				@bounds_changed="onMapBoundsChange">
+				@bounds_changed="onMapBoundsChange"
+				@click="selectedVenueId = null">
 				<pg-map-marker v-if="userLocation" :position="userLocation" icon="/img/map/pin-user.svg" title="La tua posizione" />
 				<pg-map-marker v-for="(venue, index) in venues" :key="venue.id" :position="venue.coords" :icon="mapMarkerIcon(venue, index)" @click="select(venue)">
 					<pg-map-info-window :opened="venue.id === selectedVenueId" @closeclick="select(null)">
@@ -138,7 +139,7 @@
 							{{ $t('pages.explore.search_area') }}
 						</b-tooltip>
 					</template>
-					<div v-if="$mq == 'xs' && $mq == 'constrained' && mapNeedsRefresh" class="container-fluid map-floating-controls">
+					<div v-if="($mq == 'xs' || $mq == 'constrained') && mapNeedsRefresh" class="container-fluid map-floating-controls">
 						<pg-button variant="accent" block @click="onSearchBoundsClick">{{ $t('pages.explore.search_area') }}</pg-button>
 					</div>
 				</template>
