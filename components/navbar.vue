@@ -249,3 +249,250 @@ export default {
 	}
 }
 </script>
+
+<style lang="scss">
+.navbar {
+	z-index: $zindex-modal-backdrop; // Stay above fullscreen menu
+	transition: background-color $navbar-transition-duration,
+		color $navbar-transition-duration;
+}
+// Notch support with hack
+// https://github.com/webpack-contrib/sass-loader/issues/528#issuecomment-362259216
+@supports (padding: max(0px)) {
+	.navbar-expand {
+		padding-left: m#{a}x($navbar-padding-x, env(safe-area-inset-left));
+		padding-right: m#{a}x($navbar-padding-x, env(safe-area-inset-right));
+	}
+}
+.navbar-brand {
+	display: flex;
+	align-items: center;
+}
+
+// Brand + logo + arrow
+.navbar-brand:active {
+	opacity: 0.85;
+}
+.navbar__logo {
+	display: block;
+	width: 143px;
+	height: 42px;
+}
+.navbar__logo--no-symbol {
+	width: 155px;
+}
+.navbar__logo--no-text {
+	width: 29px;
+}
+.navbar__logo-arrow {
+	margin-left: 0.25rem;
+	width: 16px;
+	height: 16px;
+	transition: transform $navbar-transition-duration;
+	font-size: 0; // Fixes icon misalignment
+
+	.navbar--drawer-open & {
+		transform: rotate(180deg);
+	}
+}
+
+// Search
+.navbar__search {
+	flex: 1;
+	border-radius: $input-border-radius-lg;
+	transition: $navbar-transition-duration;
+	margin-right: $navbar-padding-x / 2; // Same spacing between it and the brand
+	max-width: 30rem; // Avoid full width search
+}
+.navbar__search-icon-addon {
+	display: none;
+}
+.navbar__search-input {
+	border: 0;
+	border-color: transparent !important;
+	background-color: transparent !important;
+	font-size: $input-font-size !important;
+
+	&::placeholder {
+		transition: $navbar-transition-duration;
+	}
+
+	&:focus {
+		border-color: none;
+		box-shadow: none;
+	}
+}
+.navbar__search-btn {
+	border: 0;
+	padding-left: 0;
+	outline: none;
+}
+
+@include media-breakpoint-up(md) {
+	.navbar__search {
+		position: relative;
+	}
+	.navbar__search-icon-addon {
+		background: transparent;
+		border: 0;
+		padding-right: 0;
+		display: flex; // Inverse of display: none on the previous media query
+	}
+}
+
+// Drawer
+.navbar__drawer {
+	padding-top: 64px;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: $zindex-fixed;
+	background-color: rgba($modal-backdrop-bg, $modal-backdrop-opacity);
+	overflow: auto;
+	-webkit-backdrop-filter: blur(20px);
+}
+.navbar__drawer-nav {
+	background-color: #fff;
+	padding-top: $spacer / 2;
+	padding-bottom: $spacer / 2;
+
+	.nav-item {
+		color: #000;
+		position: relative;
+	}
+	.nav-item + .nav-item::after {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: $nav-link-padding-x;
+		right: 0;
+		height: 1px;
+		background-color: rgba($palette-dark-green-100, 0.5);
+		pointer-events: none;
+	}
+	.nav-link {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		color: $palette-dark-green-400;
+
+		&.active {
+			color: theme-color('primary');
+		}
+	}
+}
+.navbar__drawer {
+	&.v-enter-active,
+	&.v-leave-active {
+		transition: $navbar-transition-duration ease-in-out;
+
+		.navbar__drawer-nav {
+			transition: $navbar-transition-duration ease-in-out;
+		}
+	}
+
+	&.v-enter,
+	&.v-leave-to {
+		opacity: 0;
+
+		.navbar__drawer-nav {
+			transform: translateY(-100%);
+		}
+	}
+}
+
+// Light style
+.navbar-light {
+	background-color: $white;
+
+	.navbar__logo-arrow {
+		color: $palette-dark-green-200;
+	}
+
+	.navbar__search {
+		background-color: $gray-100;
+	}
+	.navbar__search-icon-addon {
+		color: rgba($body-color, 0.5);
+		transition-duration: $navbar-transition-duration;
+	}
+	.navbar__search-input {
+		color: rgba($body-color, 0.5);
+
+		&::placeholder {
+			color: rgba($body-color, 0.5);
+		}
+		&:focus {
+			color: $body-color;
+
+			&::placeholder {
+				color: rgba($body-color, 0.25);
+			}
+		}
+	}
+	.navbar__search-btn {
+		color: $palette-dark-green-200;
+
+		&:hover {
+			color: $palette-dark-green-100;
+		}
+	}
+	.navbar__search--focused {
+		background-color: transparent;
+		color: rgba($body-color, 0.25);
+		box-shadow: inset 0 0 0 2px $palette-green-500;
+
+		.navbar__search-icon-addon {
+			color: $palette-green-500;
+		}
+	}
+}
+
+// Dark style (dark green)
+.navbar-dark {
+	background-color: $palette-dark-green-500;
+	color: $white;
+
+	.pg-logo__background {
+		display: none;
+	}
+	.pg-logo__foreground {
+		fill: $white;
+	}
+
+	.navbar__search {
+		background-color: $palette-dark-green-400;
+	}
+	.navbar__search-icon-addon {
+		color: rgba($white, 0.5);
+		transition-duration: $navbar-transition-duration;
+	}
+	.navbar__search-input {
+		color: $white;
+
+		&::placeholder {
+			color: rgba($white, 0.5);
+		}
+		&:focus::placeholder {
+			color: rgba($white, 0.25);
+		}
+	}
+	.navbar__search-btn {
+		color: rgba($white, 0.5);
+
+		&:hover {
+			color: rgba($white, 0.75);
+		}
+	}
+	.navbar__search--focused {
+		color: rgba($white, 0.25);
+		box-shadow: inset 0 0 0 2px $palette-green-500;
+
+		.navbar__search-icon-addon {
+			color: $palette-green-500;
+		}
+	}
+}
+</style>

@@ -50,3 +50,21 @@ export default {
 	}
 }
 </script>
+
+<style lang="scss">
+.pg-logo {
+	&__text {
+		fill: $palette-dark-green-500;
+	}
+	&__symbol {
+		fill: url('#pg-logo__symbol-gradient');
+	}
+	&__shadow {
+		fill: url('#pg-logo__shadow-gradient');
+		fill-opacity: 0.1;
+	}
+	&__badge {
+		fill: $palette-dark-green-400;
+	}
+}
+</style>

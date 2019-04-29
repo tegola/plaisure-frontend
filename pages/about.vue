@@ -1,5 +1,5 @@
 <template>
-	<div class="pg-about-page">
+	<div>
 		<pg-navbar />
 
 		<div class="container my-5">

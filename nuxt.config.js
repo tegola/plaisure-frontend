@@ -89,6 +89,7 @@ module.exports = {
 		// Doc: https://axios.nuxtjs.org/usage
 		'@nuxtjs/axios',
 		'@nuxtjs/dotenv',
+		'@nuxtjs/style-resources',
 		'nuxt-svg-loader',
 		'vue-geolocation-api/nuxt',
 		[
@@ -153,6 +154,15 @@ module.exports = {
 	*/
 	axios: {
 		// See https://github.com/nuxt-community/axios-module#options
+	},
+
+	styleResources: {
+		sass: [
+			'bootstrap/scss/_functions.scss',
+			'~/assets/scss/_variables.scss',
+			'bootstrap/scss/_variables.scss',
+			'bootstrap/scss/_mixins.scss'
+		]
 	},
 
 	/*

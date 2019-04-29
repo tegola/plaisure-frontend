@@ -1,8 +1,10 @@
 // Variables and bootstrap
-@import "~bootstrap/scss/functions";
-@import "variables";
-@import "~bootstrap/scss/variables";
-@import "~bootstrap/scss/mixins";
+// Moved into nuxt.config
+// @import "~bootstrap/scss/functions";
+// @import "variables";
+// @import "~bootstrap/scss/variables";
+// @import "~bootstrap/scss/mixins";
+
 // @import "~bootstrap/scss/print";
 @import "~bootstrap/scss/reboot";
 @import "~bootstrap/scss/type";
@@ -50,29 +52,11 @@
 @import "components/buttons";
 @import "components/dropdown";
 @import "components/flickity";
-@import "components/footer";
 @import "components/google-maps";
-@import "components/icon";
-@import "components/image-frame";
 @import "components/input-group";
-@import "components/lightbox";
-@import "components/logo";
 @import "components/modal";
-@import "components/navbar";
-@import "components/offline-alert";
 @import "components/venue-grid-item";
-@import "components/subscription-card";
 
 // Utility classes
 @import "utilities/embed";
 @import "utilities/text";
-@import "utilities/visibility";
-
-// Pages
-@import "pages/about";
-@import "pages/detail";
-@import "pages/explore";
-@import "pages/home";
-@import "pages/promote";
-@import "pages/venue-form";
-@import "pages/user";

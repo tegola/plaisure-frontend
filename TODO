@@ -42,7 +42,7 @@
  ✔ Aggiustare gli spazi per il "notch" di iPhone X* @done (18-10-22 00:07)
  ✔ Modifica dati utente: non si devono poter nullare i campi di fatturazione se ci sono sottoscrizioni attive. @done (19-04-07 15:10)
  ✔ Modifica dati utente: al salvataggio, aggiornare i dati su Stripe. @done (19-04-06 11:52)
- ☐ Spostare i css nelle pagine
+ ✔ Spostare i css nelle pagine @done (19-04-29 23:59)
  ✔ Modifica attività: spostare caricamento e salvataggio nello store @done (18-10-22 00:08)
  ✔ Edit sala: il link all'edit quando una sala non ha proprietario ma l'utente è già registrato deve rimandare alla richiesta del codice dell'AAMS @done (19-03-10 00:02)
  ☐ Disattivare i piani attivi su Stripe all'eliminazione di una sala

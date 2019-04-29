@@ -12,7 +12,7 @@
 
 			<div v-if="venues.length" class="row mt-5">
 				<div v-for="venue in venues" :key="venue.id" class="col-md-6 col-xl-4 mb-4">
-					<nuxt-link :to="localePath({ name: 'venues-id-edit', params: { id: venue.id }})" class="text-inherit">
+					<nuxt-link :to="localePath({ name: 'venues-id', params: { id: venue.id }})" class="text-reset">
 						<pg-venue-grid-item
 							:venue="venue"
 							:show-highlight="false"
@@ -75,3 +75,42 @@ export default {
 	}
 }
 </script>
+
+<style lang="scss">
+.pg-user-page {
+	// Add another venue
+	&__add-card {
+		height: 100%;
+		text-align: center;
+		color: inherit;
+		transition: 0.15s;
+		color: $palette-dark-green-500;
+	}
+	&__add-card-body {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+	}
+	&__add-card-icon {
+		width: $spacer * 3;
+		height: $spacer * 3;
+		padding: $spacer / 2;
+		border-radius: 50%;
+		margin-bottom: $spacer * 0.25;
+		background-color: $palette-green-100;
+		transition: 0.15s;
+	}
+
+	// Add another venue
+	&__add-card:hover {
+		border-color: transparent;
+		background-color: $palette-green-100;
+		color: $palette-dark-green-500;
+	}
+	&__add-card:hover &__add-card-icon {
+		background-color: $palette-dark-green-500;
+		color: $palette-green-100;
+	}
+}
+</style>

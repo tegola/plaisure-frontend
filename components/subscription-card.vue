@@ -106,3 +106,23 @@ export default {
 	}
 }
 </script>
+
+<style lang="scss">
+.pg-subscription-card {
+	&--clickable {
+		cursor: pointer;
+		transition: 200ms;
+	}
+
+	&--clickable:hover {
+		transform: scale(1.02);
+		border-color: theme-color('primary');
+		box-shadow: inset 0 0 0 $border-width theme-color('primary'),
+			0 3px 20px rgba(theme-color('primary'), 0.25);
+	}
+	&--selected {
+		border-color: theme-color('primary');
+		box-shadow: inset 0 0 0 $border-width theme-color('primary');
+	}
+}
+</style>
