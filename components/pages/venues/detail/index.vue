@@ -162,11 +162,6 @@
 											<strong v-if="venue.parking_capacity">{{ venue.parking_capacity }}</strong>
 											<span v-else class="text-muted">{{ $t('pages.venue_detail.common.unknown') }}</span>
 										</li>
-										<li class="detail-list-item">
-											{{ $t('pages.venue_detail.details.pay_per_view_platforms') }}:
-											<strong v-if="venue.pay_per_view_platforms.length">{{ payPerViewPlatformNames }}</strong>
-											<span v-else class="text-muted">{{ $t('pages.venue_detail.common.unknown') }}</span>
-										</li>
 										<li v-if="isInCategory('betting_agency')" class="detail-list-item">
 											{{ $t('pages.venue_detail.details.seating_capacity') }}:
 											<strong v-if="venue.seating_capacity">{{ venue.seating_capacity }}</strong>
@@ -486,12 +481,6 @@ export default {
 
 		vltPlatformNames() {
 			return this.venue.vlt_platforms.map(platform => platform.name).join(', ')
-		},
-
-		payPerViewPlatformNames() {
-			return this.venue.pay_per_view_platforms
-				.map(platform => platform.name)
-				.join(', ')
 		},
 
 		currencySymbol() {

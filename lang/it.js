@@ -239,7 +239,6 @@ export default {
 				virtual_betting: 'Scommesse virtuali',
 				horse_betting: 'Scommesse ippiche',
 				parking_capacity: 'Posti auto',
-				pay_per_view_platforms: 'Pay per view disponibili',
 				seating_capacity: 'Posti a sedere'
 			},
 			amenities: {
@@ -363,8 +362,7 @@ export default {
 					security: 'Security',
 					smoking_area: 'Area fumatori',
 					wifi: 'Wi-Fi'
-				},
-				pay_per_view_platforms: 'Piattaforme Pay Per View'
+				}
 			},
 			contacts: {
 				title: 'Contatti',

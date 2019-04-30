@@ -236,7 +236,6 @@ export default {
 				virtual_betting: 'Virtual betting',
 				horse_betting: 'Horse betting',
 				parking_capacity: 'Parking spots',
-				pay_per_view_platforms: 'Pay Per View',
 				seating_capacity: 'Seatings'
 			},
 			amenities: {
@@ -360,8 +359,7 @@ export default {
 					security: 'Security',
 					smoking_area: 'Smoking area',
 					wifi: 'Wi-Fi'
-				},
-				pay_per_view_platforms: 'Pay Per View'
+				}
 			},
 			contacts: {
 				title: 'Contacts',

@@ -96,24 +96,6 @@
 				</div>
 			</div>
 		</b-form-group>
-
-		<b-form-group
-			v-bind="formGroupProps"
-			:label="$t('pages.venue_form.services.pay_per_view_platforms')"
-			label-class="pt-0">
-			<div class="form-row">
-				<div class="col-lg-10">
-					<b-checkbox-group v-model="venuePayPerViewPlatformIds" stacked>
-						<b-checkbox
-							v-for="item in payPerViewPlatforms"
-							:key="item.id"
-							:value="item.id">
-							{{ item.name }}
-						</b-checkbox>
-					</b-checkbox-group>
-				</div>
-			</div>
-		</b-form-group>
 	</div>
 </template>
 
@@ -145,12 +127,7 @@ export default {
 	},
 
 	computed: {
-		...mapState('venueForm', [
-			'venue',
-			'amenities',
-			'vltPlatforms',
-			'payPerViewPlatforms'
-		]),
+		...mapState('venueForm', ['venue', 'amenities', 'vltPlatforms']),
 
 		venueSportsBetting: {
 			get() {
@@ -287,18 +264,6 @@ export default {
 				this.$store.commit('venueForm/setVenueField', {
 					field: 'amenities',
 					value: amenities
-				})
-			}
-		},
-
-		venuePayPerViewPlatformIds: {
-			get() {
-				return this.venue.pay_per_view_platform_ids
-			},
-			set(value) {
-				this.$store.commit('venueForm/setVenueField', {
-					field: 'pay_per_view_platform_ids',
-					value
 				})
 			}
 		},
