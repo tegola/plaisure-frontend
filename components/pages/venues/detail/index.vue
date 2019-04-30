@@ -467,11 +467,17 @@ export default {
 
 		editRoute() {
 			if (this.isMine) {
-				return `/venues/${this.venue.id}/edit`
+				return this.localePath({
+					name: 'venues-id-edit',
+					params: { id: this.venue.id }
+				})
 			} else if (this.$auth.user) {
-				return `/venues/${this.venue.id}/claim`
+				return this.localePath({
+					name: 'venues-id-claim',
+					params: { id: this.venue.id }
+				})
 			} else {
-				return '/promote'
+				return this.localePath('promote')
 			}
 		},
 
