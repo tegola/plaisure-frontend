@@ -590,8 +590,8 @@ export default {
 	data: {
 		subscriptions: {
 			default: 'Free',
-			premium_1: 'Premium 1',
-			premium_2: 'Premium 2'
+			silver: 'Silver',
+			gold: 'Gold'
 		},
 		categories: {
 			adult_gaming_center: 'Adult gaming centre',

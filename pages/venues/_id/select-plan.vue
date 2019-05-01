@@ -322,7 +322,7 @@ export default {
 				},
 				{
 					base: {
-						name: 'premium_1',
+						name: 'silver',
 						currency: 'EUR',
 						price: 39,
 						highlight: this.$t('components.subscription_card.highlight'),
@@ -340,7 +340,7 @@ export default {
 				},
 				{
 					base: {
-						name: 'premium_2',
+						name: 'gold',
 						currency: 'EUR',
 						price: 79,
 						lines: [
