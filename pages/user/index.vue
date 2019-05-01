@@ -51,7 +51,6 @@
 </template>
 
 <script>
-import PgButton from '@/components/button'
 import PgNoItems from '@/components/no-items'
 import PgVenueGridItem from '@/components/venue-grid-item'
 
@@ -60,7 +59,6 @@ export default {
 
 	components: {
 		PgNoItems,
-		PgButton,
 		PgVenueGridItem
 	},
 

@@ -13,6 +13,7 @@ export default {
 		status: {
 			error: 'Error',
 			loading: 'Caricamento',
+			offline: 'Attenzione: non sei connesso a internet!',
 			invalid_form:
 				'Ci sono degli errori nel modulo. Controlla i dati inseriti.',
 			save_error:
@@ -26,15 +27,15 @@ export default {
 			delete: 'Elimina',
 			remove: 'Rimuovi',
 			select: 'Scegli'
+		},
+		cookie: {
+			agree: 'Utilizzando questo sito acconsenti alla nostra {policy_link}',
+			link: "informativa sull'utilizzo dei cookie"
 		}
 	},
 
 	// Components -------------------------------------------------------------
 	components: {
-		offline_alert: {
-			offline: 'Attenzione: non sei connesso a internet!'
-		},
-
 		navbar: {
 			search: 'Cerca vicino a...',
 			home: 'Home',

@@ -128,7 +128,6 @@ import BFormGroup from 'bootstrap-vue/es/components/form-group/form-group'
 import BInput from 'bootstrap-vue/es/components/form-input/form-input'
 import BSelect from 'bootstrap-vue/es/components/form-select/form-select'
 import BCheckbox from 'bootstrap-vue/es/components/form-checkbox/form-checkbox'
-import PgButton from '@/components/button'
 
 export default {
 	name: 'PgUserFormPage',
@@ -137,8 +136,7 @@ export default {
 		BFormGroup,
 		BInput,
 		BSelect,
-		BCheckbox,
-		PgButton
+		BCheckbox
 	},
 
 	mixins: [validationMixin],

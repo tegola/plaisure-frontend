@@ -89,7 +89,6 @@ import BNavItem from 'bootstrap-vue/es/components/nav/nav-item'
 import BListGroup from 'bootstrap-vue/es/components/list-group/list-group'
 import BListGroupItem from 'bootstrap-vue/es/components/list-group/list-group-item'
 
-import PgButton from '@/components/button'
 import PgSubscriptionCard from '@/components/subscription-card'
 
 import PgVenueFormGeneralPane from './general-pane'
@@ -111,7 +110,6 @@ export default {
 		BNavItem,
 		BListGroup,
 		BListGroupItem,
-		PgButton,
 		PgSubscriptionCard,
 		PgVenueFormGeneralPane,
 		PgVenueFormServicesPane,

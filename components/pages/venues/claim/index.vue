@@ -88,7 +88,6 @@
 <script>
 import { validationMixin } from 'vuelidate'
 import { requiredIf } from 'vuelidate/lib/validators'
-import PgButton from '@/components/button'
 import BFormGroup from 'bootstrap-vue/es/components/form-group/form-group'
 import BInput from 'bootstrap-vue/es/components/form-input/form-input'
 
@@ -100,7 +99,6 @@ export default {
 	middleware: 'auth',
 
 	components: {
-		PgButton,
 		BFormGroup,
 		BInput,
 		PgVenueClaimPageItem

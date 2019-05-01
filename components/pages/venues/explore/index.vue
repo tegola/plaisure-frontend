@@ -157,7 +157,6 @@ import {
 	InfoWindow as PgMapInfoWindow
 } from 'vue2-google-maps'
 import BTooltip from 'bootstrap-vue/es/components/tooltip/tooltip'
-import PgButton from '@/components/button'
 import PgVenueListItem from './list-item'
 import PgVenueInfowindowItem from './infowindow-item'
 import PgFilterButton from './filter-button'
@@ -172,7 +171,6 @@ export default {
 		PgMapMarker,
 		PgMapInfoWindow,
 		BTooltip,
-		PgButton,
 		PgVenueListItem,
 		PgVenueInfowindowItem,
 		PgFilterButton

@@ -56,7 +56,6 @@
 <script>
 import BFormGroup from 'bootstrap-vue/es/components/form-group/form-group'
 import BInput from 'bootstrap-vue/es/components/form-input/form-input'
-import PgButton from '@/components/button'
 import { validationMixin } from 'vuelidate'
 import { required, email } from 'vuelidate/lib/validators'
 
@@ -67,8 +66,7 @@ export default {
 
 	components: {
 		BFormGroup,
-		BInput,
-		PgButton
+		BInput
 	},
 
 	mixins: [validationMixin],

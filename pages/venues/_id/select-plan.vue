@@ -234,7 +234,6 @@ import BInput from 'bootstrap-vue/es/components/form-input/form-input'
 import BSelect from 'bootstrap-vue/es/components/form-select/form-select'
 import BRadio from 'bootstrap-vue/es/components/form-radio/form-radio'
 import BCollapse from 'bootstrap-vue/es/components/collapse/collapse'
-import PgButton from '@/components/button'
 import PgSubscriptionCard from '@/components/subscription-card'
 import { Card as StripeCard, createToken } from 'vue-stripe-elements-plus'
 
@@ -247,7 +246,6 @@ export default {
 		BSelect,
 		BRadio,
 		BCollapse,
-		PgButton,
 		PgSubscriptionCard,
 		StripeCard
 	},

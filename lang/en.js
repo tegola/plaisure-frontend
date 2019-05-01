@@ -13,6 +13,7 @@ export default {
 		status: {
 			error: 'Error',
 			loading: 'Loading',
+			offline: "Attention: you're not connected to the internet!",
 			invalid_form: 'There are errors in the form. Please review your entry.',
 			save_error:
 				'There was an error while trying saving data. Please try again.'
@@ -25,15 +26,15 @@ export default {
 			delete: 'Delete',
 			remove: 'Remove',
 			select: 'Select'
+		},
+		cookie: {
+			agree: 'By using this website, you agree to our {policy_link}',
+			link: 'cookie policy'
 		}
 	},
 
 	// Components -------------------------------------------------------------
 	components: {
-		offline_alert: {
-			offline: "Attention: you're not connected to the internet!"
-		},
-
 		navbar: {
 			search: 'Search...',
 			home: 'Home',

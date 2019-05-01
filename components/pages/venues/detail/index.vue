@@ -295,7 +295,6 @@ import { getAllInfoByISO } from 'iso-country-currency'
 import isVenueOpen from '@/utilities/is-venue-open'
 
 import PgLightbox from '@/components/lightbox'
-import PgButton from '@/components/button'
 import PgVenueDetailPageContactCard from './contact-card'
 import PgVenueDetailPageNearbyItem from './nearby-item'
 
@@ -304,7 +303,6 @@ export default {
 
 	components: {
 		PgLightbox,
-		PgButton,
 		PgVenueDetailPageContactCard,
 		PgVenueDetailPageNearbyItem
 	},

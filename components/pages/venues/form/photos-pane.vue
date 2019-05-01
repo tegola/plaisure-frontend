@@ -95,7 +95,6 @@ import { mapState } from 'vuex'
 import BProgress from 'bootstrap-vue/es/components/progress/progress'
 import VueUploader from 'vue-upload-component' // FIXME: Make custom component
 
-import PgButton from '@/components/button'
 import PgImageFrame from '@/components/image-frame'
 import PgConfirmModal from '@/components/confirm-modal'
 
@@ -104,7 +103,6 @@ export default {
 
 	components: {
 		BProgress,
-		PgButton,
 		PgImageFrame,
 		PgConfirmModal,
 		VueUploader

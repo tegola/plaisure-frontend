@@ -184,7 +184,6 @@
 import extend from 'lodash/extend'
 import sortBy from 'lodash/sortBy'
 import formatResult from '@/utilities/format-google-maps-result'
-import PgButton from '@/components/button'
 import PgPlaceTextbox from '@/components/place-textbox'
 import PgVenueGridItem from '@/components/venue-grid-item'
 import PgToken from './token'
@@ -194,7 +193,6 @@ export default {
 	name: 'PgHomePage',
 
 	components: {
-		PgButton,
 		PgPlaceTextbox,
 		PgVenueGridItem,
 		PgToken
