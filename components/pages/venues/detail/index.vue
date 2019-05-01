@@ -108,7 +108,7 @@
 										</li>
 										<li class="detail-list-item">
 											{{ $t('pages.venue_detail.details.surface_size') }}:
-											<strong v-if="venue.surface_size">{{ venue.surface_size }} mq.</strong>
+											<strong v-if="venue.surface_size">{{ venue.surface_size }} {{ $t('pages.venue_form.general.surface_size_unit') }}</strong>
 											<span v-else class="text-muted">{{ $t('pages.venue_detail.common.unknown') }}</span>
 										</li>
 										<li class="detail-list-item">
@@ -435,7 +435,7 @@ export default {
 
 			if (categories.length) {
 				return this.$t('pages.venue_detail.subtitle', {
-					category: categories[0].name,
+					category: this.$t(`data.categories.${categories[0].machine_name}`),
 					city
 				})
 			} else {
