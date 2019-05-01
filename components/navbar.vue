@@ -7,7 +7,10 @@
 				:aria-label="$constants.APP_NAME"
 				class="navbar-brand"
 				@click="toggleDrawer()">
-				<pg-logo :text="false" class="navbar__logo navbar__logo--no-text" />
+				<pg-logo
+					:flat="variant != 'light' || drawerOpen"
+					no-text
+					class="navbar__logo" />
 				<pg-icon icon="chevron-down" class="navbar__logo-arrow" />
 			</div>
 
@@ -17,7 +20,9 @@
 				:aria-label="$constants.APP_NAME"
 				class="navbar-brand"
 				:to="localePath('index')">
-				<pg-logo class="navbar__logo" />
+				<pg-logo
+					:flat="variant != 'light'"
+					class="navbar__logo" />
 			</nuxt-link>
 
 			<b-input-group v-if="search" :class="searchClasses">
@@ -274,25 +279,19 @@ export default {
 	opacity: 0.85;
 }
 .navbar__logo {
-	display: block;
-	width: 143px;
-	height: 42px;
-}
-.navbar__logo--no-symbol {
-	width: 155px;
-}
-.navbar__logo--no-text {
-	width: 29px;
+	height: 38px;
 }
 .navbar__logo-arrow {
-	margin-left: 0.25rem;
+	margin-left: 0.2rem;
 	width: 16px;
 	height: 16px;
-	transition: transform $navbar-transition-duration;
+	transition: $navbar-transition-duration ease-in-out;
 	font-size: 0; // Fixes icon misalignment
+	opacity: 0.5;
 
 	.navbar--drawer-open & {
-		transform: rotate(180deg);
+		opacity: 1;
+		transform: translateY(30%);
 	}
 }
 
@@ -454,13 +453,6 @@ export default {
 .navbar-dark {
 	background-color: $palette-dark-green-500;
 	color: $white;
-
-	.pg-logo__background {
-		display: none;
-	}
-	.pg-logo__foreground {
-		fill: $white;
-	}
 
 	.navbar__search {
 		background-color: $palette-dark-green-400;

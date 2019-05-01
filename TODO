@@ -212,22 +212,22 @@ NUXT:
  ☐ Controllare che il redirect dopo la login e register vada alla pagina localizzata
  ☐ Dopo la login da /it/login vengo rimandato a / (inglese)
  ✔ Scelta del piano non carica i dati @done (19-03-30 13:47)
- ☐ Cashier: currency in GBP?
- ☐ ssl / https
- ☐ deploy
+ ✔ Cashier: currency in GBP? @done (19-05-01 19:35)
+ ✔ ssl / https @done (19-05-01 19:35)
+ ✔ deploy @done (19-05-01 19:35)
 
 Dopo il primo deploy backend:
-  ☐ Aggiornare i file .env
-  ☐ Creare le chiavi (artisan passport:keys)
-  ☐ Crere il client oauth (artisan passport:client --password)
-  ☐ Aggiornare il file .env con l'id e la chiave del client oauth
-  ☐ Rimandare la sitemap a google (/sitemap.xml invece di /sitemap)
-  ☐ Mapping della cartella storage
-  ☐ Copia della cartella dei dati da prontogioco.it
-  ☐ artisan migrate
+  ✔ Aggiornare i file .env @done (19-05-01 19:00)
+  ✔ Creare le chiavi (artisan passport:keys) @done (19-05-01 19:00)
+  ✔ Crere il client oauth (artisan passport:client --password) @done (19-05-01 19:00)
+  ✔ Aggiornare il file .env con l'id e la chiave del client oauth @done (19-05-01 19:00)
+  ✔ Rimandare la sitemap a google (/sitemap.xml invece di /sitemap) @done (19-05-01 19:00)
+  ✔ Mapping della cartella storage @done (19-05-01 19:00)
+  ✔ Copia della cartella dei dati da prontogioco.it @done (19-05-01 19:00)
+  ✔ artisan migrate @done (19-05-01 19:00)
   ☐ Aggiungere redirect da prontogioco.it a plaisure.com
 
- ☐ Migrazione manuale dei dati:
+ ✔ Migrazione manuale dei dati: @done (19-05-01 19:00)
    UPDATE venues SET country = 'IT'
    UPDATE concessionaires SET country = 'IT'
    UPDATE pay_per_view_platforms SET country = 'IT'
@@ -237,22 +237,19 @@ Dopo il primo deploy backend:
    INSERT INTO venue_categories (machine_name, name, country) VALUES ('adult_gaming_center', 'Adult gaming centre', 'GB')
    INSERT INTO venue_categories (machine_name, name, country) VALUES ('family_entertainment_center', 'Family entertainment centre', 'GB');
 
-  ☐ Lanciare gli importer
-  ☐ Lanciare la creazione (occhio manca William Hill)
-  ☐ Svuotare la cache della home page (per evitare che le query usino il nome vecchio delle categorie)
+  ✔ Lanciare gli importer @done (19-05-01 19:01)
+  ✔ Lanciare la creazione @done (19-05-01 19:01)
+  ✔ Svuotare la cache della home page (per evitare che le query usino il nome vecchio delle categorie) @done (19-05-01 19:00)
 
 Per andare online su plaisure.com:
-  ☐ Cambiare le chiavi di stripe (frontend, backend e webhook)
-  ☐ Cambiare le chiavi di google maps (frontend)
-  ☐ Cambiare env da test a production (così vengono usati i piani di produzione in stripe)
+  ✔ Cambiare le chiavi di stripe (frontend, backend e webhook) @done (19-05-01 19:00)
+  ✔ Cambiare le chiavi di google maps (frontend) @done (19-05-01 19:00)
+  ✔ Cambiare env da test a production (così vengono usati i piani di produzione in stripe) @done (19-05-01 19:00)
   ✔ Disabilitare mailtrap @done (19-04-22 19:21)
 
 Dopo OGNI deploy backend:
-  ☐ chmod -R 777 storage
-  ☐ artisan migrate
-  ☐ controllare che ci sia env
   ☐ composer install (/opt/plesk/php/7.1/bin/php /usr/lib64/plesk-9.0/composer.phar install)
-  ☐ storage link
+  ☐ artisan migrate
 
 Dopo OGNI deploy frontend:
   ☐ npm install

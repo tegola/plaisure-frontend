@@ -39,7 +39,7 @@
 				<p class="small">Informati sulle probabilità di vincita e sul regolamento di gioco sul sito <a href="https://www.agenziadoganemonopoli.gov.it">agenziadoganemonopoli.gov.it</a></p>
 			</div>
 
-			<pg-logo :text="false" class="pg-footer__logo" />
+			<pg-logo flat no-text class="pg-footer__logo" />
 			<p class="small">
 				{{ $t('components.footer.copyright', { year, company: $constants.COMPANY_NAME }) }}<br>
 				{{ $t('components.footer.vat', { number: $constants.COMPANY_VAT_NUMBER }) }}
@@ -110,14 +110,8 @@ export default {
 	// Logo
 	&__logo {
 		height: 32px;
-		display: inline-block;
-
-		.pg-logo__background {
-			display: none;
-		}
-		.pg-logo__foreground {
-			fill: gray('500');
-		}
+		color: $gray-500;
+		margin-bottom: 0.25rem;
 	}
 }
 </style>
