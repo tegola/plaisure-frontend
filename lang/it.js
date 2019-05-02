@@ -440,7 +440,7 @@ export default {
 				vat_number_error: 'Inserisci la partita IVA.'
 			},
 			payment: {
-				title: 'Payment method',
+				title: 'Pagamento',
 				current: 'Usa la carta di credito registrata',
 				new: 'Usa una carta di credito diversa',
 				new_warning: {

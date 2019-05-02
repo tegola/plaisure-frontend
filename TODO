@@ -47,7 +47,7 @@
  ✔ Edit sala: il link all'edit quando una sala non ha proprietario ma l'utente è già registrato deve rimandare alla richiesta del codice dell'AAMS @done (19-03-10 00:02)
  ☐ Disattivare i piani attivi su Stripe all'eliminazione di una sala
  ☐ Convertire amenities in una tabella a parte e restituirlo in javascript come un array
- ☐ Abbassare le dimensioni del logo per far arrivare la navbar a 64px
+ ✔ Abbassare le dimensioni del logo per far arrivare la navbar a 64px @done (19-05-02 00:07)
  ☐ Rimuovere AuthController in favore di Auth\LoginController e Auth\RegisterController
  ☐ Porting di Fractal a Laravel API Resources
  ☐ Controllare il reload della pagina explore dopo esserci arrivato da un pulsante in home page

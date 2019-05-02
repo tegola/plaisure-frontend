@@ -54,7 +54,7 @@
 
 			<!-- Uploader -->
 			<no-ssr>
-				<div v-if="subscription.photo_limit > (venuePhotos.length + uploaderFiles.length)" :class="photoItemClass">
+				<div v-if="(venuePhotos.length + uploaderFiles.length) <= 50" :class="photoItemClass">
 					<vue-uploader
 						ref="uploader"
 						v-model="uploaderFiles"
