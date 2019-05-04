@@ -79,7 +79,8 @@ module.exports = {
 		'@/plugins/country-select-options.js',
 		'@/plugins/directives.js',
 		'@/plugins/i18n.js',
-		'@/plugins/maps.js'
+		'@/plugins/maps.js',
+		'@/plugins/notifications.js'
 	],
 
 	/*

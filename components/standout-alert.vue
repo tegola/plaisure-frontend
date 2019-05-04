@@ -6,7 +6,7 @@
 					<slot />
 				</div>
 				<pg-button
-					v-if="dismissable"
+					v-if="dismissible"
 					class="pg-standout-alert__close"
 					variant="naked"
 					@click="$emit('dismiss')">
@@ -27,7 +27,7 @@ export default {
 			default: 'top'
 		},
 
-		dismissable: {
+		dismissible: {
 			type: Boolean,
 			default: false
 		}
