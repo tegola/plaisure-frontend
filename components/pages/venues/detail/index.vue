@@ -319,7 +319,11 @@ export default {
 
 	head() {
 		const venue = this.venue
-		const metadata = {}
+		const metadata = {
+			// Don't encode json ld
+			// https://medium.com/@mhagemann/how-to-add-structured-json-ld-data-to-nuxt-js-8bb5f7c8a2d
+			__dangerouslyDisableSanitizers: ['script']
+		}
 
 		// Title
 		metadata.title = `${venue.name} - ${this.subtitle}`
