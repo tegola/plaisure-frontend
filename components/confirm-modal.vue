@@ -1,7 +1,7 @@
 <template>
 	<b-modal
 		:header-text-variant="variant"
-		:ok-variant="variant"
+		:ok-variant="okVariant || variant"
 		:cancel-title="cancelTitle"
 		v-bind="$attrs"
 		lazy
@@ -14,7 +14,7 @@
 		<p v-if="$slots.message" class="mb-0">
 			<slot name="message" />
 		</p>
-		<slot />
+		<slot v-for="(_, name) in $slots" :slot="name" :name="name" />
 	</b-modal>
 </template>
 
@@ -36,6 +36,10 @@ export default {
 			default: false
 		},
 		variant: {
+			type: String,
+			default: ''
+		},
+		okVariant: {
 			type: String,
 			default: ''
 		},

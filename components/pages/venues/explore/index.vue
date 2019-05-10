@@ -543,7 +543,7 @@ export default {
 			this.query = null
 			this.placeholder = [
 				'(',
-				this.$t('pages.explore.placeholder.in_map '),
+				this.$t('pages.explore.placeholder.in_map'),
 				')'
 			].join('')
 

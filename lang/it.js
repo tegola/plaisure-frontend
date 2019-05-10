@@ -26,7 +26,9 @@ export default {
 			save: 'Salva',
 			delete: 'Elimina',
 			remove: 'Rimuovi',
-			select: 'Scegli'
+			select: 'Scegli',
+			continue: 'Continua',
+			close: 'Chiudi'
 		},
 		cookie: {
 			agree: 'Utilizzando questo sito acconsenti alla nostra {policy_link}',
@@ -86,9 +88,9 @@ export default {
 				home_page_presence: 'Visibilità ricorrente in home page',
 				hide_nearby_venues: 'Nasconde le attività nelle vicinanze'
 			},
-			unsubscribed: {
-				line1: 'Hai disattivato il {unsubscribeDate}',
-				line2: 'Sarà funzionante fino al {endDate}'
+			cancelled: {
+				line1: 'Hai disattivato il {cancelDate}.',
+				line2: 'Sarà funzionante fino al {endDate}.'
 			}
 		}
 	},
@@ -454,10 +456,31 @@ export default {
 				card_holder_name_error:
 					"Inserisci il nome e cognome dell'intestatario così come mostrati sulla carta stessa"
 			},
-			confirm: 'Conferma abbonamento',
-			deactivate: 'Disattiva abbonamento',
+			cancel: 'Cancella abbonamento',
+			confirm: {
+				title: 'Conferma abbonamento',
+				paragraph1:
+					"Stai per attivare un abbonamento costante. Se fai click su {confirm}, autorizzi {name} ad addebitarti mensilmente il costo dell'abbonamento (pari a {price} {currency}/mese). Puoi annullare l'abbonamento in qualsiasi momento.",
+				paragraph2:
+					"Se continui accetti i {tos} e l'{privacy} di {name}. Accetti inoltre che il tuo acquisto sarà subito disponibile e di rinunciare al diritto di recesso previsto dalla legge.",
+				paragraph2_tos: 'Termini di servizio',
+				paragraph2_privacy: 'Informativa sulla privacy',
+				submit: 'Conferma abbonamento'
+			},
+			form_error:
+				'Sembra che il modulo sia incompleto: inserisci tutti i dati richiesti prima di continuare.',
 			submit_error:
-				'È avvenuto un errore nel tentativo di modificare il tuo abbonamento. Ti preghiamo di riprovare più tardi.'
+				'È avvenuto un errore nel tentativo di modificare il tuo abbonamento. Il team è già stato informato. Ti preghiamo di riprovare più tardi.',
+			subscription_success: {
+				title: 'Abbonamento attivato',
+				message:
+					"L'abbonamento che hai scelto è stato attivato. Si rinnoverà automaticamente {date}, salvo cancellazione da parte tua prima di tale data."
+			},
+			cancellation_success: {
+				title: 'Abbonamendo cancellato',
+				message:
+					'Il tuo abbonamento è stato cancellato. Rimarrà attivo fino a {date}. Non ti sarà addebitato nessun altro costo.'
+			}
 		},
 
 		user: {

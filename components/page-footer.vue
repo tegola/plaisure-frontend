@@ -84,7 +84,7 @@ export default {
 			color: inherit;
 		}
 		&:hover {
-			color: theme-color('primary');
+			color: $link-color;
 		}
 	}
 

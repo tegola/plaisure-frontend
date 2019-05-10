@@ -263,8 +263,9 @@ export default {
 }
 // Notch support with hack
 // https://github.com/webpack-contrib/sass-loader/issues/528#issuecomment-362259216
-@supports (padding: max(0px)) {
+@supports (padding: m#{a}x(0px)) {
 	.navbar-expand {
+		border: 1px solid red;
 		padding-left: m#{a}x($navbar-padding-x, env(safe-area-inset-left));
 		padding-right: m#{a}x($navbar-padding-x, env(safe-area-inset-right));
 	}

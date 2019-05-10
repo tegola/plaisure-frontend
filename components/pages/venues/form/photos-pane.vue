@@ -96,7 +96,6 @@ import BProgress from 'bootstrap-vue/es/components/progress/progress'
 import VueUploader from 'vue-upload-component' // FIXME: Make custom component
 
 import PgImageFrame from '@/components/image-frame'
-import PgConfirmModal from '@/components/confirm-modal'
 
 export default {
 	name: 'PhotosPane',
@@ -104,7 +103,6 @@ export default {
 	components: {
 		BProgress,
 		PgImageFrame,
-		PgConfirmModal,
 		VueUploader
 	},
 

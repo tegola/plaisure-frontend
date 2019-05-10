@@ -37,6 +37,20 @@
 					<!-- Back to default subscription -->
 					<template v-if="model.subscription_name == 'default'">
 						<p>{{ $t('pages.venue_plan.selected_free', { date: formatDate(venue.subscription.current_period_ends_at) }) }}</p>
+
+						<!-- Confirm change -->
+						<div class="text-right">
+							<!-- Default subscription -->
+							<pg-button
+								v-if="model.subscription_name === 'default'"
+								:block="$mq == 'xs' || $mq == 'constrained'"
+								variant="primary"
+								:loading="saving"
+								:disabled="saving"
+								@click="submit">
+								{{ $t('pages.venue_plan.cancel') }}
+							</pg-button>
+						</div>
 					</template>
 
 					<!-- All other subscriptions -->
@@ -202,21 +216,53 @@
 							</b-form-group>
 						</b-collapse>
 
-						<p class="small">Stai per attivare un abbonamento costante. Se fai clic su "Conferma abbonamento", autorizzi {{ $constants.APP_NAME }} ad addebitarti mensilmente il costo dell'abbonamento (attualmente pari a 1,99 €/mese). Puoi annullare l'abbonamento in qualsiasi momento. Ulteriori informazioni.</p>
-						<p class="small">Se fai clic su "Conferma abbonamento" accetti i Termini di servizio di {{ $constants.APP_NAME }} l'Informativa sulla privacy. Accetti inoltre che il tuo acquisto sarà subito disponibile e di rinunciare al diritto di recesso previsto dalla legge (ad eccezione dei servizi).</p>
+						<!-- Confirm change -->
+						<div class="text-right">
+							<pg-button
+								:loading="validating"
+								:block="$mq == 'xs' || $mq == 'constrained'"
+								variant="primary"
+								@click="validateAndContinue">
+								{{ $t('common.actions.continue') }}
+							</pg-button>
+						</div>
 					</template>
-
-					<!-- Confirm change -->
-					<div class="text-right">
-						<pg-button
-							:loading="saving"
-							:block="$mq == 'xs' || $mq == 'constrained'"
-							variant="primary"
-							@click="submit">
-							{{ model.subscription_name === 'default' ? $t('pages.venue_plan.deactivate') : $t('pages.venue_plan.confirm') }}
-						</pg-button>
-					</div>
 				</div>
+
+				<b-modal
+					v-model="confirmModalOpen"
+					lazy
+					centered
+					hide-header-close
+					no-close-on-backdrop
+					:title="$t('pages.venue_plan.confirm.title')"
+					@ok.prevent="submit">
+					<i18n path="pages.venue_plan.confirm.paragraph1" tag="p">
+						<span class="font-weight-bold" place="confirm">{{ $t('pages.venue_plan.confirm.submit') }}</span>
+						<span place="name">{{ $constants.APP_NAME }}</span>
+						<span place="price">{{ selectedSubscription.formattedPrice }}</span>
+						<span place="currency">{{ selectedSubscription.currencySymbol }}</span>
+					</i18n>
+					<i18n path="pages.venue_plan.confirm.paragraph2" tag="p" class="small">
+						<a href="#" place="tos">{{ $t('pages.venue_plan.confirm.paragraph2_tos') }}</a>
+						<a href="#" place="privacy">{{ $t('pages.venue_plan.confirm.paragraph2_privacy') }}</a>
+						<span place="name">{{ $constants.APP_NAME }}</span>
+					</i18n>
+					<template #modal-footer>
+						<pg-button
+							:disabled="saving"
+							@click="confirmModalOpen = false">
+							{{ $t('common.actions.cancel') }}
+						</pg-button>
+						<pg-button
+							variant="primary"
+							:loading="saving"
+							:disabled="saving"
+							@click="submit">
+							{{ $t('pages.venue_plan.confirm.submit') }}
+						</pg-button>
+					</template>
+				</b-modal>
 			</div>
 		</div>
 
@@ -227,6 +273,7 @@
 <script>
 import { validationMixin } from 'vuelidate'
 import { requiredIf } from 'vuelidate/lib/validators'
+import { getParamByParam } from 'iso-country-currency'
 import scrollIntoView from '@/utilities/scroll-into-view'
 import extend from 'lodash/extend'
 import BFormGroup from 'bootstrap-vue/es/components/form-group/form-group'
@@ -275,9 +322,11 @@ export default {
 		}
 
 		return {
+			validating: false,
 			saving: false,
 			stripeOptions,
 			cardError: null,
+			confirmModalOpen: false,
 			model: {
 				subscription_name: '',
 				new_billing: false,
@@ -428,6 +477,26 @@ export default {
 				address_postal_code: this.user.address_postcode,
 				country: this.user.country
 			}
+		},
+
+		selectedSubscription() {
+			let subscription = this.subscriptions.find(
+				subscription => subscription.name === this.model.subscription_name
+			)
+
+			if (!subscription) return
+
+			subscription = extend({}, subscription, {
+				currencySymbol: getParamByParam(
+					'currency',
+					subscription.currency,
+					'symbol'
+				),
+				// FIXME: usare vue i18n number formatter
+				formattedPrice: subscription.price.toFixed(2).replace('.', ',')
+			})
+
+			return subscription
 		}
 	},
 
@@ -579,7 +648,10 @@ export default {
 		prepareToken() {
 			return new Promise((resolve, reject) => {
 				// No payment form, just return
-				if (!this.showPaymentForm) resolve()
+				if (!this.showPaymentForm) {
+					resolve()
+					return
+				}
 
 				// Billing form visible, create the token for storing the
 				// new credit card
@@ -594,52 +666,105 @@ export default {
 			})
 		},
 
-		async submit() {
-			const msg = this.$t('pages.venue_plan.payment.error')
+		async validateAndContinue() {
+			this.validating = true
 
-			this.saving = true
-
-			// Before checking for errors, we need to be sure that we get the
-			// token for registering the new credit card
 			try {
+				// Before checking for errors, we need to make sure we get the
+				// token for registering the credit card
 				await this.prepareToken()
 
 				// Validate
 				this.$v.$touch()
 
 				// Stop on validation errors
-				if (this.$v.$error) {
-					this.saving = false
-					return
+				if (this.$v.$error) throw new Error()
+
+				// Show confirm modal
+				this.confirmModalOpen = true
+			} catch (err) {
+				this.$bvModal.msgBoxOk(this.$t('pages.venue_plan.form_error'), {
+					centered: true,
+					headerTextVariant: 'danger',
+					title: this.$t('common.status.error'),
+					okTitle: this.$t('common.actions.close')
+				})
+			} finally {
+				this.validating = false
+			}
+		},
+
+		async submit() {
+			this.saving = true
+
+			try {
+				// Save
+				const data = await this.$axios.$post(
+					`/venues/${this.venue.id}/subscribe`,
+					this.model
+				)
+
+				// Notify the user of saved subscription
+				let notifyStrings = {}
+				const dateOptions = {
+					weekday: 'long',
+					day: 'numeric',
+					month: 'long',
+					year: 'numeric'
 				}
 
-				// Save subscription
-				try {
-					// Save
-					await this.$axios.post(
-						`/venues/${this.venue.id}/subscribe`,
-						this.model
+				if (this.model.subscription_name === 'default') {
+					// Default subscription -> Cancellation
+					const date = new Date(data.ends_at).toLocaleDateString(
+						this.$i18n.isoCode,
+						dateOptions
 					)
 
-					// FIXME: Add notification of saved subscription
-
-					// Reload user, in case its billing info has changed
-					await this.$auth.fetchUser()
-
-					// Back to venue detail
-					this.$router.push(
-						this.localePath({
-							name: 'venues-id',
-							params: { id: this.venue.id }
+					notifyStrings = {
+						title: this.$t('pages.venue_plan.cancellation_success.title'),
+						text: this.$t('pages.venue_plan.cancellation_success.message', {
+							date
 						})
+					}
+				} else {
+					// New/modify subscription
+					const date = new Date(data.current_period_ends_at).toLocaleDateString(
+						this.$i18n.isoCode,
+						dateOptions
 					)
-				} catch (err) {
-					alert(msg)
-					this.saving = false
+
+					notifyStrings = {
+						title: this.$t('pages.venue_plan.subscription_success.title'),
+						text: this.$t('pages.venue_plan.subscription_success.message', {
+							date
+						})
+					}
 				}
+
+				this.$notify({
+					...notifyStrings,
+					duration: -1,
+					type: 'success'
+				})
+
+				// Reload user, in case its billing info has changed
+				await this.$auth.fetchUser()
+
+				// Back to venue detail
+				this.$router.push(
+					this.localePath({
+						name: 'venues-id',
+						params: { id: this.venue.id }
+					})
+				)
 			} catch (err) {
 				this.saving = false
-				alert(msg)
+				this.$bvModal.msgBoxOk(this.$t('pages.venue_plan.submit_error'), {
+					centered: true,
+					headerTextVariant: 'danger',
+					title: this.$t('common.status.error'),
+					okTitle: this.$t('common.actions.close')
+				})
 			}
 		}
 	}

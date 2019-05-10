@@ -25,7 +25,9 @@ export default {
 			save: 'Save',
 			delete: 'Delete',
 			remove: 'Remove',
-			select: 'Select'
+			select: 'Select',
+			continue: 'Continue',
+			close: 'Close'
 		},
 		cookie: {
 			agree: 'By using this website, you agree to our {policy_link}',
@@ -84,9 +86,9 @@ export default {
 				home_page_presence: 'Recurrent presence on the home page',
 				hide_nearby_venues: "Hide nearby venues in your business's page"
 			},
-			unsubscribed: {
-				line1: 'Hai disattivato il {unsubscribeDate}',
-				line2: 'Sarà funzionante fino al {endDate}'
+			cancelled: {
+				line1: 'Cancelled on {cancelDate}.',
+				line2: 'Will work until {endDate}.'
 			}
 		}
 	},
@@ -450,10 +452,31 @@ export default {
 				card_holder_name_error:
 					'Please type the card holder name as shown on the card itself'
 			},
-			confirm: 'Save subscription',
-			deactivate: 'Deactivate my subscription',
+			cancel: 'Cancel subscription',
+			confirm: {
+				title: 'Confirm subscription',
+				paragraph1:
+					'This is a continuous subscription. By clicking {confirm}, you authorise {name} to charge you the subscription cost monthly (currently {currency} {price}/month). You can cancel at any time.',
+				paragraph2:
+					"By continuing, you agree to the {name}'s {tos} and {privacy}. You also agree that your purchase will be available immediately and that you waive your statutory right of withdrawal.",
+				paragraph2_tos: 'Terms of Service',
+				paragraph2_privacy: 'Privacy policy',
+				submit: 'Confirm subscription'
+			},
+			form_error:
+				'Looks like the form is incomplete: please fill out all required fields before continuing.',
 			submit_error:
-				'There was an error while trying to setup your subscription. Please try again later'
+				'There was an error while trying to setup your subscription. The support team has already been informed. Please try again later.',
+			subscription_success: {
+				title: 'Subscription successful',
+				message:
+					'You subscription has been activated. It will renew automatically on {date}, unless you cancel it before that date.'
+			},
+			cancellation_success: {
+				title: 'Subscription cancelled',
+				message:
+					"You subscription has been cancelled. It will remain active until {date}. You won't be charged again."
+			}
 		},
 
 		user: {

@@ -14,8 +14,8 @@
 				<div class="d-flex align-items-center">
 					<pg-icon icon="info" class="mr-3 text-info" />
 					<p class="mb-0 small flex-fill">
-						Hai disattivato il {{ formatDate(lastUpdateDate) }}.<br>
-						Sarà funzionante fino al {{ formatDate(endDate) }}
+						{{ this. $t('components.subscription_card.cancelled.line1', { cancelDate: formatDate(lastUpdateDate) }) }}<br>
+						{{ this. $t('components.subscription_card.cancelled.line2', { endDate: formatDate(endDate) }) }}
 					</p>
 				</div>
 			</div>
@@ -64,10 +64,6 @@ export default {
 				'pg-subscription-card--clickable': this.clickable,
 				'pg-subscription-card--selected': this.selected
 			}
-		},
-
-		currencySymbol() {
-			return getParamByParam('currency', this.subscription.currency, 'symbol')
 		},
 
 		price() {
