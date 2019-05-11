@@ -248,8 +248,8 @@ Per andare online su plaisure.com:
   ✔ Disabilitare mailtrap @done (19-04-22 19:21)
 
 Dopo OGNI deploy backend:
-  ☐ composer install (/opt/plesk/php/7.1/bin/php /usr/lib64/plesk-9.0/composer.phar install)
-  ☐ artisan migrate
+  ☐ /opt/plesk/php/7.2/bin/php /usr/lib64/plesk-9.0/composer.phar install
+  ☐ /opt/plesk/php/7.2/bin/php artisan migrate --force
 
 Dopo OGNI deploy frontend:
   ☐ npm install
