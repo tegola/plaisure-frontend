@@ -22,7 +22,7 @@
 					<b-select v-model="venueConcessionaireId">
 						<option :value="null">{{ $t('pages.venue_form.general.concessionaire_none') }}</option>
 						<option
-							v-for="item in concessionaires"
+							v-for="item in concessionaireOptions"
 							:key="item.id"
 							:value="item.id">
 							{{ item.name }}
@@ -37,7 +37,7 @@
 			:label="$t('pages.venue_form.general.description')">
 			<div class="form-row">
 				<div class="col-lg-10">
-					<b-textarea v-model="venueDescription" rows="2" />
+					<b-textarea v-model="venueDescription" rows="3" />
 				</div>
 			</div>
 		</b-form-group>
@@ -66,7 +66,7 @@
 				<div class="col-lg-10">
 					<b-checkbox-group v-model="venueCategoryIds" stacked>
 						<b-checkbox
-							v-for="category in categories"
+							v-for="category in categoryOptions"
 							:key="category.id"
 							:value="category.id">
 							{{ $t(`data.categories.${category.machine_name}`) }}
@@ -204,6 +204,15 @@ export default {
 			}
 		},
 
+		concessionaireOptions() {
+			return this.concessionaires.filter(concessionaire => {
+				return Boolean(
+					concessionaire.country === this.venue.country ||
+						!concessionaire.country
+				)
+			})
+		},
+
 		venueConcessionaireId: {
 			get() {
 				return this.venue.concessionaire_id
@@ -238,6 +247,14 @@ export default {
 					value
 				})
 			}
+		},
+
+		categoryOptions() {
+			return this.categories.filter(category => {
+				return Boolean(
+					category.country === this.venue.country || !category.country
+				)
+			})
 		},
 
 		venueCategoryIds: {
@@ -314,6 +331,19 @@ export default {
 	},
 
 	watch: {
+		'venue.country'() {
+			// Keep only categories for the selected country
+			this.venueCategoryIds = this.venueCategoryIds.filter(id => {
+				return this.categoryOptions.some(category => category.id === id)
+			})
+
+			// Keep concessionaire only if present in the selected country
+			const concessionaireFound = this.concessionaireOptions.some(
+				concessionaire => concessionaire.id === this.venueConcessionaireId
+			)
+			if (!concessionaireFound) this.venueConcessionaireId = null
+		},
+
 		venueCoords: {
 			immediate: true,
 			handler() {

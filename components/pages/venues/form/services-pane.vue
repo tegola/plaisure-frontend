@@ -69,7 +69,7 @@
 				<div class="col-lg-10">
 					<b-checkbox-group v-model="venueVltPlatformIds" stacked>
 						<b-checkbox
-							v-for="item in vltPlatforms"
+							v-for="item in vltPlatformOptions"
 							:key="item.id"
 							:value="item.id">
 							{{ item.name }}
@@ -225,6 +225,14 @@ export default {
 			}
 		},
 
+		vltPlatformOptions() {
+			return this.vltPlatforms.filter(vltPlatform => {
+				return Boolean(
+					vltPlatform.country === this.venue.country || !vltPlatform.country
+				)
+			})
+		},
+
 		venueVltPlatformIds: {
 			get() {
 				return this.venue.vlt_platform_ids
@@ -270,6 +278,16 @@ export default {
 
 		$v() {
 			return this.$parent.$v.venue
+		}
+	},
+
+	watch: {
+		'venue.country'() {
+			this.venueVltPlatformIds = this.venueVltPlatformIds.filter(id => {
+				return this.vltPlatformOptions.some(
+					vltPlatform => vltPlatform.id === id
+				)
+			})
 		}
 	}
 }
