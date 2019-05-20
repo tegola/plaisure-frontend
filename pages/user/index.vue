@@ -12,20 +12,33 @@
 
 			<div v-if="venues.length" class="row mt-5">
 				<div v-for="venue in venues" :key="venue.id" class="col-md-6 col-xl-4 mb-4">
-					<nuxt-link :to="localePath({ name: 'venues-id', params: { id: venue.id }})" class="text-reset">
+					<nuxt-link :to="localePath({ name: 'venues-id-edit', params: { id: venue.id }})" class="text-reset">
 						<pg-venue-grid-item
 							:venue="venue"
 							:show-highlight="false"
 							class="mb-2"
 						/>
 					</nuxt-link>
-					<pg-button
-						:to="localePath({ name: 'venues-id-edit', params: { id: venue.id }})"
-						block
-						variant="primary"
-						size="sm">
-						{{ $t('common.actions.edit') }}
-					</pg-button>
+					<div class="d-flex justify-content-between">
+						<div class="flex-grow-1 mr-2">
+							<pg-button
+								:to="localePath({ name: 'venues-id-edit', params: { id: venue.id }})"
+								block
+								variant="primary">
+								{{ $t('common.actions.edit') }}
+							</pg-button>
+						</div>
+						<div class="flex-grow-1">
+							<pg-button
+								:to="localePath({ name: 'venues-id', params: { id: venue.id }})"
+								block
+								icon="arrow-right"
+								icon-position="right"
+								class="d-inline-flex justify-content-between align-items-center">
+								{{ $t('pages.user.view') }}
+							</pg-button>
+						</div>
+					</div>
 				</div>
 				<div class="col-md-6 col-xl-4 mb-4">
 					<nuxt-link :to="localePath('venues-add')" class="card pg-user-page__add-card">

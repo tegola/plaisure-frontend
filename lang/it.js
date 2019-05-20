@@ -496,7 +496,8 @@ export default {
 				message: '{action} per aggiungere la tua prima attività!',
 				message_action: 'Clicca qui'
 			},
-			add_another: "Aggiungi un'altra attività"
+			add_another: "Aggiungi un'altra attività",
+			view: 'Visualizza'
 		},
 
 		user_form: {

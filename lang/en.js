@@ -492,7 +492,8 @@ export default {
 				message: '{action} to add your first one now!',
 				message_action: 'Click here'
 			},
-			add_another: 'Add another venue'
+			add_another: 'Add another venue',
+			view: 'View'
 		},
 
 		user_form: {
