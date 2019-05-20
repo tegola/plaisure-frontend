@@ -11,7 +11,7 @@
 						<div class="header-gallery-bg">
 							<div v-for="i in 6" :key="i" class="header-photo header-photo-placeholder" />
 						</div>
-						<nuxt-link v-if="showEditAction" :to="editRoute" class="header-photo header-photo-add">
+						<nuxt-link v-if="showEditAction" :to="editRoute" rel="nofollow" class="header-photo header-photo-add">
 							<pg-icon icon="plus" />
 							<div>{{ $t('pages.venue_detail.gallery.add') }}</div>
 						</nuxt-link>
@@ -75,7 +75,7 @@
 										<div>
 											<div class="jackpot-name">{{ jackpot.label && jackpot.value ? jackpot.label : `Jackpot ${index}` }}</div>
 											<div class="jackpot-value">{{ formatCurrency(jackpot.value) }}</div>
-											<div v-if="showEditAction"><nuxt-link :to="editRoute">{{ $t('pages.venue_detail.common.edit') }}</nuxt-link></div>
+											<div v-if="showEditAction"><nuxt-link :to="editRoute" rel="nofollow">{{ $t('pages.venue_detail.common.edit') }}</nuxt-link></div>
 										</div>
 									</div>
 								</div>
@@ -96,7 +96,7 @@
 						<div class="my-5">
 							<h5>
 								{{ $t('pages.venue_detail.details.title') }}
-								<nuxt-link v-if="showEditAction" :to="editRoute" class="small ml-2">{{ $t('pages.venue_detail.common.edit') }}</nuxt-link>
+								<nuxt-link v-if="showEditAction" :to="editRoute" rel="nofollow" class="small ml-2">{{ $t('pages.venue_detail.common.edit') }}</nuxt-link>
 							</h5>
 							<div class="row">
 								<div class="col-md">
@@ -178,7 +178,7 @@
 						<div class="my-5">
 							<h5>
 								{{ $t('pages.venue_detail.amenities.title') }}
-								<nuxt-link v-if="showEditAction" :to="editRoute" class="small ml-2">{{ $t('pages.venue_detail.common.edit') }}</nuxt-link>
+								<nuxt-link v-if="showEditAction" :to="editRoute" rel="nofollow" class="small ml-2">{{ $t('pages.venue_detail.common.edit') }}</nuxt-link>
 							</h5>
 							<div class="row">
 								<div class="col-md">
@@ -242,7 +242,7 @@
 							<div class="card-body">
 								<h4 class="card-title">{{ $t('pages.venue_detail.claim.title') }}</h4>
 								<p class="card-text">{{ $t('pages.venue_detail.claim.intro') }} <nuxt-link :to="localePath('promote')">{{ $t('pages.venue_detail.claim.more') }}&hellip;</nuxt-link></p>
-								<pg-button :to="localePath({ name: 'venues-id-claim', params: { id: venue.id }})" variant="primary">{{ $t('pages.venue_detail.claim.action') }}</pg-button>
+								<pg-button :to="localePath({ name: 'venues-id-claim', params: { id: venue.id }})" variant="primary" rel="nofollow">{{ $t('pages.venue_detail.claim.action') }}</pg-button>
 							</div>
 						</div>
 					</div>

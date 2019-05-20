@@ -13,7 +13,7 @@
 		<div class="list-group list-group-flush">
 			<!-- Address -->
 			<div class="list-group-item contact-card-list-item">
-				<nuxt-link v-if="showEditAction" :to="editRoute" class="float-right">{{ $t('pages.venue_detail.common.edit') }}</nuxt-link>
+				<nuxt-link v-if="showEditAction" :to="editRoute" rel="nofollow" class="float-right">{{ $t('pages.venue_detail.common.edit') }}</nuxt-link>
 
 				<pg-icon icon="directions" class="contact-card-list-item-icon" />
 				<div class="mb-2">
