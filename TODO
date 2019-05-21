@@ -50,7 +50,7 @@
  ☐ Convertire amenities in una tabella a parte e restituirlo in javascript come un array
  ✔ Abbassare le dimensioni del logo per far arrivare la navbar a 64px @done (19-05-02 00:07)
  ☐ Rimuovere AuthController in favore di Auth\LoginController e Auth\RegisterController
- ☐ Porting di Fractal a Laravel API Resources
+ ☐ Continuare il porting di Fractal a Laravel API Resources
  ☐ Controllare il reload della pagina explore dopo esserci arrivato da un pulsante in home page
  ☐ Passare la lingua selezionata al client @low
  ☐ Modifica dati utente: aggiungere validazioni lato client in cui non si possono nullare i campi di fatturazione se ci sono sottoscrizioni attive @low
@@ -108,6 +108,7 @@ Generale:
  ☐ Aggiungere pagina di errore
  ☐ Aggiungere pagina di downtime
  ☐ Supporto ai like/dislike
+ ☐ Supporto per le recensioni e per rispondere lato gestore (quindi registrazione utente normale e gestore)
  ☐ Aggiungere i link di Prontogioco ai social network
  ☐ Servizi aggiuntivi
    - Area privè (privee?, privet?)

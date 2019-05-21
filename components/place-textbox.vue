@@ -5,11 +5,11 @@
 		:value="value"
 		:select-first-on-enter="selectFirstOnEnter"
 		@place_changed="onPlaceChanged"
-		@focus.native="onFocus"
-		@blur.native="onBlur"
-		@input.native="onInput"
-		@keydown.native.esc="onEscKey"
-		@keydown.native.enter="onEnterKey"
+		@focus="onFocus"
+		@blur="onBlur"
+		@input="onInput"
+		@keydown.esc="onEscKey"
+		@keydown.enter="onEnterKey"
 	/>
 </template>
 
@@ -41,17 +41,27 @@ export default {
 	},
 
 	methods: {
+		isMenuOpen() {
+			// Get menus as array
+			const menus = [].slice.call(document.querySelectorAll('.pac-container'))
+
+			const anyMenuOpen = menus.some(menu => {
+				return (
+					menu.offsetWidth || menu.offsetHeight || menu.getClientRects().length
+				)
+			})
+
+			return anyMenuOpen
+		},
+
 		onFocus(e) {
 			// Auto select text
-			if (this.value) e.target.select()
+			e.target.select()
 
 			this.$emit('focus', e)
 		},
 
 		onBlur(e) {
-			// Remove place if there's no text
-			if (!this.value) this.$emit('place-changed', null)
-
 			this.$emit('blur', e)
 		},
 
@@ -61,36 +71,33 @@ export default {
 			// Remove place if present
 			if (this.place) {
 				this.place = null
-				this.$emit('place-changed', null)
+				this.$emit('place-changed', this.place)
 			}
 		},
 
-		onEscKey() {
-			// Delete all text if not place is selected
-			this.$emit('input', null)
-			this.$emit('place-changed', null)
+		onEscKey(e) {
+			if (this.isMenuOpen()) return
+
+			this.$emit('input', '')
+
+			this.place = null
+			this.$emit('place-changed', this.place)
 		},
 
 		onEnterKey(e) {
-			const menus = document.querySelectorAll('.pac-container')
-
-			menus.forEach(menu => {
-				if (
-					menu.offsetWidth ||
-					menu.offsetHeight ||
-					menu.getClientRects().length
-				) {
-					e.preventDefault()
-				}
-			})
-
-			// Pass event to parent if not stopped
-			if (!e.defaultPrevented) {
+			// Prevent enter key if menu is open
+			if (this.isMenuOpen()) {
+				e.preventDefault()
+			} else {
 				this.$emit(e.type, e)
 			}
 		},
 
 		onPlaceChanged(place) {
+			// Store place locally
+			this.place = place
+			this.$emit('place-changed', this.place)
+
 			// Emit clean place name as input
 			let value = place.name
 			if (place.vicinity && place.name !== place.vicinity) {
@@ -98,12 +105,6 @@ export default {
 			}
 
 			this.$emit('input', value)
-
-			// Store place locally
-			this.place = place
-
-			// Emit place
-			this.$emit('place-changed', place)
 		}
 	}
 }

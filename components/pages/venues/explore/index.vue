@@ -448,7 +448,7 @@ export default {
 			this.query = ''
 			this.placeholder = [
 				'(',
-				this.$t('pages.explore.placeholder.location '),
+				this.$t('pages.explore.placeholder.location'),
 				')'
 			].join('')
 

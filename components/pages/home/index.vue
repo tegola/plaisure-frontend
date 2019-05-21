@@ -27,12 +27,13 @@
 									<div class="position-relative">
 										<label class="sr-only">{{ $t('pages.home.search.label') }}</label>
 										<pg-place-textbox
-											v-model="query"
+											:value="query"
 											:placeholder="placeholder"
 											:options="placeTextboxOptions"
 											class="form-control form-control-lg pg-home-page__search-form-control pg-home-page__search-query-control"
 											@place-changed="onPlaceChanged"
-											@keydown.enter="canSubmit ? submit : null"
+											@input="onPlaceTextboxInput"
+											@keydown.enter="submit"
 										/>
 										<no-ssr>
 											<div
@@ -360,6 +361,12 @@ export default {
 			})
 		},
 
+		onPlaceTextboxInput(value) {
+			this.useUserLocation = false
+			this.placeholder = this.$t('pages.home.search.city_placeholder')
+			this.query = value
+		},
+
 		onPlaceChanged(place) {
 			// Reset user location indicator
 			this.useUserLocation = false
@@ -386,6 +393,8 @@ export default {
 		},
 
 		submit() {
+			if (!this.canSubmit) return
+
 			this.$router.push(
 				this.localePath({
 					name: 'venues-explore',
