@@ -8,7 +8,7 @@
 					<pg-icon icon="circle-outline-notch" spinning />
 					<h5 class="m-0">{{ $t('common.status.loading') }}&hellip;</h5>
 				</template>
-				<p v-if="error" class="lead text-muted mb-0">C'è stato un errore nel caricamento dei dati.</p>
+				<p v-if="error" class="lead text-muted mb-0">{{ $t('common.status.load_error') }}</p>
 			</div>
 		</div>
 
@@ -202,14 +202,19 @@ export default {
 
 				// Reload user data, including venues
 				await this.$auth.fetchUser()
+
+				// Go back to the user profile
+				this.$router.push(this.localePath('user'))
 			} catch (err) {
-				this.error = true
+				this.$notify({
+					title: this.$t('common.status.error'),
+					text: this.$t('common.status.save_error'),
+					duration: -1,
+					type: 'danger'
+				})
 			} finally {
 				this.saving = false
 			}
-
-			// Go back to the user profile
-			this.$router.push(this.localePath('user'))
 		}
 	}
 }

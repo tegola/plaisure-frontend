@@ -14,6 +14,8 @@ export default {
 			error: 'Error',
 			loading: 'Caricamento',
 			offline: 'Attenzione: non sei connesso a internet!',
+			load_error:
+				'È avvenuto un errore nel tentativo di caricamento dei dati. Prova di nuovo.',
 			invalid_form:
 				'Ci sono degli errori nel modulo. Controlla i dati inseriti.',
 			save_error:

@@ -54,7 +54,7 @@
  ☐ Controllare il reload della pagina explore dopo esserci arrivato da un pulsante in home page
  ☐ Passare la lingua selezionata al client @low
  ☐ Modifica dati utente: aggiungere validazioni lato client in cui non si possono nullare i campi di fatturazione se ci sono sottoscrizioni attive @low
- ☐ Aggiustare la place textbox con le conoscenze migliori di vue @low
+ ✔ Aggiustare la place textbox con le conoscenze migliori di vue @low @done (19-05-21 23:29)
 
  ✔ L'indirizzo deve avere una riga unica, nessun campo per numero civico (+ codice per la migrazione del db) @done (18-12-16 01:59)
  ✔ Deploy con la modifica dell'indirizzo riga 1 e 2 @done (18-12-16 11:53)
@@ -96,7 +96,8 @@ Generale:
  ☐ Aggiungere il lazy load alla galleria foto
  ✔ Iniziare iter per rivendicazione attività @done (18-05-04 00:20)
  ☐ Possibilità di inserire le descrizioni alle foto
- ☐ Possibilità di riordinare le foto
+ ✔ Possibilità di riordinare le foto @done (19-05-26 22:59)
+ ☐ Animazioni e indicaioni grafiche (cursore o handle di spostamento) nell'ordinamento delle foto
  ☐ Estrapolare l'indirizzo FB messenger dall'indirizzo Facebook (facebook.com/Planet-Rich-Frascati-293498787699636/ -> 293498787699636)
  ☐ Catena/Franchise (Punto Snai, Eurobet, ecc.)
  ✔ Lightbox: controllare che ESC funzioni sempre @done (17-11-02 00:05)

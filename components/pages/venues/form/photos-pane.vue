@@ -2,9 +2,14 @@
 	<div class="my-5">
 		<h5>{{ $t('pages.venue_form.photos.title') }}</h5>
 		<hr>
-		<div :class="{ 'bg-light': $refs.uploader && $refs.uploader.dropActive }" class="row">
+
+		<draggable
+			v-model="venuePhotos"
+			draggable=".draggable"
+			:class="{ 'bg-light': $refs.uploader && $refs.uploader.dropActive }"
+			class="row">
 			<!-- Current photos -->
-			<div v-for="photo in venuePhotos" :key="photo.id" :class="photoItemClass">
+			<div v-for="photo in venuePhotos" :key="photo.id" :class="photoItemClass" class="draggable">
 				<a :href="photo.resized_url" target="_blank">
 					<pg-image-frame
 						:src="photo.thumbnail_url"
@@ -25,54 +30,56 @@
 			</div>
 
 			<!-- Current uploads -->
-			<div v-for="(file, index) in uploaderFiles" :key="index" :class="photoItemClass">
-				<div class="embed-responsive embed-responsive-1by1 rounded border">
-					<div class="embed-responsive-item d-flex flex-column align-items-center justify-content-center text-center">
-						<template v-if="file.error">
-							<div class="text-danger small">
-								<strong>{{ $t('common.status.error') }}</strong><br>
-								{{ file.error }}
-							</div>
-							<pg-button
-								v-b-tooltip.hover.bottom
-								size="sm"
-								variant="danger"
-								class="mt-2"
-								icon="trash"
-								:title="$t('common.actions.delete')"
-								@click.prevent="$refs.uploader.remove(file)"
-							/>
-						</template>
-						<template v-else>
-							{{ $t('common.status.loading') }}
-							<b-progress :value="parseFloat(file.progress)" class="w-75 my-2" style="height: 2px" />
-							{{ file.progress }}%
-						</template>
+			<template #footer>
+				<div v-for="(file, index) in uploaderFiles" :key="index" :class="photoItemClass">
+					<div class="embed-responsive embed-responsive-1by1 rounded border">
+						<div class="embed-responsive-item d-flex flex-column align-items-center justify-content-center text-center">
+							<template v-if="file.error">
+								<div class="text-danger small">
+									<strong>{{ $t('common.status.error') }}</strong><br>
+									{{ file.error }}
+								</div>
+								<pg-button
+									v-b-tooltip.hover.bottom
+									size="sm"
+									variant="danger"
+									class="mt-2"
+									icon="trash"
+									:title="$t('common.actions.delete')"
+									@click.prevent="$refs.uploader.remove(file)"
+								/>
+							</template>
+							<template v-else>
+								{{ $t('common.status.loading') }}
+								<b-progress :value="parseFloat(file.progress)" class="w-75 my-2" style="height: 2px" />
+								{{ file.progress }}%
+							</template>
+						</div>
 					</div>
 				</div>
-			</div>
 
-			<!-- Uploader -->
-			<no-ssr>
-				<div v-if="(venuePhotos.length + uploaderFiles.length) <= 50" :class="photoItemClass">
-					<vue-uploader
-						ref="uploader"
-						v-model="uploaderFiles"
-						:drop="true"
-						:headers="uploaderHeaders"
-						class="embed-responsive embed-responsive-1by1 rounded"
-						accept="image/*"
-						multiple
-						:post-action="uploaderUrl"
-						@input-file="onUploaderFileInput">
-						<a class="embed-responsive-item text-primary border d-flex flex-column align-items-center justify-content-center">
-							<pg-icon icon="plus" />
-							{{ $t('pages.venue_form.photos.upload') }}
-						</a>
-					</vue-uploader>
-				</div>
-			</no-ssr>
-		</div>
+				<!-- Uploader -->
+				<no-ssr>
+					<div v-if="(venuePhotos.length + uploaderFiles.length) <= 50" :class="photoItemClass">
+						<vue-uploader
+							ref="uploader"
+							v-model="uploaderFiles"
+							:drop="true"
+							:headers="uploaderHeaders"
+							class="embed-responsive embed-responsive-1by1 rounded"
+							accept="image/*"
+							multiple
+							:post-action="uploaderUrl"
+							@input-file="onUploaderFileInput">
+							<a class="embed-responsive-item text-primary border d-flex flex-column align-items-center justify-content-center">
+								<pg-icon icon="plus" />
+								{{ $t('pages.venue_form.photos.upload') }}
+							</a>
+						</vue-uploader>
+					</div>
+				</no-ssr>
+			</template>
+		</draggable>
 
 		<pg-confirm-modal
 			v-model="confirmDeleteOpen"
@@ -92,6 +99,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import draggable from 'vuedraggable'
 import BProgress from 'bootstrap-vue/es/components/progress/progress'
 import VueUploader from 'vue-upload-component' // FIXME: Make custom component
 
@@ -101,6 +109,7 @@ export default {
 	name: 'PhotosPane',
 
 	components: {
+		draggable,
 		BProgress,
 		PgImageFrame,
 		VueUploader
