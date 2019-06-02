@@ -58,6 +58,9 @@
 					</div>
 				</div>
 
+				<!-- Force footer with just the uploader to render on client -->
+				<span style="width: 0px; overflow: hidden;">&nbsp;</span>
+
 				<!-- Uploader -->
 				<no-ssr>
 					<div v-if="(venuePhotos.length + uploaderFiles.length) <= 50" :class="photoItemClass">
