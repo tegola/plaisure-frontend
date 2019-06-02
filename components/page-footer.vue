@@ -72,8 +72,8 @@ export default {
 
 <style lang="scss">
 .pg-footer {
-	margin-top: map-get($spacers, 5);
-	margin-bottom: map-get($spacers, 5);
+	padding-top: map-get($spacers, 5);
+	padding-bottom: map-get($spacers, 5);
 	color: $text-muted;
 	font-size: $font-size-sm;
 	text-align: center;
