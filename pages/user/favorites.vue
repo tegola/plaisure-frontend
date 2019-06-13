@@ -9,7 +9,7 @@
 					:key="venue.id"
 					:to="localePath({ name: 'venues-id', params: { id: venue.id }})"
 					:venue="venue"
-					class="border-top-0">
+					class="pg-user-favorites-page__list-item">
 					<pg-button
 						class="mt-2 px-2"
 						pill
@@ -82,6 +82,9 @@ export default {
 
 <style lang="scss">
 .pg-user-favorites-page {
+	&__list-item:first-child {
+		border-top: 0;
+	}
 	.pg-no-items__icon {
 		background-color: $palette-fuchsia-100;
 		color: $palette-fuchsia-500;

@@ -11,8 +11,9 @@
 				v-for="venue in venues"
 				:key="venue.id"
 				:to="localePath({ name: 'venues-id-edit', params: { id: venue.id }})"
+				target="item"
 				:venue="venue"
-				class="pg-user-venues-page__list-item "
+				class="pg-user-venues-page__list-item"
 			/>
 			<b-list-group-item
 				:to="localePath('venues-add')"
