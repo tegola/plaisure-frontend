@@ -1,6 +1,6 @@
 import Vue from 'vue'
 
-import Modal from 'bootstrap-vue/es/components/modal'
+import { ModalPlugin } from 'bootstrap-vue'
 
 import PgLogo from '@/components/logo'
 import PgNavbar from '@/components/navbar'
@@ -10,9 +10,7 @@ import PgPageFooter from '@/components/page-footer'
 import PgButton from '@/components/button'
 import PgConfirmModal from '@/components/confirm-modal'
 
-Vue.use(Modal, {
-	centered: true
-})
+Vue.use(ModalPlugin)
 
 Vue.component('pg-logo', PgLogo)
 Vue.component('pg-navbar', PgNavbar)

@@ -148,9 +148,18 @@ export default {
 		},
 
 		register: {
-			meta_title: 'Register',
-			title: 'Register to {name}',
-			intro: 'You will be able to claim your venue or publish a new one.',
+			owner: {
+				meta_title: 'Register as owner',
+				title: 'Register to {name} as owner',
+				intro: 'You will be able to claim your venue or publish a new one.'
+			},
+
+			user: {
+				meta_title: 'Register',
+				title: 'Register to {name}',
+				intro: 'You will be able to favorite, rate and review venues.'
+			},
+
 			name: 'Name',
 			name_error: 'Type your name.',
 			email: 'E-mail address',
@@ -266,7 +275,7 @@ export default {
 			claim: {
 				title: 'Is this your venue?',
 				intro:
-					"If you're the owner or the manager of this venue, you can claim it for free and keep it updated, add photos, jackpots, and more.",
+					"If you're the owner of this venue, you can claim it for free and keep it updated, add photos, jackpots, and more.",
 				more: 'More info',
 				action: 'Claim this venue'
 				// subject: 'Claim venue: {name} (id: {id})'
@@ -480,61 +489,64 @@ export default {
 			}
 		},
 
-		user: {
-			meta_title: 'User profile',
-			title: 'Hello {name}!',
-			intro: 'Here you can manage your profile and your venues.',
-			actions: {
-				edit_profile: 'Edit your profile',
-				logout: 'Logout'
-			},
-			no_items: {
-				title: 'No venues',
-				message: '{action} to add your first one now!',
-				message_action: 'Click here'
-			},
-			add_another: 'Add another venue',
-			view: 'View'
+		user_info: {
+			title: 'Personal information',
+			name: 'Name',
+			name_error: 'Please type your name.',
+			name_hint:
+				'Shown on your venue reviews and on messages and/or notifications you may receive from {name}.',
+			email: 'E-mail address',
+			newsletter: 'Keep me informed with new features and deals',
+			locale: 'Language and region',
+			locale_error: 'Please select your preferred language and region'
 		},
 
-		user_form: {
-			meta_title: 'Edit your profile',
-			title: 'Edit your profile',
-			general: {
-				name: 'First and last name',
-				name_error: 'Please type your first and last name.',
-				email: 'E-mail address',
-				newsletter: 'Keep me informed with new features and deals',
-				locale: 'Language and region',
-				locale_error: 'Please select your preferred language and region'
-			},
-			billing: {
-				title: 'Billing',
-				legal_name: 'Legal name',
-				legal_name_error: 'Please type your company legal name.',
-				address: 'Address',
-				address_error: 'Please type the address.',
-				postcode: 'Postal code',
-				postcode_error: 'Please type the postal code.',
-				city: 'City',
-				city_error: 'Please type the city name.',
-				region: 'Region',
-				region_error: 'Please type the region.',
-				country: 'Country',
-				country_error: 'Please select the country.',
-				vat_number: 'VAT number',
-				vat_number_error: 'Please type the VAT number.'
-			},
-			password: {
-				title: 'Pick new password',
-				intro:
-					'Type a new password below to change it, leave the two fields empty to keep it unchanged.',
-				password: 'New password',
-				password_hint: 'At least 8 chars, letters and numbers',
-				password_error: 'Please type at least 8 chars, letters and numbers.',
-				password_confirmation: 'Repeat password',
-				password_confirmation_error: "Passwords don't match."
+		user_venues: {
+			title: 'Manage your venues',
+			intro_first: 'Start by adding your first venue.',
+			intro_edit: 'Click one of them to edit.',
+			add_first: 'Add your first venue',
+			add_another: 'Add another venue'
+		},
+
+		user_billing: {
+			title: 'Billing information',
+			intro: 'Will be used to generate all your invoices.',
+			legal_name: 'Legal name',
+			legal_name_error: 'Please type your company legal name.',
+			address: 'Address',
+			address_error: 'Please type the address.',
+			postcode: 'Postal code',
+			postcode_error: 'Please type the postal code.',
+			city: 'City',
+			city_error: 'Please type the city name.',
+			region: 'Region',
+			region_error: 'Please type the region.',
+			country: 'Country',
+			country_error: 'Please select the country.',
+			vat_number: 'VAT number',
+			vat_number_error: 'Please type the VAT number.'
+		},
+
+		user_favorites: {
+			title: 'Manage favorites',
+			no_items: {
+				title: 'No favorites saved',
+				subtitle: 'You can add a favorite anytime while browsing the site.'
 			}
+		},
+
+		user_password: {
+			title: 'Change password',
+			intro: 'Type a new password below to change it.',
+			password: 'New password',
+			password_hint: 'At least 8 chars, letters and numbers',
+			password_error: 'Please type at least 8 chars, letters and numbers.',
+			password_confirmation: 'Repeat password',
+			password_confirmation_error: "Passwords don't match.",
+			submit: 'Change password',
+			submit_success_title: 'Password changed',
+			submit_success_text: 'Your password has been changed successfully.'
 		},
 
 		promote: {
@@ -573,7 +585,7 @@ export default {
 				paragraph2_strong: 'Claim this venue'
 			},
 			manage: 'Manage your venue',
-			register: 'Register now'
+			register: 'Register as owner now'
 		},
 
 		about: {

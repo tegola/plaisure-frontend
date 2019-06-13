@@ -9,7 +9,7 @@
 			:invalid-feedback="$t('pages.venue_form.general.name_error')">
 			<div class="form-row">
 				<div class="col-lg-10">
-					<b-input v-model="venueName" :placeholder="$t('pages.venue_form.general.name_placeholder')" />
+					<b-form-input v-model="venueName" :placeholder="$t('pages.venue_form.general.name_placeholder')" />
 				</div>
 			</div>
 		</b-form-group>
@@ -19,7 +19,7 @@
 			:label="$t('pages.venue_form.general.concessionaire')">
 			<div class="form-row">
 				<div class="col-lg-10">
-					<b-select v-model="venueConcessionaireId">
+					<b-form-select v-model="venueConcessionaireId">
 						<option :value="null">{{ $t('pages.venue_form.general.concessionaire_none') }}</option>
 						<option
 							v-for="item in concessionaireOptions"
@@ -27,7 +27,7 @@
 							:value="item.id">
 							{{ item.name }}
 						</option>
-					</b-select>
+					</b-form-select>
 				</div>
 			</div>
 		</b-form-group>
@@ -37,7 +37,7 @@
 			:label="$t('pages.venue_form.general.description')">
 			<div class="form-row">
 				<div class="col-lg-10">
-					<b-textarea v-model="venueDescription" rows="3" />
+					<b-form-textarea v-model="venueDescription" rows="3" />
 				</div>
 			</div>
 		</b-form-group>
@@ -50,7 +50,7 @@
 			<div class="form-row">
 				<div class="col-5 col-md-4 col-lg-3">
 					<b-input-group :append="$t('pages.venue_form.general.surface_size_unit')">
-						<b-input v-model.number="venueSurfaceSize" type="number" min="1" />
+						<b-form-input v-model.number="venueSurfaceSize" type="number" min="1" />
 					</b-input-group>
 				</div>
 			</div>
@@ -64,14 +64,14 @@
 			label-class="pt-0">
 			<div class="form-row">
 				<div class="col-lg-10">
-					<b-checkbox-group v-model="venueCategoryIds" stacked>
-						<b-checkbox
+					<b-form-checkbox-group v-model="venueCategoryIds" stacked>
+						<b-form-checkbox
 							v-for="category in categoryOptions"
 							:key="category.id"
 							:value="category.id">
 							{{ $t(`data.categories.${category.machine_name}`) }}
-						</b-checkbox>
-					</b-checkbox-group>
+						</b-form-checkbox>
+					</b-form-checkbox-group>
 				</div>
 			</div>
 		</b-form-group>
@@ -81,10 +81,10 @@
 			:label="$t('pages.venue_form.general.address')">
 			<div class="form-row">
 				<div class="col-lg-10 mb-2">
-					<b-input :placeholder="$t('pages.venue_form.general.address_line1_placeholder')" :value="venueAddress.line1" @input="onAddressInput('line1', $event)" />
+					<b-form-input :placeholder="$t('pages.venue_form.general.address_line1_placeholder')" :value="venueAddress.line1" @input="onAddressInput('line1', $event)" />
 				</div>
 				<div class="col-lg-10">
-					<b-input :placeholder="$t('pages.venue_form.general.address_line2_placeholder')" :value="venueAddress.line2" @input="onAddressInput('line2', $event)" />
+					<b-form-input :placeholder="$t('pages.venue_form.general.address_line2_placeholder')" :value="venueAddress.line2" @input="onAddressInput('line2', $event)" />
 				</div>
 			</div>
 		</b-form-group>
@@ -93,7 +93,7 @@
 			:label="$t('pages.venue_form.general.city')">
 			<div class="form-row">
 				<div class="col-lg-10">
-					<b-input :value="venueAddress.city" @input="onAddressInput('city', $event)" />
+					<b-form-input :value="venueAddress.city" @input="onAddressInput('city', $event)" />
 				</div>
 			</div>
 		</b-form-group>
@@ -102,10 +102,10 @@
 			:label="$t('pages.venue_form.general.zipcode_province')">
 			<div class="form-row">
 				<div class="col-3">
-					<b-input :placeholder="$t('pages.venue_form.general.zipcode_placeholder')" :value="venueAddress.postcode" @input="onAddressInput('postcode', $event)" />
+					<b-form-input :placeholder="$t('pages.venue_form.general.zipcode_placeholder')" :value="venueAddress.postcode" @input="onAddressInput('postcode', $event)" />
 				</div>
 				<div class="col-9 col-lg-7">
-					<b-input :placeholder="$t('pages.venue_form.general.province_placeholder')" :value="venueAddress.province" @input="onAddressInput('province', $event)" />
+					<b-form-input :placeholder="$t('pages.venue_form.general.province_placeholder')" :value="venueAddress.province" @input="onAddressInput('province', $event)" />
 				</div>
 			</div>
 		</b-form-group>
@@ -116,7 +116,7 @@
 			:invalid-feedback="$t('pages.venue_form.general.address_error')">
 			<div class="form-row">
 				<div class="col-lg-10">
-					<b-select v-model="venueCountry" :options="$countrySelectOptions" />
+					<b-form-select v-model="venueCountry" :options="$countrySelectOptions" />
 				</div>
 			</div>
 		</b-form-group>
@@ -153,14 +153,16 @@ import throttle from 'lodash/throttle'
 import extend from 'lodash/extend'
 import isEqual from 'lodash/isEqual'
 
-import BFormGroup from 'bootstrap-vue/es/components/form-group/form-group'
-import BFormText from 'bootstrap-vue/es/components/form/form-text'
-import BInput from 'bootstrap-vue/es/components/form-input/form-input'
-import BInputGroup from 'bootstrap-vue/es/components/input-group/input-group'
-import BTextarea from 'bootstrap-vue/es/components/form-textarea/form-textarea'
-import BSelect from 'bootstrap-vue/es/components/form-select/form-select'
-import BCheckbox from 'bootstrap-vue/es/components/form-checkbox/form-checkbox'
-import BCheckboxGroup from 'bootstrap-vue/es/components/form-checkbox/form-checkbox-group'
+import {
+	BFormGroup,
+	BFormText,
+	BFormInput,
+	BInputGroup,
+	BFormTextarea,
+	BFormSelect,
+	BFormCheckbox,
+	BFormCheckboxGroup
+} from 'bootstrap-vue'
 import { Map as PgMap, Marker as PgMapMarker } from 'vue2-google-maps'
 import formGroupProps from './form-group-props'
 
@@ -170,12 +172,12 @@ export default {
 	components: {
 		BFormGroup,
 		BFormText,
-		BInput,
+		BFormInput,
 		BInputGroup,
-		BTextarea,
-		BSelect,
-		BCheckbox,
-		BCheckboxGroup,
+		BFormTextarea,
+		BFormSelect,
+		BFormCheckbox,
+		BFormCheckboxGroup,
 		PgMap,
 		PgMapMarker
 	},

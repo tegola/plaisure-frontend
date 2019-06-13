@@ -5,10 +5,10 @@
 		<b-form-group v-bind="formGroupProps">
 			<div class="form-row">
 				<div class="col-lg-10">
-					<div><b-checkbox v-model="venueSportsBetting">{{ $t('pages.venue_form.services.sports_betting') }}</b-checkbox></div>
-					<div><b-checkbox v-model="venueVirtualBetting">{{ $t('pages.venue_form.services.virtual_betting') }}</b-checkbox></div>
-					<div><b-checkbox v-model="venueHorseBetting">{{ $t('pages.venue_form.services.horse_betting') }}</b-checkbox></div>
-					<div><b-checkbox v-model="venueArcadeRoulette">{{ $t('pages.venue_form.services.arcade_roulette') }}</b-checkbox></div>
+					<div><b-form-checkbox v-model="venueSportsBetting">{{ $t('pages.venue_form.services.sports_betting') }}</b-form-checkbox></div>
+					<div><b-form-checkbox v-model="venueVirtualBetting">{{ $t('pages.venue_form.services.virtual_betting') }}</b-form-checkbox></div>
+					<div><b-form-checkbox v-model="venueHorseBetting">{{ $t('pages.venue_form.services.horse_betting') }}</b-form-checkbox></div>
+					<div><b-form-checkbox v-model="venueArcadeRoulette">{{ $t('pages.venue_form.services.arcade_roulette') }}</b-form-checkbox></div>
 				</div>
 			</div>
 		</b-form-group>
@@ -20,7 +20,7 @@
 			:invalid-feedback="$t('pages.venue_form.services.invalid_value')">
 			<div class="form-row">
 				<div class="col-md-3 col-lg-3">
-					<b-input v-model.number="venueVltMachineCount" type="number" min="0" />
+					<b-form-input v-model.number="venueVltMachineCount" type="number" min="0" />
 				</div>
 			</div>
 		</b-form-group>
@@ -32,7 +32,7 @@
 			:invalid-feedback="$t('pages.venue_form.services.invalid_value')">
 			<div class="form-row">
 				<div class="col-md-3 col-lg-3">
-					<b-input v-model.number="venueAwpMachineCount" type="number" min="0" />
+					<b-form-input v-model.number="venueAwpMachineCount" type="number" min="0" />
 				</div>
 			</div>
 		</b-form-group>
@@ -44,7 +44,7 @@
 			:invalid-feedback="$t('pages.venue_form.services.invalid_value')">
 			<div class="form-row">
 				<div class="col-md-3 col-lg-3">
-					<b-input v-model.number="venueSeatingCapacity" type="number" min="0" />
+					<b-form-input v-model.number="venueSeatingCapacity" type="number" min="0" />
 				</div>
 			</div>
 		</b-form-group>
@@ -56,7 +56,7 @@
 			:invalid-feedback="$t('pages.venue_form.services.invalid_value')">
 			<div class="form-row">
 				<div class="col-md-3 col-lg-3">
-					<b-input v-model.number="venueParkingCapacity" type="number" min="0" />
+					<b-form-input v-model.number="venueParkingCapacity" type="number" min="0" />
 				</div>
 			</div>
 		</b-form-group>
@@ -67,14 +67,14 @@
 			label-class="pt-0">
 			<div class="form-row">
 				<div class="col-lg-10">
-					<b-checkbox-group v-model="venueVltPlatformIds" stacked>
-						<b-checkbox
+					<b-form-checkbox-group v-model="venueVltPlatformIds" stacked>
+						<b-form-checkbox
 							v-for="item in vltPlatformOptions"
 							:key="item.id"
 							:value="item.id">
 							{{ item.name }}
-						</b-checkbox>
-					</b-checkbox-group>
+						</b-form-checkbox>
+					</b-form-checkbox-group>
 				</div>
 			</div>
 		</b-form-group>
@@ -85,14 +85,14 @@
 			label-class="pt-0">
 			<div class="form-row">
 				<div class="col-lg-10">
-					<b-checkbox-group v-model="venueAmenities" stacked>
-						<b-checkbox
+					<b-form-checkbox-group v-model="venueAmenities" stacked>
+						<b-form-checkbox
 							v-for="item in amenities"
 							:key="item"
 							:value="item">
 							{{ $t(`pages.venue_form.services.amenities.${item}`) }}
-						</b-checkbox>
-					</b-checkbox-group>
+						</b-form-checkbox>
+					</b-form-checkbox-group>
 				</div>
 			</div>
 		</b-form-group>
@@ -103,10 +103,12 @@
 import { mapState } from 'vuex'
 import extend from 'lodash/extend'
 
-import BFormGroup from 'bootstrap-vue/es/components/form-group/form-group'
-import BInput from 'bootstrap-vue/es/components/form-input/form-input'
-import BCheckbox from 'bootstrap-vue/es/components/form-checkbox/form-checkbox'
-import BCheckboxGroup from 'bootstrap-vue/es/components/form-checkbox/form-checkbox-group'
+import {
+	BFormGroup,
+	BFormInput,
+	BFormCheckbox,
+	BFormCheckboxGroup
+} from 'bootstrap-vue'
 
 import formGroupProps from './form-group-props'
 
@@ -115,9 +117,9 @@ export default {
 
 	components: {
 		BFormGroup,
-		BInput,
-		BCheckbox,
-		BCheckboxGroup
+		BFormInput,
+		BFormCheckbox,
+		BFormCheckboxGroup
 	},
 
 	data() {

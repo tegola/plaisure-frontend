@@ -268,16 +268,18 @@ export default {
 		},
 
 		promoteButton() {
-			// Unregistered user
-			if (!this.$auth.user) {
+			const user = this.$auth.user
+
+			// Unregistered user or non owner
+			if (!user || !user.is_owner) {
 				return {
-					route: this.localePath('register'),
+					route: this.localePath('owners-register'),
 					label: this.$t('pages.home.promote.register')
 				}
 			}
 
 			// Logged in user with no venues
-			if (!this.$auth.user.venue_ids.length) {
+			if (!user.venue_ids.length) {
 				return {
 					route: this.localePath('venues-add'),
 					label: this.$t('pages.home.promote.add')

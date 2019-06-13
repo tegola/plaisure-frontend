@@ -1,12 +1,12 @@
 <template>
 	<div>
 		<b-form-group :class="showControls ? 'mb-2' : 'mb-0'">
-			<b-select v-model="mode">
+			<b-form-select v-model="mode">
 				<option value="always">{{ $t('pages.venue_form.hours.always') }}</option>
 				<option value="full">{{ $t('pages.venue_form.hours.full') }}</option>
 				<option value="split">{{ $t('pages.venue_form.hours.split') }}</option>
 				<option value="closed">{{ $t('pages.venue_form.hours.closed') }}</option>
-			</b-select>
+			</b-form-select>
 		</b-form-group>
 
 		<div v-if="showControls" class="form-row">
@@ -14,16 +14,16 @@
 				:label="showSecondaryControls ? $t('pages.venue_form.hours.morning') : $t('pages.venue_form.hours.from_to')"
 				class="col-sm-6">
 				<b-input-group>
-					<b-select
+					<b-form-select
 						:value="value[0]"
 						@change="onTimeChange(0, $event)">
 						<option v-for="(option, index) in options" :key="index">{{ option }}</option>
-					</b-select>
-					<b-select
+					</b-form-select>
+					<b-form-select
 						:value="value[1]"
 						@change="onTimeChange(1, $event)">
 						<option v-for="(option, index) in options" :key="index">{{ option }}</option>
-					</b-select>
+					</b-form-select>
 				</b-input-group>
 			</b-form-group>
 			<b-form-group
@@ -31,16 +31,16 @@
 				:label="$t('pages.venue_form.hours.afternoon')"
 				class="col-sm-6">
 				<b-input-group>
-					<b-select
+					<b-form-select
 						:value="value[2]"
 						@change="onTimeChange(2, $event)">
 						<option v-for="(option, index) in options" :key="index">{{ option }}</option>
-					</b-select>
-					<b-select
+					</b-form-select>
+					<b-form-select
 						:value="value[3]"
 						@change="onTimeChange(3, $event)">
 						<option v-for="(option, index) in options" :key="index">{{ option }}</option>
-					</b-select>
+					</b-form-select>
 				</b-input-group>
 			</b-form-group>
 		</div>
@@ -48,9 +48,7 @@
 </template>
 
 <script>
-import BFormGroup from 'bootstrap-vue/es/components/form-group/form-group'
-import BInputGroup from 'bootstrap-vue/es/components/input-group/input-group'
-import BSelect from 'bootstrap-vue/es/components/form-select/form-select'
+import { BFormGroup, BInputGroup, BFormSelect } from 'bootstrap-vue'
 
 // Generate options
 const options = []
@@ -72,7 +70,7 @@ export default {
 	components: {
 		BFormGroup,
 		BInputGroup,
-		BSelect
+		BFormSelect
 	},
 
 	props: {

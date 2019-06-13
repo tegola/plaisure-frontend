@@ -4,8 +4,12 @@
 
 		<div class="container my-5">
 			<div class="text-center mb-5">
-				<h2>{{ $t('pages.login.title') }}</h2>
-				<p class="lead text-muted">{{ $t('pages.login.intro', { name: $constants.APP_NAME }) }}</p>
+				<h2 :class="$mq === 'xs' || $mq === 'constrained' ? 'h4' : null">
+					{{ $t('pages.login.title') }}
+				</h2>
+				<p class="text-muted" :class="$mq === 'comfortable' ? 'lead' : null">
+					{{ $t('pages.login.intro', { name: $constants.APP_NAME }) }}
+				</p>
 			</div>
 
 			<div class="row">
@@ -16,14 +20,14 @@
 							:label="$t('pages.login.email')"
 							:state="!$v.model.email.$error"
 							:invalid-feedback="$t('pages.login.email_error')">
-							<b-input v-model="model.email" :disabled="loading" type="email" autofocus />
+							<b-form-input v-model="model.email" :disabled="loading" type="email" autofocus />
 						</b-form-group>
 
 						<b-form-group
 							:label="$t('pages.login.password')"
 							:state="!$v.model.password.$error"
 							:invalid-feedback="$t('pages.login.password_error')">
-							<b-input v-model="model.password" :disabled="loading" type="password" />
+							<b-form-input v-model="model.password" :disabled="loading" type="password" />
 						</b-form-group>
 
 						<b-form-group>
@@ -54,8 +58,7 @@
 </template>
 
 <script>
-import BFormGroup from 'bootstrap-vue/es/components/form-group/form-group'
-import BInput from 'bootstrap-vue/es/components/form-input/form-input'
+import { BFormGroup, BFormInput } from 'bootstrap-vue'
 import { validationMixin } from 'vuelidate'
 import { required, email } from 'vuelidate/lib/validators'
 
@@ -66,7 +69,7 @@ export default {
 
 	components: {
 		BFormGroup,
-		BInput
+		BFormInput
 	},
 
 	mixins: [validationMixin],

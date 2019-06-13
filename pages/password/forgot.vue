@@ -4,8 +4,12 @@
 
 		<div class="container my-5">
 			<div class="text-center mb-5">
-				<h2>{{ $t('pages.forgot_password.title') }}</h2>
-				<p class="lead text-muted">{{ $t('pages.forgot_password.intro') }}</p>
+				<h2 :class="$mq === 'xs' || $mq === 'constrained' ? 'h4' : null">
+					{{ $t('pages.forgot_password.title') }}
+				</h2>
+				<p class="text-muted" :class="$mq === 'comfortable' ? 'lead' : null">
+					{{ $t('pages.forgot_password.intro') }}
+				</p>
 			</div>
 
 			<div class="row">
@@ -16,7 +20,7 @@
 							:label="$t('pages.forgot_password.email')"
 							:state="!$v.model.email.$error"
 							:invalid-feedback="$t('pages.forgot_password.email_error')">
-							<b-input v-model="model.email" :disabled="loading" type="email" autofocus />
+							<b-form-input v-model="model.email" :disabled="loading" type="email" autofocus />
 						</b-form-group>
 
 						<b-form-group>
@@ -38,8 +42,7 @@
 </template>
 
 <script>
-import BFormGroup from 'bootstrap-vue/es/components/form-group/form-group'
-import BInput from 'bootstrap-vue/es/components/form-input/form-input'
+import { BFormGroup, BFormInput } from 'bootstrap-vue'
 import { validationMixin } from 'vuelidate'
 import { required, email } from 'vuelidate/lib/validators'
 
@@ -50,7 +53,7 @@ export default {
 
 	components: {
 		BFormGroup,
-		BInput
+		BFormInput
 	},
 
 	mixins: [validationMixin],

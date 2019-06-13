@@ -88,12 +88,14 @@
 </template>
 
 <script>
-import BInputGroup from 'bootstrap-vue/es/components/input-group/input-group'
-import BInputGroupText from 'bootstrap-vue/es/components/input-group/input-group-text'
-import BInputGroupAppend from 'bootstrap-vue/es/components/input-group/input-group-append'
-import BNav from 'bootstrap-vue/es/components/nav/nav'
-import BNavbarNav from 'bootstrap-vue/es/components/navbar/navbar-nav'
-import BNavItem from 'bootstrap-vue/es/components/nav/nav-item'
+import {
+	BInputGroup,
+	BInputGroupText,
+	BInputGroupAppend,
+	BNav,
+	BNavbarNav,
+	BNavItem
+} from 'bootstrap-vue'
 
 import PgLogo from './logo'
 import PgIcon from './icon'

@@ -22,7 +22,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import BFormGroup from 'bootstrap-vue/es/components/form-group/form-group'
+import { BFormGroup } from 'bootstrap-vue'
 
 import PgVenueFormHourFieldset from './hour-fieldset'
 import formGroupProps from './form-group-props'

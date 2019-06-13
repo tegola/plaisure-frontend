@@ -20,7 +20,7 @@
 									:label="$t('pages.venue_claim.code')"
 									:invalid-feedback="$t('pages.venue_claim.code_error')"
 									label-sr-only>
-									<b-input
+									<b-form-input
 										ref="input"
 										v-model.trim="model.code"
 										:placeholder="$t('pages.venue_claim.code_placeholder')"
@@ -88,9 +88,7 @@
 <script>
 import { validationMixin } from 'vuelidate'
 import { requiredIf } from 'vuelidate/lib/validators'
-import BFormGroup from 'bootstrap-vue/es/components/form-group/form-group'
-import BInput from 'bootstrap-vue/es/components/form-input/form-input'
-
+import { BFormGroup, BFormInput } from 'bootstrap-vue'
 import PgVenueClaimPageItem from './item'
 
 export default {
@@ -100,7 +98,7 @@ export default {
 
 	components: {
 		BFormGroup,
-		BInput,
+		BFormInput,
 		PgVenueClaimPageItem
 	},
 

@@ -1,0 +1,212 @@
+<template>
+	<div>
+		<h3 class="h4">{{ $t('pages.user_billing.title') }}</h3>
+		<p class="text-muted">{{ $t('pages.user_billing.intro') }}</p>
+
+		<form method="post" class="mt-4" @submit.prevent="submit">
+			<b-form-group
+				:state="!$v.model.legal_name.$error"
+				:label="$t('pages.user_billing.legal_name')"
+				:invalid-feedback="$t('pages.user_billing.legal_name_error')">
+				<b-form-input v-model="model.legal_name" type="text" autocomplete="organization" />
+			</b-form-group>
+			<b-form-group
+				:state="!$v.model.address_line1.$error"
+				:label="$t('pages.user_billing.address')"
+				:invalid-feedback="$t('pages.user_billing.address_error')">
+				<b-form-input v-model="model.address_line1" type="text" autocomplete="address-line1" class="mb-2" />
+				<b-form-input v-model="model.address_line2" type="text" autocomplete="address-line2" />
+			</b-form-group>
+			<div class="form-row">
+				<div class="col-sm-4">
+					<b-form-group
+						:state="!$v.model.address_postcode.$error"
+						:label="$t('pages.user_billing.postcode')"
+						:invalid-feedback="$t('pages.user_billing.postcode_error')">
+						<b-form-input v-model="model.address_postcode" type="text" autocomplete="postal-code" />
+					</b-form-group>
+				</div>
+				<div class="col-sm-8">
+					<b-form-group
+						:state="!$v.model.address_city.$error"
+						:label="$t('pages.user_billing.city')"
+						:invalid-feedback="$t('pages.user_billing.city_error')">
+						<b-form-input v-model="model.address_city" type="text" autocomplete="address-level2" />
+					</b-form-group>
+				</div>
+			</div>
+			<div class="form-row">
+				<div class="col-sm">
+					<b-form-group
+						:state="!$v.model.address_region.$error"
+						:label="$t('pages.user_billing.region')"
+						:invalid-feedback="$t('pages.user_billing.region_error')">
+						<b-form-input v-model="model.address_region" type="text" autocomplete="address-level1" />
+					</b-form-group>
+				</div>
+				<div class="col-sm">
+					<b-form-group
+						:state="!$v.model.country.$error"
+						:label="$t('pages.user_billing.country')"
+						:invalid-feedback="$t('pages.user_billing.country_error')">
+						<b-form-select v-model="model.country" :options="$countrySelectOptions" />
+					</b-form-group>
+				</div>
+			</div>
+			<b-form-group
+				:state="!$v.model.vat_number.$error"
+				:label="$t('pages.user_billing.vat_number')"
+				:invalid-feedback="$t('pages.user_billing.vat_number_error')">
+				<b-form-input v-model="model.vat_number" type="text" />
+			</b-form-group>
+
+			<b-form-group class="mt-3 text-right">
+				<pg-button
+					ref="submit"
+					:block="$mq == 'constrained'"
+					:loading="loading"
+					type="submit"
+					variant="primary">
+					{{ $t('common.actions.save') }}
+				</pg-button>
+			</b-form-group>
+		</form>
+	</div>
+</template>
+
+<script>
+import { BFormGroup, BFormInput, BFormSelect } from 'bootstrap-vue'
+import { validationMixin } from 'vuelidate'
+import { requiredIf } from 'vuelidate/lib/validators'
+
+export default {
+	name: 'PgUserBillingPage',
+
+	components: {
+		BFormGroup,
+		BFormInput,
+		BFormSelect
+	},
+
+	mixins: [validationMixin],
+
+	data() {
+		return {
+			loading: false,
+			model: {}
+		}
+	},
+
+	computed: {
+		hasAnyLegalField() {
+			const m = this.model
+			const hasAny = [
+				m.legal_name,
+				m.address_line1,
+				m.address_line2,
+				m.address_city,
+				m.address_postcode,
+				m.address_region,
+				m.country,
+				m.vat_number
+			].some(item => item)
+
+			return hasAny
+		}
+	},
+
+	async asyncData({ $axios }) {
+		const { user } = await $axios.$get('/user/edit')
+
+		return {
+			model: {
+				locale: user.locale,
+				legal_name: user.legal_name,
+				address_line1: user.address_line1,
+				address_line2: user.address_line2,
+				address_city: user.address_city,
+				address_postcode: user.address_postcode,
+				address_region: user.address_region,
+				country: user.country,
+				vat_number: user.vat_number
+			}
+		}
+	},
+
+	head() {
+		return {
+			title: this.$t('pages.user_billing.title')
+		}
+	},
+
+	validations: {
+		model: {
+			legal_name: {
+				required: requiredIf(function() {
+					return this.hasAnyLegalField
+				})
+			},
+			address_line1: {
+				required: requiredIf(function() {
+					return this.hasAnyLegalField
+				})
+			},
+			address_city: {
+				required: requiredIf(function() {
+					return this.hasAnyLegalField
+				})
+			},
+			address_postcode: {
+				required: requiredIf(function() {
+					return this.hasAnyLegalField
+				})
+			},
+			address_region: {
+				required: requiredIf(function() {
+					return this.hasAnyLegalField
+				})
+			},
+			country: {
+				required: requiredIf(function() {
+					return this.hasAnyLegalField
+				})
+			},
+			vat_number: {
+				required: requiredIf(function() {
+					return this.hasAnyLegalField
+				})
+			}
+		}
+	},
+
+	methods: {
+		async submit() {
+			// Validate
+			this.$v.$touch()
+
+			// Stop if there are errors
+			if (this.$v.$error) return
+
+			this.loading = true
+
+			try {
+				await this.$axios.post('/user/billing', this.model)
+				await this.$auth.fetchUser()
+
+				// Show button as successful
+				this.$refs.submit.showSuccess()
+			} catch (err) {
+				this.$bvModal.msgBoxOk(this.$t('common.status.save_error'), {
+					centered: true,
+					headerTextVariant: 'danger',
+					title: this.$t('common.status.error'),
+					okTitle: this.$t('common.actions.close'),
+					okVariant: 'danger'
+				})
+			} finally {
+				this.loading = false
+			}
+		}
+	}
+}
+</script>

@@ -1,83 +1,56 @@
 <template>
-	<div class="pg-user-page">
-		<pg-navbar variant="dark" />
+	<div class="pg-user-venues-page">
+		<h3 class="h4">{{ $t('pages.user_venues.title') }}</h3>
+		<p class="text-muted">
+			<template v-if="venues.length">{{ $t('pages.user_venues.intro_edit') }}</template>
+			<template v-else>{{ $t('pages.user_venues.intro_first') }}</template>
+		</p>
 
-		<div class="container my-5">
-			<div class="text-center">
-				<h3>{{ $t('pages.user.title', { name: $auth.user.name }) }}</h3>
-				<p>{{ $t('pages.user.intro') }}</p>
-				<pg-button :to="localePath('user-edit')" size="sm">{{ $t('pages.user.actions.edit_profile') }}</pg-button>
-				<pg-button size="sm" @click="$auth.logout()">{{ $t('pages.user.actions.logout') }}</pg-button>
-			</div>
-
-			<div v-if="venues.length" class="row mt-5">
-				<div v-for="venue in venues" :key="venue.id" class="col-md-6 col-xl-4 mb-4">
-					<nuxt-link :to="localePath({ name: 'venues-id-edit', params: { id: venue.id }})" class="text-reset">
-						<pg-venue-grid-item
-							:venue="venue"
-							:show-highlight="false"
-							class="mb-2"
-						/>
-					</nuxt-link>
-					<div class="d-flex justify-content-between">
-						<div class="flex-grow-1 mr-2">
-							<pg-button
-								:to="localePath({ name: 'venues-id-edit', params: { id: venue.id }})"
-								block
-								variant="primary">
-								{{ $t('common.actions.edit') }}
-							</pg-button>
-						</div>
-						<div class="flex-grow-1">
-							<pg-button
-								:to="localePath({ name: 'venues-id', params: { id: venue.id }})"
-								block
-								icon="arrow-right"
-								icon-position="right"
-								class="d-inline-flex justify-content-between align-items-center">
-								{{ $t('pages.user.view') }}
-							</pg-button>
-						</div>
+		<b-list-group v-if="venues.length" flush class="mt-4">
+			<pg-user-venue-list-item
+				v-for="venue in venues"
+				:key="venue.id"
+				:to="localePath({ name: 'venues-id-edit', params: { id: venue.id }})"
+				:venue="venue"
+				class="pg-user-venues-page__list-item "
+			/>
+			<b-list-group-item
+				:to="localePath('venues-add')"
+				class="border-bottom-0 pg-user-venues-page__list-item pg-user-venues-page__add-list-item">
+				<div class="row align-items-center">
+					<div class="col-4 col-sm-5 col-md-4">
+						<pg-image-frame content-class="pg-user-venues-page__add-list-item-content">
+							<pg-icon icon="plus" class="pg-user-venues-page__add-list-item-icon" />
+						</pg-image-frame>
+					</div>
+					<div class="col font-weight-bold">
+						<template v-if="venues.length">{{ $t('pages.user_venues.add_another') }}</template>
+						<template v-else>{{ $t('pages.user_venues.add_first') }}</template>
 					</div>
 				</div>
-				<div class="col-md-6 col-xl-4 mb-4">
-					<nuxt-link :to="localePath('venues-add')" class="card pg-user-page__add-card">
-						<div class="card-body pg-user-page__add-card-body">
-							<pg-icon icon="plus" class="pg-user-page__add-card-icon" />
-							{{ $t('pages.user.add_another') }}
-						</div>
-					</nuxt-link>
-				</div>
-			</div>
-
-			<pg-no-items v-if="!venues.length" :title="$t('pages.user.no_items.title')" class="py-5 my-5">
-				<i18n path="pages.user.no_items.message">
-					<nuxt-link :to="localePath('venues-add')" place="action">
-						<strong>{{ $t('pages.user.no_items.message_action') }}</strong>
-					</nuxt-link>
-				</i18n>
-			</pg-no-items>
-		</div>
-
-		<pg-page-footer />
+			</b-list-group-item>
+		</b-list-group>
 	</div>
 </template>
 
 <script>
-import PgNoItems from '@/components/no-items'
-import PgVenueGridItem from '@/components/venue-grid-item'
+import { BListGroup, BListGroupItem } from 'bootstrap-vue'
+import PgImageFrame from '@/components/image-frame'
+import PgUserVenueListItem from '@/components/pages/user/venue-list-item'
 
 export default {
-	name: 'PgUserDetailPage',
+	name: 'PgUserVenuesPage',
 
 	components: {
-		PgNoItems,
-		PgVenueGridItem
+		BListGroup,
+		BListGroupItem,
+		PgUserVenueListItem,
+		PgImageFrame
 	},
 
 	head() {
 		return {
-			title: this.$t('pages.user.meta_title')
+			title: this.$t('pages.user_venues.title')
 		}
 	},
 
@@ -88,38 +61,35 @@ export default {
 </script>
 
 <style lang="scss">
-.pg-user-page {
+.pg-user-venues-page {
 	// Add another venue
-	&__add-card {
-		height: 100%;
-		text-align: center;
+	&__list-item {
+		transition: all 0.15s;
 		color: inherit;
-		transition: 0.15s;
+
+		&:first-child {
+			border-top: 0;
+		}
+	}
+	&__list-item:hover {
 		color: $palette-dark-green-500;
 	}
-	&__add-card-body {
+	&__add-list-item-content {
 		display: flex;
-		flex-direction: column;
 		align-items: center;
 		justify-content: center;
 	}
-	&__add-card-icon {
+	&__add-list-item-icon {
 		width: $spacer * 3;
 		height: $spacer * 3;
 		padding: $spacer / 2;
 		border-radius: 50%;
 		margin-bottom: $spacer * 0.25;
+		color: $palette-dark-green-500;
 		background-color: $palette-green-100;
 		transition: 0.15s;
 	}
-
-	// Add another venue
-	&__add-card:hover {
-		border-color: transparent;
-		background-color: $palette-green-100;
-		color: $palette-dark-green-500;
-	}
-	&__add-card:hover &__add-card-icon {
+	&__add-list-item:hover &__add-list-item-icon {
 		background-color: $palette-dark-green-500;
 		color: $palette-green-100;
 	}

@@ -1,29 +1,46 @@
 <template>
-	<b-button v-bind="$attrs" :disabled="isDisabled" v-on="$listeners">
-		<!-- Left icon (used also as loader) -->
-		<pg-icon
-			v-if="(icon && iconPosition === 'left') || loading"
-			:icon="loading ? 'circle-outline-notch' : icon"
-			:spinning="loading"
-			class="pg-button__icon"
-		/>
+	<b-button
+		:disabled="isDisabled"
+		:class="classes"
+		v-bind="$attrs"
+		v-on="$listeners">
+		<!-- Content (when not loading and not showing success) -->
+		<div class="pg-button__content">
+			<!-- Left icon -->
+			<pg-icon
+				v-if="(icon && iconPosition === 'left') "
+				:icon="icon"
+			/>
 
-		<!-- Content -->
-		<slot v-if="!loading">
-			{{ label }}
-		</slot>
+			<!-- Content -->
+			<slot>{{ label }}</slot>
 
-		<!-- Right icon -->
-		<pg-icon
-			v-if="(icon && iconPosition === 'right') && !loading"
-			:icon="icon"
-			class="pg-button__icon"
-		/>
+			<!-- Right icon -->
+			<pg-icon
+				v-if="(icon && iconPosition === 'right')"
+				:icon="icon"
+			/>
+		</div>
+
+		<!-- Loading or success icon -->
+		<div v-if="loading || successful" class="pg-button__overlay">
+			<pg-icon
+				v-if="loading"
+				icon="circle-outline-notch"
+				spinning
+				class="pg-button__overlay-icon"
+			/>
+			<pg-icon
+				v-if="!loading && successful"
+				icon="checkmark"
+				class="pg-button__overlay-icon"
+			/>
+		</div>
 	</b-button>
 </template>
 
 <script>
-import BButton from 'bootstrap-vue/es/components/button/button'
+import { BButton } from 'bootstrap-vue'
 import PgIcon from '@/components/icon'
 
 export default {
@@ -60,19 +77,60 @@ export default {
 		}
 	},
 
+	data() {
+		return {
+			successful: false
+		}
+	},
+
 	computed: {
+		classes() {
+			return {
+				'pg-button': true,
+				'pg-button--loading': this.loading,
+				'pg-button--successful': this.successful
+			}
+		},
+
 		isDisabled() {
 			return this.disabled || this.loading
 		}
 	},
 
-	watch: {
-		loading() {
-			// Keep width when loading
-			const el = this.$el
-
-			el.style.width = this.loading ? `${el.offsetWidth}px` : null
+	methods: {
+		showSuccess(time = 1500) {
+			this.successful = true
+			setTimeout(() => {
+				this.successful = false
+			}, time)
 		}
 	}
 }
 </script>
+
+<style lang="scss">
+.pg-button {
+	position: relative;
+
+	&__content {
+		transition: opacity 0.2s;
+	}
+	&__overlay {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	&--loading &,
+	&--successful & {
+		&__content {
+			opacity: 0;
+		}
+	}
+}
+</style>

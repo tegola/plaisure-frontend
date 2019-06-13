@@ -69,7 +69,7 @@
 
 						<template v-if="hasExistingBilling">
 							<b-form-group>
-								<b-radio v-model="model.new_billing" :value="false">
+								<b-form-radio v-model="model.new_billing" :value="false">
 									{{ $t('pages.venue_plan.billing.current') }}
 									<b-collapse id="existing-billing-collapse" :visible="!model.new_billing">
 										<div class="pt-2 small">
@@ -85,10 +85,10 @@
 											<div>{{ $t('pages.venue_plan.billing.vat_number') }}: {{ user.vat_number }}</div>
 										</div>
 									</b-collapse>
-								</b-radio>
+								</b-form-radio>
 							</b-form-group>
 							<b-form-group>
-								<b-radio v-model="model.new_billing" :value="true">
+								<b-form-radio v-model="model.new_billing" :value="true">
 									{{ $t('pages.venue_plan.billing.new') }}
 									<b-collapse id="new-billing-collapse" :visible="showNewBillingWarning">
 										<div class="pt-2 small">
@@ -97,7 +97,7 @@
 											</i18n>
 										</div>
 									</b-collapse>
-								</b-radio>
+								</b-form-radio>
 							</b-form-group>
 						</template>
 
@@ -106,7 +106,7 @@
 								:state="!$v.model.legal_name.$error"
 								:label="$t('pages.venue_plan.billing.legal_name')"
 								:invalid-feedback="$t('pages.venue_plan.billing.legal_name_error')">
-								<b-input
+								<b-form-input
 									v-model="model.legal_name"
 									type="text"
 									autocomplete="organization"
@@ -117,8 +117,8 @@
 								:state="!$v.model.address_line1.$error"
 								:label="$t('pages.venue_plan.billing.address')"
 								:invalid-feedback="$t('pages.venue_plan.billing.address_error')">
-								<b-input v-model="model.address_line1" type="text" autocomplete="address-line1" class="mb-2" />
-								<b-input v-model="model.address_line2" type="text" autocomplete="address-line2" />
+								<b-form-input v-model="model.address_line1" type="text" autocomplete="address-line1" class="mb-2" />
+								<b-form-input v-model="model.address_line2" type="text" autocomplete="address-line2" />
 							</b-form-group>
 							<div class="form-row">
 								<div class="col-sm-4">
@@ -126,7 +126,7 @@
 										:state="!$v.model.address_postcode.$error"
 										:label="$t('pages.venue_plan.billing.postcode')"
 										:invalid-feedback="$t('pages.venue_plan.billing.postcode_error')">
-										<b-input v-model="model.address_postcode" type="text" autocomplete="postal-code" />
+										<b-form-input v-model="model.address_postcode" type="text" autocomplete="postal-code" />
 									</b-form-group>
 								</div>
 								<div class="col-sm-8">
@@ -134,7 +134,7 @@
 										:state="!$v.model.address_city.$error"
 										:label="$t('pages.venue_plan.billing.city')"
 										:invalid-feedback="$t('pages.venue_plan.billing.city_error')">
-										<b-input v-model="model.address_city" type="text" autocomplete="address-level2" />
+										<b-form-input v-model="model.address_city" type="text" autocomplete="address-level2" />
 									</b-form-group>
 								</div>
 							</div>
@@ -144,7 +144,7 @@
 										:state="!$v.model.address_region.$error"
 										:label="$t('pages.venue_plan.billing.region')"
 										:invalid-feedback="$t('pages.venue_plan.billing.region_error')">
-										<b-input v-model="model.address_region" type="text" autocomplete="address-level1" />
+										<b-form-input v-model="model.address_region" type="text" autocomplete="address-level1" />
 									</b-form-group>
 								</div>
 								<div class="col-sm">
@@ -152,7 +152,7 @@
 										:state="!$v.model.country.$error"
 										:label="$t('pages.venue_plan.billing.country')"
 										:invalid-feedback="$t('pages.venue_plan.billing.country_error')">
-										<b-select v-model="model.country" :options="$countrySelectOptions" />
+										<b-form-select v-model="model.country" :options="$countrySelectOptions" />
 									</b-form-group>
 								</div>
 							</div>
@@ -160,7 +160,7 @@
 								:state="!$v.model.vat_number.$error"
 								:label="$t('pages.venue_plan.billing.vat_number')"
 								:invalid-feedback="$t('pages.venue_plan.billing.vat_number_error')">
-								<b-input v-model="model.vat_number" type="text" />
+								<b-form-input v-model="model.vat_number" type="text" />
 							</b-form-group>
 						</b-collapse>
 
@@ -172,7 +172,7 @@
 
 						<template v-if="hasExistingPayment">
 							<b-form-group>
-								<b-radio v-model="model.new_payment" :value="false">
+								<b-form-radio v-model="model.new_payment" :value="false">
 									{{ $t('pages.venue_plan.payment.current') }}
 									<b-collapse id="existing-payment-collapse" :visible="!model.new_payment">
 										<div class="pt-2 small">
@@ -181,10 +181,10 @@
 											<div>{{ $t('pages.venue_plan.payment.card_expiration') }}: {{ user.card_expiry_month }}/{{ user.card_expiry_year }}</div>
 										</div>
 									</b-collapse>
-								</b-radio>
+								</b-form-radio>
 							</b-form-group>
 							<b-form-group>
-								<b-radio v-model="model.new_payment" :value="true">
+								<b-form-radio v-model="model.new_payment" :value="true">
 									{{ $t('pages.venue_plan.payment.new') }}
 									<b-collapse id="new-payment-collapse" :visible="showNewPaymentWarning">
 										<div class="pt-2 small">
@@ -193,7 +193,7 @@
 											</i18n>
 										</div>
 									</b-collapse>
-								</b-radio>
+								</b-form-radio>
 							</b-form-group>
 						</template>
 
@@ -212,7 +212,7 @@
 								:state="!$v.model.card_holder_name.$error"
 								:label="$t('pages.venue_plan.payment.card_holder_name')"
 								:invalid-feedback="$t('pages.venue_plan.payment.card_holder_name_error')">
-								<b-input v-model="model.card_holder_name" type="text" autocomplete="cc-name" />
+								<b-form-input v-model="model.card_holder_name" type="text" autocomplete="cc-name" />
 							</b-form-group>
 						</b-collapse>
 
@@ -231,7 +231,6 @@
 
 				<b-modal
 					v-model="confirmModalOpen"
-					lazy
 					centered
 					hide-header-close
 					no-close-on-backdrop
@@ -271,16 +270,19 @@
 </template>
 
 <script>
+import {
+	BFormGroup,
+	BFormInput,
+	BFormSelect,
+	BFormRadio,
+	BCollapse
+} from 'bootstrap-vue'
+
 import { validationMixin } from 'vuelidate'
 import { requiredIf } from 'vuelidate/lib/validators'
 import { getParamByParam } from 'iso-country-currency'
 import scrollIntoView from '@/utilities/scroll-into-view'
 import extend from 'lodash/extend'
-import BFormGroup from 'bootstrap-vue/es/components/form-group/form-group'
-import BInput from 'bootstrap-vue/es/components/form-input/form-input'
-import BSelect from 'bootstrap-vue/es/components/form-select/form-select'
-import BRadio from 'bootstrap-vue/es/components/form-radio/form-radio'
-import BCollapse from 'bootstrap-vue/es/components/collapse/collapse'
 import PgSubscriptionCard from '@/components/subscription-card'
 import { Card as StripeCard, createToken } from 'vue-stripe-elements-plus'
 
@@ -289,9 +291,9 @@ export default {
 
 	components: {
 		BFormGroup,
-		BInput,
-		BSelect,
-		BRadio,
+		BFormInput,
+		BFormSelect,
+		BFormRadio,
 		BCollapse,
 		PgSubscriptionCard,
 		StripeCard

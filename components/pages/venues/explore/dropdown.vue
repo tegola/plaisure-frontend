@@ -1,10 +1,10 @@
 <script>
-import bDropdown from 'bootstrap-vue/es/components/dropdown/dropdown.js'
+import { BDropdown } from 'bootstrap-vue'
 
 export default {
 	name: 'PgExplorePageDropdown',
 
-	mixins: [bDropdown],
+	mixins: [BDropdown],
 
 	props: {
 		autoHide: {
@@ -19,7 +19,7 @@ export default {
 			if (vm instanceof MouseEvent && !this.autoHide) return
 
 			// close when other dropdown on page is opened
-			bDropdown.mixins[1].methods.rootCloseListener.call(this, vm)
+			BDropdown.mixins[1].methods.rootCloseListener.call(this, vm)
 		}
 	}
 }

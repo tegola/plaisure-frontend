@@ -103,7 +103,7 @@
 <script>
 import { mapState } from 'vuex'
 import draggable from 'vuedraggable'
-import BProgress from 'bootstrap-vue/es/components/progress/progress'
+import { BProgress } from 'bootstrap-vue'
 import VueUploader from 'vue-upload-component' // FIXME: Make custom component
 
 import PgImageFrame from '@/components/image-frame'

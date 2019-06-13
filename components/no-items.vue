@@ -1,9 +1,15 @@
 <template>
-	<div class="text-muted text-center">
-		<h5>{{ title }}</h5>
-		<p v-if="$slots.default || subtitle" class="mb-0">
-			<slot>{{ subtitle }}</slot>
-		</p>
+	<div class="pg-no-items">
+		<pg-icon
+			v-if="icon"
+			:icon="icon"
+			class="pg-no-items__icon"
+		/>
+
+		<h5 class="pg-no-items__title">{{ title }}</h5>
+		<p v-if="subtitle" class="pg-no-items__subtitle">{{ subtitle }}</p>
+
+		<slot />
 	</div>
 </template>
 
@@ -12,6 +18,10 @@ export default {
 	name: 'PgNoItems',
 
 	props: {
+		icon: {
+			type: String,
+			default: null
+		},
 		title: {
 			type: String,
 			default: function() {
@@ -25,3 +35,16 @@ export default {
 	}
 }
 </script>
+
+<style lang="scss">
+.pg-no-items {
+	color: $text-muted;
+	text-align: center;
+
+	&__icon {
+		width: $icon-size-base * 4;
+		height: $icon-size-base * 4;
+		margin-bottom: $spacer / 2;
+	}
+}
+</style>

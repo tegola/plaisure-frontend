@@ -4,8 +4,12 @@
 
 		<div class="container my-5">
 			<div class="text-center mb-5">
-				<h2>{{ $t('pages.reset_password.title') }}</h2>
-				<p class="lead text-muted">{{ $t('pages.reset_password.intro') }}</p>
+				<h2 :class="$mq === 'xs' || $mq === 'constrained' ? 'h4' : null">
+					{{ $t('pages.reset_password.title') }}
+				</h2>
+				<p class="text-muted" :class="$mq === 'comfortable' ? 'lead' : null">
+					{{ $t('pages.reset_password.intro') }}
+				</p>
 			</div>
 
 			<div class="row">
@@ -17,21 +21,21 @@
 							:label="$t('pages.reset_password.email')"
 							:state="!$v.model.email.$error"
 							:invalid-feedback="$t('pages.reset_password.email_error')">
-							<b-input :value="model.email" type="email" plaintext readonly />
+							<b-form-input :value="model.email" type="email" plaintext readonly />
 						</b-form-group>
 
 						<b-form-group
 							:label="$t('pages.reset_password.password')"
 							:state="!$v.model.password.$error"
 							:invalid-feedback="$t('pages.reset_password.password_error')">
-							<b-input v-model="model.password" :disabled="loading" type="password" autofocus />
+							<b-form-input v-model="model.password" :disabled="loading" type="password" autofocus />
 						</b-form-group>
 
 						<b-form-group
 							:label="$t('pages.reset_password.password_confirmation')"
 							:state="!$v.model.password_confirmation.$error"
 							:invalid-feedback="$t('pages.reset_password.password_confirmation_error')">
-							<b-input v-model="model.password_confirmation" :disabled="loading" type="password" />
+							<b-form-input v-model="model.password_confirmation" :disabled="loading" type="password" />
 						</b-form-group>
 
 						<b-form-group>
@@ -53,8 +57,7 @@
 </template>
 
 <script>
-import BFormGroup from 'bootstrap-vue/es/components/form-group/form-group'
-import BInput from 'bootstrap-vue/es/components/form-input/form-input'
+import { BFormGroup, BFormInput } from 'bootstrap-vue'
 import { validationMixin } from 'vuelidate'
 import { required, email, minLength, sameAs } from 'vuelidate/lib/validators'
 
@@ -65,7 +68,7 @@ export default {
 
 	components: {
 		BFormGroup,
-		BInput
+		BFormInput
 	},
 
 	mixins: [validationMixin],

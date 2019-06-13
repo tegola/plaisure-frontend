@@ -64,7 +64,7 @@
 						</i18n>
 						<p class="text-center my-5">
 							<nuxt-link v-if="$auth.user" :to="localePath('user')" class="btn btn-lg btn-primary">{{ $t('pages.promote.manage') }}</nuxt-link>
-							<nuxt-link v-else :to="localePath('register')" class="btn btn-lg btn-primary">{{ $t('pages.promote.register') }}</nuxt-link>
+							<nuxt-link v-else :to="localePath('owners-register')" class="btn btn-lg btn-primary">{{ $t('pages.promote.register') }}</nuxt-link>
 						</p>
 					</div>
 				</div>

@@ -11,7 +11,7 @@ export default {
 			sunday: 'Domenica'
 		},
 		status: {
-			error: 'Error',
+			error: 'Errore',
 			loading: 'Caricamento',
 			offline: 'Attenzione: non sei connesso a internet!',
 			load_error:
@@ -128,7 +128,7 @@ export default {
 				title: 'Mettiti in gioco',
 				paragraph:
 					'Registra la tua attività o rivendica un’attività già presente. È veloce, e soprattutto è gratis!',
-				register: 'Registrati come gestore',
+				register: 'Registrati come proprietario',
 				add: 'Aggiungi la tua attività',
 				manage: 'Vai alla gestione attività',
 				more: 'Maggiori informazioni'
@@ -151,9 +151,19 @@ export default {
 		},
 
 		register: {
-			meta_title: 'Iscriviti',
-			title: 'Iscriviti a {name}',
-			intro: 'Potrai così registrare o modificare la tua attività.',
+			owner: {
+				meta_title: 'Iscriviti come proprietario',
+				title: 'Iscriviti a {name} come proprietario',
+				intro: 'Potrai così reclamare la tua attività o aggiungerne una nuova.'
+			},
+
+			user: {
+				meta_title: 'Iscriviti',
+				title: 'Iscriviti a {name}',
+				intro:
+					'Potrai così salvare le tue attività preferite, votarle e recensirle.'
+			},
+
 			name: 'Nome',
 			name_error: 'Inserisci il tuo nome.',
 			email: 'Indirizzo e-mail',
@@ -270,7 +280,7 @@ export default {
 			claim: {
 				title: 'È la tua attività?',
 				intro:
-					'Se sei proprietaro o gestore di questa attività, puoi rivendicarla gratuitamente e tenerla aggiornata, aggiungere foto, jackpot e tanto altro.',
+					'Se sei il proprietaro di questa attività, puoi rivendicarla gratuitamente e tenerla aggiornata, aggiungere foto, jackpot e tanto altro.',
 				more: 'Ulteriori informazioni',
 				action: 'Rivendica attività'
 				// subject: 'Rivendicazione attività: {name} (identificativo: {id})'
@@ -295,7 +305,7 @@ export default {
 			meta_title: 'Rivendica attività: {name}',
 			title: 'Rivendica attività',
 			intro:
-				'Stai per rivendicare la seguente attività, che non ha un proprietario o gestore. Così facendo essa sarà assegnata a te e potrai gestirne i dati.',
+				'Stai per rivendicare la seguente attività, che non ha un proprietario. Così facendo essa sarà assegnata a te e potrai gestirne i dati.',
 			continue_code:
 				"Per continuare, inserisci il codice di censimento dell'attività come registrata con l'AAMS:",
 			continue_nocode: 'Per proseguire, fai click su “Continua”.',
@@ -485,62 +495,65 @@ export default {
 			}
 		},
 
-		user: {
-			meta_title: 'Gestione utente',
-			title: 'Ciao {name}!',
-			intro: 'Da qui puoi gestire il tuo profilo e le tue attività',
-			actions: {
-				edit_profile: 'Modifica i tuoi dati',
-				logout: 'Esci'
-			},
-			no_items: {
-				title: 'Nessuna attività',
-				message: '{action} per aggiungere la tua prima attività!',
-				message_action: 'Clicca qui'
-			},
-			add_another: "Aggiungi un'altra attività",
-			view: 'Visualizza'
+		user_info: {
+			title: 'Dati personali',
+			name: 'Nome',
+			name_error: 'Inserisci il tuo nome.',
+			name_hint:
+				'Viene visualizzato nelle tue recensioni e nei messaggi e/o notifiche che potresti ricevere da {name}',
+			email: 'Indirizzo e-mail',
+			newsletter: 'Voglio essere informato sulle nuove offerte e funzionalità',
+			locale: 'Lingua e zona',
+			locale_error: 'Scegli la tua lingua.'
 		},
 
-		user_form: {
-			meta_title: 'Modifica i tuoi dati',
-			title: 'Modifica i tuoi dati',
-			general: {
-				name: 'Nome e cognome',
-				name_error: 'Inserisci nome e cognome.',
-				email: 'Indirizzo e-mail',
-				newsletter:
-					'Voglio essere informato sulle nuove offerte e funzionalità',
-				locale: 'Lingua e zona',
-				locale_error: 'Scegli la tua lingua.'
-			},
-			billing: {
-				title: 'Fatturazione',
-				legal_name: "Denominazione legale dell'azienda",
-				legal_name_error: "Inserisci la denominazione legale dell'azienda.",
-				address: 'Indirizzo',
-				address_error: "Inserisci l'indirizzo.",
-				postcode: 'CAP',
-				postcode_error: 'Inserisci il CAP.',
-				city: 'Città',
-				city_error: 'Inserisci la città.',
-				region: 'Provincia',
-				region_error: 'Inserisci la provincia.',
-				country: 'Paese',
-				country_error: 'Scegli il paese.',
-				vat_number: 'Partita IVA',
-				vat_number_error: 'Inserisci la partita IVA.'
-			},
-			password: {
-				title: 'Nuova password',
-				intro:
-					'Scrivi una nuova password e ripetila per cambiarla, lascia i due campi vuoti per tenere la password corrente.',
-				password: 'Nuova password',
-				password_hint: 'Almeno 8 caratteri tra lettere e numeri',
-				password_error: 'Inserisci almeno 8 caratteri tra lettere e numeri.',
-				password_confirmation: 'Ripeti password',
-				password_confirmation_error: 'Le password non coincidono.'
+		user_venues: {
+			title: 'Le tue attività',
+			intro_first: 'Inizia aggiungendo una nuova attività.',
+			intro_edit: 'Fai click su una di esse per modificarla.',
+			add_first: 'Aggiungi la tua prima attività',
+			add_another: "Aggiungi un'altra attività"
+		},
+
+		user_billing: {
+			title: 'Informazioni di fatturazione',
+			intro: 'Saranno usate per generare tutte le tue fatture.',
+			legal_name: "Denominazione legale dell'azienda",
+			legal_name_error: "Inserisci la denominazione legale dell'azienda.",
+			address: 'Indirizzo',
+			address_error: "Inserisci l'indirizzo.",
+			postcode: 'CAP',
+			postcode_error: 'Inserisci il CAP.',
+			city: 'Città',
+			city_error: 'Inserisci la città.',
+			region: 'Provincia',
+			region_error: 'Inserisci la provincia.',
+			country: 'Paese',
+			country_error: 'Scegli il paese.',
+			vat_number: 'Partita IVA',
+			vat_number_error: 'Inserisci la partita IVA.'
+		},
+
+		user_favorites: {
+			title: 'Gestione preferiti',
+			no_items: {
+				title: 'Non hai preferiti',
+				subtitle:
+					"Puoi aggiungere un'attività ai preferiti in qualsiasi momento durante la navigazione."
 			}
+		},
+
+		user_password: {
+			title: 'Cambia password',
+			intro: 'Scegli una nuova password e ripetila per cambiarla.',
+			password: 'Nuova password',
+			password_hint: 'Almeno 8 caratteri tra lettere e numeri',
+			password_error: 'Inserisci almeno 8 caratteri tra lettere e numeri.',
+			password_confirmation: 'Ripeti password',
+			password_confirmation_error: 'Le password non coincidono.',
+			submit: 'Cambia password',
+			submit_success_title: 'Password modificata',
+			submit_success_text: 'La tua password è stata modificata correttamente.'
 		},
 
 		promote: {
@@ -579,7 +592,7 @@ export default {
 				paragraph2_strong: 'Rivendica attività'
 			},
 			manage: 'Gestisci la tua attività',
-			register: 'Registrati'
+			register: 'Registrati come proprietario'
 		},
 
 		about: {
@@ -593,7 +606,7 @@ export default {
 				paragraph3:
 					"L'utente potrà consultare tutte le informazioni come ad esempio il numero di macchine, la tipologia di slot machines e VLT, di giochi live, gli orari di apertura, la ristorazione, le scommesse, ecc., i benefit e gli eventi che la sala da gioco ha da offrire.",
 				paragraph4:
-					'Il gestore, attraverso {name}, potrà comunicare con potenziali clienti con una semplicità senza precedenti nel settore gioco.',
+					'Il proprietario, attraverso {name}, potrà comunicare con potenziali clienti con una semplicità senza precedenti nel settore gioco.',
 				paragraph5:
 					"{name} è sensibile al gioco responsabile dando una visibilità preferenziale alle case da gioco sicure e con personale qualificato con attestati di frequenza a corsi per contrastare il Gioco d'Azzardo Patologico (GAP)."
 			},

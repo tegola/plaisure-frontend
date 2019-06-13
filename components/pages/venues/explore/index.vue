@@ -156,7 +156,7 @@ import {
 	Marker as PgMapMarker,
 	InfoWindow as PgMapInfoWindow
 } from 'vue2-google-maps'
-import BTooltip from 'bootstrap-vue/es/components/tooltip/tooltip'
+import { BTooltip } from 'bootstrap-vue'
 import PgVenueListItem from './list-item'
 import PgVenueInfowindowItem from './infowindow-item'
 import PgFilterButton from './filter-button'

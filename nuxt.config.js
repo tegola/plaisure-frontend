@@ -150,6 +150,11 @@ module.exports = {
 		]
 	],
 
+	router: {
+		linkActiveClass: 'active',
+		linkExactActiveClass: 'active'
+	},
+
 	/*
 	** Axios module configuration
 	*/

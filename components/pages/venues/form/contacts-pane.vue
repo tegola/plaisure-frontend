@@ -7,7 +7,7 @@
 			:label="$t('pages.venue_form.contacts.phone')">
 			<div class="form-row">
 				<div class="col-md-9 col-lg-10">
-					<b-input
+					<b-form-input
 						:value="venue.contacts.phone"
 						type="tel"
 						@input="onContactInput('phone', $event)"
@@ -23,7 +23,7 @@
 			:invalid-feedback="$t('pages.venue_form.contacts.email_error')">
 			<div class="form-row">
 				<div class="col-md-9 col-lg-10">
-					<b-input
+					<b-form-input
 						:placeholder="$t('pages.venue_form.contacts.email_placeholder' )"
 						:value="venue.contacts.email"
 						type="email"
@@ -38,7 +38,7 @@
 			label="Facebook Messenger">
 			<div class="form-row">
 				<div class="col-md-9 col-lg-10">
-					<b-input
+					<b-form-input
 						:value="venue.contacts.facebook"
 						@input="onContactInput('facebook', $event)"
 					/>
@@ -52,7 +52,7 @@
 			<div class="form-row">
 				<div class="col-md-9 col-lg-10">
 					<b-input-group prepend="@">
-						<b-input
+						<b-form-input
 							:value="venue.contacts.twitter"
 							@input="onContactInput('twitter', $event)"
 						/>
@@ -68,7 +68,7 @@
 			:invalid-feedback="$t('pages.venue_form.contacts.url_error')">
 			<div class="form-row">
 				<div class="col-lg-10">
-					<b-input
+					<b-form-input
 						v-auto-http
 						:placeholder="$t('pages.venue_form.contacts.url_placeholder')"
 						:value="venue.urls.site"
@@ -86,7 +86,7 @@
 			:invalid-feedback="$t('pages.venue_form.contacts.url_error')">
 			<div class="form-row">
 				<div class="col-lg-10">
-					<b-input
+					<b-form-input
 						v-auto-http
 						:placeholder="$t('pages.venue_form.contacts.url_placeholder')"
 						:value="venue.urls.online_casino"
@@ -104,7 +104,7 @@
 			:invalid-feedback="$t('pages.venue_form.contacts.url_error')">
 			<div class="form-row">
 				<div class="col-lg-10">
-					<b-input
+					<b-form-input
 						v-auto-http
 						:placeholder="$t('pages.venue_form.contacts.url_placeholder')"
 						:value="venue.urls.facebook"
@@ -122,9 +122,7 @@ import { mapState } from 'vuex'
 import autoHttp from '@/directives/auto-http'
 import extend from 'lodash/extend'
 
-import BFormGroup from 'bootstrap-vue/es/components/form-group/form-group'
-import BInput from 'bootstrap-vue/es/components/form-input/form-input'
-import BInputGroup from 'bootstrap-vue/es/components/input-group/input-group'
+import { BFormGroup, BFormInput, BInputGroup } from 'bootstrap-vue'
 
 import formGroupProps from './form-group-props'
 
@@ -133,7 +131,7 @@ export default {
 
 	components: {
 		BFormGroup,
-		BInput,
+		BFormInput,
 		BInputGroup
 	},
 

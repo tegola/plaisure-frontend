@@ -84,10 +84,7 @@ import { mapState, mapGetters } from 'vuex'
 import { validationMixin } from 'vuelidate'
 import scrollIntoView from '@/utilities/scroll-into-view'
 
-import BNav from 'bootstrap-vue/es/components/nav/nav'
-import BNavItem from 'bootstrap-vue/es/components/nav/nav-item'
-import BListGroup from 'bootstrap-vue/es/components/list-group/list-group'
-import BListGroupItem from 'bootstrap-vue/es/components/list-group/list-group-item'
+import { BNav, BNavItem, BListGroup, BListGroupItem } from 'bootstrap-vue'
 
 import PgSubscriptionCard from '@/components/subscription-card'
 

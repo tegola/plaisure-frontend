@@ -4,7 +4,6 @@
 		:ok-variant="okVariant || variant"
 		:cancel-title="cancelTitle"
 		v-bind="$attrs"
-		lazy
 		centered
 		hide-header-close
 		cancel-variant="light"
@@ -19,7 +18,7 @@
 </template>
 
 <script>
-import BModal from 'bootstrap-vue/es/components/modal/modal'
+import { BModal } from 'bootstrap-vue'
 
 export default {
 	name: 'PgConfirmModal',

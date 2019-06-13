@@ -9,7 +9,7 @@
 			v-bind="formGroupProps">
 			<div class="form-row">
 				<div class="col-md col-lg-5">
-					<b-input
+					<b-form-input
 						:placeholder="$t('pages.venue_form.jackpots.name_placeholder')"
 						:value="venue.jackpots[n].label"
 						class="mb-2 mb-md-0"
@@ -18,7 +18,7 @@
 				</div>
 				<div class="col-md col-lg-5">
 					<b-input-group :prepend="currencySymbol">
-						<b-input
+						<b-form-input
 							:placeholder="$t('pages.venue_form.jackpots.amount_placeholder')"
 							:value="venue.jackpots[n].value"
 							type="number"
@@ -38,9 +38,7 @@
 import { mapState } from 'vuex'
 import { getAllInfoByISO } from 'iso-country-currency'
 
-import BFormGroup from 'bootstrap-vue/es/components/form-group/form-group'
-import BInput from 'bootstrap-vue/es/components/form-input/form-input'
-import BInputGroup from 'bootstrap-vue/es/components/input-group/input-group'
+import { BFormGroup, BFormInput, BInputGroup } from 'bootstrap-vue'
 
 import formGroupProps from './form-group-props'
 
@@ -49,7 +47,7 @@ export default {
 
 	components: {
 		BFormGroup,
-		BInput,
+		BFormInput,
 		BInputGroup
 	},
 
