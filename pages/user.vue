@@ -42,7 +42,7 @@
 							<b-list-group-item
 								exact
 								class="pg-user-page__menu-item">
-								Commenti e valutazioni
+								Recensioni
 							</b-list-group-item>
 							<b-list-group-item
 								:to="localePath('user-password')"

@@ -236,6 +236,10 @@ export default {
 
 		venue_detail: {
 			subtitle: '{category} a {city}',
+			favorites: {
+				add: 'Aggiungi ai preferiti',
+				remove: 'Rimuovi dai preferiti'
+			},
 			gallery: {
 				add: 'Aggiungi foto',
 				all: 'Guarda tutte le foto'

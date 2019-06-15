@@ -44,14 +44,29 @@
 					</div>
 
 					<!-- Title -->
-					<h2 class="header-title">{{ venue.name }}</h2>
-					<ul class="list-inline text-dark-green-muted mb-0">
-						<li class="list-inline-item">{{ subtitle }}</li>
-						<li v-if="venue.business_hours.length" class="list-inline-item">
-							<span v-if="isOpen" class="text-success">{{ $t('pages.venue_detail.card.open_now') }}</span>
-							<strong v-else class="text-danger">{{ $t('pages.venue_detail.card.closed_now') }}</strong>
-						</li>
-					</ul>
+					<div class="row">
+						<div class="col-lg-8">
+							<div class="d-flex align-items-center">
+								<div class="flex-grow-1">
+									<h2 class="header-title">{{ venue.name }}</h2>
+									<ul class="list-inline text-dark-green-muted mb-0">
+										<li class="list-inline-item">{{ subtitle }}</li>
+										<li v-if="venue.business_hours.length" class="list-inline-item">
+											<span v-if="isOpen" class="text-success">{{ $t('pages.venue_detail.card.open_now') }}</span>
+											<strong v-else class="text-danger">{{ $t('pages.venue_detail.card.closed_now') }}</strong>
+										</li>
+									</ul>
+								</div>
+								<div>
+									<pg-button
+										v-b-tooltip.hover
+										v-bind="favoriteButtonProps"
+										@click="toggleFavorite"
+									/>
+								</div>
+							</div>	
+						</div>
+					</div>
 				</div>
 			</div>
 
@@ -310,6 +325,7 @@ export default {
 	data() {
 		return {
 			venue: null,
+			mutableFavorite: null,
 			nearbyVenues: [],
 			lightboxIndex: 0,
 			lightboxOpen: false,
@@ -445,6 +461,18 @@ export default {
 			}
 		},
 
+		favoriteButtonProps() {
+			return {
+				class: 'px-2',
+				pill: true,
+				variant: this.isFavorite ? 'accent' : 'outline-dark-green-300',
+				icon: this.isFavorite ? 'heart' : 'heart-outline',
+				title: this.isFavorite
+					? this.$t('pages.venue_detail.favorites.remove')
+					: this.$t('pages.venue_detail.favorites.add')
+			}
+		},
+
 		lightboxImages() {
 			const photos = this.venue.photos
 
@@ -455,6 +483,16 @@ export default {
 				url: file.resized_url,
 				thumbnail_url: file.thumbnail_url
 			}))
+		},
+
+		isFavorite() {
+			if (this.$auth.loggedIn) {
+				return this.mutableFavorite !== null
+					? this.mutableFavorite
+					: this.$auth.user.favorite_ids.indexOf(this.venue.id) !== -1
+			} else {
+				return false
+			}
 		},
 
 		isMine() {
@@ -537,6 +575,35 @@ export default {
 				currency,
 				minimumFractionDigits: 2
 			})
+		},
+
+		async toggleFavorite() {
+			// Send to login
+			if (!this.$auth.loggedIn) {
+				this.$router.push(this.localePath('login'))
+				return
+			}
+
+			// Fill mutableFavorite with current real value
+			this.mutableFavorite = this.isFavorite
+
+			// Keep old status and define server action
+			const old = this.mutableFavorite
+			const action = this.isFavorite ? 'remove' : 'add'
+
+			// Toggle status locally
+			this.mutableFavorite = !this.mutableFavorite
+
+			try {
+				// Change status remotely and reload user
+				await this.$axios.post(`/user/favorites/${action}`, {
+					id: this.venue.id
+				})
+				await this.$auth.fetchUser()
+			} catch {
+				// Error, restore status locally
+				this.mutableFavorite = old
+			}
 		},
 
 		prepareEmailLink(address, subject) {
