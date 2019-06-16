@@ -38,7 +38,10 @@
 @import "~bootstrap/scss/utilities";
 
 // Bootstrap Vue
-@import '~bootstrap-vue/src/index.scss';
+@import "~bootstrap-vue/src/index.scss";
+
+// Uploader
+@import "vue-upload-component/dist/vue-upload-component.part.css";
 
 // Base
 @import "animations";

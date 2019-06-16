@@ -58,29 +58,25 @@
 					</div>
 				</div>
 
-				<!-- Force footer with just the uploader to render on client -->
-				<span style="width: 0px; overflow: hidden;">&nbsp;</span>
-
 				<!-- Uploader -->
-				<no-ssr>
-					<div v-if="(venuePhotos.length + uploaderFiles.length) <= 50" :class="photoItemClass">
-						<vue-uploader
-							ref="uploader"
-							v-model="uploaderFiles"
-							:drop="true"
-							:headers="uploaderHeaders"
-							class="embed-responsive embed-responsive-1by1 rounded"
-							accept="image/*"
-							multiple
-							:post-action="uploaderUrl"
-							@input-file="onUploaderFileInput">
-							<a class="embed-responsive-item text-primary border d-flex flex-column align-items-center justify-content-center">
-								<pg-icon icon="plus" />
-								{{ $t('pages.venue_form.photos.upload') }}
-							</a>
-						</vue-uploader>
-					</div>
-				</no-ssr>
+				<div v-if="(venuePhotos.length + uploaderFiles.length) <= 50" :class="photoItemClass">
+					<vue-uploader
+						ref="uploader"
+						v-model="uploaderFiles"
+						:drop="true"
+						:headers="uploaderHeaders"
+						class="embed-responsive embed-responsive-1by1 rounded"
+						accept="image/*"
+						multiple
+						:maximum="50"
+						:post-action="uploaderUrl"
+						@input-file="onUploaderFileInput">
+						<a class="embed-responsive-item text-primary border d-flex flex-column align-items-center justify-content-center">
+							<pg-icon icon="plus" />
+							{{ $t('pages.venue_form.photos.upload') }}
+						</a>
+					</vue-uploader>
+				</div>
 			</template>
 		</draggable>
 
@@ -104,7 +100,7 @@
 import { mapState } from 'vuex'
 import draggable from 'vuedraggable'
 import { BProgress } from 'bootstrap-vue'
-import VueUploader from 'vue-upload-component' // FIXME: Make custom component
+import VueUploader from 'vue-upload-component/dist/vue-upload-component.part.js' // FIXME: Make custom component
 
 import PgImageFrame from '@/components/image-frame'
 
