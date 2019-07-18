@@ -24,7 +24,7 @@
 
 		<pg-no-items 
 			v-if="!venues.length"
-			icon="heart"
+			icon="heart-outline"
 			:title="$t('pages.user_favorites.no_items.title')"
 			:subtitle="$t('pages.user_favorites.no_items.subtitle')"
 			class="py-5"
@@ -45,6 +45,8 @@ export default {
 		PgUserVenueListItem,
 		PgNoItems
 	},
+
+	transition: 'prova',
 
 	head() {
 		return {
@@ -86,10 +88,7 @@ export default {
 		border-top: 0;
 	}
 	.pg-no-items__icon {
-		background-color: $palette-fuchsia-100;
 		color: $palette-fuchsia-500;
-		border-radius: 50%;
-		padding: $spacer;
 	}
 }
 </style>

@@ -260,6 +260,81 @@
 								<pg-button :to="localePath({ name: 'venues-id-claim', params: { id: venue.id }})" variant="primary" rel="nofollow">{{ $t('pages.venue_detail.claim.action') }}</pg-button>
 							</div>
 						</div>
+
+						<hr>
+
+						<!-- Reviews -->
+						<div class="my-5">
+							<div class="d-flex align-items justify-content-between">
+								<h5 class="mb-4">{{ $t('Rating and reviews') }}</h5>
+								<nuxt-link :to="localePath({ name: 'venues-id-reviews', params: { id: venue.id }})">
+									See all reviews
+									<pg-icon icon="arrow-right" />
+								</nuxt-link>
+							</div>
+
+							<!-- Rating summary and division -->
+							<div v-if="venue.rating.count" class="row mb-5">
+								<div class="col-sm-5 mb-3 mb-sm-0">
+									<pg-rating simple :value="venue.rating.average.toFixed(1)" class="pg-venue-detail-page__rating-summary" />
+									<span class="text-muted ml-2 small">{{ $t(`${venue.rating.count} ratings`) }}</span>
+								</div>
+								<div class="col-sm-7 d-flex flex-column-reverse">
+									<div v-for="n in 5" :key="`rating-division-${n}`" class="pg-venue-detail-page__rating-division">
+										<div class="pg-venue-detail-page__rating-division-stars">
+											<pg-icon
+												v-for="s in n"
+												:key="`review-division-${s}`"
+												icon="star"
+												class="pg-venue-detail-page__rating-division-star"
+											/>
+										</div>
+										<div class="progress pg-venue-detail-page__rating-division-progress">
+											<div class="progress-bar" :style="{ width: (venue.rating[`${n}_count`] / venue.rating.count * 100) + '%' }" />
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<!-- Review list -->
+							<pg-review-item
+								v-for="review in venue.reviews"
+								:key="review.id"
+								:venue="venue"
+								:review="review"
+								class="mb-3"
+								@replied="loadData"
+							/>
+
+							<!-- Rate / review -->
+							<template v-if="$auth.loggedIn">
+								<div v-if="!isMine && !reviewFormOpen" class="row my-5">
+									<div class="col-md-7">
+										<div class="pg-venue-detail-page__rating-action mb-2 mb-md-0">
+											{{ $t('Click to rate') }}
+											<pg-rating
+												:value="userReview ? userReview.rating : null"
+												@input="onRatingInput"
+											/>
+										</div>
+									</div>
+									<div class="col-md-5">
+										<pg-button variant="primary" block @click="reviewFormOpen = true">{{ $t('Leave a review') }}</pg-button>
+									</div>
+								</div>
+							</template>
+							<p v-else class="text-muted text-center">
+								<nuxt-link :to="localePath('login')">Accedi</nuxt-link> per lasciare una valutazione o scrivere una recensione
+							</p>
+
+							<pg-venue-detail-page-review-form
+								v-if="reviewFormOpen"
+								:venue="venue"
+								:review="userReview"
+								@cancel="reviewFormOpen = false"
+								@saved="onReviewSaved"
+							/>
+						</div>
 					</div>
 					<div class="col-lg-4">
 						<!-- Contact card for big screens -->
@@ -310,7 +385,9 @@ import { getAllInfoByISO } from 'iso-country-currency'
 import isVenueOpen from '@/utilities/is-venue-open'
 
 import PgLightbox from '@/components/lightbox'
+import PgReviewItem from '@/components/review-item'
 import PgVenueDetailPageContactCard from './contact-card'
+import PgVenueDetailPageReviewForm from './review-form'
 import PgVenueDetailPageNearbyItem from './nearby-item'
 
 export default {
@@ -318,18 +395,25 @@ export default {
 
 	components: {
 		PgLightbox,
+		PgReviewItem,
 		PgVenueDetailPageContactCard,
+		PgVenueDetailPageReviewForm,
 		PgVenueDetailPageNearbyItem
 	},
 
 	data() {
 		return {
+			// Async
 			venue: null,
-			mutableFavorite: null,
+			userReview: null,
 			nearbyVenues: [],
+
+			// Local
+			mutableFavorite: null,
 			lightboxIndex: 0,
 			lightboxOpen: false,
-			hoursExpanded: false
+			hoursExpanded: false,
+			reviewFormOpen: false
 		}
 	},
 
@@ -372,6 +456,12 @@ export default {
 				'@type': 'GeoCoordinates',
 				latitude: venue.coords.lat,
 				longitude: venue.coords.lng
+			},
+			aggregateRating: {
+				'@type': 'AggregateRating',
+				ratingCount: venue.rating.count,
+				ratingValue: venue.rating.average,
+				reviewCount: venue.review_count
 			}
 		}
 
@@ -549,6 +639,12 @@ export default {
 	},
 
 	methods: {
+		async loadData() {
+			const data = await this.$axios.$get(`/venues/${this.$route.params.id}`)
+
+			extend(this, data)
+		},
+
 		isInCategory(categoryMachineName) {
 			return Boolean(
 				this.venue.categories.find(
@@ -608,6 +704,26 @@ export default {
 
 		prepareEmailLink(address, subject) {
 			return `mailto:${address}?subject=${encodeURIComponent(subject)}`
+		},
+
+		async onRatingInput(value) {
+			// Store rating
+			await this.$axios.post(`/venues/${this.venue.id}/reviews`, {
+				rating: value
+			})
+
+			// Show confirmation / thanks
+			this.$notify({
+				text: this.$t('Your rating has been received. Thanks!')
+			})
+
+			// Reload venue
+			this.loadData()
+		},
+
+		onReviewSaved() {
+			this.reviewFormOpen = false
+			this.loadData()
 		}
 	}
 }
@@ -771,6 +887,65 @@ export default {
 	// Details
 	.detail-list-item {
 		margin-top: map-get($spacers, 2);
+	}
+
+	// Rating summary
+	&__rating-summary {
+		border-radius: 50rem;
+		background-color: $orange-100;
+		padding: 0.4rem 0.75rem;
+		vertical-align: baseline;
+
+		.pg-rating__icon {
+			width: 30px;
+			height: 30px;
+		}
+		.pg-rating__label {
+			font-size: 2.25rem;
+			font-weight: $font-weight-normal;
+		}
+	}
+
+	// Rating division
+	&__rating-division {
+		display: flex;
+		align-items: center;
+	}
+	&__rating-division-stars {
+		height: 10px;
+		width: 50px;
+		text-align: right;
+		line-height: 0;
+		margin-right: ($spacer / 2);
+	}
+	&__rating-division-star {
+		width: 10px;
+		height: 10px;
+		color: $gray-600;
+	}
+	&__rating-division-progress {
+		height: 3px;
+		flex: 1;
+
+		.progress-bar {
+			background-color: $gray-500;
+		}
+	}
+
+	// Rating action
+	&__rating-action {
+		background: $orange-100;
+		color: $orange-600;
+		border-radius: $border-radius;
+		padding: $btn-padding-y $btn-padding-x;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+
+		.pg-rating__icon {
+			width: 26px;
+			height: 26px;
+		}
 	}
 
 	// Nearby venues

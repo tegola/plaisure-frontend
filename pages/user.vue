@@ -39,11 +39,13 @@
 								class="pg-user-page__menu-item">
 								Preferiti
 							</b-list-group-item>
+							<!--
 							<b-list-group-item
 								exact
 								class="pg-user-page__menu-item">
-								Recensioni
+								{{ $t('Reviews') }}
 							</b-list-group-item>
+							-->
 							<b-list-group-item
 								:to="localePath('user-password')"
 								exact

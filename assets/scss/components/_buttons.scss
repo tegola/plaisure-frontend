@@ -1,5 +1,9 @@
-.btn-lg {
-	font-size: $font-size-base;
+.btn-xs {
+	@include button-size($btn-padding-y-xs, $btn-padding-x-xs, $btn-font-size-xs, $btn-line-height-xs, $btn-border-radius-xs);
+
+	.pg-icon {
+		height: 1rem;
+	}
 }
 
 // Normal buttons

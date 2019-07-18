@@ -1,5 +1,5 @@
 <template>
-	<component :is="svg" :class="classes" />
+	<component :is="svg" :class="classes" v-on="$listeners" />
 </template>
 
 <script>

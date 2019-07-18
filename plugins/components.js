@@ -9,6 +9,7 @@ import PgIcon from '@/components/icon'
 import PgPageFooter from '@/components/page-footer'
 import PgButton from '@/components/button'
 import PgConfirmModal from '@/components/confirm-modal'
+import PgRating from '@/components/rating'
 
 Vue.use(ModalPlugin)
 
@@ -19,3 +20,4 @@ Vue.component('pg-icon', PgIcon)
 Vue.component('pg-page-footer', PgPageFooter)
 Vue.component('pg-button', PgButton)
 Vue.component('pg-confirm-modal', PgConfirmModal)
+Vue.component('pg-rating', PgRating)

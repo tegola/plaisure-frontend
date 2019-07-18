@@ -16,8 +16,7 @@ export default {
 			offline: "Attention: you're not connected to the internet!",
 			invalid_form: 'There are errors in the form. Please review your entry.',
 			load_error: 'There was an error while loading data. Please try again.',
-			save_error:
-				'There was an error while trying saving data. Please try again.'
+			save_error: 'There was an error while saving data. Please try again.'
 		},
 		actions: {
 			add: 'Add',

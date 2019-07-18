@@ -1,3 +1,4 @@
+  ☐ IMPORTANTE: trovare il modo di disabilitare l'accesso esterno alle api pubbliche (es. http://localhost:8888/api/venues/7NQlVQRny1) facendo accedere solo lo stesso dominio (CORS?)
   ✔ Far rifunzionare le checkbox "amenities" @done (19-04-07 16:32)
   ✔ Icone per le categorie GB sulla mappa @done (19-02-18 23:21)
   ✔ Solo categorie GB nel sito GB, solo IT nel sito IT @done (19-02-11 21:32)
@@ -89,6 +90,9 @@
  ✔ Categorie: Sala VLT diventa Sala slot VLT @done (17-11-04 20:09)
  ✔ Ricerca di parole spezzate ("Time city" cerca "time" e "city") @done (17-11-04 22:41)
 
+Recensioni:
+ ☐ Aggiungere gestione recensioni lato profilo utente
+
 Generale:
  ✔ Unire indirizzo e numero civico (migrazione + query) @done (19-02-11 21:45)
  ✔ Aggiungere orari e farli renderizzare @done (17-10-21 01:51)
@@ -138,6 +142,7 @@ Generale:
  ✔ Aggiungere favicon @done (17-08-25 17:33)
  ✔ Autocomplete: fare un wrapper per aggiungere gli eventi 1. place_change(vuoto), 2. select all on click, 3. non chiudere menu se premo invio, 4. blur alla chiusura @done (17-09-18 23:28)
  ☐ Auth: se il primo caricamento è una pagina protetta si viene rimandati alla login ma dopo la login non si va alla pagina protetta. Ricontrollare quando viene mergiata questa PR: https://github.com/nuxt-community/auth-module/pull/333
+
 
 SEO e analytics:
  ☐ Tag OpenGraph
@@ -228,7 +233,7 @@ Dopo il primo deploy backend:
   ✔ Mapping della cartella storage @done (19-05-01 19:00)
   ✔ Copia della cartella dei dati da prontogioco.it @done (19-05-01 19:00)
   ✔ artisan migrate @done (19-05-01 19:00)
-  ☐ Aggiungere redirect da prontogioco.it a plaisure.com
+  ✔ Aggiungere redir∂ct da prontogioco.it a plaisure.com @done (19-07-18 23:19)
 
  ✔ Migrazione manuale dei dati: @done (19-05-01 19:00)
    UPDATE venues SET country = 'IT'

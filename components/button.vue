@@ -10,6 +10,7 @@
 			<pg-icon
 				v-if="(icon && iconPosition === 'left') "
 				:icon="icon"
+				class="pg-button__icon"
 			/>
 
 			<!-- Content -->
@@ -19,6 +20,7 @@
 			<pg-icon
 				v-if="(icon && iconPosition === 'right')"
 				:icon="icon"
+				class="pg-button__icon"
 			/>
 		</div>
 
@@ -88,7 +90,11 @@ export default {
 			return {
 				'pg-button': true,
 				'pg-button--loading': this.loading,
-				'pg-button--successful': this.successful
+				'pg-button--successful': this.successful,
+				'pg-button--icon-left':
+					(this.label || this.$slots.default) && this.iconPosition === 'left',
+				'pg-button--icon-right':
+					(this.label || this.$slots.default) && this.iconPosition === 'right'
 			}
 		},
 
@@ -131,6 +137,13 @@ export default {
 		&__content {
 			opacity: 0;
 		}
+	}
+
+	&--icon-left &__icon {
+		margin-right: 0.25em;
+	}
+	&--icon-right &__icon {
+		margin-left: 0.25em;
 	}
 }
 </style>
