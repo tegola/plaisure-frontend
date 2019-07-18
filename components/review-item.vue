@@ -22,7 +22,7 @@
 			<!-- Owner content (Title, date, body) -->
 			<div v-if="review.reply" class="card-body px-3 pt-0 pb-3">
 				<ul class="list-inline card-text">
-					<li class="list-inline-item font-weight-semibold">{{ $t('Owner response') }}</li>
+					<li class="list-inline-item font-weight-semibold">{{ $t('components.review_item.owner_response') }}</li>
 					<li class="list-inline-item text-muted">{{ formatDate(review.replied_at) }}</li>
 				</ul>
 				<p class="card-text pg-review-item__copy">{{ review.reply }}</p>
@@ -38,7 +38,7 @@
 					size="xs"
 					icon="reply"
 					@click="reply">
-					{{ review.reply ? $t('Edit reply') : $t('Reply') }}
+					{{ review.reply ? $t('components.review_item.actions.edit_reply') : $t('components.review_item.actions.reply') }}
 				</pg-button>
 				<pg-button
 					class="pg-review-item__button"
@@ -48,7 +48,7 @@
 					:loading="reporting"
 					:disabled="reported"
 					@click="report">
-					{{ reported ? this.$t('Reported') : this.$t('Report') }}
+					{{ reported ? this.$t('components.review_item.actions.reported') : this.$t('components.review_item.actions.report') }}
 				</pg-button>
 			</div>
 		</b-collapse>
@@ -56,7 +56,7 @@
 		<!-- Reply form -->
 		<b-collapse :id="`form-collapse-${review.id}`" :visible="showReplyForm">
 			<form class="card-body pg-review-item__reply-form" @reset="cancelReply" @submit.prevent="submitReply">
-				<b-form-group :label="$t('Reply to this review')">
+				<b-form-group :label="$t('components.review_item.reply_form.label')">
 					<b-form-textarea
 						ref="textarea"
 						v-model="replyText"
@@ -64,7 +64,7 @@
 					/>
 				</b-form-group>
 				<b-form-group class="text-right mb-0">
-					<pg-button type="reset">{{ $t('Cancel') }}</pg-button>
+					<pg-button type="reset">{{ $t('common.actions.cancel') }}</pg-button>
 					<pg-button
 						type="submit"
 						:loading="replying"
@@ -132,14 +132,16 @@ export default {
 		submitButtonProps() {
 			if (!this.review.reply) {
 				return {
-					label: this.$t('Post'),
+					label: this.$t('components.review_item.reply_form.post'),
 					variant: 'primary'
 				}
 			} else {
 				const text = this.replyText.trim()
 
 				return {
-					label: text ? this.$t('Update reply') : this.$t('Delete reply'),
+					label: text
+						? this.$t('components.review_item.reply_form.update')
+						: this.$t('components.review_item.reply_form.delete'),
 					variant: text ? 'primary' : 'danger'
 				}
 			}
@@ -195,15 +197,13 @@ export default {
 
 		async report() {
 			const answer = await this.$bvModal.msgBoxConfirm(
-				this.$t(
-					'Report this comment as offensive, inappropriate, upsetting or spam?'
-				),
+				this.$t('components.review_item.report_dialog.text'),
 				{
-					title: this.$t('Report review'),
+					title: this.$t('components.review_item.report_dialog.title'),
 					headerTextVariant: 'danger',
 					centered: true,
 					noFade: true,
-					okTitle: this.$t('Report this review'),
+					okTitle: this.$t('components.review_item.report_dialog.submit'),
 					okVariant: 'danger'
 				}
 			)

@@ -74,6 +74,28 @@ export default {
 			}
 		},
 
+		review_item: {
+			owner_response: 'Owner response',
+			actions: {
+				reply: 'Reply',
+				edit_reply: 'Edit reply',
+				report: 'Report',
+				reported: 'Reported'
+			},
+			reply_form: {
+				label: 'Reply to this review',
+				submit: 'Post',
+				update: 'Update reply',
+				delete: 'Delete reply'
+			},
+			report_dialog: {
+				title: 'Report review',
+				text:
+					'Report this review as offensive, inappropriate, upsetting or spam?',
+				submit: 'Submit report'
+			}
+		},
+
 		subscription_card: {
 			price: '{currency}{price}/month',
 			highlight: 'Most popular',

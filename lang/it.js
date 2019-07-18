@@ -77,6 +77,28 @@ export default {
 			}
 		},
 
+		review_item: {
+			owner_response: 'Risposta del gestore',
+			actions: {
+				reply: 'Rispondi',
+				edit_reply: 'Modifica risposta',
+				report: 'Segnala',
+				reported: 'Segnalata'
+			},
+			reply_form: {
+				label: 'Rispondi a questa recensione',
+				submit: 'Pubblica',
+				update: 'Modifica risposta',
+				delete: 'Cancella risposta'
+			},
+			report_dialog: {
+				title: 'Segnala recensione',
+				text:
+					'Vuoi segnalare questa recensione come offensiva, inappropriata o spam?',
+				submit: 'Invia segnalazione'
+			}
+		},
+
 		subscription_card: {
 			price: '{currency}{price}/mese',
 			highlight: 'Il più acquistato',
