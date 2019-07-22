@@ -653,15 +653,15 @@ export default {
 			company: {
 				title: 'About {name}',
 				paragraph1:
-					"{name} è una startup che combina le capacità tecnologiche di web e di design da un lato, e l'esperienza nel settore gioco a livello italiano e mondiale dall'altro.", // FIXME
+					'{name} is a start-up that combines, on the one hand, the technological capacities of the web and, on the other, the experience in the gaming industry at worldwide level.',
 				paragraph2:
-					'Nel panorama mondiale del settore gioco mancava un servizio come {name}, dove si fanno incontrare i due attori della filiera — chi cerca e chi offre gioco lecito — garantendo un livello sempre più alto per gli ospiti delle case da gioco, che potranno scegliere, anche attraverso {name}, dove passare il proprio prezioso tempo libero.', // FIXME
+					'The international scenario of the Gambling Industry lacked a service like {name} that allows meeting people who are looking for legal gambling and the ones who provide it. We ensure high-quality service to the guests of casinos who – also thanks to our start-up – will choose where to spend their own valuable free time.',
 				paragraph3:
-					"L'utente potrà consultare tutte le informazioni come ad esempio il numero di macchine, la tipologia di slot machines e VLT, di giochi live, gli orari di apertura, la ristorazione, le scommesse, ecc., i benefit e gli eventi che la sala da gioco ha da offrire.", // FIXME
+					'The user can gather all information such as the number of machines, the type of slot and VLT machines or live games, opening hours, catering services, benefits and events that the gaming room has to offer.',
 				paragraph4:
-					'Il gestore, attraverso {name}, potrà comunicare con potenziali clienti con una semplicità senza precedenti nel settore gioco.', // FIXME
+					'Through our platform, the operator will be able to communicate with potential customers with a simplicity ever experienced in the gambling industry.',
 				paragraph5:
-					"{name} è sensibile al gioco responsabile dando una visibilità preferenziale alle case da gioco sicure e con personale qualificato con attestati di frequenza a corsi per contrastare il Gioco d'Azzardo Patologico (GAP)." // FIXME
+					'Our policy is strictly sensitive to responsible gaming. In fact, we give preferential visibility to reliable casinos with qualified staff who has attendance certificates for courses focused on tackling the problem of Pathological Gaming'
 			},
 			contact: {
 				title: 'Contact us',
