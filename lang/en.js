@@ -74,6 +74,22 @@ export default {
 			}
 		},
 
+		review_form: {
+			title: 'Leave a review',
+			rating: 'Rating',
+			rating_error: 'Please pick a rating.',
+			summary: 'Summary',
+			summary_placeholder:
+				'Summarize your visit or highlight an interesting detail',
+			summary_error: 'Please type a summary for this review.',
+			body: 'Review',
+			body_placeholder:
+				'Tell about your experience here. Service, atmosphere, hospitality?',
+			body_error: 'Please write the review.',
+			submit: 'Submit review',
+			submit_success: 'Thanks for your feedback!'
+		},
+
 		review_item: {
 			owner_response: 'Owner response',
 			actions: {
@@ -84,7 +100,7 @@ export default {
 			},
 			reply_form: {
 				label: 'Reply to this review',
-				submit: 'Post',
+				post: 'Post',
 				update: 'Update reply',
 				delete: 'Delete reply'
 			},
@@ -112,6 +128,10 @@ export default {
 				line1: 'Cancelled on {cancelDate}.',
 				line2: 'Will work until {endDate}.'
 			}
+		},
+
+		rating: {
+			tooltip: '{value} out of {max}'
 		}
 	},
 
@@ -297,6 +317,16 @@ export default {
 				no_contact: 'No contact info',
 				no_urls: 'No site or social network profile'
 			},
+			reviews: {
+				title: 'Rating and reviews',
+				count: '1 rating | {count} ratings',
+				all: 'See all reviews',
+				rate: 'Click to rate',
+				rate_success: 'Thanks for your feedback',
+				write: 'Leave a review',
+				login: '{action} to rate or review.',
+				login_action: 'Login'
+			},
 			claim: {
 				title: 'Is this your venue?',
 				intro:
@@ -319,6 +349,11 @@ export default {
 				yes: 'Yes',
 				no: 'No'
 			}
+		},
+
+		venue_reviews: {
+			meta_title: 'All reviews for {name}',
+			title: 'All reviews'
 		},
 
 		venue_claim: {

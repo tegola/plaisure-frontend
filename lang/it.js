@@ -87,7 +87,7 @@ export default {
 			},
 			reply_form: {
 				label: 'Rispondi a questa recensione',
-				submit: 'Pubblica',
+				post: 'Pubblica',
 				update: 'Modifica risposta',
 				delete: 'Cancella risposta'
 			},
@@ -97,6 +97,22 @@ export default {
 					'Vuoi segnalare questa recensione come offensiva, inappropriata o spam?',
 				submit: 'Invia segnalazione'
 			}
+		},
+
+		review_form: {
+			title: 'Lascia una recensione',
+			rating: 'Valutazione',
+			rating_error: 'Scegli la valutazione.',
+			summary: 'Titolo',
+			summary_placeholder:
+				'Riassumi la tua vista o metti in evidenza un dettaglio interessante',
+			summary_error: 'Riassumi in poche parole la tua recensione',
+			body: 'Recensione',
+			body_placeholder:
+				"Raccontaci della tua esperienza in questo posto. Il servizio, l'atmosfera, l'ospitalità?",
+			body_error: 'Scrivi la recensione.',
+			submit: 'Invia recensione',
+			submit_success: 'Grazie della recensione!'
 		},
 
 		subscription_card: {
@@ -116,6 +132,10 @@ export default {
 				line1: 'Hai disattivato il {cancelDate}.',
 				line2: 'Sarà funzionante fino al {endDate}.'
 			}
+		},
+
+		rating: {
+			tooltip: '{value} su {max}'
 		}
 	},
 
@@ -303,6 +323,16 @@ export default {
 				no_contact: 'Nessuna informazione di contatto',
 				no_urls: 'Nessun sito o pagina social'
 			},
+			reviews: {
+				title: 'Valutazioni e recensioni',
+				count: '1 valutazione | {count} valutazioni',
+				all: 'Guarda tutte le recensioni',
+				rate: 'Fai click per valutare',
+				rate_success: 'Grazie della valutazione!',
+				write: 'Lascia una recensione',
+				login: '{login} per valutare o lasciare una recensione.',
+				login_action: 'Accedi'
+			},
 			claim: {
 				title: 'È la tua attività?',
 				intro:
@@ -325,6 +355,11 @@ export default {
 				yes: 'Sì',
 				no: 'No'
 			}
+		},
+
+		venue_reviews: {
+			meta_title: 'Tutte le recensioni per {name}',
+			title: 'Tutte le recensioni'
 		},
 
 		venue_claim: {

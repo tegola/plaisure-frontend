@@ -1,42 +1,42 @@
 <template>
-	<form class="card ap-venue-detail-page-review-form" @reset="cancel" @submit.prevent="submit">
+	<form class="card pg-review-form" @reset="cancel" @submit.prevent="submit">
 		<div class="card-body">
-			<h5 class="mb-0 font-weight-normal">{{ $t('Leave a review') }}</h5>
+			<h5 class="mb-0 font-weight-normal">{{ $t('components.review_form.title') }}</h5>
 		</div>
 		<hr class="my-0">
 		<div class="card-body">
 			<b-form-group
-				:label="$t('Rating')"
+				:label="$t('components.review_form.rating')"
 				:state="!$v.model.rating.$error"
-				:invalid-feedback="$t('Please pick a rating.')">
+				:invalid-feedback="$t('components.review_form.rating_error')">
 				<pg-rating
 					v-model="model.rating"
-					class="ap-venue-detail-page-review-form__rating"
+					class="pg-review-form__rating"
 				/>
 			</b-form-group>
 			<b-form-group
-				:label="$t('Title')"
+				:label="$t('components.review_form.summary')"
 				:state="!$v.model.title.$error"
-				:invalid-feedback="$t('Please type a summary for this review.')">
+				:invalid-feedback="$t('components.review_form.summary_error')">
 				<b-form-input
 					v-model="model.title"
-					:placeholder="$t('Summarize your visit or highlight an interesting detail')"
+					:placeholder="$t('components.review_form.summary_placeholder')"
 					autofocus
 				/>
 			</b-form-group>
 			<b-form-group
-				:label="$t('Review')"
+				:label="$t('components.review_form.body')"
 				:state="!$v.model.body.$error"
-				:invalid-feedback="$t('Please write your review.')">
+				:invalid-feedback="$t('components.review_form.body_error')">
 				<b-form-textarea
 					v-model="model.body"
-					:placeholder="$t('Tell about your experience here. Service, atmosphere, hospitality?')"
+					:placeholder="$t('components.review_form.body_placeholder')"
 					rows="5"
 				/>
 			</b-form-group>
 			<b-form-group class="text-right mb-0">
-				<pg-button type="reset">{{ $t('Cancel') }}</pg-button>
-				<pg-button type="submit" variant="primary" :loading="saving">{{ $t('Submit review') }}</pg-button>
+				<pg-button type="reset">{{ $t('common.actions.cancel') }}</pg-button>
+				<pg-button type="submit" variant="primary" :loading="saving">{{ $t('components.review_form.submit') }}</pg-button>
 			</b-form-group>
 		</div>
 	</form>
@@ -49,7 +49,7 @@ import { required } from 'vuelidate/lib/validators'
 import { BFormGroup, BFormInput, BFormTextarea } from 'bootstrap-vue'
 
 export default {
-	name: 'PgVenueDetailPageReviewForm',
+	name: 'PgReviewForm',
 
 	components: {
 		BFormGroup,
@@ -130,7 +130,7 @@ export default {
 
 				// Show confirmation / thanks
 				this.$notify({
-					text: this.$t('Your review has been saved. Thanks!')
+					text: this.$t('components.review_form.submit_success')
 				})
 
 				// Reload venue
@@ -138,7 +138,7 @@ export default {
 
 				extend(this.$data, data)
 
-				this.$emit('saved')
+				this.$emit('submit')
 			} catch (error) {
 				this.$notify({
 					title: this('common.status.error'),
@@ -154,7 +154,7 @@ export default {
 </script>
 
 <style lang="scss">
-.ap-venue-detail-page-review-form {
+.pg-review-form {
 	&__rating {
 		margin-left: -3px;
 

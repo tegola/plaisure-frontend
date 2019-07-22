@@ -5,7 +5,7 @@
 		<div class="container my-5">
 			<div class="row">
 				<div class="col-md-10 col-lg-8 mx-auto">
-					<h3 class="mb-4">{{ $t('All reviews') }}</h3>
+					<h3 class="mb-4">{{ $t('pages.venue_reviews.title') }}</h3>
 
 					<pg-venue-reviews-page-item :venue="venue" />
 					<br>

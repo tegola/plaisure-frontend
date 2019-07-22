@@ -78,7 +78,10 @@ export default {
 		},
 
 		title() {
-			return `${this.displayedValue} out of ${this.max}`
+			return this.$t('components.rating.tooltip', {
+				value: this.displayedValue,
+				max: this.max
+			})
 		},
 
 		fillStyle() {

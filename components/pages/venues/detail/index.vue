@@ -266,9 +266,9 @@
 						<!-- Reviews -->
 						<div class="my-5">
 							<div class="d-flex align-items justify-content-between">
-								<h5 class="mb-4">{{ $t('Rating and reviews') }}</h5>
+								<h5 class="mb-4">{{ $t('pages.venue_detail.reviews.title') }}</h5>
 								<nuxt-link :to="localePath({ name: 'venues-id-reviews', params: { id: venue.id }})">
-									See all reviews
+									{{ $t('pages.venue_detail.reviews.all') }}
 									<pg-icon icon="arrow-right" />
 								</nuxt-link>
 							</div>
@@ -277,7 +277,7 @@
 							<div v-if="venue.rating.count" class="row mb-5">
 								<div class="col-sm-5 mb-3 mb-sm-0">
 									<pg-rating simple :value="venue.rating.average.toFixed(1)" class="pg-venue-detail-page__rating-summary" />
-									<span class="text-muted ml-2 small">{{ $t(`${venue.rating.count} ratings`) }}</span>
+									<span class="text-muted ml-2 small">{{ $tc('pages.venue_detail.reviews.count', venue.rating.count, { count: venue.rating.count }) }}</span>
 								</div>
 								<div class="col-sm-7 d-flex flex-column-reverse">
 									<div v-for="n in 5" :key="`rating-division-${n}`" class="pg-venue-detail-page__rating-division">
@@ -311,7 +311,7 @@
 								<div v-if="!isMine && !reviewFormOpen" class="row my-5">
 									<div class="col-md-7">
 										<div class="pg-venue-detail-page__rating-action mb-2 mb-md-0">
-											{{ $t('Click to rate') }}
+											{{ $t('pages.venue_detail.reviews.rate') }}
 											<pg-rating
 												:value="userReview ? userReview.rating : null"
 												@input="onRatingInput"
@@ -319,20 +319,22 @@
 										</div>
 									</div>
 									<div class="col-md-5">
-										<pg-button variant="primary" block @click="reviewFormOpen = true">{{ $t('Leave a review') }}</pg-button>
+										<pg-button variant="primary" block @click="reviewFormOpen = true">{{ $t('pages.venue_detail.reviews.write') }}</pg-button>
 									</div>
 								</div>
 							</template>
 							<p v-else class="text-muted text-center">
-								<nuxt-link :to="localePath('login')">Accedi</nuxt-link> per lasciare una valutazione o scrivere una recensione
+								<i18n path="pages.venue_detail.reviews.login">
+									<router-link :to="localePath('login')" place="login">{{ $t('pages.venue_detail.reviews.login_action') }}</router-link>
+								</i18n>
 							</p>
 
-							<pg-venue-detail-page-review-form
+							<pg-review-form
 								v-if="reviewFormOpen"
 								:venue="venue"
 								:review="userReview"
 								@cancel="reviewFormOpen = false"
-								@saved="onReviewSaved"
+								@submit="onReviewFormSubmit"
 							/>
 						</div>
 					</div>
@@ -386,8 +388,8 @@ import isVenueOpen from '@/utilities/is-venue-open'
 
 import PgLightbox from '@/components/lightbox'
 import PgReviewItem from '@/components/review-item'
+import PgReviewForm from '@/components/review-form'
 import PgVenueDetailPageContactCard from './contact-card'
-import PgVenueDetailPageReviewForm from './review-form'
 import PgVenueDetailPageNearbyItem from './nearby-item'
 
 export default {
@@ -396,8 +398,8 @@ export default {
 	components: {
 		PgLightbox,
 		PgReviewItem,
+		PgReviewForm,
 		PgVenueDetailPageContactCard,
-		PgVenueDetailPageReviewForm,
 		PgVenueDetailPageNearbyItem
 	},
 
@@ -714,14 +716,14 @@ export default {
 
 			// Show confirmation / thanks
 			this.$notify({
-				text: this.$t('Your rating has been received. Thanks!')
+				text: this.$t('pages.venue_detail.reviews.rate_success')
 			})
 
 			// Reload venue
 			this.loadData()
 		},
 
-		onReviewSaved() {
+		onReviewFormSubmit() {
 			this.reviewFormOpen = false
 			this.loadData()
 		}
