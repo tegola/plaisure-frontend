@@ -284,7 +284,7 @@ export default {
 			},
 			gallery: {
 				add: 'Aggiungi foto',
-				all: 'Guarda tutte le foto'
+				all: 'Vedi tutte'
 			},
 			description: 'Descrizione attività',
 			details: {
@@ -326,7 +326,7 @@ export default {
 			reviews: {
 				title: 'Valutazioni e recensioni',
 				count: '1 valutazione | {count} valutazioni',
-				all: 'Guarda tutte le recensioni',
+				all: 'Vedi tutte',
 				rate: 'Fai click per valutare',
 				rate_success: 'Grazie della valutazione!',
 				write: 'Lascia una recensione',

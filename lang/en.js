@@ -320,7 +320,7 @@ export default {
 			reviews: {
 				title: 'Rating and reviews',
 				count: '1 rating | {count} ratings',
-				all: 'See all reviews',
+				all: 'See all',
 				rate: 'Click to rate',
 				rate_success: 'Thanks for your feedback',
 				write: 'Leave a review',
