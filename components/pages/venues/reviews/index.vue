@@ -19,6 +19,13 @@
 						no-reply
 						class="mb-3"
 					/>
+
+					<pg-no-items
+						v-if="!reviews.length"
+						:title="$t('pages.venue_reviews.no_items.title')"
+						:subtitle="$t('pages.venue_reviews.no_items.subtitle')"
+						class="py-5"
+					/>
 				</div>
 			</div>
 		</div>
@@ -29,6 +36,7 @@
 
 <script>
 import PgReviewItem from '@/components/review-item'
+import PgNoItems from '@/components/no-items'
 import PgVenueReviewsPageItem from './item'
 
 export default {
@@ -36,6 +44,7 @@ export default {
 
 	components: {
 		PgReviewItem,
+		PgNoItems,
 		PgVenueReviewsPageItem
 	},
 

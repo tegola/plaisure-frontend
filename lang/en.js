@@ -324,7 +324,7 @@ export default {
 				rate: 'Click to rate',
 				rate_success: 'Thanks for your feedback',
 				write: 'Leave a review',
-				login: '{action} to rate or review.',
+				login: '{action} to rate or review this venue.',
 				login_action: 'Login'
 			},
 			claim: {
@@ -353,7 +353,11 @@ export default {
 
 		venue_reviews: {
 			meta_title: 'All reviews for {name}',
-			title: 'All reviews'
+			title: 'All reviews',
+			no_items: {
+				title: 'No reviews',
+				subtitle: 'This venue has no reviews.'
+			}
 		},
 
 		venue_claim: {
@@ -546,6 +550,17 @@ export default {
 				title: 'Subscription cancelled',
 				message:
 					"You subscription has been cancelled. It will remain active until {date}. You won't be charged again."
+			}
+		},
+
+		user: {
+			menu: {
+				venues: 'Your venues',
+				info: 'Personal information',
+				billing: 'Billing information',
+				favorites: 'Favorites',
+				password: 'Change password',
+				logout: 'Logout'
 			}
 		},
 

@@ -67,7 +67,7 @@ export default {
 
 		review: {
 			type: Object,
-			required: true
+			default: () => null
 		}
 	},
 
@@ -77,7 +77,8 @@ export default {
 			model: {
 				rating: 0,
 				title: '',
-				body: ''
+				body: '',
+				language: this.$i18n.locale
 			}
 		}
 	},
@@ -85,12 +86,13 @@ export default {
 	watch: {
 		review: {
 			immediate: true,
-			handler(r) {
+			handler(review) {
+				if (!review) return
+
 				extend(this.model, {
-					rating: r.rating,
-					title: r.title,
-					body: r.body,
-					language: this.$i18n.locale
+					rating: review.rating,
+					title: review.title,
+					body: review.body
 				})
 			}
 		}

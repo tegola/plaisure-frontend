@@ -105,7 +105,7 @@ export default {
 			rating_error: 'Scegli la valutazione.',
 			summary: 'Titolo',
 			summary_placeholder:
-				'Riassumi la tua vista o metti in evidenza un dettaglio interessante',
+				'Riassumi la tua visita o metti in evidenza un dettaglio interessante',
 			summary_error: 'Riassumi in poche parole la tua recensione',
 			body: 'Recensione',
 			body_placeholder:
@@ -330,7 +330,8 @@ export default {
 				rate: 'Fai click per valutare',
 				rate_success: 'Grazie della valutazione!',
 				write: 'Lascia una recensione',
-				login: '{login} per valutare o lasciare una recensione.',
+				login:
+					'{action} per valutare o lasciare una recensione a questa attività.',
 				login_action: 'Accedi'
 			},
 			claim: {
@@ -359,7 +360,11 @@ export default {
 
 		venue_reviews: {
 			meta_title: 'Tutte le recensioni per {name}',
-			title: 'Tutte le recensioni'
+			title: 'Tutte le recensioni',
+			no_items: {
+				title: 'Nessuna recensione',
+				subtitle: 'Questa attività non ha ricevuto recensioni.'
+			}
 		},
 
 		venue_claim: {
@@ -553,6 +558,17 @@ export default {
 				title: 'Abbonamendo cancellato',
 				message:
 					'Il tuo abbonamento è stato cancellato. Rimarrà attivo fino a {date}. Non ti sarà addebitato nessun altro costo.'
+			}
+		},
+
+		user: {
+			menu: {
+				venues: 'Le tue attività',
+				info: 'Dati personali',
+				billing: 'Fatturazione',
+				favorites: 'Preferiti',
+				password: 'Cambia password',
+				logout: 'Esci'
 			}
 		},
 

@@ -142,6 +142,7 @@ Generale:
  ✔ Aggiungere favicon @done (17-08-25 17:33)
  ✔ Autocomplete: fare un wrapper per aggiungere gli eventi 1. place_change(vuoto), 2. select all on click, 3. non chiudere menu se premo invio, 4. blur alla chiusura @done (17-09-18 23:28)
  ☐ Auth: se il primo caricamento è una pagina protetta si viene rimandati alla login ma dopo la login non si va alla pagina protetta. Ricontrollare quando viene mergiata questa PR: https://github.com/nuxt-community/auth-module/pull/333
+ ☐ Auth: quando vado alla login e poi devo tornare alla pagina precedente non funziona. es. quando devo lasciare una recensione ma non sono loggato
 
 
 SEO e analytics:

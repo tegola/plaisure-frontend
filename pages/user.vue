@@ -17,47 +17,47 @@
 								:to="localePath('user')"
 								exact
 								class="pg-user-page__menu-item">
-								Le tue attività
+								{{ $t('pages.user.menu.venues') }}
 							</b-list-group-item>
 
 							<b-list-group-item
 								:to="localePath('user-info')"
 								exact
 								class="pg-user-page__menu-item mt-3">
-								Dati personali
+								{{ $t('pages.user.menu.info') }}
 							</b-list-group-item>
 							<b-list-group-item
 								v-if="$auth.user.is_owner"
 								:to="localePath('user-billing')"
 								exact
 								class="pg-user-page__menu-item">
-								Fatturazione
+								{{ $t('pages.user.menu.billing') }}
 							</b-list-group-item>
 							<b-list-group-item
 								:to="localePath('user-favorites')"
 								exact
 								class="pg-user-page__menu-item">
-								Preferiti
+								{{ $t('pages.user.menu.favorites') }}
 							</b-list-group-item>
 							<!--
 							<b-list-group-item
 								exact
 								class="pg-user-page__menu-item">
-								{{ $t('Reviews') }}
+								{{ $t('pages.user.menu.reviews') }}
 							</b-list-group-item>
 							-->
 							<b-list-group-item
 								:to="localePath('user-password')"
 								exact
 								class="pg-user-page__menu-item">
-								Cambia password
+								{{ $t('pages.user.menu.password') }}
 							</b-list-group-item>
 
 							<b-list-group-item
 								href="#"
 								class="pg-user-page__menu-item mt-3"
 								@click="$auth.logout()">
-								Esci
+								{{ $t('pages.user.menu.logout') }}
 							</b-list-group-item>
 						</b-list-group>
 					</b-card>

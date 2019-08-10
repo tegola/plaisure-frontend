@@ -267,7 +267,7 @@
 						<div class="my-5">
 							<div class="d-flex align-items justify-content-between">
 								<h5 class="mb-4">{{ $t('pages.venue_detail.reviews.title') }}</h5>
-								<nuxt-link :to="localePath({ name: 'venues-id-reviews', params: { id: venue.id }})">
+								<nuxt-link v-if="venue.reviews.count" :to="localePath({ name: 'venues-id-reviews', params: { id: venue.id }})">
 									{{ $t('pages.venue_detail.reviews.all') }}
 									<pg-icon icon="arrow-right" />
 								</nuxt-link>
@@ -325,7 +325,7 @@
 							</template>
 							<p v-else class="text-muted text-center">
 								<i18n path="pages.venue_detail.reviews.login">
-									<router-link :to="localePath('login')" place="login">{{ $t('pages.venue_detail.reviews.login_action') }}</router-link>
+									<router-link :to="localePath('login')" place="action">{{ $t('pages.venue_detail.reviews.login_action') }}</router-link>
 								</i18n>
 							</p>
 
