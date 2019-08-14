@@ -257,10 +257,10 @@ export default {
 					value: city.query,
 					icon: 'location',
 					label: city.query,
-					route: {
-						path: '/venues/explore',
+					route: this.localePath({
+						name: 'venues-explore',
 						query: city
-					}
+					})
 				})
 			})
 
