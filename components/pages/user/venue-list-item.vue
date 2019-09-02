@@ -33,8 +33,8 @@
 </template>
 
 <script>
-import PgVenueItemMixin from '@/mixins/venue-collection-item'
 import { BListGroupItem } from 'bootstrap-vue'
+import PgVenueItemMixin from '@/mixins/venue-collection-item'
 import PgImageFrame from '@/components/image-frame'
 
 export default {

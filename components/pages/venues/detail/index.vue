@@ -64,7 +64,7 @@
 										@click="toggleFavorite"
 									/>
 								</div>
-							</div>	
+							</div>
 						</div>
 					</div>
 				</div>
@@ -384,13 +384,14 @@
 <script>
 import extend from 'lodash/extend'
 import { getAllInfoByISO } from 'iso-country-currency'
-import isVenueOpen from '@/utilities/is-venue-open'
 
-import PgLightbox from '@/components/lightbox'
-import PgReviewItem from '@/components/review-item'
-import PgReviewForm from '@/components/review-form'
 import PgVenueDetailPageContactCard from './contact-card'
 import PgVenueDetailPageNearbyItem from './nearby-item'
+
+import PgReviewItem from '@/components/review-item'
+import PgReviewForm from '@/components/review-form'
+import PgLightbox from '@/components/lightbox'
+import isVenueOpen from '@/utilities/is-venue-open'
 
 export default {
 	name: 'PgVenueDetailPage',

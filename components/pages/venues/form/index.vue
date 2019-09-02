@@ -82,11 +82,8 @@
 <script>
 import { mapState, mapGetters } from 'vuex'
 import { validationMixin } from 'vuelidate'
-import scrollIntoView from '@/utilities/scroll-into-view'
 
 import { BNav, BNavItem, BListGroup, BListGroupItem } from 'bootstrap-vue'
-
-import PgSubscriptionCard from '@/components/subscription-card'
 
 import PgVenueFormGeneralPane from './general-pane'
 import PgVenueFormServicesPane from './services-pane'
@@ -96,6 +93,9 @@ import PgVenueFormPhotosPane from './photos-pane'
 import PgVenueFormJackpotsPane from './jackpots-pane'
 
 import validations from './validations'
+import scrollIntoView from '@/utilities/scroll-into-view'
+
+import PgSubscriptionCard from '@/components/subscription-card'
 
 export default {
 	name: 'PgVenueFormPage',

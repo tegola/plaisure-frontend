@@ -26,8 +26,8 @@
 </template>
 
 <script>
-import Dropdown from './dropdown'
 import { BDropdownItem } from 'bootstrap-vue'
+import Dropdown from './dropdown'
 import PgIcon from '@/components/icon'
 
 export default {

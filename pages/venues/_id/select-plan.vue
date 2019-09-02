@@ -281,10 +281,10 @@ import {
 import { validationMixin } from 'vuelidate'
 import { requiredIf } from 'vuelidate/lib/validators'
 import { getParamByParam } from 'iso-country-currency'
-import scrollIntoView from '@/utilities/scroll-into-view'
 import extend from 'lodash/extend'
-import PgSubscriptionCard from '@/components/subscription-card'
 import { Card as StripeCard, createToken } from 'vue-stripe-elements-plus'
+import scrollIntoView from '@/utilities/scroll-into-view'
+import PgSubscriptionCard from '@/components/subscription-card'
 
 export default {
 	name: 'PgVenueSelectPlanPage',

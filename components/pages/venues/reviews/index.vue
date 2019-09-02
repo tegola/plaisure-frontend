@@ -35,9 +35,9 @@
 </template>
 
 <script>
+import PgVenueReviewsPageItem from './item'
 import PgReviewItem from '@/components/review-item'
 import PgNoItems from '@/components/no-items'
-import PgVenueReviewsPageItem from './item'
 
 export default {
 	name: 'PgVenueReviewsPage',

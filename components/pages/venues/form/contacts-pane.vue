@@ -119,12 +119,10 @@
 
 <script>
 import { mapState } from 'vuex'
-import autoHttp from '@/directives/auto-http'
 import extend from 'lodash/extend'
-
 import { BFormGroup, BFormInput, BInputGroup } from 'bootstrap-vue'
-
 import formGroupProps from './form-group-props'
+import autoHttp from '@/directives/auto-http'
 
 export default {
 	name: 'ContactsPane',
