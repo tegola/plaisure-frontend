@@ -14,7 +14,7 @@
 						<b-list-group flush>
 							<b-list-group-item
 								v-if="$auth.user.is_owner"
-								:to="localePath('user')"
+								:to="localePath('user-venues')"
 								exact
 								class="pg-user-page__menu-item">
 								{{ $t('pages.user.menu.venues') }}
@@ -76,8 +76,6 @@
 import { BCard, BCardBody, BListGroup, BListGroupItem } from 'bootstrap-vue'
 
 export default {
-	middleware: 'auth',
-
 	components: {
 		BCard,
 		BCardBody,

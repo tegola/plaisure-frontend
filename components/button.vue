@@ -8,7 +8,7 @@
 		<div class="pg-button__content">
 			<!-- Left icon -->
 			<pg-icon
-				v-if="(icon && iconPosition === 'left') "
+				v-if="icon && iconPosition === 'left'"
 				:icon="icon"
 				class="pg-button__icon"
 			/>
@@ -18,7 +18,7 @@
 
 			<!-- Right icon -->
 			<pg-icon
-				v-if="(icon && iconPosition === 'right')"
+				v-if="icon && iconPosition === 'right'"
 				:icon="icon"
 				class="pg-button__icon"
 			/>

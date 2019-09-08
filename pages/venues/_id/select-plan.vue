@@ -93,7 +93,7 @@
 									<b-collapse id="new-billing-collapse" :visible="showNewBillingWarning">
 										<div class="pt-2 small">
 											<i18n path="pages.venue_plan.billing.new_warning.message">
-												<strong class="text-danger" place="warning">{{ $t('pages.venue_plan.billing.new_warning.warning') }}</strong>
+												<strong slot="warning" class="text-danger">{{ $t('pages.venue_plan.billing.new_warning.warning') }}</strong>
 											</i18n>
 										</div>
 									</b-collapse>
@@ -189,7 +189,7 @@
 									<b-collapse id="new-payment-collapse" :visible="showNewPaymentWarning">
 										<div class="pt-2 small">
 											<i18n path="pages.venue_plan.payment.new_warning.message">
-												<strong class="text-danger" place="warning">{{ $t('pages.venue_plan.payment.new_warning.warning') }}</strong>
+												<strong slot="warning" class="text-danger">{{ $t('pages.venue_plan.payment.new_warning.warning') }}</strong>
 											</i18n>
 										</div>
 									</b-collapse>
@@ -237,15 +237,15 @@
 					:title="$t('pages.venue_plan.confirm.title')"
 					@ok.prevent="submit">
 					<i18n path="pages.venue_plan.confirm.paragraph1" tag="p">
-						<span class="font-weight-bold" place="confirm">{{ $t('pages.venue_plan.confirm.submit') }}</span>
-						<span place="name">{{ $constants.APP_NAME }}</span>
-						<span place="price">{{ selectedSubscription.formattedPrice }}</span>
-						<span place="currency">{{ selectedSubscription.currencySymbol }}</span>
+						<span slot="confirm" class="font-weight-bold">{{ $t('pages.venue_plan.confirm.submit') }}</span>
+						<span slot="name">{{ $constants.APP_NAME }}</span>
+						<span slot="price">{{ selectedSubscription.formattedPrice }}</span>
+						<span slot="currency">{{ selectedSubscription.currencySymbol }}</span>
 					</i18n>
 					<i18n path="pages.venue_plan.confirm.paragraph2" tag="p" class="small">
-						<a href="#" place="tos">{{ $t('pages.venue_plan.confirm.paragraph2_tos') }}</a>
-						<a href="#" place="privacy">{{ $t('pages.venue_plan.confirm.paragraph2_privacy') }}</a>
-						<span place="name">{{ $constants.APP_NAME }}</span>
+						<a slot="tos" href="#">{{ $t('pages.venue_plan.confirm.paragraph2_tos') }}</a>
+						<a slot="privacy" href="#">{{ $t('pages.venue_plan.confirm.paragraph2_privacy') }}</a>
+						<span slot="name">{{ $constants.APP_NAME }}</span>
 					</i18n>
 					<template #modal-footer>
 						<pg-button

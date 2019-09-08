@@ -35,7 +35,7 @@
 											@input="onPlaceTextboxInput"
 											@keydown.enter="submit"
 										/>
-										<no-ssr>
+										<client-only>
 											<div
 												v-if="$geolocation.supported"
 												v-b-tooltip
@@ -52,7 +52,7 @@
 													@click="findUserLocation"
 												/>
 											</div>
-										</no-ssr>
+										</client-only>
 									</div>
 								</div>
 								<div class="col-auto">
@@ -154,23 +154,21 @@
 						<p class="text-dark-green-muted mb-1">{{ $t('pages.home.promote.intro') }}</p>
 						<h3 class="display-4 text-dark-green mb-3">{{ $t('pages.home.promote.title') }}</h3>
 						<p class="lead text-dark-green mb-4">{{ $t('pages.home.promote.paragraph') }}</p>
-						<p>
-							<pg-button
-								:to="promoteButton.route"
-								:block="$mq == 'xs'"
-								variant="primary"
-								icon="arrow-right"
-								icon-position="right">
-								{{ promoteButton.label }}
-							</pg-button>
-							<pg-button
-								:to="localePath('promote')"
-								:block="$mq == 'xs'"
-								variant="link"
-								class="text-dark-green">
-								{{ $t('pages.home.promote.more') }}
-							</pg-button>
-						</p>
+						<pg-button
+							:to="promoteButton.route"
+							:block="$mq == 'xs'"
+							variant="primary"
+							icon="arrow-right"
+							icon-position="right">
+							{{ promoteButton.label }}
+						</pg-button>
+						<pg-button
+							:to="localePath('promote')"
+							:block="$mq == 'xs'"
+							variant="link"
+							class="text-dark-green">
+							{{ $t('pages.home.promote.more') }}
+						</pg-button>
 					</div>
 				</div>
 			</div>

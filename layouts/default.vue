@@ -25,10 +25,10 @@
 		<!--
 		<pg-standout-alert position="bottom" dismissible @dismiss="acceptCookies">
 			<i18n path="common.cookie.agree">
-				<a href="#" place="policy_link" class="text-accent">{{ $t('common.cookie.link') }}</a>
+				<a slot="policy_link" href="#" class="text-accent">{{ $t('common.cookie.link') }}</a>
 			</i18n>
 		</pg-standout-alert>
-	-->
+		-->
 	</div>
 </template>
 

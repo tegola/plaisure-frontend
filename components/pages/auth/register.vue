@@ -37,8 +37,8 @@
 						</b-form-group>
 
 						<i18n tag="p" class="small text-muted" path="pages.register.agree1">
-							<a href="#" place="terms_link">{{ $t('pages.register.agree2') }}</a>
-							<a href="#" place="privacy_link">{{ $t('pages.register.agree3') }}</a>
+							<a slot="terms_link" href="#">{{ $t('pages.register.agree2') }}</a>
+							<a slot="privacy_link" href="#">{{ $t('pages.register.agree3') }}</a>
 						</i18n>
 
 						<b-form-group>
@@ -53,9 +53,7 @@
 
 						<p class="text-center">
 							<i18n path="pages.register.login1">
-								<span place="link">
-									<nuxt-link :to="localePath('login')">{{ $t('pages.register.login2') }}</nuxt-link>
-								</span>
+								<nuxt-link slot="link" :to="localePath('login')">{{ $t('pages.register.login2') }}</nuxt-link>
 							</i18n>
 						</p>
 					</form>

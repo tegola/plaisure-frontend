@@ -43,9 +43,7 @@
 						<p class="text-center">
 							<nuxt-link :to="localePath('password-forgot')">{{ $t('pages.login.forgot') }}</nuxt-link><br>
 							<i18n path="pages.login.register1">
-								<span place="link">
-									<nuxt-link :to="localePath('register')">{{ $t('pages.login.register2') }}</nuxt-link>
-								</span>
+								<nuxt-link slot="link" :to="localePath('register')">{{ $t('pages.login.register2') }}</nuxt-link>
 							</i18n>
 						</p>
 					</form>

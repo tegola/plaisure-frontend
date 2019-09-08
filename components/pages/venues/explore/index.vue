@@ -7,7 +7,7 @@
 			variant="dark"
 			@place-changed="onPlaceChanged">
 			<template slot="searchAppend">
-				<no-ssr>
+				<client-only>
 					<pg-button
 						v-if="$geolocation.supported"
 						:loading="locating"
@@ -18,7 +18,7 @@
 						class="navbar__search-btn"
 						@click="findUserLocation"
 					/>
-				</no-ssr>
+				</client-only>
 			</template>
 		</pg-navbar>
 

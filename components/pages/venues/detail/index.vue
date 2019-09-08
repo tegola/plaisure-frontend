@@ -325,7 +325,7 @@
 							</template>
 							<p v-else class="text-muted text-center">
 								<i18n path="pages.venue_detail.reviews.login">
-									<router-link :to="localePath('login')" place="action">{{ $t('pages.venue_detail.reviews.login_action') }}</router-link>
+									<nuxt-link slot="action" :to="localePath('login')">{{ $t('pages.venue_detail.reviews.login_action') }}</nuxt-link>
 								</i18n>
 							</p>
 
@@ -359,7 +359,7 @@
 						<div class="my-4">
 							<h5>{{ $t('pages.venue_detail.issues.title') }}</h5>
 							<i18n tag="p" path="pages.venue_detail.issues.intro">
-								<a :href="prepareEmailLink(this.$constants.EMAIL_REPORT, $t('pages.venue_detail.issues.subject', { name: venue.name, id: venue.id }))" place="report">{{ $t('pages.venue_detail.issues.report') }}</a>
+								<a slot="report" :href="prepareEmailLink(this.$constants.EMAIL_REPORT, $t('pages.venue_detail.issues.subject', { name: venue.name, id: venue.id }))">{{ $t('pages.venue_detail.issues.report') }}</a>
 							</i18n>
 						</div>
 					</div>
@@ -922,8 +922,8 @@ export default {
 		margin-right: ($spacer / 2);
 	}
 	&__rating-division-star {
-		width: 10px;
-		height: 10px;
+		width: 10px !important;
+		height: 10px !important;
 		color: $gray-600;
 	}
 	&__rating-division-progress {

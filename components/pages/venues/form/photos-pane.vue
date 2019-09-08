@@ -87,7 +87,7 @@
 			variant="danger"
 			@ok="confirmDeletePhoto">
 			<i18n tag="p" path="pages.venue_form.photos.delete.intro">
-				<strong class="text-danger" place="action">{{ $t('pages.venue_form.photos.delete.intro_action') }}</strong>
+				<strong slot="action" class="text-danger">{{ $t('pages.venue_form.photos.delete.intro_action') }}</strong>
 			</i18n>
 			<div v-if="currentPhoto" class="text-center">
 				<img :src="currentPhoto.thumbnail_url" class="img-fluid rounded">
