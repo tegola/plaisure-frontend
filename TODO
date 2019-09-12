@@ -1,4 +1,6 @@
+  ✔ IMPORTANTE: limitare le informazioni al caricamento di /user, l'utente non deve ricevere tutti i dati @done (19-09-12 19:42)
   ☐ IMPORTANTE: trovare il modo di disabilitare l'accesso esterno alle api pubbliche (es. http://localhost:8888/api/venues/7NQlVQRny1) facendo accedere solo lo stesso dominio (CORS?)
+  ☐ IMPORTANTE: la mappa si è mezza rotta, prova a cercare Milano e vedi come si sposta di continuo
   ✔ Far rifunzionare le checkbox "amenities" @done (19-04-07 16:32)
   ✔ Icone per le categorie GB sulla mappa @done (19-02-18 23:21)
   ✔ Solo categorie GB nel sito GB, solo IT nel sito IT @done (19-02-11 21:32)
@@ -9,7 +11,7 @@
 
  ✔ Form: Le categorie presenti devono essere prese in base al paese @done (19-05-20 19:26)
  ☐ Testo + traduzione della pagina della scelta piani
- ☐ Rivedere e tradurre testi della pagina about
+ ✔ Rivedere e tradurre testi della pagina about @done (19-09-12 18:53)
  ✔ Rivedere e tradurre testi della pagina "gioca responsabilmente" @done (19-04-26 23:50)
  ✔ Rimuovere il pulsante "aggiungi" nella lista attività dell'utente, usare un box alla fine @done (19-04-07 17:48)
  ☐ Email di benvenuto (verifica) all'utente dopo la registrazione
@@ -52,7 +54,7 @@
  ✔ Abbassare le dimensioni del logo per far arrivare la navbar a 64px @done (19-05-02 00:07)
  ☐ Rimuovere AuthController in favore di Auth\LoginController e Auth\RegisterController
  ☐ Continuare il porting di Fractal a Laravel API Resources
- ☐ Controllare il reload della pagina explore dopo esserci arrivato da un pulsante in home page
+ ✔ Controllare il reload della pagina explore dopo esserci arrivato da un pulsante in home page @done (19-09-12 19:27)
  ☐ Passare la lingua selezionata al client @low
  ☐ Modifica dati utente: aggiungere validazioni lato client in cui non si possono nullare i campi di fatturazione se ci sono sottoscrizioni attive @low
  ✔ Aggiustare la place textbox con le conoscenze migliori di vue @low @done (19-05-21 23:29)
@@ -112,8 +114,8 @@ Generale:
  ☐ Sistema per mettere le parole chiave
  ☐ Aggiungere pagina di errore
  ☐ Aggiungere pagina di downtime
- ☐ Supporto ai like/dislike
- ☐ Supporto per le recensioni e per rispondere lato gestore (quindi registrazione utente normale e gestore)
+ ✘ Supporto ai like/dislike @cancelled (19-09-12 19:36)
+ ✔ Supporto per le recensioni e per rispondere lato gestore (quindi registrazione utente normale e gestore) @done (19-09-12 19:36)
  ☐ Aggiungere i link di Prontogioco ai social network
  ☐ Servizi aggiuntivi
    - Area privè (privee?, privet?)
@@ -179,7 +181,7 @@ Ricerca:
  ☐ Quando non c'è nessun risultato, mostrare il "nessun risultato" più carino e con la possibilità di impostare il tipo a "tutto"
  ✔ Filtri in modalità AND (quindi tag invece che select) @done (17-08-17 17:09)
  ☐ Priorità alle attività paganti, con indicatore più visibile
- ☐ Pulsante per usare la posizione dell'utente
+ ✔ Pulsante per usare la posizione dell'utente @done (19-09-12 19:38)
  ☐ Se una sala con un bonus di distanza esce dalla mappa sparisce completamente, mentre dovrebbe comunque rimanere (ha un bonus!)
 
 Azienda:
@@ -218,9 +220,9 @@ Sale premium:
  ☐ Eventi
 
 NUXT:
- ☐ Al primo caricamento di un route protetto vengo rimandato alla login anche se ho già il token
- ☐ Controllare che il redirect dopo la login e register vada alla pagina localizzata
- ☐ Dopo la login da /it/login vengo rimandato a / (inglese)
+ ✔ Al primo caricamento di un route protetto vengo rimandato alla login anche se ho già il token @done (19-09-12 19:55)
+ ✔ Controllare che il redirect dopo la login e register vada alla pagina localizzata @done (19-09-12 19:54)
+ ✔ Dopo la login da /it/login vengo rimandato a / (inglese) @done (19-09-12 19:41)
  ✔ Scelta del piano non carica i dati @done (19-03-30 13:47)
  ✔ Cashier: currency in GBP? @done (19-05-01 19:35)
  ✔ ssl / https @done (19-05-01 19:35)

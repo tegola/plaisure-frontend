@@ -115,6 +115,15 @@ export default {
 				await this.$auth.loginWith('local', {
 					data: this.model
 				})
+
+				// Go to the next page
+				const redirect =
+					this.$route.query.redirect ||
+					this.$auth.$storage.getUniversal('redirect')
+
+				this.$auth.$storage.setUniversal('redirect', null)
+
+				if (redirect) this.$router.push(redirect)
 			} catch (err) {
 				this.loading = false
 				this.error = true

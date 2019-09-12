@@ -325,7 +325,7 @@
 							</template>
 							<p v-else class="text-muted text-center">
 								<i18n path="pages.venue_detail.reviews.login">
-									<nuxt-link slot="action" :to="localePath('login')">{{ $t('pages.venue_detail.reviews.login_action') }}</nuxt-link>
+									<nuxt-link slot="action" :to="localePath({ name: 'login', query: { redirect: $route.path }})">{{ $t('pages.venue_detail.reviews.login_action') }}</nuxt-link>
 								</i18n>
 							</p>
 
