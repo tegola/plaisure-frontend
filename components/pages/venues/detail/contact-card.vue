@@ -54,7 +54,7 @@
 				<ul v-if="hasContacts" class="list-unstyled mb-0">
 					<li v-if="venue.contacts.phone"><a :href="`tel://${venue.contacts.phone}`">{{ venue.contacts.phone }}</a></li>
 					<li v-if="venue.contacts.email"><a :href="`mailto:${venue.contacts.email}`">{{ venue.contacts.email }}</a></li>
-					<li v-if="facebookMessengerUrl"><a :href="facebookMessengerUrl" target="_blank">{{ venue.contacts.facebook }}</a> <span class="text-muted">(Facebook Messenger)</span></li>
+					<li v-if="facebookMessengerUrl"><a :href="facebookMessengerUrl" target="_blank">Facebook Messenger</a></li>
 					<li v-if="twitterUrl"><a :href="twitterUrl" target="_blank">@{{ venue.contacts.twitter }}</a> <span class="text-muted">(Twitter)</span></li>
 				</ul>
 				<p v-else class="mb-0 text-muted">{{ $t('pages.venue_detail.card.no_contact') }}</p>
@@ -183,7 +183,16 @@ export default {
 		},
 
 		facebookMessengerUrl() {
-			const handle = this.venue.contacts.facebook
+			// Get handle from the specfied contact
+			let handle = this.venue.contacts.facebook
+
+			// Fallback to handle inferred from url
+			if (!handle && this.venue.urls.facebook) {
+				const re = /^.*\.facebook\.com\/.*-(\d{5,})\/?$/i
+				const matches = this.venue.urls.facebook.match(re)
+
+				if (matches.length > 1) handle = matches[matches.length - 1]
+			}
 
 			return handle ? `https://www.messenger.com/t/${handle}` : null
 		},
