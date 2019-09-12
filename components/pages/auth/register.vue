@@ -150,7 +150,10 @@ export default {
 				})
 
 				// Go to the next page
-				const redirect = this.$auth.$storage.getUniversal('redirect')
+				const redirect =
+					this.$route.query.redirect ||
+					this.$auth.$storage.getUniversal('redirect')
+
 				this.$auth.$storage.setUniversal('redirect', null)
 
 				this.$router.push(redirect || this.localePath('index'))
