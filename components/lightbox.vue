@@ -258,18 +258,13 @@ export default {
 	opacity: 0.75;
 	transition: 100ms;
 
-	&:hover,
-	&:focus,
-	&:active {
+	&:hover {
 		opacity: 1;
-	}
-	&:active {
-		transform: scale(0.9);
 	}
 }
 .pg-lightbox__close-icon {
-	width: 32px;
-	height: 32px;
+	width: 40px;
+	height: 40px;
 }
 
 // Slider + images
@@ -292,7 +287,6 @@ export default {
 	justify-content: center;
 }
 .pg-lightbox__image {
-	box-shadow: 0 5px 40px rgba(#000, 0.25);
 	border-radius: $border-radius-lg;
 	max-width: 100%;
 	max-height: 100%;
@@ -316,13 +310,8 @@ export default {
 	cursor: pointer;
 	transition: 100ms;
 
-	&:hover,
-	&:focus,
-	&:active {
-		opacity: 0.75;
-	}
-	&:active {
-		transform: scale(0.9);
+	&:hover {
+		opacity: 1;
 	}
 }
 .pg-lightbox__prev-arrow {
@@ -332,8 +321,8 @@ export default {
 	right: 0;
 }
 .pg-lightbox__arrow-icon {
-	width: 48px;
-	height: 48px;
+	width: 40px;
+	height: 40px;
 }
 
 // Thumbnails
@@ -352,7 +341,7 @@ export default {
 	background-repeat: no-repeat;
 	border-radius: $border-radius-sm;
 	opacity: 0.5;
-	border: $border-width solid rgba($white, 0.1);
+	border: ($border-width * 2) solid transparent;
 	cursor: pointer;
 	transition: 200ms, transform 100ms;
 
@@ -360,16 +349,11 @@ export default {
 		margin-left: 1rem;
 	}
 
-	&:hover,
-	&:focus {
+	&:hover {
 		opacity: 1;
 	}
-	&:active {
-		transform: scale(0.95);
-	}
 	&#{&}--selected {
-		border-color: theme-color('secondary');
-		box-shadow: inset 0 0 0 $border-width theme-color('secondary');
+		border-color: $light;
 		opacity: 1;
 	}
 }
