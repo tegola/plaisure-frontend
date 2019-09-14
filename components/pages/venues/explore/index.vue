@@ -71,7 +71,7 @@
 				<!-- Loader -->
 				<div v-if="loading" key="loader" class="list-group-item venue-list-placeholder-item text-muted">
 					<pg-icon icon="circle-outline-notch" spinning />
-					<h4 class="mb-0">{{ $t('common.status.loading') }}&hellip;</h4>
+					<p class="mb-0">{{ $t('common.status.loading') }}&hellip;</p>
 				</div>
 				<template v-else>
 					<!-- Empty list -->
@@ -346,34 +346,39 @@ export default {
 	},
 
 	methods: {
-		loadData() {
+		async loadData() {
+			// eslint-disable-next-line
+			console.log('loadData')
+
 			this.loading = true
 
-			return this.$axios
-				.get('/venues/explore', {
+			try {
+				const response = await this.$axios.get('/venues/explore', {
 					params: {
 						country: this.$i18n.region
 					}
 				})
-				.then(response => {
-					// Fill data
-					this.categories = response.data.categories
-					// this amenities = response.data.amenities;
 
-					// Fill categories in search params
-					if (!this.searchParams.categories.length) {
-						this.searchParams.categories = this.categories.map(
-							category => category.id
-						)
-					}
+				// Fill data
+				this.categories = response.data.categories
+				// this amenities = response.data.amenities;
 
-					// Stop loading
-					this.loading = false
-				})
+				// Fill categories in search params
+				if (!this.searchParams.categories.length) {
+					this.searchParams.categories = this.categories.map(
+						category => category.id
+					)
+				}
+			} finally {
+				this.loading = false
+			}
 		},
 
 		// Location search ----------------------------------------------------
 		onPlaceChanged(place) {
+			// eslint-disable-next-line
+			console.log('onPlaceChanged')
+
 			if (!place) return
 
 			const bounds =
@@ -418,6 +423,9 @@ export default {
 
 		// User location ------------------------------------------------------
 		async findUserLocation() {
+			// eslint-disable-next-line
+			console.log('findUserLocation')
+
 			this.locating = true
 			let position
 
@@ -479,11 +487,17 @@ export default {
 
 		// Filters ------------------------------------------------------------
 		onRadiusChange(value) {
+			// eslint-disable-next-line
+			console.log('onRadiusChange')
+
 			this.searchParams.radius = value
 			this.search()
 		},
 
 		onCategoryChange(value) {
+			// eslint-disable-next-line
+			console.log('onCategoryChange')
+
 			this.searchParams.categories = value.length
 				? value
 				: this.categories.map(category => category.id)
@@ -499,9 +513,12 @@ export default {
 
 		// Map ----------------------------------------------------------------
 		onMapBoundsChange: debounce(function(bounds) {
+			// eslint-disable-next-line
+			console.log('onMapBoundsChange')
+
 			// Fat arrow functions do not work with debounce
 			// Store bounds
-			this.mapBounds = bounds
+			// this.mapBounds = bounds
 
 			// Stop if map bounds event is not enabled
 			if (!this.mapBoundsEventEnabled) {
@@ -535,6 +552,9 @@ export default {
 		},
 
 		onSearchBoundsClick() {
+			// eslint-disable-next-line
+			console.log('onSearchBoundsClick')
+
 			// Change search mode
 			this.searchMode = 'bounds'
 
@@ -567,6 +587,9 @@ export default {
 
 		// Search -------------------------------------------------------------
 		async search() {
+			// eslint-disable-next-line
+			console.log('search')
+
 			// Load venues
 			this.loading = true
 
@@ -620,6 +643,7 @@ export default {
 	.wrapper {
 		flex: 1;
 		display: flex;
+		height: 100%;
 	}
 
 	// Filters
