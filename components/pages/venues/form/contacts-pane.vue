@@ -69,7 +69,7 @@
 			<div class="form-row">
 				<div class="col-lg-10">
 					<b-form-input
-						v-auto-http
+						v-auto-https
 						:placeholder="$t('pages.venue_form.contacts.url_placeholder')"
 						:value="venue.urls.site"
 						type="url"
@@ -87,7 +87,7 @@
 			<div class="form-row">
 				<div class="col-lg-10">
 					<b-form-input
-						v-auto-http
+						v-auto-https
 						:placeholder="$t('pages.venue_form.contacts.url_placeholder')"
 						:value="venue.urls.online_casino"
 						type="url"
@@ -105,7 +105,7 @@
 			<div class="form-row">
 				<div class="col-lg-10">
 					<b-form-input
-						v-auto-http
+						v-auto-https
 						:placeholder="$t('pages.venue_form.contacts.url_placeholder')"
 						:value="venue.urls.facebook"
 						type="url"
@@ -122,7 +122,7 @@ import { mapState } from 'vuex'
 import extend from 'lodash/extend'
 import { BFormGroup, BFormInput, BInputGroup } from 'bootstrap-vue'
 import formGroupProps from './form-group-props'
-import autoHttp from '@/directives/auto-http'
+import autoHttps from '@/directives/auto-https'
 
 export default {
 	name: 'ContactsPane',
@@ -134,7 +134,7 @@ export default {
 	},
 
 	directives: {
-		autoHttp
+		autoHttps
 	},
 
 	data() {

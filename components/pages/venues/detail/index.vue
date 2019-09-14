@@ -444,7 +444,7 @@ export default {
 
 		// Structured data - general
 		const structuredData = {
-			'@context': 'http://schema.org',
+			'@context': 'https://schema.org',
 			'@type': 'EntertainmentBusiness',
 			name: venue.name,
 			url: `${process.env.APP_URL}/venues/${venue.id}`,

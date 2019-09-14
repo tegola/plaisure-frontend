@@ -1,6 +1,6 @@
 export default {
 	bind(el, binding, vnode) {
-		const prefix = 'http://'
+		const prefix = 'https://'
 		const re = new RegExp('^http(s?)://', 'i')
 
 		const handler = function(e) {
