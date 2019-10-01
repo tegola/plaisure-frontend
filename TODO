@@ -1,6 +1,5 @@
   ✔ IMPORTANTE: limitare le informazioni al caricamento di /user, l'utente non deve ricevere tutti i dati @done (19-09-12 19:42)
   ☐ IMPORTANTE: trovare il modo di disabilitare l'accesso esterno alle api pubbliche (es. http://localhost:8888/api/venues/7NQlVQRny1) facendo accedere solo lo stesso dominio (CORS?)
-  ☐ IMPORTANTE: la mappa si è mezza rotta, prova a cercare Milano e vedi come si sposta di continuo
   ✔ Far rifunzionare le checkbox "amenities" @done (19-04-07 16:32)
   ✔ Icone per le categorie GB sulla mappa @done (19-02-18 23:21)
   ✔ Solo categorie GB nel sito GB, solo IT nel sito IT @done (19-02-11 21:32)
@@ -112,12 +111,11 @@ Generale:
  ☐ Supporto promozioni (es: caffè gratis, bevande gratis, stuzzichini, orari per pranzo e cena, concorso, ecc.) - Cambia anche l'elemento nella lista
  ☐ "E' tardi! vuoi vedere solo le attività aperte?"
  ☐ Calcolare gli orari di apertura in base al timezone della sala, e non in base a quello del server
- ☐ Sistema per mettere le parole chiave
  ☐ Aggiungere pagina di errore
  ☐ Aggiungere pagina di downtime
  ✘ Supporto ai like/dislike @cancelled (19-09-12 19:36)
  ✔ Supporto per le recensioni e per rispondere lato gestore (quindi registrazione utente normale e gestore) @done (19-09-12 19:36)
- ☐ Aggiungere i link di Prontogioco ai social network
+ ☐ Aggiungere i link di Plaisure ai social network
  ☐ Servizi aggiuntivi
    - Area privè (privee?, privet?)
    - Aria condizionata
@@ -144,8 +142,7 @@ Generale:
  ✔ Rimuovere l'accesso utente per il momento @done (17-08-09 18:46)
  ✔ Aggiungere favicon @done (17-08-25 17:33)
  ✔ Autocomplete: fare un wrapper per aggiungere gli eventi 1. place_change(vuoto), 2. select all on click, 3. non chiudere menu se premo invio, 4. blur alla chiusura @done (17-09-18 23:28)
- ☐ Auth: se il primo caricamento è una pagina protetta si viene rimandati alla login ma dopo la login non si va alla pagina protetta. Ricontrollare quando viene mergiata questa PR: https://github.com/nuxt-community/auth-module/pull/333
- ☐ Auth: quando vado alla login e poi devo tornare alla pagina precedente non funziona. es. quando devo lasciare una recensione ma non sono loggato
+ ✔ Auth: quando vado alla login e poi devo tornare alla pagina precedente non funziona. es. quando devo lasciare una recensione ma non sono loggato @done (19-10-01 23:21)
  ☐ Notifica al proprietario quando ci sono nuove recensioni
 
 
