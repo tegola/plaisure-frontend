@@ -2,17 +2,13 @@
 	<div class="pg-venue-form-page">
 		<pg-navbar variant="dark" />
 
-		<div v-if="loading || error" class="container d-flex text-muted text-center" style="height: 50vh">
+		<div v-if="error" class="container d-flex text-muted text-center" style="height: 50vh">
 			<div class="m-auto">
-				<template v-if="loading">
-					<pg-icon icon="circle-outline-notch" spinning />
-					<h5 class="m-0">{{ $t('common.status.loading') }}&hellip;</h5>
-				</template>
-				<p v-if="error" class="lead text-muted mb-0">{{ $t('common.status.load_error') }}</p>
+				<p class="lead text-muted mb-0">{{ $t('common.status.load_error') }}</p>
 			</div>
 		</div>
 
-		<div v-if="!loading && venue">
+		<template v-if="venue">
 			<div class="secondary-nav">
 				<div class="title-wrapper">
 					<div class="container d-flex align-items-center justify-content-between">
@@ -72,7 +68,7 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</template>
 
 		<pg-page-footer />
 	</div>
@@ -119,7 +115,6 @@ export default {
 
 	data() {
 		return {
-			loading: false,
 			error: false,
 			saving: false,
 			panes: ['general', 'services', 'contacts', 'hours', 'photos', 'jackpots']
@@ -141,7 +136,7 @@ export default {
 		}
 	},
 
-	async fetch({ $axios, params, store }) {
+	async asyncData({ $axios, params, store }) {
 		// Reset the store
 		store.commit('venueForm/reset')
 
@@ -158,7 +153,9 @@ export default {
 			store.commit('venueForm/setConcessionaires', data.concessionaires)
 			store.commit('venueForm/setVltPlatforms', data.vltPlatforms)
 		} catch (err) {
-			this.error = true
+			return {
+				error: true
+			}
 		}
 	},
 

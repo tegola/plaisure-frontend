@@ -8,8 +8,7 @@ const initialState = {
 	amenities: [],
 	categories: [],
 	concessionaires: [],
-	vltPlatforms: [],
-	payPerViewPlatforms: []
+	vltPlatforms: []
 }
 
 export const state = () => extend({}, initialState)
@@ -49,10 +48,6 @@ export const mutations = {
 
 	setVltPlatforms: (state, vltPlatforms) => {
 		state.vltPlatforms = vltPlatforms
-	},
-
-	setPayPerViewPlatforms: (state, payPerViewPlatforms) => {
-		state.payPerViewPlatforms = payPerViewPlatforms
 	},
 
 	setVenueField: (state, { field, value }) => {

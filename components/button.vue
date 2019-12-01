@@ -33,7 +33,7 @@
 				class="pg-button__overlay-icon"
 			/>
 			<pg-icon
-				v-if="!loading && successful"
+				v-else-if="successful"
 				icon="checkmark"
 				class="pg-button__overlay-icon"
 			/>
