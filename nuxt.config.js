@@ -163,7 +163,7 @@ module.exports = {
 	},
 
 	styleResources: {
-		sass: [
+		scss: [
 			'bootstrap/scss/_functions.scss',
 			'~/assets/scss/_variables.scss',
 			'bootstrap/scss/_variables.scss',

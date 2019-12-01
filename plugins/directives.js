@@ -1,6 +1,5 @@
 import Vue from 'vue'
-import BTooltipDirective from 'bootstrap-vue/es/directives/tooltip/tooltip'
-import BScrollspyDirective from 'bootstrap-vue/es/directives/scrollspy/scrollspy'
+import { VBTooltip, VBScrollspy } from 'bootstrap-vue'
 
-Vue.directive('b-tooltip', BTooltipDirective)
-Vue.directive('b-scrollspy', BScrollspyDirective)
+Vue.directive('b-tooltip', VBTooltip)
+Vue.directive('b-scrollspy', VBScrollspy)
