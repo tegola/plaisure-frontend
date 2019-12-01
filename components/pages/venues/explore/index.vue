@@ -347,9 +347,6 @@ export default {
 
 	methods: {
 		async loadData() {
-			// eslint-disable-next-line
-			console.log('loadData')
-
 			this.loading = true
 
 			try {
@@ -376,9 +373,6 @@ export default {
 
 		// Location search ----------------------------------------------------
 		onPlaceChanged(place) {
-			// eslint-disable-next-line
-			console.log('onPlaceChanged')
-
 			if (!place) return
 
 			const bounds =
@@ -423,9 +417,6 @@ export default {
 
 		// User location ------------------------------------------------------
 		async findUserLocation() {
-			// eslint-disable-next-line
-			console.log('findUserLocation')
-
 			this.locating = true
 			let position
 
@@ -487,17 +478,11 @@ export default {
 
 		// Filters ------------------------------------------------------------
 		onRadiusChange(value) {
-			// eslint-disable-next-line
-			console.log('onRadiusChange')
-
 			this.searchParams.radius = value
 			this.search()
 		},
 
 		onCategoryChange(value) {
-			// eslint-disable-next-line
-			console.log('onCategoryChange')
-
 			this.searchParams.categories = value.length
 				? value
 				: this.categories.map(category => category.id)
@@ -512,13 +497,10 @@ export default {
 		*/
 
 		// Map ----------------------------------------------------------------
+		// Fat arrow functions do not work with debounce
 		onMapBoundsChange: debounce(function(bounds) {
-			// eslint-disable-next-line
-			console.log('onMapBoundsChange')
-
-			// Fat arrow functions do not work with debounce
 			// Store bounds
-			// this.mapBounds = bounds
+			this.mapBounds = bounds
 
 			// Stop if map bounds event is not enabled
 			if (!this.mapBoundsEventEnabled) {
@@ -552,9 +534,6 @@ export default {
 		},
 
 		onSearchBoundsClick() {
-			// eslint-disable-next-line
-			console.log('onSearchBoundsClick')
-
 			// Change search mode
 			this.searchMode = 'bounds'
 
@@ -587,9 +566,6 @@ export default {
 
 		// Search -------------------------------------------------------------
 		async search() {
-			// eslint-disable-next-line
-			console.log('search')
-
 			// Load venues
 			this.loading = true
 
