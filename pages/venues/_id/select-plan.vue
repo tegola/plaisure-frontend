@@ -12,6 +12,20 @@
 				<span class="text-muted">({{ address }})</span>
 			</p>
 
+			<!-- Payment alert -->
+			<div v-if="needsPayment" class="row">
+				<div class="col-lg-9 mx-lg-auto">
+					<b-alert variant="warning" show class="mb-0">
+						<h5>{{ $t('pages.venue_plan.needs_payment.title') }}</h5>
+						<p>{{ $t('pages.venue_plan.needs_payment.line1') }}</p>
+						<p>{{ $t('pages.venue_plan.needs_payment.line2') }}</p>
+						<div class="text-center">
+							<pg-button variant="warning" @click="cancelPending">{{ $t('pages.venue_plan.needs_payment.action') }}</pg-button>
+						</div>
+					</b-alert>
+				</div>
+			</div>
+
 			<!-- Selection -->
 			<div class="row my-5">
 				<div
@@ -19,30 +33,25 @@
 					:key="subscription.name"
 					class="col-md-4 d-flex">
 					<pg-subscription-card
-						:subscription="subscription"
-						:selected="isSubscriptionSelected(subscription)"
-						:last-update-date="lastUpdateDateForSubscription(subscription)"
-						:end-date="endDateForSubscription(subscription)"
-						:highlight="subscription.highlight"
-						clickable
 						class="flex-fill mb-3 mb-md-0"
+						v-bind="propsForSubscription(subscription)"
 						@select="onSubscriptionSelect(subscription.name)"
 					/>
 				</div>
 			</div>
 
 			<!-- Form -->
-			<div v-if="model.subscription_name" ref="controls" class="row">
+			<div v-if="model.subscription_name !== null" ref="controls" class="row">
 				<div class="col-lg-7 mx-lg-auto">
 					<!-- Back to default subscription -->
-					<template v-if="model.subscription_name == 'default'">
+					<template v-if="model.subscription_name === 'default'">
 						<p>{{ $t('pages.venue_plan.selected_free', { date: formatDate(venue.subscription.current_period_ends_at) }) }}</p>
 
 						<!-- Confirm change -->
 						<div class="text-right">
 							<!-- Default subscription -->
 							<pg-button
-								v-if="model.subscription_name === 'default'"
+								v-if="!model.subscription_name"
 								:block="$mq == 'xs' || $mq == 'constrained'"
 								variant="primary"
 								:loading="saving"
@@ -60,6 +69,13 @@
 							<template v-if="hasExistingBilling">{{ $t('pages.venue_plan.selected_paid_review_data') }}</template>
 							<template v-else>{{ $t('pages.venue_plan.selected_paid_input_data') }}.</template>
 						</p>
+
+						<b-alert v-if="isResuming" show class="mx-md-n3">
+							<i18n path="pages.venue_plan.resume">
+								<strong slot="last_update_date">{{ formatDate(venue.subscription.updated_at) }}</strong>
+								<strong slot="end_date">{{ formatDate(venue.subscription.ends_at) }}</strong>
+							</i18n>
+						</b-alert>
 
 						<!-- Billing -->
 						<div class="pt-4">
@@ -215,18 +231,18 @@
 								<b-form-input v-model="model.card_holder_name" type="text" autocomplete="cc-name" />
 							</b-form-group>
 						</b-collapse>
-
-						<!-- Confirm change -->
-						<div class="text-right">
-							<pg-button
-								:loading="validating"
-								:block="$mq == 'xs' || $mq == 'constrained'"
-								variant="primary"
-								@click="validateAndContinue">
-								{{ $t('common.actions.continue') }}
-							</pg-button>
-						</div>
 					</template>
+
+					<!-- Confirm change -->
+					<div class="text-right">
+						<pg-button
+							:loading="validating"
+							:block="$mq == 'xs' || $mq == 'constrained'"
+							variant="primary"
+							@click="validateAndContinue">
+							{{ $t('common.actions.continue') }}
+						</pg-button>
+					</div>
 				</div>
 
 				<b-modal
@@ -271,6 +287,7 @@
 
 <script>
 import {
+	BAlert,
 	BFormGroup,
 	BFormInput,
 	BFormSelect,
@@ -282,7 +299,7 @@ import { validationMixin } from 'vuelidate'
 import { requiredIf } from 'vuelidate/lib/validators'
 import { getParamByParam } from 'iso-country-currency'
 import extend from 'lodash/extend'
-import { Card as StripeCard, createToken } from 'vue-stripe-elements-plus'
+import { Card as StripeCard, handleCardSetup } from 'vue-stripe-elements-plus'
 import scrollIntoView from '@/utilities/scroll-into-view'
 import PgSubscriptionCard from '@/components/subscription-card'
 
@@ -290,6 +307,7 @@ export default {
 	name: 'PgVenueSelectPlanPage',
 
 	components: {
+		BAlert,
 		BFormGroup,
 		BFormInput,
 		BFormSelect,
@@ -324,13 +342,15 @@ export default {
 		}
 
 		return {
+			venue: null,
+			paymentIntentSecret: null,
 			validating: false,
 			saving: false,
 			stripeOptions,
 			cardError: null,
 			confirmModalOpen: false,
 			model: {
-				subscription_name: '',
+				subscription_name: null,
 				new_billing: false,
 				legal_name: '',
 				address_line1: '',
@@ -341,7 +361,7 @@ export default {
 				country: '',
 				vat_number: '',
 				new_payment: false,
-				token_id: null,
+				payment_method_id: null,
 				card_holder_name: ''
 			}
 		}
@@ -418,6 +438,18 @@ export default {
 			})
 		},
 
+		needsPayment() {
+			return this.venue.subscription && this.venue.subscription.needs_payment
+		},
+
+		isResuming() {
+			return (
+				this.venue.subscription &&
+				this.venue.subscription.name === this.model.subscription_name &&
+				this.venue.subscription.ends_at
+			)
+		},
+
 		hasExistingBilling() {
 			const u = this.user
 
@@ -468,16 +500,20 @@ export default {
 			return [a.line1, a.city].join(', ')
 		},
 
-		stripeTokenData() {
-			if (!this.user) return
-
+		paymentMethodData() {
 			return {
-				name: this.model.card_holder_name,
-				address_line1: this.user.address_line1,
-				address_line2: this.user.address_line2,
-				address_city: this.user.address_city,
-				address_postal_code: this.user.address_postcode,
-				country: this.user.country
+				payment_method_data: {
+					billing_details: {
+						name: this.model.legal_name,
+						address: {
+							line1: this.model.address_line1,
+							line2: this.model.address_line2,
+							city: this.model.address_city,
+							postal_code: this.model.address_postcode,
+							country: this.model.country
+						}
+					}
+				}
 			}
 		},
 
@@ -523,7 +559,7 @@ export default {
 	},
 
 	asyncData({ $axios, params }) {
-		return $axios.$get(`/venues/${params.id}/edit`)
+		return $axios.$get(`/venues/${params.id}/subscription`)
 	},
 
 	head() {
@@ -569,11 +605,13 @@ export default {
 					return !this.hasExistingBilling || this.model.new_billing
 				})
 			},
-			token_id: {
+			/*
+			payment_method_id: {
 				required: requiredIf(function() {
 					return !this.hasExistingPayment || this.model.new_payment
 				})
 			},
+			*/
 			card_holder_name: {
 				required: requiredIf(function() {
 					return !this.hasExistingPayment || this.model.new_payment
@@ -594,46 +632,49 @@ export default {
 			})
 		},
 
-		isSubscriptionSelected(subscription) {
-			const current = this.venue.subscription
+		propsForSubscription(newSubscription) {
+			const currentSubscription = this.venue.subscription
 
-			if (this.model.subscription_name) {
-				return subscription.name === this.model.subscription_name
-			} else if (current) {
-				return subscription.name === current.name
+			const props = {
+				subscription: newSubscription,
+				highlight: newSubscription.highlight,
+				selected: this.model.subscription_name === newSubscription.name,
+				clickable: true,
+				disabled: false
 			}
-		},
 
-		lastUpdateDateForSubscription(subscription) {
-			const current = this.venue.subscription
+			// Disabled
+			if (this.needsPayment) {
+				// Current subscription needs payment, disable all subscriptions
+				props.disabled = true
+			} else if (newSubscription.name === 'default') {
+				// Default subscription: disabled if there is no subscription
+				// or if existing subscription is going to end because it has
+				// already been cancelled
+				props.disabled = Boolean(
+					!currentSubscription || currentSubscription.ends_at
+				)
+			} else {
+				// Any other subscription
+				props.disabled =
+					currentSubscription &&
+					currentSubscription.name === newSubscription.name &&
+					!currentSubscription.ends_at
+			}
 
-			return subscription.name !== 'default' &&
-				subscription.name === current.name &&
-				current.updated_at
-				? current.updated_at
-				: null
-		},
+			// Clickable
+			props.clickable = !props.disabled
 
-		endDateForSubscription(subscription) {
-			const current = this.venue.subscription
-
-			return subscription.name !== 'default' &&
-				subscription.name === current.name &&
-				current.ends_at
-				? current.ends_at
-				: null
+			return props
 		},
 
 		async onSubscriptionSelect(name) {
-			this.model.subscription_name =
-				name === this.venue.subscription.name ? null : name
+			// Save selected subscription
+			this.model.subscription_name = name
 
 			// Reset need for new billing and payment
 			this.model.new_billing = false
 			this.model.new_payment = false
-
-			// Stop if a new subscription has been picked
-			if (!this.model.subscription_name) return
 
 			await this.$nextTick()
 
@@ -647,52 +688,55 @@ export default {
 			this.cardError = error ? error.message : null
 		},
 
-		prepareToken() {
-			return new Promise((resolve, reject) => {
-				// No payment form, just return
-				if (!this.showPaymentForm) {
-					resolve()
-					return
+		validateAndContinue() {
+			if (this.model.subscription_name === 'default') {
+				// Default subscription doesn't ask for additional fields, so
+				// it just continues
+				this.submit()
+			} else {
+				this.validating = true
+
+				try {
+					// Validate
+					this.$v.$touch()
+
+					// Stop on validation errors
+					if (this.$v.$error) throw new Error()
+
+					// Show confirm modal
+					this.confirmModalOpen = true
+				} catch (err) {
+					this.$bvModal.msgBoxOk(this.$t('pages.venue_plan.form_error'), {
+						centered: true,
+						headerTextVariant: 'danger',
+						title: this.$t('common.status.error'),
+						okTitle: this.$t('common.actions.close')
+					})
+				} finally {
+					this.validating = false
 				}
-
-				// Billing form visible, create the token for storing the
-				// new credit card
-				createToken(this.stripeTokenData).then(({ token, error }) => {
-					// Error
-					if (error) return reject(error)
-
-					// Success, store token id
-					this.model.token_id = token.id
-					resolve()
-				})
-			})
+			}
 		},
 
-		async validateAndContinue() {
-			this.validating = true
+		async cancelPending() {
+			const url = `/venues/${this.venue.id}/subscription`
+
+			this.saving = true
 
 			try {
-				// Before checking for errors, we need to make sure we get the
-				// token for registering the credit card
-				await this.prepareToken()
-
-				// Validate
-				this.$v.$touch()
-
-				// Stop on validation errors
-				if (this.$v.$error) throw new Error()
-
-				// Show confirm modal
-				this.confirmModalOpen = true
-			} catch (err) {
-				this.$bvModal.msgBoxOk(this.$t('pages.venue_plan.form_error'), {
-					centered: true,
-					headerTextVariant: 'danger',
-					title: this.$t('common.status.error'),
-					okTitle: this.$t('common.actions.close')
+				// Cancel subscription
+				await this.$axios.$post(`/venues/${this.venue.id}/subscription`, {
+					subscription_name: null
 				})
-			} finally {
-				this.validating = false
+
+				// Reload page data (we can't call asyncData again)
+				const data = await this.$axios.$get(url)
+
+				this.venue = data.venue
+				this.paymentIntentSecret = data.paymentIntentSecret
+			} catch (err) {
+				this.saving = false
+				this.showSubmitError()
 			}
 		},
 
@@ -700,14 +744,32 @@ export default {
 			this.saving = true
 
 			try {
+				// Prepare payment method data in case the user needs a new one
+				if (this.showPaymentForm) {
+					const { setupIntent, error } = await handleCardSetup(
+						this.paymentIntentSecret,
+						this.paymentMethodData
+					)
+
+					if (error) throw error
+
+					this.model.payment_method_id = setupIntent.payment_method
+				}
+
 				// Save
+				const sentModel = extend({}, this.model)
+
+				if (sentModel.subscription_name === 'default') {
+					sentModel.subscription_name = null
+				}
+
 				const data = await this.$axios.$post(
-					`/venues/${this.venue.id}/subscribe`,
-					this.model
+					`/venues/${this.venue.id}/subscription`,
+					sentModel
 				)
 
-				// Notify the user of saved subscription
-				let notifyStrings = {}
+				// Prepare notification
+				let notifySettings
 				const dateOptions = {
 					weekday: 'long',
 					day: 'numeric',
@@ -715,39 +777,46 @@ export default {
 					year: 'numeric'
 				}
 
-				if (this.model.subscription_name === 'default') {
-					// Default subscription -> Cancellation
-					const date = new Date(data.ends_at).toLocaleDateString(
+				if (data.subscription.needs_payment) {
+					// Payment confirmation needed
+					notifySettings = {
+						title: this.$t('pages.venue_plan.subscription_confirm.title'),
+						text: this.$t('pages.venue_plan.subscription_confirm.message'),
+						duration: -1,
+						type: 'warning'
+					}
+				} else if (data.subscription.ends_at) {
+					// Subscribed -> Cancellation
+					const date = new Date(data.subscription.ends_at).toLocaleDateString(
 						this.$i18n.isoCode,
 						dateOptions
 					)
 
-					notifyStrings = {
+					notifySettings = {
 						title: this.$t('pages.venue_plan.cancellation_success.title'),
 						text: this.$t('pages.venue_plan.cancellation_success.message', {
 							date
-						})
+						}),
+						duration: -1,
+						type: 'success'
 					}
 				} else {
 					// New/modify subscription
-					const date = new Date(data.current_period_ends_at).toLocaleDateString(
-						this.$i18n.isoCode,
-						dateOptions
-					)
+					const date = new Date(
+						data.subscription.current_period_ends_at
+					).toLocaleDateString(this.$i18n.isoCode, dateOptions)
 
-					notifyStrings = {
+					notifySettings = {
 						title: this.$t('pages.venue_plan.subscription_success.title'),
 						text: this.$t('pages.venue_plan.subscription_success.message', {
 							date
-						})
+						}),
+						duration: -1,
+						type: 'success'
 					}
 				}
 
-				this.$notify({
-					...notifyStrings,
-					duration: -1,
-					type: 'success'
-				})
+				this.$notify(notifySettings)
 
 				// Reload user, in case its billing info has changed
 				await this.$auth.fetchUser()
@@ -761,13 +830,18 @@ export default {
 				)
 			} catch (err) {
 				this.saving = false
-				this.$bvModal.msgBoxOk(this.$t('pages.venue_plan.submit_error'), {
-					centered: true,
-					headerTextVariant: 'danger',
-					title: this.$t('common.status.error'),
-					okTitle: this.$t('common.actions.close')
-				})
+				this.confirmModalOpen = false
+				this.showSubmitError()
 			}
+		},
+
+		showSubmitError() {
+			this.$bvModal.msgBoxOk(this.$t('pages.venue_plan.submit_error'), {
+				centered: true,
+				headerTextVariant: 'danger',
+				title: this.$t('common.status.error'),
+				okTitle: this.$t('common.actions.close')
+			})
 		}
 	}
 }

@@ -54,19 +54,18 @@
 					<div class="col-lg-4">
 						<pg-subscription-card
 							v-if="venue.id"
-							:subscription="venue.subscription"
-							:highlight="$t('Abbonamento corrente')"
-							:last-update-date="venue.subscription.updated_at"
-							:end-date="venue.subscription.ends_at"
+							:subscription="venueSubscription"
+							:highlight="$t('pages.venue_form.subscription.title')"
+							:last-update-date="venueSubscription.updated_at"
+							:end-date="venueSubscription.ends_at"
 							class="my-5">
 							<hr class="my-0">
 							<div class="card-body">
-								<!-- FIXME: Non dare troppa evidenze se è già all'abbonamento più costoso -->
 								<pg-button
-									variant="primary"
+									:variant="venueSubscription.name === 'gold' ? 'light' : 'primary'"
 									block
 									:to="localePath({ name: 'venues-id-select-plan', params: { id: venue.id }})">
-									Cambia
+									{{ $t('common.actions.change') }}
 								</pg-button>
 							</div>
 						</pg-subscription-card>
@@ -129,7 +128,17 @@ export default {
 
 	computed: {
 		...mapState('venueForm', ['venue']),
-		...mapGetters('venueForm', ['isSaved'])
+		...mapGetters('venueForm', ['isSaved']),
+
+		venueSubscription() {
+			return (
+				this.venue.subscription || {
+					name: 'default',
+					currency: 'EUR',
+					price: 0
+				}
+			)
+		}
 	},
 
 	async fetch({ $axios, params, store }) {

@@ -30,7 +30,8 @@ export default {
 			remove: 'Rimuovi',
 			select: 'Scegli',
 			continue: 'Continua',
-			close: 'Chiudi'
+			close: 'Chiudi',
+			change: 'Cambia'
 		},
 		cookie: {
 			agree: 'Utilizzando questo sito acconsenti alla nostra {policy_link}',
@@ -127,6 +128,9 @@ export default {
 				distance_bonus: 'Bonus del {amount}% nei risultati di ricerca',
 				home_page_presence: 'Visibilità ricorrente in home page',
 				hide_nearby_venues: 'Nasconde le attività nelle vicinanze'
+			},
+			error: {
+				payment: 'Ancora inattivo: assicurati di aver confermato il pagamento.'
 			},
 			cancelled: {
 				line1: 'Hai disattivato il {cancelDate}.',
@@ -483,11 +487,22 @@ export default {
 				name: 'Jackpot {number}',
 				name_placeholder: 'Nome',
 				amount_placeholder: 'Valore'
+			},
+			subscription: {
+				title: 'Abbonamento corrente'
 			}
 		},
 
 		venue_plan: {
 			title: 'Scegli abbonamento',
+			needs_payment: {
+				title: 'Abbonamento in attesa di pagamento',
+				line1:
+					'Questa attività ha un abbonamento in attesa di conferma del pagamento. Controlla la tua casella di posta elettronica per eventuali richieste di conferma e segui le istruzioni indicate.',
+				line2:
+					"Se invece vuoi annullare l'abbonamento scelto e ricominciare da capo, fai click sul pulsante qui sotto.",
+				action: 'Annulla abbonamento'
+			},
 			selected_free:
 				"Hai scelto l'abbonamento gratuito. Questo annullerà il rinnovo mensile e non ti verrà addebitato nessun altro costo. L'attuale abbonamento rimarrà comunque attivo fino allo scadere del periodo già pagato, ovvero fino al {date}.",
 			selected_paid: 'Hai scelto un abbonamento a pagamento.',
@@ -495,6 +510,8 @@ export default {
 				'Inserisci qui di seguito le tue informazioni di fatturazione e pagamento.',
 			selected_paid_review_data:
 				'Assicurati che le tue informazioni di fatturazione e pagamento siano corretti.',
+			resume:
+				"Hai disattivato questo abbonamento il {last_update_date}, ma non sarebbe scaduta fino al {end_date}. Riattivando l'iscrizione non ti sarà addebitato niente fino a tale data!",
 			billing: {
 				title: 'Fatturazione',
 				current: "Usa l'indirizzo registrato",
@@ -548,16 +565,21 @@ export default {
 			form_error:
 				'Sembra che il modulo sia incompleto: inserisci tutti i dati richiesti prima di continuare.',
 			submit_error:
-				'È avvenuto un errore nel tentativo di modificare il tuo abbonamento. Il team è già stato informato. Ti preghiamo di riprovare più tardi.',
+				'È avvenuto un errore nel tentativo di modificare il tuo abbonamento. Il nostro staff di supporto è già stato informato. Ti preghiamo di riprovare più tardi.',
+			subscription_confirm: {
+				title: 'Conferma richiesta',
+				message:
+					'È necessaria la conferma del pagamento. Controlla la posta elettronica e segui le indicazioni fornite.'
+			},
 			subscription_success: {
 				title: 'Abbonamento attivato',
 				message:
-					"L'abbonamento che hai scelto è stato attivato. Si rinnoverà automaticamente {date}, salvo cancellazione da parte tua prima di tale data."
+					"L'abbonamento che hai scelto è stato attivato. Si rinnoverà automaticamente il {date}, salvo cancellazione da parte tua prima di tale data."
 			},
 			cancellation_success: {
 				title: 'Abbonamendo cancellato',
 				message:
-					'Il tuo abbonamento è stato cancellato. Rimarrà attivo fino a {date}. Non ti sarà addebitato nessun altro costo.'
+					"Il rinnovo automatico del tuo abbonamento è stato disattivato. L'abbonamento rimarrà comunque attivo fino al {date}. Non ti sarà addebitato nessun altro costo."
 			}
 		},
 

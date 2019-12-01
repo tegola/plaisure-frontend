@@ -1,21 +1,27 @@
 <template>
 	<div :class="classes" @click="onClick">
 		<div class="card-body">
-			<span v-if="highlight" class="badge badge-primary initialism">{{ highlight }}</span>
+			<span v-if="highlight" class="badge badge-primary initialism mb-2">{{ highlight }}</span>
 			<h3 class="card-title">{{ $t(`data.subscriptions.${subscription.name}`) }}</h3>
 			<p class="card-text lead">{{ price }}</p>
 			<ul class="list-unstyled card-text">
 				<li v-for="(line, index) in subscription.lines" :key="index">{{ line }}</li>
 			</ul>
 		</div>
-		<template v-if="lastUpdateDate && endDate" class="card-body">
+		<template v-if="subscription.needs_payment">
+			<hr class="my-0">
+			<div class="card-body">
+				<b-alert variant="warning" show class="mb-0 small">{{ this.$t('components.subscription_card.error.payment') }}</b-alert>
+			</div>
+		</template>
+		<template v-else-if="lastUpdateDate && endDate" class="card-body">
 			<hr class="my-0">
 			<div class="card-body">
 				<div class="d-flex align-items-center">
 					<pg-icon icon="info" class="mr-3 text-info" />
 					<p class="mb-0 small flex-fill">
-						{{ this. $t('components.subscription_card.cancelled.line1', { cancelDate: formatDate(lastUpdateDate) }) }}<br>
-						{{ this. $t('components.subscription_card.cancelled.line2', { endDate: formatDate(endDate) }) }}
+						{{ this.$t('components.subscription_card.cancelled.line1', { cancelDate: formatDate(lastUpdateDate) }) }}<br>
+						{{ this.$t('components.subscription_card.cancelled.line2', { endDate: formatDate(endDate) }) }}
 					</p>
 				</div>
 			</div>
@@ -26,9 +32,14 @@
 
 <script>
 import { getParamByParam } from 'iso-country-currency'
+import { BAlert } from 'bootstrap-vue'
 
 export default {
 	name: 'PgSubscriptionCard',
+
+	components: {
+		BAlert
+	},
 
 	props: {
 		subscription: {
@@ -54,6 +65,10 @@ export default {
 		selected: {
 			type: Boolean,
 			default: false
+		},
+		disabled: {
+			type: Boolean,
+			default: false
 		}
 	},
 
@@ -61,8 +76,9 @@ export default {
 		classes() {
 			return {
 				card: true,
-				'pg-subscription-card--clickable': this.clickable,
-				'pg-subscription-card--selected': this.selected
+				'pg-subscription-card--clickable': this.clickable && !this.disabled,
+				'pg-subscription-card--selected': this.selected,
+				'pg-subscription-card--disabled': this.disabled
 			}
 		},
 
@@ -95,7 +111,7 @@ export default {
 		},
 
 		onClick() {
-			if (!this.clickable) return
+			if (!this.clickable || this.disabled) return
 
 			this.$emit('select')
 		}
@@ -119,6 +135,9 @@ export default {
 	&--selected {
 		border-color: theme-color('primary');
 		box-shadow: inset 0 0 0 $border-width theme-color('primary');
+	}
+	&--disabled {
+		background-color: gray('100');
 	}
 }
 </style>

@@ -27,7 +27,8 @@ export default {
 			remove: 'Remove',
 			select: 'Select',
 			continue: 'Continue',
-			close: 'Close'
+			close: 'Close',
+			change: 'Change'
 		},
 		cookie: {
 			agree: 'By using this website, you agree to our {policy_link}',
@@ -122,7 +123,10 @@ export default {
 				as_free: 'All the perks of the free plan, plus:',
 				distance_bonus: '{amount}% bonus in search results',
 				home_page_presence: 'Recurrent presence on the home page',
-				hide_nearby_venues: "Hide nearby venues in your business's page"
+				hide_nearby_venues: "Hide nearby venues in your venue's page"
+			},
+			error: {
+				payment: "Still inactive, make sure you've confirmed the payment."
 			},
 			cancelled: {
 				line1: 'Cancelled on {cancelDate}.',
@@ -475,11 +479,22 @@ export default {
 				name: 'Jackpot {number}',
 				name_placeholder: 'Name',
 				amount_placeholder: 'Amount'
+			},
+			subscription: {
+				title: 'Subscription'
 			}
 		},
 
 		venue_plan: {
 			title: 'Select plan',
+			needs_payment: {
+				title: 'Payment pending',
+				line1:
+					"This venue's subscription is waiting for a payment confirmation. Check your e-mail inbox for any payment confirmation requests and follow the on-screen instructions.",
+				line2:
+					'If you want to cancel the subscription and start over, click the button below.',
+				action: 'Cancel pending subscription'
+			},
 			selected_free:
 				'You selected the free plan. This will deactivate your current subscription and your credit card will not be charged anymore. The subscription will keep working till the end of the period, on {date}.',
 			selected_paid: 'You selected a paid plan.',
@@ -487,6 +502,8 @@ export default {
 				'Please insert you billing information and payment method.',
 			selected_paid_review_data:
 				'Make sure your billing information and payment method are up to date.',
+			resume:
+				"You cancelled this subscription on {last_update_date}, but it was being kept active until {end_date}. Subscribing again won't charge your card until that date!",
 			billing: {
 				title: 'Billing',
 				current: 'Use the currently registered billing address',
@@ -541,15 +558,20 @@ export default {
 				'Looks like the form is incomplete: please fill out all required fields before continuing.',
 			submit_error:
 				'There was an error while trying to setup your subscription. The support team has already been informed. Please try again later.',
+			subscription_confirm: {
+				title: 'Payment confirmation required',
+				message:
+					'We need your payment confirmation. Please check your e-mail and follow the instructions.'
+			},
 			subscription_success: {
 				title: 'Subscription successful',
 				message:
-					'You subscription has been activated. It will renew automatically on {date}, unless you cancel it before that date.'
+					'You subscription is now active. It will renew automatically on {date}, unless you cancel it before that date.'
 			},
 			cancellation_success: {
 				title: 'Subscription cancelled',
 				message:
-					"You subscription has been cancelled. It will remain active until {date}. You won't be charged again."
+					"You subscription's auto renew has been disabled. The subscription will remain active until {date}, but you won't be charged again."
 			}
 		},
 
