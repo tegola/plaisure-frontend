@@ -570,10 +570,11 @@ export default {
 			this.loading = true
 
 			try {
-				this.venues = await this.$axios.$post(
+				const data = await this.$axios.$post(
 					'/venues/explore',
 					this.searchParams
 				)
+				this.venues = data.venues
 			} finally {
 				this.loading = false
 			}
