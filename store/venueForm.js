@@ -1,5 +1,5 @@
 import extend from 'lodash/extend'
-import cloneDeep from 'lodash/cloneDeep'
+import cloneDeep from 'lodash/cloneDeep' // FIXME: replace with extend({}, ..., ...)
 import isEqual from 'lodash/isEqual'
 
 const initialState = {
@@ -24,10 +24,6 @@ export const mutations = {
 
 	setVenue: (state, venue) => {
 		state.venue = venue
-
-		// Fill amenities with venue fields
-		// FIXME: Move to separate table
-		state.amenities = Object.keys(venue.amenities)
 	},
 
 	setOriginalVenue: (state, originalVenue) => {
@@ -51,13 +47,7 @@ export const mutations = {
 	},
 
 	setVenueField: (state, { field, value }) => {
-		if (field === 'amenities') {
-			// Avoid changing the entire object or it will trigger a loop
-			// FIXME: ...
-			extend(state.venue.amenities, value)
-		} else {
-			state.venue[field] = value
-		}
+		state.venue[field] = value
 	},
 
 	setJackpot: (state, { field, number, value }) => {

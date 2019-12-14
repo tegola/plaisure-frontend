@@ -306,18 +306,7 @@ export default {
 				parking_capacity: 'Posti auto',
 				seating_capacity: 'Posti a sedere'
 			},
-			amenities: {
-				title: 'Servizi',
-				atm: 'Totem Bancomat',
-				bar: 'Bar',
-				pay_per_view: 'Pay per view',
-				pos: 'POS',
-				private_parking: 'Parcheggio privato',
-				restaurant: 'Ristorante',
-				security: 'Servizio di sicurezza',
-				smoking_area: 'Area fumatori',
-				wifi: 'Wi-Fi'
-			},
+			amenities: 'Comodità',
 			card: {
 				directions: 'Ottieni indicazioni stradali',
 				closed: 'Chiuso',
@@ -436,18 +425,7 @@ export default {
 				seating_capacity: 'Posti a sedere',
 				parking_capacity: 'Posti auto',
 				vlt_platforms: 'Piattaforme VLT',
-				amenities: {
-					title: 'Comodità',
-					atm: 'Totem Bancomat',
-					bar: 'Bar',
-					pay_per_view: 'Pay per view',
-					pos: 'POS',
-					private_parking: 'Parcheggio privato',
-					restaurant: 'Ristorante',
-					security: 'Security',
-					smoking_area: 'Area fumatori',
-					wifi: 'Wi-Fi'
-				}
+				amenities: 'Comodità'
 			},
 			contacts: {
 				title: 'Contatti',

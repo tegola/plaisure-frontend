@@ -50,7 +50,9 @@ Generale:
    - Area relax
    - Punto ristoro invece di Ristorante
    - Servizio navetta
+ ☐ Rimuovere i campi amenity dalla tabella venues e il codice di refactoring dopo aver lanciato quest'ultimo
  ☐ Notifica al proprietario quando ci sono nuove recensioni
+ ☐ Rimuovere il campo "name" e aggiungere gli unique a "machine_name" nelle tabelle di categories, amenities, vlt_platform, concessionaries, ecc.
 
 
 SEO e analytics:

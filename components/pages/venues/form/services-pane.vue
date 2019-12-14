@@ -81,16 +81,20 @@
 
 		<b-form-group
 			v-bind="formGroupProps"
-			:label="$t('pages.venue_form.services.amenities.title')"
+			:label="$t('pages.venue_form.services.amenities')"
 			label-class="pt-0">
 			<div class="form-row">
 				<div class="col-lg-10">
-					<b-form-checkbox-group v-model="venueAmenities" stacked>
+					<b-form-checkbox-group v-model="venueAmenityIds" stacked>
 						<b-form-checkbox
-							v-for="item in amenities"
-							:key="item"
-							:value="item">
-							{{ $t(`pages.venue_form.services.amenities.${item}`) }}
+							v-for="item in amenityOptions"
+							:key="item.id"
+							:value="item.id">
+							<pg-icon
+								:icon="amenityIconMap[item.machine_name]"
+								class="mr-1"
+							/>
+							{{ $t(`data.amenities.${item.machine_name}`) }}
 						</b-form-checkbox>
 					</b-form-checkbox-group>
 				</div>
@@ -101,16 +105,15 @@
 
 <script>
 import { mapState } from 'vuex'
-import extend from 'lodash/extend'
-
+// import extend from 'lodash/extend'
 import {
 	BFormGroup,
 	BFormInput,
 	BFormCheckbox,
 	BFormCheckboxGroup
 } from 'bootstrap-vue'
-
 import formGroupProps from './form-group-props'
+import amenityIconMap from '@/utilities/amenity-icon-map'
 
 export default {
 	name: 'ServicesPane',
@@ -247,33 +250,26 @@ export default {
 			}
 		},
 
-		venueAmenities: {
-			get() {
-				// Object to array of values
-				const obj = this.venue.amenities
-				const arr = Object.keys(obj) // Get keys
-					.map(key => (obj[key] === true ? key : null)) // Convert object in array of field names
-					.filter(item => item !== null) // Remove null values
+		amenityOptions() {
+			return this.amenities.filter(amenity => {
+				return Boolean(
+					amenity.country === this.venue.country || !amenity.country
+				)
+			})
+		},
 
-				return arr
+		amenityIconMap() {
+			return amenityIconMap
+		},
+
+		venueAmenityIds: {
+			get() {
+				return this.venue.amenity_ids
 			},
 			set(value) {
-				// Array to object
-				const amenities = extend({}, this.venue.amenities)
-
-				// Turn all to false
-				for (const key of Object.keys(amenities)) {
-					amenities[key] = false
-				}
-
-				// Turn specified ones to true
-				value.forEach(name => {
-					amenities[name] = true
-				})
-
 				this.$store.commit('venueForm/setVenueField', {
-					field: 'amenities',
-					value: amenities
+					field: 'amenity_ids',
+					value
 				})
 			}
 		},
@@ -289,6 +285,9 @@ export default {
 				return this.vltPlatformOptions.some(
 					vltPlatform => vltPlatform.id === id
 				)
+			})
+			this.venueAmenityIds = this.venueAmenityIds.filter(id => {
+				return this.amenityOptions.some(amenity => amenity.id === id)
 			})
 		}
 	}

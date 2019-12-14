@@ -148,7 +148,7 @@ export default {
 
 			store.commit('venueForm/setVenue', data.venue)
 			store.commit('venueForm/setOriginalVenue', data.venue)
-			// store.commit('venueForm/setAmenities', data.amenities) // Taken out of venue object for now
+			store.commit('venueForm/setAmenities', data.amenities)
 			store.commit('venueForm/setCategories', data.categories)
 			store.commit('venueForm/setConcessionaires', data.concessionaires)
 			store.commit('venueForm/setVltPlatforms', data.vltPlatforms)

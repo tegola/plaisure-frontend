@@ -116,37 +116,37 @@
 							<div class="row">
 								<div class="col-md">
 									<ul class="list-unstyled mb-0 mb-md-3">
-										<li class="detail-list-item">
+										<li class="mt-2">
 											{{ $t('pages.venue_detail.details.concessionaire') }}:
 											<strong v-if="venue.concessionaire">{{ venue.concessionaire.name }}</strong>
 											<span v-else class="text-muted">{{ $t('pages.venue_detail.common.unknown') }}</span>
 										</li>
-										<li class="detail-list-item">
+										<li class="mt-2">
 											{{ $t('pages.venue_detail.details.surface_size') }}:
 											<strong v-if="venue.surface_size">{{ venue.surface_size }} {{ $t('pages.venue_form.general.surface_size_unit') }}</strong>
 											<span v-else class="text-muted">{{ $t('pages.venue_detail.common.unknown') }}</span>
 										</li>
-										<li class="detail-list-item">
+										<li class="mt-2">
 											{{ $t('pages.venue_detail.details.vlt_machine_count') }}:
 											<strong v-if="venue.vlt_machine_count">{{ venue.vlt_machine_count }}</strong>
 											<span v-else class="text-muted">{{ $t('pages.venue_detail.common.unknown') }}</span>
 										</li>
-										<li class="detail-list-item">
+										<li class="mt-2">
 											{{ $t('pages.venue_detail.details.vlt_platforms') }}:
 											<strong v-if="venue.vlt_platforms.length">{{ vltPlatformNames }}</strong>
 											<span v-else class="text-muted">{{ $t('pages.venue_detail.common.unknown') }}</span>
 										</li>
-										<li class="detail-list-item">
+										<li class="mt-2">
 											{{ $t('pages.venue_detail.details.awp_machine_count') }}:
 											<strong v-if="venue.awp_machine_count">{{ venue.awp_machine_count }}</strong>
 											<span v-else class="text-muted">{{ $t('pages.venue_detail.common.unknown') }}</span>
 										</li>
-										<li class="detail-list-item">
+										<li class="mt-2">
 											{{ $t('pages.venue_detail.details.arcade_roulette') }}:
 											<strong v-if="venue.arcade_roulette" class="text-success">{{ $t('pages.venue_detail.common.yes') }}</strong>
 											<span v-else class="text-muted">{{ venue.has_owner ? $t('pages.venue_detail.common.no') : $t('pages.venue_detail.common.unknown') }}</span>
 										</li>
-										<li class="detail-list-item">
+										<li class="mt-2">
 											{{ $t('pages.venue_detail.details.online_casino') }}:
 											<a v-if="venue.urls.online_casino" :href="venue.urls.online_casino" target="_blank">{{ venue.urls.online_casino }}</a>
 											<span v-else class="text-muted">{{ $t('pages.venue_detail.common.unknown') }}</span>
@@ -156,28 +156,28 @@
 								<div class="col-md">
 									<ul class="list-unstyled">
 										<template v-if="isInCategory('betting_agency')">
-											<li class="detail-list-item">
+											<li class="mt-2">
 												{{ $t('pages.venue_detail.details.sports_betting') }}:
 												<strong v-if="venue.sports_betting" class="text-success">{{ $t('pages.venue_detail.common.yes') }}</strong>
 												<span v-else class="text-muted">{{ venue.has_owner ? $t('pages.venue_detail.common.no') : $t('pages.venue_detail.common.unknown') }}</span>
 											</li>
-											<li class="detail-list-item">
+											<li class="mt-2">
 												{{ $t('pages.venue_detail.details.virtual_betting') }}:
 												<strong v-if="venue.virtual_betting" class="text-success">{{ $t('pages.venue_detail.common.yes') }}</strong>
 												<span v-else class="text-muted">{{ venue.has_owner ? $t('pages.venue_detail.common.no') : $t('pages.venue_detail.common.unknown') }}</span>
 											</li>
-											<li class="detail-list-item">
+											<li class="mt-2">
 												{{ $t('pages.venue_detail.details.horse_betting') }}:
 												<strong v-if="venue.horse_betting" class="text-success">{{ $t('pages.venue_detail.common.yes') }}</strong>
 												<span v-else class="text-muted">{{ venue.has_owner ? $t('pages.venue_detail.common.no') : $t('pages.venue_detail.common.unknown') }}</span>
 											</li>
 										</template>
-										<li class="detail-list-item">
+										<li class="mt-2">
 											{{ $t('pages.venue_detail.details.parking_capacity') }}:
 											<strong v-if="venue.parking_capacity">{{ venue.parking_capacity }}</strong>
 											<span v-else class="text-muted">{{ $t('pages.venue_detail.common.unknown') }}</span>
 										</li>
-										<li v-if="isInCategory('betting_agency')" class="detail-list-item">
+										<li v-if="isInCategory('betting_agency')" class="mt-2">
 											{{ $t('pages.venue_detail.details.seating_capacity') }}:
 											<strong v-if="venue.seating_capacity">{{ venue.seating_capacity }}</strong>
 											<span v-else class="text-muted">{{ $t('pages.venue_detail.common.unknown') }}</span>
@@ -190,74 +190,34 @@
 						<hr>
 
 						<!-- Amenities -->
-						<div class="my-5">
+						<div v-if="venue.amenities.length" class="my-5">
 							<h5>
-								{{ $t('pages.venue_detail.amenities.title') }}
+								{{ $t('pages.venue_detail.amenities') }}
 								<nuxt-link v-if="showEditAction" :to="editRoute" rel="nofollow" class="small ml-2">{{ $t('pages.venue_detail.common.edit') }}</nuxt-link>
 							</h5>
-							<div class="row">
-								<div class="col-md">
-									<ul class="list-unstyled mb-0 mb-md-3">
-										<li class="detail-list-item">
-											{{ $t('pages.venue_detail.amenities.atm') }}:
-											<strong v-if="venue.amenities.atm" class="text-success">{{ $t('pages.venue_detail.common.yes') }}</strong>
-											<span v-else class="text-muted">{{ venue.has_owner ? $t('pages.venue_detail.common.no') : $t('pages.venue_detail.common.unknown') }}</span>
-										</li>
-										<li class="detail-list-item">
-											{{ $t('pages.venue_detail.amenities.bar') }}:
-											<strong v-if="venue.amenities.bar" class="text-success">{{ $t('pages.venue_detail.common.yes') }}</strong>
-											<span v-else class="text-muted">{{ venue.has_owner ? $t('pages.venue_detail.common.no') : $t('pages.venue_detail.common.unknown') }}</span>
-										</li>
-										<li class="detail-list-item">
-											{{ $t('pages.venue_detail.amenities.pay_per_view') }}:
-											<strong v-if="venue.amenities.pay_per_view" class="text-success">{{ $t('pages.venue_detail.common.yes') }}</strong>
-											<span v-else class="text-muted">{{ venue.has_owner ? $t('pages.venue_detail.common.no') : $t('pages.venue_detail.common.unknown') }}</span>
-										</li>
-										<li class="detail-list-item">
-											{{ $t('pages.venue_detail.amenities.pos') }}:
-											<strong v-if="venue.amenities.pos" class="text-success">{{ $t('pages.venue_detail.common.yes') }}</strong>
-											<span v-else class="text-muted">{{ venue.has_owner ? $t('pages.venue_detail.common.no') : $t('pages.venue_detail.common.unknown') }}</span>
-										</li>
-										<li class="detail-list-item">
-											{{ $t('pages.venue_detail.amenities.private_parking') }}:
-											<strong v-if="venue.amenities.private_parking" class="text-success">{{ $t('pages.venue_detail.common.yes') }}</strong>
-											<span v-else class="text-muted">{{ venue.has_owner ? $t('pages.venue_detail.common.no') : $t('pages.venue_detail.common.unknown') }}</span>
-										</li>
-									</ul>
-								</div>
-								<div class="col-md">
-									<ul class="list-unstyled">
-										<li class="detail-list-item">
-											{{ $t('pages.venue_detail.amenities.restaurant') }}:
-											<strong v-if="venue.amenities.restaurant" class="text-success">{{ $t('pages.venue_detail.common.yes') }}</strong>
-											<span v-else class="text-muted">{{ venue.has_owner ? $t('pages.venue_detail.common.no') : $t('pages.venue_detail.common.unknown') }}</span>
-										</li>
-										<li class="detail-list-item">
-											{{ $t('pages.venue_detail.amenities.security') }}:
-											<strong v-if="venue.amenities.security" class="text-success">{{ $t('pages.venue_detail.common.yes') }}</strong>
-											<span v-else class="text-muted">{{ venue.has_owner ? $t('pages.venue_detail.common.no') : $t('pages.venue_detail.common.unknown') }}</span>
-										</li>
-										<li class="detail-list-item">
-											{{ $t('pages.venue_detail.amenities.smoking_area') }}:
-											<strong v-if="venue.amenities.smoking_area" class="text-success">{{ $t('pages.venue_detail.common.yes') }}</strong>
-											<span v-else class="text-muted">{{ venue.has_owner ? $t('pages.venue_detail.common.no') : $t('pages.venue_detail.common.unknown') }}</span>
-										</li>
-										<li class="detail-list-item">
-											{{ $t('pages.venue_detail.amenities.wifi') }}:
-											<strong v-if="venue.amenities.wifi" class="text-success">{{ $t('pages.venue_detail.common.yes') }}</strong>
-											<span v-else class="text-muted">{{ venue.has_owner ? $t('pages.venue_detail.common.no') : $t('pages.venue_detail.common.unknown') }}</span>
-										</li>
-									</ul>
-								</div>
-							</div>
+							<ul class="list-unstyled row">
+								<li
+									v-for="amenity in venue.amenities"
+									:key="amenity.machine_name"
+									class="col-sm-6 col-md-4 mt-2">
+									<pg-icon :icon="amenityIconMap[amenity.machine_name]" class="mr-2" />
+									{{ $t(`data.amenities.${amenity.machine_name}`) }}
+								</li>
+							</ul>
 						</div>
 
 						<!-- Promote -->
-						<div v-if="!venue.has_owner" class="card bg-light my-4 text-center">
+						<div v-if="!venue.has_owner" class="card bg-light my-5">
 							<div class="card-body">
-								<h4 class="card-title">{{ $t('pages.venue_detail.claim.title') }}</h4>
+								<h5 class="mb-3">{{ $t('pages.venue_detail.claim.title') }}</h5>
 								<p class="card-text">{{ $t('pages.venue_detail.claim.intro') }} <nuxt-link :to="localePath('promote')">{{ $t('pages.venue_detail.claim.more') }}&hellip;</nuxt-link></p>
-								<pg-button :to="localePath({ name: 'venues-id-claim', params: { id: venue.id }})" variant="primary" rel="nofollow">{{ $t('pages.venue_detail.claim.action') }}</pg-button>
+								<pg-button
+									:block="$mq == 'xs' || $mq == 'constrained'"
+									:to="localePath({ name: 'venues-id-claim', params: { id: venue.id }})"
+									variant="primary"
+									rel="nofollow">
+									{{ $t('pages.venue_detail.claim.action') }}
+								</pg-button>
 							</div>
 						</div>
 
@@ -384,13 +344,12 @@
 <script>
 import extend from 'lodash/extend'
 import { getAllInfoByISO } from 'iso-country-currency'
-
 import PgVenueDetailPageContactCard from './contact-card'
 import PgVenueDetailPageNearbyItem from './nearby-item'
-
 import PgReviewItem from '@/components/review-item'
 import PgReviewForm from '@/components/review-form'
 import PgLightbox from '@/components/lightbox'
+import amenityIconMap from '@/utilities/amenity-icon-map'
 import isVenueOpen from '@/utilities/is-venue-open'
 
 export default {
@@ -634,6 +593,10 @@ export default {
 			const j = this.venue.jackpots
 
 			return j[1].value || j[2].value || j[3].value
+		},
+
+		amenityIconMap() {
+			return amenityIconMap
 		}
 	},
 
@@ -885,11 +848,6 @@ export default {
 		line-height: 1.25;
 		font-weight: $font-weight-bold;
 		margin-top: map-get($spacers, 1);
-	}
-
-	// Details
-	.detail-list-item {
-		margin-top: map-get($spacers, 2);
 	}
 
 	// Rating summary

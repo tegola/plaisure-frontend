@@ -300,18 +300,7 @@ export default {
 				parking_capacity: 'Parking spots',
 				seating_capacity: 'Seatings'
 			},
-			amenities: {
-				title: 'Amenities',
-				atm: 'ATM',
-				bar: 'Bar',
-				pay_per_view: 'Pay Per View',
-				pos: 'POS',
-				private_parking: 'Private parking spots',
-				restaurant: 'Restaurant',
-				security: 'Security',
-				smoking_area: 'Smoking area',
-				wifi: 'Wi-Fi'
-			},
+			amenities: 'Amenities',
 			card: {
 				directions: 'Get directions',
 				closed: 'Closed',
@@ -429,18 +418,7 @@ export default {
 				seating_capacity: 'Seatings',
 				parking_capacity: 'Parking spots',
 				vlt_platforms: 'VLT platforms',
-				amenities: {
-					title: 'Amenities',
-					atm: 'ATM',
-					bar: 'Bar',
-					pay_per_view: 'Pay Per View',
-					pos: 'POS',
-					private_parking: 'Private parking spots',
-					restaurant: 'Restaurant',
-					security: 'Security',
-					smoking_area: 'Smoking area',
-					wifi: 'Wi-Fi'
-				}
+				amenities: 'Amenities'
 			},
 			contacts: {
 				title: 'Contacts',
@@ -740,7 +718,7 @@ export default {
 			bar: 'Bar',
 			pay_per_view: 'Pay Per View',
 			pos: 'POS',
-			private_parking: 'Private parking spots',
+			private_parking: 'Private parking',
 			restaurant: 'Restaurant',
 			security: 'Security',
 			smoking_area: 'Smoking area',
