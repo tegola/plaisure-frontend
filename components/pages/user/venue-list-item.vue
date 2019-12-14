@@ -29,7 +29,7 @@
 				<slot />
 			</div>
 			<div 
-				v-if="venue.subscription && !venue.subscription.needs_payment"
+				v-if="venue.subscription && venue.subscription.needs_payment"
 				class="col-auto text-danger">
 				<pg-icon
 					icon="exclamation-circle-outline"
