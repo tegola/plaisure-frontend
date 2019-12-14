@@ -63,7 +63,7 @@ export default {
 
 <style lang="scss">
 .pg-user-venues-page {
-	// Add another venue
+	// List item
 	&__list-item {
 		transition: all 0.15s;
 		color: inherit;
@@ -75,6 +75,13 @@ export default {
 	&__list-item:hover {
 		color: $palette-dark-green-500;
 	}
+
+	&__list-item-warning-icon {
+		width: 1.75rem;
+		height: 1.75rem;
+	}
+
+	// Add another venue
 	&__add-list-item-content {
 		display: flex;
 		align-items: center;

@@ -1,6 +1,6 @@
  ✔ IMPORTANTE: limitare le informazioni al caricamento di /user, l'utente non deve ricevere tutti i dati @done (19-09-12 19:42)
  ☐ IMPORTANTE: trovare il modo di disabilitare l'accesso esterno alle api pubbliche (es. http://localhost:8888/api/venues/7NQlVQRny1) facendo accedere solo lo stesso dominio (CORS?)
- ☐ Far rifunzionare le checkbox "amenities"
+ ✔ Far rifunzionare le checkbox "amenities" @done(19-12-14 16:30)
  ☐ In caso di carta non funzionante Stripe punta a /user/billing, ma lì non ci sono i campi per cambiare carta
 
  ☐ Email di benvenuto (verifica) all'utente dopo la registrazione

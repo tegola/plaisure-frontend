@@ -28,6 +28,14 @@
 				<p class="mb-0">{{ address }}</p>
 				<slot />
 			</div>
+			<div 
+				v-if="venue.subscription && !venue.subscription.needs_payment"
+				class="col-auto text-danger">
+				<pg-icon
+					icon="exclamation-circle-outline"
+					class="pg-user-venues-page__list-item-warning-icon"
+				/>
+			</div>
 		</div>
 	</b-list-group-item>
 </template>

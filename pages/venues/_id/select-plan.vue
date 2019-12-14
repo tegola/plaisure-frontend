@@ -13,7 +13,7 @@
 			</p>
 
 			<!-- Payment alert -->
-			<div v-if="needsPayment" class="row">
+			<div v-if="!needsPayment" class="row">
 				<div class="col-lg-9 mx-lg-auto">
 					<b-alert variant="warning" show class="mb-0">
 						<h5>{{ $t('pages.venue_plan.needs_payment.title') }}</h5>

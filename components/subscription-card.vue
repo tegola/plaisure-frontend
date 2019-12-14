@@ -10,8 +10,14 @@
 		</div>
 		<template v-if="subscription.needs_payment">
 			<hr class="my-0">
-			<div class="card-body">
-				<b-alert variant="warning" show class="mb-0 small">{{ this.$t('components.subscription_card.error.payment') }}</b-alert>
+			<div class="card-body text-danger d-flex align-items-center">
+				{{ this.$t('components.subscription_card.error.payment') }}
+				<div>
+					<pg-icon
+						icon="exclamation-circle-outline"
+						class="pg-subscription-card__warning-icon"
+					/>
+				</div>
 			</div>
 		</template>
 		<template v-else-if="lastUpdateDate && endDate" class="card-body">
@@ -32,14 +38,9 @@
 
 <script>
 import { getParamByParam } from 'iso-country-currency'
-import { BAlert } from 'bootstrap-vue'
 
 export default {
 	name: 'PgSubscriptionCard',
-
-	components: {
-		BAlert
-	},
 
 	props: {
 		subscription: {
@@ -121,11 +122,14 @@ export default {
 
 <style lang="scss">
 .pg-subscription-card {
+	&__warning-icon {
+		width: 1.5rem;
+		height: 1.5rem;
+	}
 	&--clickable {
 		cursor: pointer;
 		transition: 200ms;
 	}
-
 	&--clickable:hover {
 		transform: scale(1.02);
 		border-color: theme-color('primary');

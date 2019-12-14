@@ -11,15 +11,21 @@
 		<template v-if="venue">
 			<div class="secondary-nav">
 				<div class="title-wrapper">
-					<div class="container d-flex align-items-center justify-content-between">
-						<h2 class="h5 mb-0">{{ venue.id ? $t('pages.venue_form.title.edit') : $t('pages.venue_form.title.add') }}</h2>
-						<pg-button
-							:disabled="isSaved"
-							:loading="saving"
-							variant="primary"
-							@click="submit">
-							{{ $t('common.actions.save') }}
-						</pg-button>
+					<div class="container">
+						<div class="row align-items-center">
+							<div class="col">
+								<h2 class="h5 mb-0">{{ venue.id ? $t('pages.venue_form.title.edit') : $t('pages.venue_form.title.add') }}</h2>
+							</div>
+							<div class="col-auto ml-auto">
+								<pg-button
+									:disabled="isSaved"
+									:loading="saving"
+									variant="primary"
+									@click="submit">
+									{{ $t('common.actions.save') }}
+								</pg-button>
+							</div>
+						</div>
 					</div>
 				</div>
 				<div ref="sectionNavWrapper" class="section-nav-wrapper">
@@ -255,12 +261,11 @@ export default {
 				content: '';
 				position: absolute;
 				bottom: 0;
-				left: -1px;
-				right: -2px;
+				left: 0;
+				right: 0;
 				height: 2px;
 				transform: scaleX(0);
 				opacity: 0;
-				border-radius: 2px;
 				background-color: theme-color('primary');
 				transition: transform 150ms ease-in-out, opacity 100ms 50ms ease-in-out;
 				pointer-events: none;
