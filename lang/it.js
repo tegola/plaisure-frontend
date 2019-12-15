@@ -335,11 +335,11 @@ export default {
 				action: 'Rivendica attività'
 				// subject: 'Rivendicazione attività: {name} (identificativo: {id})'
 			},
-			issues: {
+			report: {
 				title: 'Hai trovato un errore?',
 				intro:
-					"Se l'indirizzo o i dati sono errati, l'attività non esiste più, o se ci sono foto offensive, puoi {report}.",
-				report: 'segnalare questa attività',
+					"Se l'indirizzo o i dati sono errati, l'attività non esiste più, o se ci sono foto offensive, puoi segnalarla.",
+				action: 'Segnala attività',
 				subject: 'Segnalazione errore: {name} (identificativo: {id})'
 			},
 			nearby: 'Attività nei dintorni',

@@ -48,7 +48,7 @@
 						<div class="col-lg-8">
 							<div class="d-flex align-items-center">
 								<div class="flex-grow-1">
-									<h2 class="header-title">{{ venue.name }}</h2>
+									<h2 class="h4 text-olive-900">{{ venue.name }}</h2>
 									<ul class="list-inline text-dark-green-muted mb-0">
 										<li class="list-inline-item">{{ subtitle }}</li>
 										<li v-if="venue.business_hours.length" class="list-inline-item">
@@ -85,7 +85,7 @@
 						<template v-if="!venue.has_owner || hasJackpots">
 							<div class="row my-5 pt-2">
 								<div v-for="(jackpot, index) in venue.jackpots" :key="index" class="col-md-4">
-									<div v-if="jackpot.label && jackpot.value" :class="['jackpot', index < 3 ? 'mb-3 mb-md-0' : null]">
+									<div v-if="!venue.has_owner || (jackpot.label && jackpot.value)" :class="['jackpot', index < 3 ? 'mb-3 mb-md-0' : null]">
 										<img :src="`/img/detail/jackpot-${index}.svg`" class="jackpot-icon">
 										<div>
 											<div class="jackpot-name">{{ jackpot.label && jackpot.value ? jackpot.label : `Jackpot ${index}` }}</div>
@@ -187,44 +187,31 @@
 							</div>
 						</div>
 
-						<hr>
-
 						<!-- Amenities -->
-						<div v-if="venue.amenities.length" class="my-5">
-							<h5>
-								{{ $t('pages.venue_detail.amenities') }}
-								<nuxt-link v-if="showEditAction" :to="editRoute" rel="nofollow" class="small ml-2">{{ $t('pages.venue_detail.common.edit') }}</nuxt-link>
-							</h5>
-							<ul class="list-unstyled row">
-								<li
-									v-for="amenity in venue.amenities"
-									:key="amenity.machine_name"
-									class="col-sm-6 col-md-4 mt-2">
-									<pg-icon :icon="amenityIconMap[amenity.machine_name]" class="mr-2" />
-									{{ $t(`data.amenities.${amenity.machine_name}`) }}
-								</li>
-							</ul>
-						</div>
+						<template v-if="venue.amenities.length">
+							<hr>
 
-						<!-- Promote -->
-						<div v-if="!venue.has_owner" class="card bg-light my-5">
-							<div class="card-body">
-								<h5 class="mb-3">{{ $t('pages.venue_detail.claim.title') }}</h5>
-								<p class="card-text">{{ $t('pages.venue_detail.claim.intro') }} <nuxt-link :to="localePath('promote')">{{ $t('pages.venue_detail.claim.more') }}&hellip;</nuxt-link></p>
-								<pg-button
-									:block="$mq == 'xs' || $mq == 'constrained'"
-									:to="localePath({ name: 'venues-id-claim', params: { id: venue.id }})"
-									variant="primary"
-									rel="nofollow">
-									{{ $t('pages.venue_detail.claim.action') }}
-								</pg-button>
+							<div class="my-5">
+								<h5>
+									{{ $t('pages.venue_detail.amenities') }}
+									<nuxt-link v-if="showEditAction" :to="editRoute" rel="nofollow" class="small ml-2">{{ $t('pages.venue_detail.common.edit') }}</nuxt-link>
+								</h5>
+								<ul class="list-unstyled row">
+									<li
+										v-for="amenity in venue.amenities"
+										:key="amenity.machine_name"
+										class="col-sm-6 col-md-4 mt-2">
+										<pg-icon :icon="amenityIconMap[amenity.machine_name]" class="mr-2" />
+										{{ $t(`data.amenities.${amenity.machine_name}`) }}
+									</li>
+								</ul>
 							</div>
-						</div>
+						</template>
 
 						<hr>
 
 						<!-- Reviews -->
-						<div class="my-5">
+						<div class="mt-5">
 							<div class="d-flex align-items justify-content-between">
 								<h5 class="mb-4">{{ $t('pages.venue_detail.reviews.title') }}</h5>
 								<nuxt-link v-if="venue.reviews.count" :to="localePath({ name: 'venues-id-reviews', params: { id: venue.id }})">
@@ -234,7 +221,7 @@
 							</div>
 
 							<!-- Rating summary and division -->
-							<div v-if="venue.rating.count" class="row mb-5">
+							<div v-if="venue.rating.count" class="row">
 								<div class="col-sm-5 mb-3 mb-sm-0">
 									<pg-rating simple :value="venue.rating.average.toFixed(1)" class="pg-venue-detail-page__rating-summary" />
 									<span class="text-muted ml-2 small">{{ $tc('pages.venue_detail.reviews.count', venue.rating.count, { count: venue.rating.count }) }}</span>
@@ -262,13 +249,13 @@
 								:key="review.id"
 								:venue="venue"
 								:review="review"
-								class="mb-3"
+								class="mt-3"
 								@replied="loadData"
 							/>
 
 							<!-- Rate / review -->
 							<template v-if="$auth.loggedIn">
-								<div v-if="!isMine && !reviewFormOpen" class="row my-5">
+								<div v-if="!isMine && !reviewFormOpen" class="row mt-5">
 									<div class="col-md-7">
 										<div class="pg-venue-detail-page__rating-action mb-2 mb-md-0">
 											{{ $t('pages.venue_detail.reviews.rate') }}
@@ -306,23 +293,82 @@
 							:edit-route="editRoute"
 							class="d-none d-lg-block"
 						/>
+					</div>
+				</div>
+			</div>
 
-						<!-- Nearby venues -->
-						<div v-if="nearbyVenues.length" class="my-5">
-							<h5 class="mb-3">{{ $t('pages.venue_detail.nearby') }}</h5>
-							<ul class="list-unstyled">
-								<pg-venue-detail-page-nearby-item v-for="nearbyVenue in nearbyVenues" :key="nearbyVenue.id" :venue="nearbyVenue" />
-							</ul>
+			<div class="bg-light mt-5 pt-5">
+				<div class="container text-center text-md-left">
+					<div class="row">
+
+						<!-- Claim -->
+						<div class="col-md mb-4" v-if="!venue.has_owner">
+							<div class="row">
+								<div class="col-md-auto">
+									<pg-icon
+										icon="pencil"
+										class="mb-2 mb-md-none"
+										size="2x"
+									/>
+								</div>
+								<div class="col-md">
+									<h6 class="mb-1">{{ $t('pages.venue_detail.claim.title') }}</h6>
+									<p>{{ $t('pages.venue_detail.claim.intro') }} <nuxt-link :to="localePath('promote')" class="text-olive-800 font-weight-bold">{{ $t('pages.venue_detail.claim.more') }}&hellip;</nuxt-link></p>
+									<pg-button
+										:to="localePath({ name: 'venues-id-claim', params: { id: venue.id }})"
+										variant="primary"
+										rel="nofollow">
+										{{ $t('pages.venue_detail.claim.action') }}
+									</pg-button>
+								</div>
+							</div>
 						</div>
 
 						<!-- Report -->
-						<div class="my-4">
-							<h5>{{ $t('pages.venue_detail.issues.title') }}</h5>
-							<i18n tag="p" path="pages.venue_detail.issues.intro">
-								<a slot="report" :href="prepareEmailLink(this.$constants.EMAIL_REPORT, $t('pages.venue_detail.issues.subject', { name: venue.name, id: venue.id }))">{{ $t('pages.venue_detail.issues.report') }}</a>
-							</i18n>
+						<div class="col-md text-muted mb-4">
+							<div class="row">
+								<div class="col-md-auto">
+									<pg-icon
+										icon="exclamation-circle-outline"
+										class="mb-2 mb-md-none"
+										size="2x"
+									/>
+								</div>
+								<div class="col-md">
+									<h6 class="mb-1">{{ $t('pages.venue_detail.report.title') }}</h6>
+									<p>{{ $t('pages.venue_detail.report.intro') }}</p>
+									<pg-button
+										:href="prepareEmailLink(this.$constants.EMAIL_REPORT, $t('pages.venue_detail.issues.subject', { name: venue.name, id: venue.id }))"
+										variant="gray-300">
+										{{ $t('pages.venue_detail.report.action') }}
+									</pg-button>
+								</div>
+							</div>
 						</div>
+
 					</div>
+				</div>
+
+				<!-- Nearby venues -->
+				<div v-if="nearbyVenues.length">
+					<div class="container">
+						<hr class="mt-3 mb-5">
+						<h5 class="mb-3">{{ $t('pages.venue_detail.nearby') }}</h5>
+					</div>
+					<pg-scrollable-pane selector=".row" class="pb-5">
+						<div class="container">
+							<div class="row">
+								<div
+									v-for="nearbyVenue in nearbyVenuesForSize"
+									:key="nearbyVenue.id"
+									class="col-11 col-sm-7 col-md-4 col-xl-3">
+									<nuxt-link :to="localePath({ name: 'venues-id', params: { id: nearbyVenue.id }})" class="text-reset">
+										<pg-venue-grid-item :venue="nearbyVenue" />
+									</nuxt-link>
+								</div>
+							</div>
+						</div>
+					</pg-scrollable-pane>
 				</div>
 			</div>
 
@@ -331,8 +377,8 @@
 				:title="venue.name"
 				:images="lightboxImages"
 				:index="lightboxIndex"
-				:arrows="$mq == 'comfortable'"
-				:thumbnails="$mq == 'comfortable'"
+				:arrows="$mq === 'md' || $mq === 'lg' || $mq === 'xl'"
+				:thumbnails="$mq === 'md' || $mq === 'lg' || $mq === 'xl'"
 				@close="closeLightbox"
 			/>
 		</template>
@@ -345,7 +391,8 @@
 import extend from 'lodash/extend'
 import { getAllInfoByISO } from 'iso-country-currency'
 import PgVenueDetailPageContactCard from './contact-card'
-import PgVenueDetailPageNearbyItem from './nearby-item'
+import PgScrollablePane from '@/components/scrollable-pane'
+import PgVenueGridItem from '@/components/venue-grid-item'
 import PgReviewItem from '@/components/review-item'
 import PgReviewForm from '@/components/review-form'
 import PgLightbox from '@/components/lightbox'
@@ -357,10 +404,11 @@ export default {
 
 	components: {
 		PgLightbox,
-		PgReviewItem,
 		PgReviewForm,
+		PgReviewItem,
+		PgScrollablePane,
 		PgVenueDetailPageContactCard,
-		PgVenueDetailPageNearbyItem
+		PgVenueGridItem
 	},
 
 	data() {
@@ -597,6 +645,12 @@ export default {
 
 		amenityIconMap() {
 			return amenityIconMap
+		},
+
+		nearbyVenuesForSize() {
+			return this.$mq === 'md' || this.$mq === 'lg'
+				? this.nearbyVenues.slice(0, 3)
+				: this.nearbyVenues
 		}
 	},
 
@@ -783,10 +837,6 @@ export default {
 		align-items: center;
 		justify-content: center;
 	}
-	.header-title {
-		color: $palette-dark-green-500;
-		font-size: $h5-font-size;
-	}
 
 	// Contact card
 	.contact-card {
@@ -909,36 +959,6 @@ export default {
 		}
 	}
 
-	// Nearby venues
-	&__nearby-item-icon {
-		width: 24px;
-		height: 24px;
-		fill: $white;
-		margin-right: $grid-gutter-width / 2;
-
-		.pg-svg__background {
-			fill: $palette-fuchsia-400;
-		}
-	}
-	&__nearby-item-category {
-		text-transform: uppercase;
-		letter-spacing: 0.025rem;
-		color: $gray-700;
-		font-size: $font-size-xs;
-		font-weight: $font-weight-semibold;
-	}
-	&__nearby-item-name {
-		font-weight: $font-weight-semibold;
-	}
-	&__nearby-item-address {
-		color: $text-muted;
-		font-size: $font-size-xs;
-	}
-
-	&__nearby-item:hover &__nearby-item-name {
-		color: $link-hover-color;
-	}
-
 	@include media-breakpoint-up(sm) {
 		.contact-card-map {
 			background-size: 150%;
@@ -956,9 +976,6 @@ export default {
 			height: 200px;
 			padding: 0.5rem;
 		}
-		.header-title {
-			font-size: $h4-font-size;
-		}
 		.contact-card-map {
 			background-size: 100%;
 		}
@@ -970,6 +987,8 @@ export default {
 		}
 		.contact-card {
 			margin-top: -($spacer * 7.5);
+			position: sticky;
+			top: $spacer;
 
 			&:after {
 				display: block;

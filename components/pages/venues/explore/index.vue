@@ -26,7 +26,7 @@
 		<div class="navbar filter-navbar">
 			<div class="d-flex">
 				<pg-button
-					v-if="$mq == 'xs' || $mq == 'constrained'"
+					v-if="$mq === 'xs' || $mq === 'sm'"
 					:title="showMap ? $t('pages.explore.view.list') : $t('pages.explore.view.map')"
 					variant="link"
 					class="filter-button filter-button--toggle"
@@ -122,7 +122,7 @@
 				</pg-map-marker>
 				<template slot="visible">
 					<!-- Refresh buttons -->
-					<template v-if="$mq == 'comfortable' && mapNeedsRefresh">
+					<template v-if="($mq === 'md' || $mq === 'lg' || $mq === 'xl') && mapNeedsRefresh">
 						<pg-button
 							id="desktop-refresh-btn"
 							:aria-label="$t('pages.explore.search_area')"
@@ -139,7 +139,7 @@
 							{{ $t('pages.explore.search_area') }}
 						</b-tooltip>
 					</template>
-					<div v-if="($mq == 'xs' || $mq == 'constrained') && mapNeedsRefresh" class="container-fluid map-floating-controls">
+					<div v-if="($mq === 'xs' || $mq === 'sm') && mapNeedsRefresh" class="container-fluid map-floating-controls">
 						<pg-button variant="accent" block @click="onSearchBoundsClick">{{ $t('pages.explore.search_area') }}</pg-button>
 					</div>
 				</template>
@@ -267,7 +267,8 @@ export default {
 				fullscreenControl: false,
 				mapTypeControl: false,
 				streetViewControl: false,
-				zoomControl: this.$mq === 'comfortable',
+				zoomControl:
+					this.$mq === 'md' || this.$mq === 'lg' || this.$mq === 'xl',
 				zoomControlOptions: {
 					position: 1 // google.maps.ControlPosition.TOP_LEFT
 				},
@@ -326,11 +327,21 @@ export default {
 		},
 
 		showList() {
-			return this.$mq === 'comfortable' || this.currentView === 'list'
+			return (
+				this.$mq === 'md' ||
+				this.$mq === 'lg' ||
+				this.$mq === 'xl' ||
+				this.currentView === 'list'
+			)
 		},
 
 		showMap() {
-			return this.$mq === 'comfortable' || this.currentView === 'map'
+			return (
+				this.$mq === 'md' ||
+				this.$mq === 'lg' ||
+				this.$mq === 'xl' ||
+				this.currentView === 'map'
+			)
 		}
 	},
 

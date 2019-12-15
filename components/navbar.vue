@@ -3,7 +3,7 @@
 		<nav :class="classes">
 			<!-- Small logo, toggles menu -->
 			<div
-				v-if="$mq == 'xs' || $mq == 'constrained'"
+				v-if="$mq === 'xs' || $mq === 'sm'"
 				:aria-label="$constants.APP_NAME"
 				class="navbar-brand"
 				@click="toggleDrawer()">
@@ -16,7 +16,7 @@
 
 			<!-- Normal logo, goes to home page -->
 			<nuxt-link
-				v-if="$mq == 'comfortable'"
+				v-if="$mq === 'md' || $mq === 'lg' || $mq === 'xl'"
 				:aria-label="$constants.APP_NAME"
 				class="navbar-brand"
 				:to="localePath('index')">
@@ -48,7 +48,7 @@
 
 			<div class="ml-auto d-flex">
 				<slot name="right" />
-				<b-navbar-nav v-if="$mq == 'comfortable'">
+				<b-navbar-nav v-if="$mq === 'md' || $mq === 'lg' || $mq === 'xl'">
 					<template v-if="!$auth.loggedIn">
 						<b-nav-item :to="localePath('promote')">{{ $t('components.navbar.promote') }}</b-nav-item>
 						<b-nav-item :to="localePath('register')">{{ $t('components.navbar.register') }}</b-nav-item>

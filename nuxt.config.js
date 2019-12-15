@@ -134,11 +134,13 @@ module.exports = {
 			'nuxt-mq',
 			{
 				breakpoints: {
-					xs: 576, // FIXME: Perché uso xs?
-					constrained: 767,
-					comfortable: Infinity
+					xs: 576,
+					sm: 768,
+					md: 992,
+					lg: 1200,
+					xl: Infinity
 				},
-				defaultBreakpoint: 'constrained' // for SSR
+				defaultBreakpoint: 'sm' // for SSR
 			}
 		],
 		[

@@ -5,7 +5,7 @@
 		<div class="container my-5">
 			<div class="row section">
 				<div class="col-md-10 mx-md-auto col-lg-8">
-					<h2 class="font-weight-bold mb-3 text-center">{{ $t('pages.about.company.title', { name: $constants.APP_NAME }) }}</h2>
+					<h2 class="display-4 mb-4 font-weight-semibold text-center">{{ $t('pages.about.company.title', { name: $constants.APP_NAME }) }}</h2>
 					<p>{{ $t('pages.about.company.paragraph1', { name: $constants.APP_NAME }) }}</p>
 					<p>{{ $t('pages.about.company.paragraph2', { name: $constants.APP_NAME }) }}</p>
 					<p>{{ $t('pages.about.company.paragraph3') }}</p>
@@ -13,7 +13,7 @@
 					<p>{{ $t('pages.about.company.paragraph5', { name: $constants.APP_NAME }) }}</p>
 
 					<div class="text-center mt-5">
-						<h3 id="contact" class="font-weight-bold mb-3">{{ $t('pages.about.contact.title') }}</h3>
+						<h3 id="contact" class="font-weight-semibold mb-3">{{ $t('pages.about.contact.title') }}</h3>
 						<p>{{ $t('pages.about.contact.intro') }}</p>
 						<p>
 							{{ $t('pages.about.contact.info') }}<br>

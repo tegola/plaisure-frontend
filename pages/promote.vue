@@ -6,8 +6,8 @@
 			<div class="container text-center">
 				<div class="row">
 					<div class="col-10 col-lg-9 mx-auto">
-						<h1 class="jumbotron-title">{{ $t('pages.promote.hero.title') }}</h1>
-						<i18n tag="p" class="jumbotron-text" path="pages.promote.hero.paragraph">
+						<h1 class="display-3 mb-4">{{ $t('pages.promote.hero.title') }}</h1>
+						<i18n tag="p" class="jumbotron-text mb-0" path="pages.promote.hero.paragraph">
 							<span slot="name">{{ $constants.APP_NAME }}</span>
 							<strong slot="strong">{{ $t('pages.promote.hero.paragraph_strong') }}</strong>
 						</i18n>
@@ -47,7 +47,7 @@
 			<div class="row">
 				<div class="col-md-10 mx-md-auto col-lg-9">
 					<div class="section mb-5">
-						<h2 class="section-title text-center">{{ $t('pages.promote.cost.title') }}</h2>
+						<h3 class="text-center mb-3">{{ $t('pages.promote.cost.title') }}</h3>
 						<i18n tag="p" path="pages.promote.cost.paragraph1">
 							<span slot="name">{{ $constants.APP_NAME }}</span>
 							<strong slot="strong">{{ $t('pages.promote.cost.paragraph1_strong') }}</strong>
@@ -56,7 +56,7 @@
 					</div>
 
 					<div class="section my-5">
-						<h2 class="section-title text-center">{{ $t('pages.promote.start.title') }}</h2>
+						<h3 class="text-center mb-3">{{ $t('pages.promote.start.title') }}</h3>
 						<p>{{ $t('pages.promote.start.paragraph1', { name: $constants.APP_NAME }) }}</p>
 						<i18n tag="p" path="pages.promote.start.paragraph2">
 							<span slot="name">{{ $constants.APP_NAME }}</span>
@@ -93,24 +93,10 @@ export default {
 		background-color: $palette-green-100;
 		color: $palette-dark-green-500;
 	}
-	.jumbotron-title {
-		font-size: $h2-font-size;
-		font-weight: $font-weight-bold;
-	}
-	.section-title {
-		margin-bottom: $spacer;
-	}
 
 	@include media-breakpoint-up(md) {
-		.jumbotron-title {
-			font-size: $display3-size;
-			margin-bottom: $spacer * 2;
-		}
 		.jumbotron-text {
 			font-size: $font-size-lg;
-		}
-		.section-title {
-			font-size: $h3-font-size;
 		}
 	}
 }

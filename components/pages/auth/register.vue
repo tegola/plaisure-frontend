@@ -4,10 +4,10 @@
 
 		<div class="container my-5">
 			<div class="text-center mb-5">
-				<h2 :class="$mq === 'xs' || $mq === 'constrained' ? 'h4' : null">
+				<h2 :class="$mq === 'xs' || $mq === 'sm' ? 'h4' : null">
 					{{ $t(asOwner ? 'pages.register.owner.title' : 'pages.register.user.title', { name: $constants.APP_NAME }) }}
 				</h2>
-				<p class="text-muted" :class="$mq === 'comfortable' ? 'lead' : null">
+				<p class="text-muted" :class="$mq === 'md' || $mq === 'lg' || $mq === 'xl' ? 'lead' : null">
 					{{ $t(asOwner ? 'pages.register.owner.intro' : 'pages.register.user.intro') }}
 				</p>
 			</div>

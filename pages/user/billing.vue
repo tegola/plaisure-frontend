@@ -63,7 +63,7 @@
 			<b-form-group class="mt-3 text-right">
 				<pg-button
 					ref="submit"
-					:block="$mq == 'constrained'"
+					:block="$mx === 'xs' || $mq === 'sm'"
 					:loading="loading"
 					type="submit"
 					variant="primary">

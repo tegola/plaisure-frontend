@@ -52,7 +52,7 @@
 							<!-- Default subscription -->
 							<pg-button
 								v-if="!model.subscription_name"
-								:block="$mq == 'xs' || $mq == 'constrained'"
+								:block="$mq === 'xs' || $mq === 'sm'"
 								variant="primary"
 								:loading="saving"
 								:disabled="saving"
@@ -237,7 +237,7 @@
 					<div class="text-right">
 						<pg-button
 							:loading="validating"
-							:block="$mq == 'xs' || $mq == 'constrained'"
+							:block="$mq === 'xs' || $mq === 'sm'"
 							variant="primary"
 							@click="validateAndContinue">
 							{{ $t('common.actions.continue') }}

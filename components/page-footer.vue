@@ -1,7 +1,7 @@
 <template>
 	<footer class="pg-footer">
 		<div class="container">
-			<ul v-if="$mq == 'comfortable'" class="list-inline">
+			<ul v-if="$mq === 'md' || $mq === 'lg' || $mq === 'xl'" class="list-inline">
 				<li class="list-inline-item">
 					<nuxt-link :to="localePath('venues-explore')">{{ $t('components.footer.search') }}</nuxt-link>
 				</li>

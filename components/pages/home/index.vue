@@ -17,7 +17,7 @@
 						<div class="col-md-10 col-lg-7">
 							<div class="row">
 								<div class="col-md-10 col-lg-11">
-									<h1 class="display-3 text-dark-green mb-4">{{ $t('pages.home.search.title') }}</h1>
+									<h1 class="display-3 text-olive-900 mb-4">{{ $t('pages.home.search.title') }}</h1>
 									<p class="lead text-dark-green-muted font-weight-semibold mb-4">{{ $t('pages.home.search.subtitle', { name: $constants.APP_NAME }) }}</p>
 								</div>
 							</div>
@@ -85,31 +85,29 @@
 
 		<div class="my-5 pg-home-page__token-section">
 			<div class="container">
-				<h5 class="font-weight-bold">{{ $t('pages.home.explore.title') }}</h5>
+				<h5>{{ $t('pages.home.explore.title') }}</h5>
 			</div>
-			<div class="pg-home-page__scrollable-pane">
+			<pg-scrollable-pane>
 				<div class="container">
-					<div class="pg-home-page__scrollable-pane-row">
-						<pg-token
-							v-for="preset in tokenPresets"
-							:key="preset.value"
-							:icon="preset.icon"
-							:type="preset.type"
-							:to="preset.route">
-							{{ preset.label }}
-						</pg-token>
-					</div>
+					<pg-token
+						v-for="preset in tokenPresets"
+						:key="preset.value"
+						:icon="preset.icon"
+						:type="preset.type"
+						:to="preset.route">
+						{{ preset.label }}
+					</pg-token>
 				</div>
-			</div>
+			</pg-scrollable-pane>
 		</div>
 
 		<div v-if="highlightedVenues.length" class="my-5">
 			<div class="container">
-				<h5 class="font-weight-bold">{{ $t('pages.home.highlights.title') }}</h5>
+				<h5>{{ $t('pages.home.highlights.title') }}</h5>
 			</div>
-			<div class="pg-home-page__scrollable-pane">
-				<div class="container">
-					<div class="row pg-home-page__scrollable-pane-row">
+			<pg-scrollable-pane selector=".row">
+				<div class="container mb-4">
+					<div class="row">
 						<div v-for="venue in highlightedVenues" :key="venue.id" class="col-11 col-md-6 mb-4">
 							<nuxt-link :to="localePath({ name: 'venues-id', params: { id: venue.id }})" class="text-reset">
 								<pg-venue-grid-item :venue="venue" />
@@ -117,16 +115,16 @@
 						</div>
 					</div>
 				</div>
-			</div>
+			</pg-scrollable-pane>
 		</div>
 
 		<div v-if="newVenues.length" class="my-5">
 			<div class="container">
-				<h5 class="font-weight-bold">{{ $t('pages.home.new.title') }}</h5>
+				<h5>{{ $t('pages.home.new.title') }}</h5>
 			</div>
-			<div class="pg-home-page__scrollable-pane">
-				<div class="container">
-					<div class="row pg-home-page__scrollable-pane-row">
+			<pg-scrollable-pane selector=".row">
+				<div class="container mb-4">
+					<div class="row">
 						<div
 							v-for="(venue, index) in newVenues"
 							:key="venue.id"
@@ -138,7 +136,7 @@
 						</div>
 					</div>
 				</div>
-			</div>
+			</pg-scrollable-pane>
 		</div>
 
 		<div class="my-5 pg-home-page__promote-section">
@@ -152,11 +150,11 @@
 					</div>
 					<div class="col-md-8 col-xl-7">
 						<p class="text-dark-green-muted mb-1">{{ $t('pages.home.promote.intro') }}</p>
-						<h3 class="display-4 text-dark-green mb-3">{{ $t('pages.home.promote.title') }}</h3>
-						<p class="lead text-dark-green mb-4">{{ $t('pages.home.promote.paragraph') }}</p>
+						<h3 class="display-4 text-olive-900 mb-3">{{ $t('pages.home.promote.title') }}</h3>
+						<p class="lead text-olive-900 mb-4">{{ $t('pages.home.promote.paragraph') }}</p>
 						<pg-button
 							:to="promoteButton.route"
-							:block="$mq == 'xs'"
+							:block="$mq === 'xs'"
 							variant="primary"
 							icon="arrow-right"
 							icon-position="right">
@@ -164,9 +162,9 @@
 						</pg-button>
 						<pg-button
 							:to="localePath('promote')"
-							:block="$mq == 'xs'"
+							:block="$mq === 'xs'"
 							variant="link"
-							class="text-dark-green">
+							class="text-olive-900">
 							{{ $t('pages.home.promote.more') }}
 						</pg-button>
 					</div>
@@ -185,6 +183,7 @@ import sortBy from 'lodash/sortBy'
 import PgToken from './token'
 import searchCities from './search-cities'
 import formatResult from '@/utilities/format-google-maps-result'
+import PgScrollablePane from '@/components/scrollable-pane'
 import PgPlaceTextbox from '@/components/place-textbox'
 import PgVenueGridItem from '@/components/venue-grid-item'
 
@@ -192,6 +191,7 @@ export default {
 	name: 'PgHomePage',
 
 	components: {
+		PgScrollablePane,
 		PgPlaceTextbox,
 		PgVenueGridItem,
 		PgToken
@@ -488,23 +488,6 @@ export default {
 			position: absolute;
 			top: -($spacer * 5);
 			bottom: -($spacer * 8);
-		}
-	}
-
-	// Scrollable pane on small screens
-	@include media-breakpoint-down(sm) {
-		&__scrollable-pane {
-			overflow-x: auto;
-			-webkit-overflow-scrolling: touch;
-		}
-		&__scrollable-pane-row {
-			white-space: nowrap;
-			flex-wrap: nowrap;
-			padding-bottom: $spacer / 2; // Avoid cropping to token shadows
-
-			> * {
-				white-space: normal;
-			}
 		}
 	}
 

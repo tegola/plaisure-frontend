@@ -4,10 +4,10 @@
 
 		<div class="container my-5">
 			<div class="row">
-				<div class="col-md-10 ml-md-auto mr-md-auto">
+				<div class="col-md-10 col-lg-8 mx-md-auto">
 					<div class="text-center">
-						<h1 id="toofar"><strong>Gioca senza esagerare</strong></h1>
-						<h3 class="mb-4">Evita gli eccessi: fai in modo che il gioco resti un piacere.</h3>
+						<h2 id="toofar" class="display-4 font-weight-semibold">Gioca senza esagerare</h2>
+						<p class="mb-4 lead">Evita gli eccessi: fai in modo che il gioco resti un piacere.</p>
 					</div>
 					<p>
 						Il gioco è un'esperienza piacevole e positiva che non rappresenta alcun rischio per la maggior parte delle persone.<br>
@@ -29,8 +29,8 @@
 					<hr class="my-5">
 
 					<div class="text-center">
-						<h1 id="rules"><strong>Le regole</strong></h1>
-						<h3 class="mb-4">Gioca e divertiti, ma ricorda queste regole.</h3>
+						<h3 id="rules" class="font-weight-semibold">Le regole</h3>
+						<p class="lead">Gioca e divertiti, ma ricorda queste regole.</p>
 					</div>
 					<p>Per fare in modo che il gioco resti sempre un piacere, segui alcune regole elementari:</p>
 					<ul>
@@ -54,8 +54,8 @@
 					<hr class="my-5">
 
 					<div class="text-center">
-						<h1><strong>Regola del 18</strong></h1>
-						<h3 class="mb-4">I giochi che prevedono vincite in denaro sono dedicati ai più grandi.</h3>
+						<h3 id="rules" class="font-weight-semibold">Regola del 18</h3>
+						<p class="lead">I giochi che prevedono vincite in denaro sono dedicati ai più grandi.</p>
 					</div>
 					<p>IL GIOCO È VIETATO AI MINORI DI 18 ANNI</p>
 					<p>La Legge n.111, art.24, commi 19-22 del 15/07/2011 disciplina il divieto di partecipazione ai giochi con vincite in denaro per i minori.</p>
@@ -63,7 +63,7 @@
 					<hr class="my-5">
 
 					<div class="text-center">
-						<h1 id="myths"><strong>Miti e credenze</strong></h1>
+						<h3 id="myths" class="font-weight-semibold mb-4">Miti e credenze</h3>
 					</div>
 					<p>
 						<strong>MITO</strong>: “se continuo a giocare la fortuna girerà e riguadagnerò i soldi che ho perso finora: devo solo andare avanti a giocare”<br>
@@ -90,10 +90,9 @@
 					<hr class="my-5">
 
 					<div class="text-center">
-						<h1 id="help"><strong>Dove chiedere aiuto</strong></h1>
-						<h3>A chi rivolgersi</h3>
+						<h3 id="help" class="font-weight-semibold">Dove chiedere aiuto</h3>
+						<p class="lead">A chi rivolgersi</p>
 					</div>
-
 					<p>Se ritieni di avere un problema relativo al gioco o se hai un familiare che pensi abbia un problema con il gioco, puoi trovare aiuto nel servizio <strong>GiocaResponsabile</strong>.</p>
 					<p>Il servizio è completamente gratuito e anonimo e mette a disposizione di coloro che hanno sviluppato problemi (psicologici, relazionali, legali) dovuti agli eccessi di gioco, ai loro famigliari e amici, la professionalità di un team di psicologi ed esperti attraverso una serie di strumenti e piattaforme per l'assistenza:</p>
 					<ul>

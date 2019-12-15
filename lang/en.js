@@ -328,11 +328,11 @@ export default {
 				action: 'Claim this venue'
 				// subject: 'Claim venue: {name} (id: {id})'
 			},
-			issues: {
+			report: {
 				title: 'Found an error?',
 				intro:
-					'If the address is incorrect, the venue has shut down, or if there are offensive photos, you can {report}.',
-				report: 'report this venue',
+					'If the address is incorrect, the venue has shut down, or if there are offensive photos, you can report it.',
+				action: 'Report this venue',
 				subject: 'Report: {name} (id: {id})'
 			},
 			nearby: 'Venues nearby',

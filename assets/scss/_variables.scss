@@ -63,12 +63,16 @@ $theme-colors: map-merge((
   "light":      $light,
   "dark":       $dark,
 
+  "gray-300":  $gray-300,
+  "olive-800":  $olive-800,
+  "olive-900":  $olive-900,
   "orange-100": $orange-100,
   "orange-600": $orange-600
 ), $theme-colors);
 
 // Options
-$enable-shadows:  true;
+$enable-shadows:               true;
+$enable-responsive-font-sizes: true;
 
 // Spacing
 $spacer: 1rem;
@@ -124,11 +128,6 @@ $display1-size:          5rem;
 $display2-size:          4rem;
 $display3-size:          3rem;
 $display4-size:          2.5rem;
-$display1-weight:        600;
-$display2-weight:        600;
-$display3-weight:        600;
-$display4-weight:        600;
-$display-line-height:    1;
 
 $hr-border-color: rgba($black, .08);
 
