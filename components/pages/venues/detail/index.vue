@@ -300,9 +300,8 @@
 			<div class="bg-light mt-5 pt-5">
 				<div class="container text-center text-md-left">
 					<div class="row">
-
 						<!-- Claim -->
-						<div class="col-md mb-4" v-if="!venue.has_owner">
+						<div v-if="!venue.has_owner" class="col-md mb-4">
 							<div class="row">
 								<div class="col-md-auto">
 									<pg-icon
@@ -345,7 +344,6 @@
 								</div>
 							</div>
 						</div>
-
 					</div>
 				</div>
 

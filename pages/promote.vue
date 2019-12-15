@@ -6,7 +6,7 @@
 			<div class="container text-center">
 				<div class="row">
 					<div class="col-10 col-lg-9 mx-auto">
-						<h1 class="display-3 mb-4">{{ $t('pages.promote.hero.title') }}</h1>
+						<h1 class="display-3 mb-4 font-weight-bold">{{ $t('pages.promote.hero.title') }}</h1>
 						<i18n tag="p" class="jumbotron-text mb-0" path="pages.promote.hero.paragraph">
 							<span slot="name">{{ $constants.APP_NAME }}</span>
 							<strong slot="strong">{{ $t('pages.promote.hero.paragraph_strong') }}</strong>

@@ -17,7 +17,7 @@
 						<div class="col-md-10 col-lg-7">
 							<div class="row">
 								<div class="col-md-10 col-lg-11">
-									<h1 class="display-3 text-olive-900 mb-4">{{ $t('pages.home.search.title') }}</h1>
+									<h1 class="display-3 text-olive-900 mb-4 font-weight-bold">{{ $t('pages.home.search.title') }}</h1>
 									<p class="lead text-dark-green-muted font-weight-semibold mb-4">{{ $t('pages.home.search.subtitle', { name: $constants.APP_NAME }) }}</p>
 								</div>
 							</div>
