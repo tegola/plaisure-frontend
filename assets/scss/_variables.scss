@@ -42,7 +42,6 @@ $colors: map-merge((
 $primary:       $palette-green-500;
 $secondary:     $gray-200;
 $accent:        $palette-fuchsia-500;
-$neutral:       $gray-700;
 $success:       $green;
 $info:          $cyan;
 $warning:       $yellow;
@@ -55,7 +54,6 @@ $theme-colors: map-merge((
   "primary":    $primary,
   "secondary":  $secondary,
   "accent":     $accent,
-  "neutral":    $neutral,
   "success":    $success,
   "info":       $info,
   "warning":    $warning,

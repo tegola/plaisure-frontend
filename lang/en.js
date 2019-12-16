@@ -324,7 +324,7 @@ export default {
 				title: 'Is this your venue?',
 				intro:
 					"If you're the owner of this venue, you can claim it for free and keep it updated, add photos, jackpots, and more.",
-				more: 'More info',
+				more: 'Learn more',
 				action: 'Claim this venue'
 				// subject: 'Claim venue: {name} (id: {id})'
 			},

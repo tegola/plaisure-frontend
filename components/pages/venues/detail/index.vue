@@ -303,7 +303,7 @@
 						<!-- Claim -->
 						<div v-if="!venue.has_owner" class="col-md mb-4">
 							<div class="row">
-								<div class="col-md-auto">
+								<div class="col-md-auto text-muted">
 									<pg-icon
 										icon="pencil"
 										class="mb-2 mb-md-none"
@@ -312,21 +312,26 @@
 								</div>
 								<div class="col-md">
 									<h6 class="mb-1">{{ $t('pages.venue_detail.claim.title') }}</h6>
-									<p>{{ $t('pages.venue_detail.claim.intro') }} <nuxt-link :to="localePath('promote')" class="text-olive-800 font-weight-bold">{{ $t('pages.venue_detail.claim.more') }}&hellip;</nuxt-link></p>
+									<p>{{ $t('pages.venue_detail.claim.intro') }}</p>
 									<pg-button
 										:to="localePath({ name: 'venues-id-claim', params: { id: venue.id }})"
 										variant="primary"
 										rel="nofollow">
 										{{ $t('pages.venue_detail.claim.action') }}
 									</pg-button>
+									<pg-button
+										:to="localePath('promote')"
+										variant="link">
+										{{ $t('pages.venue_detail.claim.more') }}
+									</pg-button>
 								</div>
 							</div>
 						</div>
 
 						<!-- Report -->
-						<div class="col-md text-muted mb-4">
+						<div class="mb-4" :class="venue.has_owner ? 'col-md-10 col-lg-8 mx-md-auto' : 'col-md'">
 							<div class="row">
-								<div class="col-md-auto">
+								<div class="col-md-auto text-muted">
 									<pg-icon
 										icon="exclamation-circle-outline"
 										class="mb-2 mb-md-none"
