@@ -342,7 +342,7 @@
 									<h6 class="mb-1">{{ $t('pages.venue_detail.report.title') }}</h6>
 									<p>{{ $t('pages.venue_detail.report.intro') }}</p>
 									<pg-button
-										:href="prepareEmailLink(this.$constants.EMAIL_REPORT, $t('pages.venue_detail.issues.subject', { name: venue.name, id: venue.id }))"
+										:href="prepareEmailLink(this.$constants.EMAIL_REPORT, $t('pages.venue_detail.report.subject', { name: venue.name, id: venue.id }))"
 										variant="gray-300">
 										{{ $t('pages.venue_detail.report.action') }}
 									</pg-button>
