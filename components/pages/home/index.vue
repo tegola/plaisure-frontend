@@ -23,7 +23,7 @@
 							</div>
 
 							<div class="row form-row">
-								<div class="col">
+								<div class="col-sm mb-2 mb-0">
 									<div class="position-relative">
 										<label class="sr-only">{{ $t('pages.home.search.label') }}</label>
 										<pg-place-textbox
@@ -55,7 +55,7 @@
 										</client-only>
 									</div>
 								</div>
-								<div class="col-auto">
+								<div class="col-sm-auto">
 									<pg-button
 										:disabled="!canSubmit"
 										variant="accent"
