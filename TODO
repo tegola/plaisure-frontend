@@ -28,6 +28,7 @@
 
 Recensioni:
  ☐ Aggiungere gestione recensioni lato profilo utente
+ 
 
 Generale:
  ☐ Aggiungere il lazy load alla galleria foto
@@ -53,6 +54,7 @@ Generale:
  ☐ Rimuovere i campi amenity dalla tabella venues e il codice di refactoring dopo aver lanciato quest'ultimo
  ☐ Notifica al proprietario quando ci sono nuove recensioni
  ☐ Rimuovere il campo "name" e aggiungere gli unique a "machine_name" nelle tabelle di categories, amenities, vlt_platform, concessionaries, ecc.
+ ☐ Aggiungere softdelete alle sale e, quando vengono eliminate, far apparire comunque una pagina che dice "questa sala non esiste, forse è stata chiusa, ma ci sono queste altre" e mostrare le sale più vicine nel raggio di... 10km?
 
 
 SEO e analytics:
@@ -132,7 +134,6 @@ Dopo il primo deploy backend:
    UPDATE venues SET country = 'IT'
    UPDATE concessionaires SET country = 'IT'
    UPDATE pay_per_view_platforms SET country = 'IT'
-   UPDATE vlt_platforms SET country = 'IT'
    UPDATE venue_categories SET country = 'IT' WHERE machine_name = 'vlt'
    UPDATE venue_categories SET machine_name = 'betting_shop' WHERE machine_name = 'betting_agency'
    INSERT INTO venue_categories (machine_name, name, country) VALUES ('adult_gaming_center', 'Adult gaming centre', 'GB')
