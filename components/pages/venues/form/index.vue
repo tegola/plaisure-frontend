@@ -266,7 +266,7 @@ export default {
 				height: 2px;
 				transform: scaleX(0);
 				opacity: 0;
-				background-color: theme-color('primary');
+				background-color: $primary;
 				transition: transform 150ms ease-in-out, opacity 100ms 50ms ease-in-out;
 				pointer-events: none;
 			}

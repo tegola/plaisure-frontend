@@ -11,16 +11,7 @@
 	color: $white !important;
 }
 
-// Inverse buttons
-.btn-inverse-primary {
-	@include button-variant($white, $white, $white, $white, $white, $white);
-	color: theme-color('primary');
-}
-.btn-inverse-accent {
-	@include button-variant($white, $white, $white, $white, $white, $white);
-	color: theme-color('accent');
-}
-
-.btn-outline-dark-green-300 {
-	@include button-outline-variant($palette-dark-green-300);
+// Outline buttons
+.btn-outline-olive-800 {
+	@include button-outline-variant($olive-800);
 }

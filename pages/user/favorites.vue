@@ -3,7 +3,7 @@
 		<template v-if="venues.length">
 			<h3 class="h4">{{ $t('pages.user_favorites.title') }}</h3>
 
-			<b-list-group v-if="venues.length" flush class="mt-4">
+			<b-list-group flush class="mt-4">
 				<pg-user-venue-list-item
 					v-for="venue in venues"
 					:key="venue.id"
@@ -46,8 +46,6 @@ export default {
 		PgNoItems
 	},
 
-	transition: 'prova',
-
 	head() {
 		return {
 			title: this.$t('pages.user_favorites.title')
@@ -88,7 +86,10 @@ export default {
 		border-top: 0;
 	}
 	.pg-no-items__icon {
-		color: $palette-fuchsia-500;
+		background-color: $fuchsia-100;
+		color: $fuchsia-500;
+		border-radius: 50%;
+		padding: 1rem;
 	}
 }
 </style>

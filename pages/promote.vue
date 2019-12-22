@@ -90,8 +90,8 @@ export default {
 <style lang="scss">
 .pg-promote-page {
 	.jumbotron {
-		background-color: $palette-green-100;
-		color: $palette-dark-green-500;
+		background-color: $green-100;
+		color: $olive-900;
 	}
 
 	@include media-breakpoint-up(md) {

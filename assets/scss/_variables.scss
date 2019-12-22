@@ -39,9 +39,9 @@ $colors: map-merge((
   "gray-dark":  $gray-800
 ), $colors);
 
-$primary:       $palette-green-500;
+$primary:       $green-500;
 $secondary:     $gray-200;
-$accent:        $palette-fuchsia-500;
+$accent:        $fuchsia-500;
 $success:       $green;
 $info:          $cyan;
 $warning:       $yellow;
@@ -61,7 +61,8 @@ $theme-colors: map-merge((
   "light":      $light,
   "dark":       $dark,
 
-  "gray-300":  $gray-300,
+  "gray-300":   $gray-300,
+  "gray-500":   $gray-500,
   "olive-800":  $olive-800,
   "olive-900":  $olive-900,
   "orange-100": $orange-100,
@@ -181,8 +182,8 @@ $input-box-shadow:         0 0 0 transparent; // "none" was removing additional 
 $input-border-radius-lg:   $border-radius;
 // $input-border-radius-sm:   $border-radius-sm;
 
-$input-focus-border-color: theme-color('primary');
-$input-focus-box-shadow:   inset 0 0 0 1px theme-color('primary');
+$input-focus-border-color: $primary;
+$input-focus-box-shadow:   inset 0 0 0 1px $primary;
 
 $input-placeholder-color: $gray-500;
 
@@ -201,7 +202,7 @@ $custom-control-indicator-border-color: $input-border-color;
 
 $custom-select-box-shadow:         0 0 0 transparent; // "none" was removing additional box shadows
 $custom-select-focus-border-color: $input-focus-border-color;
-$custom-select-focus-box-shadow:   inset 0 0 0 1px theme-color('primary');
+$custom-select-focus-box-shadow:   inset 0 0 0 1px $primary;
 
 // Icons
 $icon-size-base: 1.25rem; // 20px
@@ -210,7 +211,7 @@ $icon-size-base: 1.25rem; // 20px
 $dropdown-border-color:   rgba($black, .08);
 $dropdown-box-shadow:     0 .33rem 1rem rgba($black, .05);
 
-$dropdown-link-hover-bg:  $palette-green-100;
+$dropdown-link-hover-bg:  $green-100;
 
 // Navbar
 $navbar-transition-duration: 300ms;
@@ -224,9 +225,9 @@ $card-border-radius: $border-radius-lg;
 // List group
 $list-group-border-color:     rgba($black, .08);
 
-$list-group-hover-bg:         $palette-green-100;
+$list-group-hover-bg:         $green-100;
 
-$list-group-action-active-bg: $palette-green-100;
+$list-group-action-active-bg: $green-100;
 
 // Modal
 $modal-content-border-color:     rgba($black, .1);

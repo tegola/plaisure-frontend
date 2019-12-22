@@ -674,46 +674,39 @@ export default {
 			right: 0;
 			width: $border-width;
 			border: 0;
-			background-color: gray('200');
+			background-color: $gray-200;
 		}
 	}
 	.filter-button__label {
 		text-transform: uppercase;
 		font-size: $font-size-xs;
 		font-weight: $font-weight-semibold;
-		color: gray('600');
+		color: $gray-600;
 	}
 	.filter-button__arrow {
 		width: 0.75rem;
 		height: 0.75rem;
 		vertical-align: -0.08em;
-		color: gray('600');
+		color: $gray-600;
 	}
 	.filter-button__text {
 		margin-top: 0.125rem;
 	}
 	.dropdown.show > .filter-button {
-		color: $white;
-		background-color: $palette-green-500;
+		color: $olive-900;
+		background-color: $green-200;
 
 		&:after {
 			visibility: hidden;
 		}
-		.filter-button__label,
-		.filter-button__arrow {
-			color: $palette-green-100;
-		}
-		.filter-button__text {
-			color: inherit;
-		}
 	}
 	.filter-button--toggle {
-		color: theme-color('primary');
+		color: $primary;
 	}
 
 	.filter-button-menu__icon {
 		width: $icon-size-base;
-		color: $palette-green-500;
+		color: $primary;
 		margin-right: 0.75rem;
 	}
 	.filter-button-menu__text {
@@ -741,30 +734,13 @@ export default {
 		padding-top: map-get($spacers, 3);
 		padding-bottom: map-get($spacers, 3);
 	}
-	.venue-list-item-photo {
-		background-size: cover;
-		background-position: center center;
-		background-repeat: no-repeat;
-		border-radius: $border-radius-sm;
-		background-color: $palette-green-200;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
-	.venue-list-item-icon {
-		max-width: 66%;
-		max-height: 80%;
-	}
 	.venue-list-item--highlighted {
-		background-color: lighten($palette-green-100, 4%);
-
-		.venue-list-item-photo {
-			background-color: $palette-green-300;
-		}
+		background-color: $green-100;
 	}
 	.venue-list-item.active {
-		background-color: $palette-green-100;
+		background-color: $green-100;
 		color: inherit;
+		margin-top: 0; // Override list-group negative margin
 	}
 
 	// Map

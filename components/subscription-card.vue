@@ -132,16 +132,16 @@ export default {
 	}
 	&--clickable:hover {
 		transform: scale(1.02);
-		border-color: theme-color('primary');
-		box-shadow: inset 0 0 0 $border-width theme-color('primary'),
-			0 3px 20px rgba(theme-color('primary'), 0.25);
+		border-color: $primary;
+		box-shadow: inset 0 0 0 $border-width $primary,
+			0 3px 20px rgba($primary, 0.25);
 	}
 	&--selected {
-		border-color: theme-color('primary');
-		box-shadow: inset 0 0 0 $border-width theme-color('primary');
+		border-color: $primary;
+		box-shadow: inset 0 0 0 $border-width $primary;
 	}
 	&--disabled {
-		background-color: gray('100');
+		background-color: $gray-100;
 	}
 }
 </style>

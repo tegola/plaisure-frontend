@@ -73,7 +73,7 @@ export default {
 		}
 	}
 	&__list-item:hover {
-		color: $palette-dark-green-500;
+		color: $olive-900;
 	}
 
 	&__list-item-warning-icon {
@@ -93,13 +93,13 @@ export default {
 		padding: $spacer / 2;
 		border-radius: 50%;
 		margin-bottom: $spacer * 0.25;
-		color: $palette-dark-green-500;
-		background-color: $palette-green-100;
+		color: $olive-900;
+		background-color: $green-100;
 		transition: 0.15s;
 	}
 	&__add-list-item:hover &__add-list-item-icon {
-		background-color: $palette-dark-green-500;
-		color: $palette-green-100;
+		background-color: $olive-900;
+		color: $green-100;
 	}
 }
 </style>

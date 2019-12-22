@@ -487,7 +487,7 @@ export default {
 			return {
 				class: 'px-2',
 				pill: true,
-				variant: this.isFavorite ? 'accent' : 'outline-dark-green-300',
+				variant: this.isFavorite ? 'accent' : 'outline-olive-800',
 				icon: this.isFavorite ? 'heart' : 'heart-outline',
 				title: this.isFavorite
 					? this.$t('pages.venue_detail.favorites.remove')
@@ -676,7 +676,7 @@ export default {
 .pg-venue-detail-page {
 	// Header
 	.header {
-		background-color: $palette-green-100;
+		background-color: $green-100;
 		padding-top: $spacer;
 		padding-bottom: $spacer * 6; // Space for the contact card
 	}
@@ -697,25 +697,12 @@ export default {
 		display: flex;
 		pointer-events: none;
 	}
-	.header-gallery-fade {
-		position: absolute;
-		top: 0;
-		right: 0;
-		bottom: 0;
-		width: $grid-gutter-width;
-		background: linear-gradient(
-			to right,
-			rgba($palette-green-100, 0),
-			$palette-green-100
-		);
-		pointer-events: none;
-	}
 	.header-photo {
 		position: relative; // Stay above the background boxes
 		width: 100px;
 		height: 100px;
 		background-color: $body-bg;
-		border: $border-width solid $palette-green-200;
+		border: $border-width solid $olive-200;
 		border-radius: $border-radius;
 		display: flex;
 		flex-shrink: 0;
@@ -727,9 +714,9 @@ export default {
 
 		&:hover,
 		&:focus {
-			color: theme-color('primary');
-			border-color: theme-color('primary');
-			box-shadow: inset 0 0 0 1px theme-color('primary');
+			color: $primary;
+			border-color: $primary;
+			box-shadow: inset 0 0 0 1px $primary;
 		}
 	}
 	.header-photo + .header-photo {
@@ -742,7 +729,7 @@ export default {
 	.header-photo-add {
 		flex-direction: column;
 		text-decoration: none;
-		color: gray('500');
+		color: $gray-500;
 		text-align: center;
 	}
 	.header-photo-zoom {

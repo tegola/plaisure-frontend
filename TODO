@@ -159,3 +159,9 @@ Dopo OGNI deploy frontend:
   ☐ npm install
   ☐ npm run build
   ☐ touch tmp/restart.txt
+
+Appena dopo il prossimo deploy amenities:
+  ☐ /opt/plesk/php/7.2/bin/php artisan db:see
+  ☐ /opt/plesk/php/7.2/bin/php artisan db:refactor --class="VenueAmenitiesToAmenitiesTableRefactor"
+  ☐ controllare le directory dei file
+  ☐ Rimuovere il codice di refactor

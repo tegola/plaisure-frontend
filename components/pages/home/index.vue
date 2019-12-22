@@ -18,7 +18,7 @@
 							<div class="row">
 								<div class="col-md-10 col-lg-11">
 									<h1 class="display-3 text-olive-900 mb-4 font-weight-bold">{{ $t('pages.home.search.title') }}</h1>
-									<p class="lead text-dark-green-muted font-weight-semibold mb-4">{{ $t('pages.home.search.subtitle', { name: $constants.APP_NAME }) }}</p>
+									<p class="lead text-gray-500 font-weight-semibold mb-4">{{ $t('pages.home.search.subtitle', { name: $constants.APP_NAME }) }}</p>
 								</div>
 							</div>
 
@@ -148,7 +148,7 @@
 							class="pg-home-page__promote-img"
 						/>
 					</div>
-					<div class="col-md-8 col-xl-7">
+					<div class="col-md-8 col-xl-6 mr-auto">
 						<p class="text-dark-green-muted mb-1">{{ $t('pages.home.promote.intro') }}</p>
 						<h3 class="display-4 text-olive-900 mb-3">{{ $t('pages.home.promote.title') }}</h3>
 						<p class="lead text-olive-900 mb-4">{{ $t('pages.home.promote.paragraph') }}</p>
@@ -415,7 +415,7 @@ export default {
 
 	// Hero
 	&__hero {
-		background-color: $palette-green-100;
+		background-color: $green-100;
 		position: relative;
 	}
 	&__hero-background {
@@ -448,8 +448,8 @@ export default {
 
 	// Search
 	&__search-form-control:focus {
-		border-color: theme-color('accent');
-		box-shadow: inset 0 0 0 1px theme-color('accent');
+		border-color: $accent;
+		box-shadow: inset 0 0 0 1px $accent;
 	}
 	&__search-query-control {
 		background-color: $white; // Default is gray
@@ -466,7 +466,7 @@ export default {
 
 		&:not([disabled]):hover,
 		&:not([disabled]):focus {
-			color: theme-color('accent');
+			color: $accent;
 		}
 	}
 
@@ -478,7 +478,7 @@ export default {
 	}
 	&__main-venue {
 		flex: 1;
-		background-color: $palette-dark-green-300;
+		background-color: $gray-500;
 		border-radius: $border-radius-lg;
 		min-height: 5em;
 	}
@@ -493,74 +493,14 @@ export default {
 
 	// Tokens
 	&__token-section {
-		line-height: 4;
-	}
-	&__token {
-		display: inline-flex;
-		align-items: center;
-		padding: 0.5rem 1rem;
-		border-radius: 3rem;
-		color: $body-color;
-		background-color: $white;
-		box-shadow: 0 0 0 2px transparent inset, 0 1px 0 rgba($black, 0.08),
-			0 1px 3px rgba($black, 0.1);
-		transition: 0.15s;
-		outline: none;
-
-		// Spacing
-		line-height: $line-height-base; // Reset parent line height
-		margin-left: -0.5rem;
-		margin-right: 1.5rem;
-
-		&:hover,
-		&:focus {
-			color: inherit;
-			text-decoration: none;
-		}
-	}
-	&__token-icon {
-		width: 40px;
-		height: 40px;
-		margin-left: -0.5rem;
-		margin-right: 0.5rem;
-	}
-
-	&__token--category {
-		&:hover,
-		&:focus {
-			box-shadow: 0 0 0 2px theme-color('primary') inset,
-				0 1px 0 rgba($black, 0.08), 0 1px 3px rgba($black, 0.1);
-		}
-
-		.pg-home-page__token-icon {
-			fill: theme-color('primary');
-
-			.pg-svg__background {
-				fill: $palette-green-100;
-			}
-		}
-	}
-	&__token--city {
-		&:hover,
-		&:focus {
-			box-shadow: 0 0 0 2px theme-color('accent') inset,
-				0 1px 0 rgba($black, 0.08), 0 1px 3px rgba($black, 0.1);
-		}
-
-		.pg-home-page__token-icon {
-			fill: theme-color('accent');
-
-			.pg-svg__background {
-				fill: $palette-fuchsia-100;
-			}
-		}
+		line-height: 3.5;
 	}
 
 	// Promote
 	&__promote-section {
 		padding-top: $spacer;
 		padding-bottom: $spacer;
-		background-color: $palette-green-100;
+		background-color: $green-100;
 	}
 
 	@include media-breakpoint-down(sm) {

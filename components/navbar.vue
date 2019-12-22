@@ -9,7 +9,7 @@
 				@click="toggleDrawer()">
 				<pg-logo
 					:flat="variant != 'light' || drawerOpen"
-					no-text
+					:text="false"
 					class="navbar__logo" />
 				<pg-icon icon="chevron-down" class="navbar__logo-arrow" />
 			</div>
@@ -66,7 +66,11 @@
 			<div v-if="drawerOpen" class="navbar__drawer" @click.self="toggleDrawer()">
 				<b-nav vertical class="navbar__drawer-nav">
 					<b-nav-item :to="localePath('index')" exact>{{ $t('components.navbar.home') }}</b-nav-item>
-					<b-nav-item v-if="$auth.user" :to="localePath('user')" exact>
+					<b-nav-item
+						v-if="$auth.user"
+						:to="localePath('user')"
+						exact
+						link-classes="d-flex justify-content-between align-items-center">
 						{{ $auth.user.name }}
 						<pg-icon icon="user" />
 					</b-nav-item>
@@ -362,6 +366,7 @@ export default {
 	.nav-item {
 		color: #000;
 		position: relative;
+		font-size: $font-size-lg;
 	}
 	.nav-item + .nav-item::after {
 		content: '';
@@ -370,17 +375,16 @@ export default {
 		left: $nav-link-padding-x;
 		right: 0;
 		height: 1px;
-		background-color: rgba($palette-dark-green-100, 0.5);
+		background-color: $gray-200;
 		pointer-events: none;
 	}
 	.nav-link {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		color: $palette-dark-green-400;
+		font-weight: $font-weight-semibold;
+		letter-spacing: -0.01em;
+		color: $olive-900;
 
 		&.active {
-			color: theme-color('primary');
+			color: $primary;
 		}
 	}
 }
@@ -409,7 +413,7 @@ export default {
 	background-color: $white;
 
 	.navbar__logo-arrow {
-		color: $palette-dark-green-200;
+		color: $gray-500;
 	}
 
 	.navbar__search {
@@ -434,30 +438,30 @@ export default {
 		}
 	}
 	.navbar__search-btn {
-		color: $palette-dark-green-200;
+		color: $gray-500;
 
 		&:hover {
-			color: $palette-dark-green-100;
+			color: $gray-400;
 		}
 	}
 	.navbar__search--focused {
 		background-color: transparent;
 		color: rgba($body-color, 0.25);
-		box-shadow: inset 0 0 0 2px $palette-green-500;
+		box-shadow: inset 0 0 0 2px $primary;
 
 		.navbar__search-icon-addon {
-			color: $palette-green-500;
+			color: $primary;
 		}
 	}
 }
 
 // Dark style (dark green)
 .navbar-dark {
-	background-color: $palette-dark-green-500;
+	background-color: $olive-900;
 	color: $white;
 
 	.navbar__search {
-		background-color: $palette-dark-green-400;
+		background-color: $olive-800;
 	}
 	.navbar__search-icon-addon {
 		color: rgba($white, 0.5);
@@ -482,10 +486,10 @@ export default {
 	}
 	.navbar__search--focused {
 		color: rgba($white, 0.25);
-		box-shadow: inset 0 0 0 2px $palette-green-500;
+		box-shadow: inset 0 0 0 2px $olive-300;
 
 		.navbar__search-icon-addon {
-			color: $palette-green-500;
+			color: $olive-300;
 		}
 	}
 }
