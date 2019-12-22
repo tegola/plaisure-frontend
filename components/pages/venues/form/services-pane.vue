@@ -91,6 +91,7 @@
 							:key="item.id"
 							:value="item.id">
 							<pg-icon
+								v-if="amenityIconMap[item.machine_name]"
 								:icon="amenityIconMap[item.machine_name]"
 								class="mr-1"
 							/>

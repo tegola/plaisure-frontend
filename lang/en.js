@@ -714,11 +714,13 @@ export default {
 			vlt: 'VLT game room'
 		},
 		amenities: {
+			air_conditioning: 'Air conditioning',
 			atm: 'ATM',
 			bar: 'Bar',
 			pay_per_view: 'Pay Per View',
 			pos: 'POS',
 			private_parking: 'Private parking',
+			private_room: 'Private room',
 			restaurant: 'Restaurant',
 			security: 'Security',
 			smoking_area: 'Smoking area',

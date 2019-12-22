@@ -201,7 +201,11 @@
 										v-for="amenity in venue.amenities"
 										:key="amenity.machine_name"
 										class="col-sm-6 col-md-4 mt-2">
-										<pg-icon :icon="amenityIconMap[amenity.machine_name]" class="mr-2" />
+										<pg-icon
+											v-if="amenityIconMap[amenity.machine_name]"
+											:icon="amenityIconMap[amenity.machine_name]"
+											class="mr-2"
+										/>
 										{{ $t(`data.amenities.${amenity.machine_name}`) }}
 									</li>
 								</ul>

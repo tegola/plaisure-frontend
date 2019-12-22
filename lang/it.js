@@ -723,11 +723,13 @@ export default {
 			vlt: 'Sala slot VLT'
 		},
 		amenities: {
+			air_conditioning: 'Aria condizionata',
 			atm: 'Totem Bancomat',
 			bar: 'Bar',
 			pay_per_view: 'Pay per view',
 			pos: 'POS',
 			private_parking: 'Parcheggio privato',
+			private_room: 'Area privè',
 			restaurant: 'Ristorante',
 			security: 'Servizio di sicurezza',
 			smoking_area: 'Area fumatori',
