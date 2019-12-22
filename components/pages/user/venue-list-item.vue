@@ -1,7 +1,10 @@
 <template>
-	<b-list-group-item :to="target === 'item' ? to : null" v-bind="$attrs">
-		<div class="row align-items-center">
-			<div class="col-4 col-sm-5 col-md-4">
+	<b-list-group-item
+		:to="target === 'item' ? to : null"
+		:class="$mq === 'xs' ? 'px-0' : null"
+		v-bind="$attrs">
+		<div class="row align-items-sm-center">
+			<div class="col-sm-5 col-md-4">
 				<pg-image-frame
 					:src="photo ? photo.resized_url : null"
 					:content-class="photo ? null : 'pg-venue-grid-item__image-content'"
@@ -26,7 +29,6 @@
 				</p>
 				<p v-if="venue.categories.length" class="small text-uppercase text-muted mb-1">{{ categories }}</p>
 				<p class="mb-0">{{ address }}</p>
-				<slot />
 			</div>
 			<div 
 				v-if="venue.subscription && venue.subscription.needs_payment"
@@ -36,6 +38,7 @@
 					class="pg-user-venues-page__list-item-warning-icon"
 				/>
 			</div>
+			<slot />
 		</div>
 	</b-list-group-item>
 </template>

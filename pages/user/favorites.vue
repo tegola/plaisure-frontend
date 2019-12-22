@@ -10,14 +10,16 @@
 					:to="localePath({ name: 'venues-id', params: { id: venue.id }})"
 					:venue="venue"
 					class="pg-user-favorites-page__list-item">
-					<pg-button
-						class="mt-2 px-2"
-						pill
-						variant="accent"
-						icon="heart"
-						:title="$t('common.actions.remove')"
-						@click="remove(venue)"
-					/>
+					<div class="col-auto">
+						<pg-button
+							class="mt-2 px-2"
+							pill
+							variant="accent"
+							icon="heart"
+							:title="$t('common.actions.remove')"
+							@click="remove(venue)"
+						/>
+					</div>
 				</pg-user-venue-list-item>
 			</b-list-group>
 		</template>
