@@ -370,7 +370,10 @@
 									:key="nearbyVenue.id"
 									class="col-11 col-sm-7 col-md-4 col-xl-3">
 									<nuxt-link :to="localePath({ name: 'venues-id', params: { id: nearbyVenue.id }})" class="text-reset">
-										<pg-venue-grid-item :venue="nearbyVenue" />
+										<pg-venue-grid-item
+											:venue="nearbyVenue"
+											class="pg-venue-detail-page__nearby-venue-item"
+										/>
 									</nuxt-link>
 								</div>
 							</div>
@@ -865,6 +868,13 @@ export default {
 		.pg-rating__icon {
 			width: 26px;
 			height: 26px;
+		}
+	}
+
+	// Nearby items
+	&__nearby-venue-item {
+		.pg-venue-grid-item__image-content {
+			background-color: $gray-300;
 		}
 	}
 
