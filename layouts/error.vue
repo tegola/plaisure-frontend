@@ -1,10 +1,11 @@
 <template>
-	<div>
+	<div class="pg-error-page">
 		<pg-navbar />
 
-		<div class="container my-5 text-center">
-			<h1 class="display-1 font-weight-normal">{{ code }}</h1>
-			<p class="lead">{{ message }}</p>
+		<div>
+			<div class="container my-5">
+				<component :is="component" :error="error" />
+			</div>
 		</div>
 
 		<pg-page-footer />
@@ -12,7 +13,15 @@
 </template>
 
 <script>
+import PgBasicErrorPage from '@/components/pages/errors/basic'
+import PgVenueClosedErrorPage from '@/components/pages/errors/venue-closed'
+
 export default {
+	components: {
+		PgBasicErrorPage,
+		PgVenueClosedErrorPage
+	},
+
 	props: {
 		error: {
 			type: Object,
@@ -20,38 +29,25 @@ export default {
 		}
 	},
 
-	head: {
-		bodyAttrs: {
-			class: 'pg-error-page'
-		}
-	},
-
 	computed: {
-		code() {
-			return (this.error && this.error.statusCode) || 500
-		},
-		message() {
-			switch (this.code) {
-				case 404:
-					return this.$t('pages.error.not_found')
-				case 500:
-					return this.$t('pages.error.server_error')
-				default:
-					return this.error.message || this.$t('pages.error.not_found')
-			}
+		component() {
+			const routeName = this.$route.name
+
+			return routeName &&
+				routeName.startsWith('venues-id___') &&
+				this.error.statusCode === 404
+				? 'pg-venue-closed-error-page'
+				: 'pg-basic-error-page'
 		}
 	}
 }
 </script>
 
 <style lang="scss">
-@import 'assets/scss/variables';
-
 .pg-error-page {
-	background-color: $gray-100;
-
-	.navbar-light {
-		background-color: transparent;
-	}
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 }
 </style>

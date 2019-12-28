@@ -54,7 +54,7 @@ Generale:
  ☐ Rimuovere i campi amenity dalla tabella venues e il codice di refactoring dopo aver lanciato quest'ultimo
  ☐ Notifica al proprietario quando ci sono nuove recensioni
  ☐ Rimuovere il campo "name" e aggiungere gli unique a "machine_name" nelle tabelle di categories, amenities, vlt_platform, concessionaries, ecc.
- ☐ Aggiungere softdelete alle sale e, quando vengono eliminate, far apparire comunque una pagina che dice "questa sala non esiste, forse è stata chiusa, ma ci sono queste altre" e mostrare le sale più vicine nel raggio di... 10km?
+ ✔ Aggiungere softdelete alle sale e, quando vengono eliminate, far apparire comunque una pagina che dice "questa sala non esiste, forse è stata chiusa, ma ci sono queste altre" e mostrare le sale più vicine nel raggio di... 10km? @done (19-12-28 03:01)
 
 
 SEO e analytics:
@@ -161,7 +161,12 @@ Dopo OGNI deploy frontend:
   ☐ touch tmp/restart.txt
 
 Appena dopo il prossimo deploy amenities:
-  ☐ /opt/plesk/php/7.2/bin/php artisan db:see
+  ☐ /opt/plesk/php/7.2/bin/php artisan db:seed
   ☐ /opt/plesk/php/7.2/bin/php artisan db:refactor --class="VenueAmenitiesToAmenitiesTableRefactor"
   ☐ controllare le directory dei file
+  ☐ /opt/plesk/php/7.2/bin/php artisan venues:import aams
+  ☐ /opt/plesk/php/7.2/bin/php artisan db:refactor --class="UpdateExistingAAMSVenuesRefactor"
+  ☐ /opt/plesk/php/7.2/bin/php artisan venues:geolocalize-imports
   ☐ Rimuovere il codice di refactor
+  ☐ Rimuovere i campi amenity_*
+  ☐ Rimuovere il campo aams_census_code

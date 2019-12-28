@@ -702,9 +702,17 @@ export default {
 			meta_title: 'Gioca senza esagerare'
 		},
 
-		error: {
-			not_found: 'Pagina non trovata',
-			server_error: 'Errore del server'
+		errors: {
+			basic: {
+				not_found: 'Pagina non trovata',
+				server_error: 'Errore del server',
+				back: 'Torna alla pagina principale'
+			},
+			venue_closed: {
+				title: 'Ops!',
+				message_1: "Quest'attività non esiste oppure è stata chiusa.",
+				message_2: "Dai un'occhiata alle attività adiacenti."
+			}
 		}
 	},
 

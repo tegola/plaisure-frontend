@@ -14,7 +14,7 @@ export default {
 		size: {
 			type: String,
 			default: null,
-			validator: value => ['2x', '3x'].indexOf(value) !== -1
+			validator: value => ['2x', '3x', '4x'].indexOf(value) !== -1
 		},
 		spinning: {
 			type: Boolean,
@@ -58,6 +58,10 @@ export default {
 	&--3x {
 		width: $icon-size-base * 3;
 		height: $icon-size-base * 3;
+	}
+	&--4x {
+		width: $icon-size-base * 4;
+		height: $icon-size-base * 4;
 	}
 
 	// Spinning icon

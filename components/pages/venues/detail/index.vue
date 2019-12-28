@@ -579,8 +579,19 @@ export default {
 		}
 	},
 
-	asyncData({ $axios, params }) {
-		return $axios.$get(`/venues/${params.id}`)
+	async asyncData({ $axios, params, error }) {
+		try {
+			return await $axios.$get(`/venues/${params.id}`)
+		} catch (e) {
+			const response = e.response
+
+			// Go to error page with nearby venues
+			error({
+				statusCode: response.status,
+				message: response.statusText,
+				nearbyVenues: response.data && response.data.nearbyVenues
+			})
+		}
 	},
 
 	methods: {

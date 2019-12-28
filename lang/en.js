@@ -693,9 +693,17 @@ export default {
 			meta_title: 'Play responsibly'
 		},
 
-		error: {
-			not_found: 'Page not found',
-			server_error: 'Server error'
+		errors: {
+			basic: {
+				not_found: 'Page not found',
+				server_error: 'Server error',
+				back: 'Go back to the home page'
+			},
+			venue_closed: {
+				title: 'Oops!',
+				message_1: 'This venue does not exist or has been closed.',
+				message_2: 'Have a look at the the venues nearby.'
+			}
 		}
 	},
 
