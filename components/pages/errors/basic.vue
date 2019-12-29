@@ -1,5 +1,5 @@
 <template>
-	<div class="text-center">
+	<div class="container text-center">
 		<h1 class="display-1 font-weight-normal">{{ code }}</h1>
 		<p class="lead">{{ message }}</p>
 		<nuxt-link :to="localePath('index')">

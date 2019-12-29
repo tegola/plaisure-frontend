@@ -3,7 +3,7 @@
 		<pg-navbar />
 
 		<div>
-			<div class="container my-5">
+			<div class="my-5">
 				<component :is="component" :error="error" />
 			</div>
 		</div>

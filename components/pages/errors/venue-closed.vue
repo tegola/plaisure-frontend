@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div class="text-center">
+		<div class="container text-center">
 			<pg-icon icon="exclamation-circle-outline" size="4x" class="text-secondary" />
 			<h1 class="display-2 font-weight-normal">{{ $t('pages.errors.venue_closed.title') }}</h1>
 			<p class="lead mt-4">
