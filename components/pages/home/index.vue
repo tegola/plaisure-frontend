@@ -123,13 +123,13 @@
 				<h5>{{ $t('pages.home.new.title') }}</h5>
 			</div>
 			<pg-scrollable-pane selector=".row">
-				<div class="container mb-4">
+				<div class="container">
 					<div class="row">
 						<div
 							v-for="(venue, index) in newVenues"
 							:key="venue.id"
 							:class="index == newVenues.length - 1 ? 'd-xl-none' : null"
-							class="col-7 col-md-4 col-xl-3 mb-4">
+							class="col-8 col-sm-7 col-md-4 col-xl-3 mb-4">
 							<nuxt-link :to="localePath({ name: 'venues-id', params: { id: venue.id }})" class="text-reset">
 								<pg-venue-grid-item :venue="venue" />
 							</nuxt-link>

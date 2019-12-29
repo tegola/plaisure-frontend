@@ -25,7 +25,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .pg-scrollable-pane {
 	@include media-breakpoint-down(sm) {
 		& {
