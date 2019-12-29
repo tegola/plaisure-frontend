@@ -365,14 +365,8 @@ export default {
 			title: 'Rivendica attività',
 			intro:
 				'Stai per rivendicare la seguente attività, che non ha un proprietario. Così facendo essa sarà assegnata a te e potrai gestirne i dati.',
-			continue_code:
-				"Per continuare, inserisci il codice di censimento dell'attività come registrata con l'AAMS:",
-			continue_nocode: 'Per proseguire, fai click su “Continua”.',
-			code: 'Codice AAMS',
-			code_placeholder: 'Codice censimento AAMS',
-			code_error: 'Inserisci il codice di censimento AAMS',
+			continue: 'Per proseguire, fai click su “Continua”.',
 			submit: 'Continua',
-			submit_error: 'Il codice inserito non è corretto.',
 			back: "Torna all'attività",
 			infobox: {
 				title: 'È gratis!',

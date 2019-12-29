@@ -358,14 +358,8 @@ export default {
 			title: 'Claim venue',
 			intro:
 				"You're about to claim the following venue, which is not managed by anybody. It will be assigned to you and you'll be able to edit its data.",
-			continue_code:
-				"To continue, please type the venue's census code as registered with AAMS:",
-			continue_nocode: 'To continue, please click “Continue”.',
-			code: 'AAMS census code',
-			code_placeholder: 'AAMS census code',
-			code_error: 'Type the AAMS census code.',
+			continue: 'To continue, please click “Continue”.',
 			submit: 'Continue',
-			submit_error: 'The code entered is incorrect.',
 			back: 'Go back to the venue',
 			infobox: {
 				title: "It's free!",
