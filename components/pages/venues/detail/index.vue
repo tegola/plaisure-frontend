@@ -407,8 +407,7 @@ import PgVenueGridItem from '@/components/venue-grid-item'
 import PgReviewItem from '@/components/review-item'
 import PgReviewForm from '@/components/review-form'
 import PgLightbox from '@/components/lightbox'
-import amenityIconMap from '@/utilities/amenity-icon-map'
-import isVenueOpen from '@/utilities/is-venue-open'
+import { amenityIconMap, isVenueOpen } from '@/utilities'
 
 export default {
 	name: 'PgVenueDetailPage',

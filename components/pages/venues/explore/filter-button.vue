@@ -117,6 +117,12 @@ export default {
 		}
 	},
 
+	watch: {
+		value() {
+			this.mutableValue = this.value
+		}
+	},
+
 	methods: {
 		select(option) {
 			let value = this.value
@@ -135,13 +141,12 @@ export default {
 
 				// Strip null values
 				value = value.filter(v => v !== null)
+
+				this.mutableValue = value
+				// Will emit on hide
 			} else {
-				value = option.value
+				this.$emit('change', option.value)
 			}
-
-			this.mutableValue = value
-
-			this.$emit('input', this.mutableValue)
 		},
 
 		isSelected(option) {
@@ -153,8 +158,8 @@ export default {
 		},
 
 		onHide() {
-			if (this.value !== this.mutableValue)
-				this.$emit('change', this.mutableValue)
+			// if (this.value !== this.mutableValue)
+			this.$emit('change', this.mutableValue)
 		}
 	}
 }

@@ -300,7 +300,7 @@ import { requiredIf } from 'vuelidate/lib/validators'
 import { getParamByParam } from 'iso-country-currency'
 import extend from 'lodash/extend'
 import { Card as StripeCard, handleCardSetup } from 'vue-stripe-elements-plus'
-import scrollIntoView from '@/utilities/scroll-into-view'
+import { scrollIntoView } from '@/utilities'
 import PgSubscriptionCard from '@/components/subscription-card'
 
 export default {

@@ -94,7 +94,7 @@ import PgVenueFormPhotosPane from './photos-pane'
 import PgVenueFormJackpotsPane from './jackpots-pane'
 
 import validations from './validations'
-import scrollIntoView from '@/utilities/scroll-into-view'
+import { scrollIntoView } from '@/utilities'
 
 import PgSubscriptionCard from '@/components/subscription-card'
 

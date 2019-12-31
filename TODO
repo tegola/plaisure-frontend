@@ -2,6 +2,8 @@
  ☐ IMPORTANTE: trovare il modo di disabilitare l'accesso esterno alle api pubbliche (es. http://localhost:8888/api/venues/7NQlVQRny1) facendo accedere solo lo stesso dominio (CORS?)
  ✔ Far rifunzionare le checkbox "amenities" @done(19-12-14 16:30)
  ☐ In caso di carta non funzionante Stripe punta a /user/billing, ma lì non ci sono i campi per cambiare carta
+ ☐ Assicurarsi che /user/venues non sia visibile a chi non è owner
+ ☐ Rimuovere la ricerca dalla navbar
 
  ☐ Email di benvenuto (verifica) all'utente dopo la registrazione
  ☐ Aggiungere i link a terms of service e privacy policy (footer, registrazione utente e modifica piano)
@@ -153,22 +155,9 @@ Dopo OGNI deploy backend:
   ☐ /opt/plesk/php/7.2/bin/php /usr/lib64/plesk-9.0/composer.phar install
   ☐ rm storage
   ☐ ln -sT /var/www/vhosts/plaisure.com/storage/ storage
-  ☐ /opt/plesk/php/7.2/bin/php artisan migrate --force
+  ☐ /opt/plesk/php/7.2/bin/php artisan migrate --force --seed
 
 Dopo OGNI deploy frontend:
   ☐ npm install
   ☐ npm run build
   ☐ touch tmp/restart.txt
-
-Appena dopo il prossimo deploy amenities:
-  ☐ Backup del database
-  ☐ /opt/plesk/php/7.2/bin/php artisan db:seed
-  ☐ /opt/plesk/php/7.2/bin/php artisan db:refactor --class="VenueAmenitiesToAmenitiesTableRefactor"
-  ☐ controllare le directory dei file
-  ☐ /opt/plesk/php/7.2/bin/php artisan venues:import aams
-  ☐ /opt/plesk/php/7.2/bin/php artisan db:refactor --class="UpdateExistingAAMSVenuesRefactor"
-  ☐ /opt/plesk/php/7.2/bin/php artisan venues:geolocalize-imports
-  ☐ Rimuovere il codice di refactor
-  ☐ Rimuovere i campi amenity_*
-  ☐ Rimuovere i campi aams_census_code e aams_subject_enrollment_code
-  ☐ Rimuovere il campo machine_type

@@ -182,7 +182,8 @@ import extend from 'lodash/extend'
 import sortBy from 'lodash/sortBy'
 import PgToken from './token'
 import searchCities from './search-cities'
-import formatResult from '@/utilities/format-google-maps-result'
+import { toQueryParams } from '@/utilities/explore-params-converter'
+import { formatGoogleMapsResult } from '@/utilities'
 import PgScrollablePane from '@/components/scrollable-pane'
 import PgPlaceTextbox from '@/components/place-textbox'
 import PgVenueGridItem from '@/components/venue-grid-item'
@@ -208,6 +209,7 @@ export default {
 			useUserLocation: false,
 			searchParams: {
 				query: null,
+				country: null,
 				c_lat: null,
 				c_lng: null
 			},
@@ -237,6 +239,7 @@ export default {
 					route: this.localePath({
 						name: 'venues-explore',
 						query: {
+							country: this.$i18n.region,
 							categories: [category.id],
 							ne_lat: this.$constants[defaultBoundsKey].ne.lat,
 							ne_lng: this.$constants[defaultBoundsKey].ne.lng,
@@ -323,6 +326,7 @@ export default {
 			// Update search params
 			extend(this.searchParams, {
 				query: null,
+				country: null,
 				c_lat: position.coords.latitude,
 				c_lng: position.coords.longitude
 			})
@@ -347,16 +351,14 @@ export default {
 				this.searchingMarkerCoords = false
 
 				if (status === 'OK') {
-					const result = formatResult(results[0])
+					const place = formatGoogleMapsResult(results[0])
 
-					let address = []
+					this.query = place.readableAddress
 
-					if (result.streetName) address.push(result.streetName)
-					address.push(result.administrativeLevels.level3long)
-					address = address.join(', ')
-
-					this.query = address
-					this.searchParams.query = address
+					extend(this.searchParams, {
+						query: place.readableAddress,
+						country: place.countryCode
+					})
 				}
 			})
 		},
@@ -372,24 +374,23 @@ export default {
 			this.useUserLocation = false
 			this.placeholder = this.$t('pages.home.search.city_placeholder')
 
-			// Reset search
-			if (!place) {
+			if (place) {
+				place = formatGoogleMapsResult(place)
+
+				extend(this.searchParams, {
+					query: place.readableAddress,
+					country: place.countryCode,
+					c_lat: place.latitude,
+					c_lng: place.longitude
+				})
+			} else {
 				extend(this.searchParams, {
 					query: null,
+					country: null,
 					c_lat: null,
 					c_lng: null
 				})
-				return
 			}
-
-			// Update search params
-			const center = place.geometry.viewport.getCenter()
-
-			extend(this.searchParams, {
-				query: this.query,
-				c_lat: center.lat(),
-				c_lng: center.lng()
-			})
 		},
 
 		submit() {
@@ -398,7 +399,7 @@ export default {
 			this.$router.push(
 				this.localePath({
 					name: 'venues-explore',
-					query: this.searchParams
+					query: toQueryParams(this.searchParams)
 				})
 			)
 		}

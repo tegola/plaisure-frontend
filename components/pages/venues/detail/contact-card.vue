@@ -77,7 +77,7 @@
 <script>
 import capitalize from 'lodash/capitalize'
 import PgImageFrame from '@/components/image-frame'
-import isVenueOpen from '@/utilities/is-venue-open'
+import { isVenueOpen } from '@/utilities'
 
 const indexToDayName = (index, locale) => {
 	// Create any date but se the right day of the week

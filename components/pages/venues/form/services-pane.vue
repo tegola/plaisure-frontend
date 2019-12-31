@@ -114,7 +114,7 @@ import {
 	BFormCheckboxGroup
 } from 'bootstrap-vue'
 import formGroupProps from './form-group-props'
-import amenityIconMap from '@/utilities/amenity-icon-map'
+import { amenityIconMap } from '@/utilities'
 
 export default {
 	name: 'ServicesPane',

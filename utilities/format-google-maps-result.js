@@ -7,9 +7,10 @@ export default result => {
 	}
 
 	const extractedObj = {
+		readableAddress: null,
 		formattedAddress: result.formatted_address || null,
-		latitude: result.geometry.location.lat,
-		longitude: result.geometry.location.lng,
+		latitude: result.geometry.location.lat(),
+		longitude: result.geometry.location.lng(),
 		extra: {
 			googlePlaceId: result.place_id || null,
 			confidence: googleConfidenceLookup[result.geometry.location_type] || 0,
@@ -88,6 +89,22 @@ export default result => {
 				}
 				break
 		}
+	}
+
+	// Readable address from name and result or from inferred street name and
+	// administrative level 3
+	if (result.name) {
+		extractedObj.readableAddress =
+			result.vicinity && result.name !== result.vicinity
+				? [result.name, result.vicinity].join(', ')
+				: result.name
+	} else {
+		extractedObj.readableAddress = [
+			extractedObj.streetName,
+			extractedObj.administrativeLevels.level3long
+		]
+			.filter(Boolean)
+			.join(', ')
 	}
 
 	return extractedObj

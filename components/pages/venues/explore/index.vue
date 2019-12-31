@@ -1,6 +1,7 @@
 <template>
 	<div class="pg-explore-page">
 		<pg-navbar
+			:search="true"
 			:placeholder="placeholder"
 			:query="query"
 			:auto-submit="false"
@@ -150,7 +151,7 @@
 
 <script>
 import extend from 'lodash/extend'
-import debounce from 'lodash/debounce'
+import { debounce } from 'lodash'
 import {
 	Map as PgMap,
 	Marker as PgMapMarker,
@@ -160,6 +161,11 @@ import { BTooltip } from 'bootstrap-vue'
 import PgVenueListItem from './list-item'
 import PgVenueInfowindowItem from './infowindow-item'
 import PgFilterButton from './filter-button'
+import {
+	toSearchParams,
+	toQueryParams
+} from '@/utilities/explore-params-converter'
+import { formatGoogleMapsResult } from '@/utilities'
 
 const searchRadiuses = [10, 20, 30, 50, 100]
 
@@ -177,75 +183,66 @@ export default {
 	},
 
 	data() {
-		const queryParams = this.$route.query
+		let mapZoom = 13
+		let mapCenter = extend(
+			{},
+			this.$constants[`MAP_DEFAULT_CENTER_${this.$i18n.region}`]
+		)
+		let mapBounds = null
 		let searchMode = 'center'
+		const queryParams = this.$route.query
+		const searchParams = extend(
+			{ radius: searchRadiuses[0] },
+			toSearchParams(queryParams)
+		)
+
+		// Prepare map zoom
+		if (queryParams.zoom) mapZoom = parseInt(queryParams.zoom)
 
 		// Prepare map center
-		const gotMapCenter = ['c_lat', 'c_lng'].every(key => key in queryParams)
-		let mapCenter
+		const gotMapCenter = ['c_lat', 'c_lng'].every(key => key in searchParams)
 
 		if (gotMapCenter) {
 			mapCenter = {
-				lat: parseFloat(queryParams.c_lat),
-				lng: parseFloat(queryParams.c_lng)
+				lat: searchParams.c_lat,
+				lng: searchParams.c_lng
 			}
-		} else {
-			mapCenter = extend(
-				{},
-				this.$constants[`MAP_DEFAULT_CENTER_${this.$i18n.region}`]
-			)
 		}
 
-		// Prepare map bounds and change search mode
+		// Prepare map bounds (end eventually change search mode)
 		const gotMapBounds = ['ne_lat', 'ne_lng', 'sw_lat', 'sw_lng'].every(
-			key => key in queryParams
+			key => key in searchParams
 		)
-		let mapBounds
+
 		if (gotMapBounds) {
 			mapBounds = {
-				north: parseFloat(queryParams.ne_lat),
-				east: parseFloat(queryParams.ne_lng),
-				south: parseFloat(queryParams.sw_lat),
-				west: parseFloat(queryParams.sw_lng)
+				north: searchParams.ne_lat,
+				east: searchParams.ne_lng,
+				south: searchParams.sw_lat,
+				west: searchParams.sw_lng
 			}
 			searchMode = 'bounds'
-		} else {
-			mapBounds = null
+			extend(searchParams, {
+				query: '',
+				ne_lat: queryParams.ne_lat,
+				ne_lng: queryParams.ne_lng,
+				sw_lat: queryParams.sw_lat,
+				sw_lng: queryParams.sw_lng
+			})
 		}
-
-		// Prepare map zoom
-		const mapZoom = parseInt(queryParams.zoom) || 13
-
-		// Prepare default search params
-		const searchParams = extend(
-			{
-				radius: searchRadiuses[0],
-				categories: []
-			},
-			queryParams
-		)
-
-		// Cleanup search params
-		if (!Array.isArray(searchParams.categories)) {
-			searchParams.categories = [searchParams.categories]
-		}
-		searchParams.categories = searchParams.categories
-			.map(category => parseInt(category))
-			.filter((category, index, arr) => arr.indexOf(category) === index)
-
-		searchParams.radius = parseInt(searchParams.radius)
 
 		return {
+			// async
 			categories: [],
 			// amenities: [],
 
+			// local
 			loading: false,
 			locating: false,
 			userLocation: null,
 
 			searchMode, // bounds, center
 			searchParams,
-			placeholder: undefined,
 			query: queryParams.query,
 			venues: [],
 			currentView: 'list',
@@ -261,14 +258,23 @@ export default {
 	},
 
 	computed: {
+		placeholder() {
+			if (this.searchMode === 'bounds') {
+				return `(${this.$t('pages.explore.placeholder.in_map')})`
+			} else if (this.searchMode === 'center' && this.userLocation) {
+				return `(${this.$t('pages.explore.placeholder.location')})`
+			} else {
+				return undefined
+			}
+		},
+
 		mapOptions() {
 			return {
 				gestureHandling: 'greedy',
 				fullscreenControl: false,
 				mapTypeControl: false,
 				streetViewControl: false,
-				zoomControl:
-					this.$mq === 'md' || this.$mq === 'lg' || this.$mq === 'xl',
+				zoomControl: ['md', 'lg', 'xl'].indexOf(this.$mq) !== -1,
 				zoomControlOptions: {
 					position: 1 // google.maps.ControlPosition.TOP_LEFT
 				},
@@ -287,6 +293,14 @@ export default {
 			}
 		},
 
+		categoriesForCountry() {
+			const country = this.searchParams.country
+
+			return this.categories.filter(
+				category => !category.country || category.country === country
+			)
+		},
+
 		radiusOptions() {
 			return searchRadiuses.map(radius => ({
 				value: radius,
@@ -295,7 +309,7 @@ export default {
 		},
 
 		categoryOptions() {
-			return this.categories
+			return this.categoriesForCountry
 				.slice() // make immutable
 				.sort((a, b) => {
 					a = this.$t(`data.categories.${a.machine_name}`)
@@ -328,18 +342,14 @@ export default {
 
 		showList() {
 			return (
-				this.$mq === 'md' ||
-				this.$mq === 'lg' ||
-				this.$mq === 'xl' ||
+				['md', 'lg', 'xl'].indexOf(this.$mq) !== -1 ||
 				this.currentView === 'list'
 			)
 		},
 
 		showMap() {
 			return (
-				this.$mq === 'md' ||
-				this.$mq === 'lg' ||
-				this.$mq === 'xl' ||
+				['md', 'lg', 'xl'].indexOf(this.$mq) !== -1 ||
 				this.currentView === 'map'
 			)
 		}
@@ -351,37 +361,29 @@ export default {
 		}
 	},
 
-	async mounted() {
-		await this.loadData()
-		this.search()
+	watch: {
+		'searchParams.country': {
+			immediate: true,
+			handler(country) {
+				this.searchParams.categories = this.categoriesForCountry.map(
+					category => category.id
+				)
+			}
+		}
+	},
+
+	asyncData({ $axios }) {
+		return $axios.$get('/venues/explore')
+	},
+
+	mounted() {
+		// Search if there's any parameter set
+		if (Object.keys(this.$route.query).length) {
+			this.search()
+		}
 	},
 
 	methods: {
-		async loadData() {
-			this.loading = true
-
-			try {
-				const response = await this.$axios.get('/venues/explore', {
-					params: {
-						country: this.$i18n.region
-					}
-				})
-
-				// Fill data
-				this.categories = response.data.categories
-				// this amenities = response.data.amenities;
-
-				// Fill categories in search params
-				if (!this.searchParams.categories.length) {
-					this.searchParams.categories = this.categories.map(
-						category => category.id
-					)
-				}
-			} finally {
-				this.loading = false
-			}
-		},
-
 		// Location search ----------------------------------------------------
 		onPlaceChanged(place) {
 			if (!place) return
@@ -397,13 +399,11 @@ export default {
 
 			// Update view
 			this.mapNeedsRefresh = false
-			this.placeholder = undefined
+			this.userLocation = null
 
-			if (place.vicinity && place.name !== place.vicinity) {
-				this.query = `${place.name}, ${place.vicinity}`
-			} else {
-				this.query = place.name
-			}
+			place = formatGoogleMapsResult(place)
+
+			this.query = place.readableAddress
 
 			// Move map, but disable map bounds tracking first
 			if (bounds && this.$refs.map) {
@@ -414,6 +414,7 @@ export default {
 			// Update search params
 			extend(this.searchParams, {
 				query: this.query,
+				country: place.countryCode,
 				c_lat: center ? center.lat() : null,
 				c_lng: center ? center.lng() : null,
 				ne_lat: null,
@@ -456,11 +457,6 @@ export default {
 				lng: longitude
 			}
 			this.query = ''
-			this.placeholder = [
-				'(',
-				this.$t('pages.explore.placeholder.location'),
-				')'
-			].join('')
 
 			// Move map center, but disable map bounds tracking first
 			this.mapBoundsEventEnabled = false
@@ -483,6 +479,26 @@ export default {
 				sw_lng: null
 			})
 
+			// Find city name
+			if (!this.geocoder) this.geocoder = new google.maps.Geocoder()
+
+			const coords = {
+				lat: latitude,
+				lng: longitude
+			}
+			this.geocoder.geocode({ location: coords }, (results, status) => {
+				if (status === 'OK') {
+					const place = formatGoogleMapsResult(results[0])
+
+					// this.query = place.readableAddress
+
+					extend(this.searchParams, {
+						query: place.readableAddress,
+						country: place.countryCode
+					})
+				}
+			})
+
 			// Load venues
 			this.search()
 		},
@@ -494,9 +510,20 @@ export default {
 		},
 
 		onCategoryChange(value) {
-			this.searchParams.categories = value.length
-				? value
-				: this.categories.map(category => category.id)
+			if (value && value.length) {
+				this.searchParams.categories = value.filter(categoryId => {
+					const category = this.categoriesForCountry.find(
+						currentCategory => currentCategory.id === categoryId
+					)
+
+					return Boolean(category)
+				})
+			} else {
+				this.searchParams.categories = this.categoriesForCountry.map(
+					category => category.id
+				)
+			}
+
 			this.search()
 		},
 
@@ -523,19 +550,16 @@ export default {
 			this.mapNeedsRefresh = true
 		}, 200),
 
-		venueFirstCategoryMachineName(venue) {
-			if (!venue.categories || !venue.categories.length) return null
-
-			return venue.categories[0].machine_name
-		},
-
 		mapMarkerIcon(venue, index) {
 			const variant =
 				venue.id === this.selectedVenueId ||
 				venue.id === this.highlightedVenueId
 					? 'inverse'
 					: 'normal'
-			const firstCategoryMachineName = this.venueFirstCategoryMachineName(venue)
+			const firstCategoryMachineName =
+				venue.categories && venue.categories.length
+					? venue.categories[0].machine_name
+					: null
 			const glyph =
 				index < 25 && firstCategoryMachineName
 					? firstCategoryMachineName
@@ -551,11 +575,6 @@ export default {
 			// Update view
 			this.mapNeedsRefresh = false
 			this.query = null
-			this.placeholder = [
-				'(',
-				this.$t('pages.explore.placeholder.in_map'),
-				')'
-			].join('')
 
 			// Update search params
 			const c = this.mapBounds.getCenter()
@@ -564,6 +583,7 @@ export default {
 
 			extend(this.searchParams, {
 				query: '',
+				// country: this.$i18n.region,
 				c_lat: c.lat(),
 				c_lng: c.lng(),
 				ne_lat: ne.lat(),
@@ -592,7 +612,7 @@ export default {
 
 			// Update URL
 			this.$router.replace({
-				query: this.searchParams
+				query: toQueryParams(this.searchParams)
 			})
 		},
 

@@ -100,10 +100,10 @@ import {
 	BNavbarNav,
 	BNavItem
 } from 'bootstrap-vue'
-
 import PgLogo from './logo'
 import PgIcon from './icon'
 import PgPlaceTextbox from './place-textbox'
+import { toQueryParams } from '@/utilities/explore-params-converter'
 
 export default {
 	name: 'PgNavbar',
@@ -127,7 +127,7 @@ export default {
 		},
 		search: {
 			type: Boolean,
-			default: true
+			default: false
 		},
 		placeholder: {
 			type: String,
@@ -242,11 +242,11 @@ export default {
 					this.$router.push(
 						this.localePath({
 							path: '/venues/explore',
-							query: {
+							query: toQueryParams({
 								query: this.mutableQuery,
 								c_lat: this.lat,
 								c_lng: this.lng
-							}
+							})
 						})
 					)
 				}
