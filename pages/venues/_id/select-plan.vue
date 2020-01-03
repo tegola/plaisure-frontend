@@ -13,7 +13,7 @@
 			</p>
 
 			<!-- Payment alert -->
-			<div v-if="!needsPayment" class="row">
+			<div v-if="needsPayment" class="row">
 				<div class="col-lg-9 mx-lg-auto">
 					<b-alert variant="warning" show class="mb-0">
 						<h5>{{ $t('pages.venue_plan.needs_payment.title') }}</h5>
@@ -465,7 +465,7 @@ export default {
 		},
 
 		hasExistingPayment() {
-			return Boolean(this.user.card_brand)
+			return !!this.user.card_brand
 		},
 
 		showBillingForm() {
@@ -634,7 +634,6 @@ export default {
 
 		propsForSubscription(newSubscription) {
 			const currentSubscription = this.venue.subscription
-
 			const props = {
 				subscription: newSubscription,
 				highlight: newSubscription.highlight,
@@ -651,9 +650,7 @@ export default {
 				// Default subscription: disabled if there is no subscription
 				// or if existing subscription is going to end because it has
 				// already been cancelled
-				props.disabled = Boolean(
-					!currentSubscription || currentSubscription.ends_at
-				)
+				props.disabled = !!(!currentSubscription || currentSubscription.ends_at)
 			} else {
 				// Any other subscription
 				props.disabled =

@@ -42,8 +42,8 @@ export default {
 	// Components -------------------------------------------------------------
 	components: {
 		navbar: {
-			search: 'Cerca vicino a...',
 			home: 'Home',
+			search: 'Cerca attività',
 			login: 'Accedi',
 			register: 'Iscriviti',
 			promote: 'Promuovi la tua attività',
@@ -253,24 +253,27 @@ export default {
 
 		explore: {
 			meta_title: 'Esplora',
-			view: {
-				list: 'Mostra lista',
-				map: 'Mostra mappa'
+			form: {
+				location: {
+					label: 'Posizione',
+					geolocalization: 'Usa la tua posizione',
+					geolocalization_error:
+						'Non è stato possibile trovare la tua posizione.',
+					placeholder: {
+						default: 'Cerca vicino a...',
+						geolocalization: 'Vicino a te',
+						in_map: "All'interno della mappa"
+					}
+				},
+				distance: 'Distanza',
+				category: 'Tipo',
+				amenities: 'Comodità',
+				view: {
+					list: 'Lista',
+					map: 'Mappa'
+				},
+				results: 'Nessun risultato | 1 risultato | {count} risultati'
 			},
-			filters: {
-				all: 'Tutti',
-				selected: 'Nessuna selezione | 1 selezionato | {count} selezionati',
-				category_label: 'Tipo',
-				radius_label: 'Distanza',
-				amenity_label: 'Servizi disponibili'
-			},
-			placeholder: {
-				location: 'Vicino a te',
-				in_map: "All'interno della mappa"
-			},
-			location: 'Usa la tua posizione',
-			location_error: 'Non è stato possibile trovare la tua posizione.',
-			results: 'Nessuna attività trovata | 1 risultato | {count} risultati',
 			limited_results:
 				'Il numero di risultati è stato limitato automaticamente. Cerca una zona specifica per visualizzare più dettagli.',
 			search_area: 'Cerca in questa zona',

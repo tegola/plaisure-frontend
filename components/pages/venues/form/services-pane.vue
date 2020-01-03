@@ -233,7 +233,7 @@ export default {
 
 		vltPlatformOptions() {
 			return this.vltPlatforms.filter(vltPlatform => {
-				return Boolean(
+				return !!(
 					vltPlatform.country === this.venue.country || !vltPlatform.country
 				)
 			})
@@ -253,9 +253,7 @@ export default {
 
 		amenityOptions() {
 			return this.amenities.filter(amenity => {
-				return Boolean(
-					amenity.country === this.venue.country || !amenity.country
-				)
+				return !!(amenity.country === this.venue.country || !amenity.country)
 			})
 		},
 

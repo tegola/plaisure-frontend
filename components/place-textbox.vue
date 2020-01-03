@@ -3,7 +3,9 @@
 		ref="input"
 		v-bind="$attrs"
 		:value="value"
-		:select-first-on-enter="selectFirstOnEnter"
+		select-first-on-enter
+		:options="options"
+		class="form-control"
 		@place_changed="onPlaceChanged"
 		@focus="onFocus"
 		@blur="onBlur"
@@ -28,9 +30,13 @@ export default {
 			type: String,
 			default: null
 		},
-		selectFirstOnEnter: {
-			type: Boolean,
-			default: true
+		options: {
+			type: Object,
+			default: () => {
+				return {
+					types: ['geocode'] // Limit search to cities, addresses, etc.
+				}
+			}
 		}
 	},
 
@@ -52,6 +58,10 @@ export default {
 			})
 
 			return anyMenuOpen
+		},
+
+		focus() {
+			this.$refs.input.$refs.input.focus()
 		},
 
 		onFocus(e) {
@@ -94,17 +104,23 @@ export default {
 		},
 
 		onPlaceChanged(place) {
-			// Store place locally
-			this.place = place
-			this.$emit('place-changed', this.place)
+			if (place && place.name) {
+				// Store place locally
+				this.place = place
+				this.$emit('place-changed', this.place)
 
-			// Emit clean place name as input
-			let value = place.name
-			if (place.vicinity && place.name !== place.vicinity) {
-				value = `${place.name}, ${place.vicinity}`
+				// Emit clean place name as input
+				let value = place.name
+				if (place.vicinity && place.name !== place.vicinity) {
+					value = `${place.name}, ${place.vicinity}`
+				}
+
+				this.$emit('input', value)
+			} else {
+				this.place = null
+				this.$emit('place-changed', null)
+				this.$emit('input', '')
 			}
-
-			this.$emit('input', value)
 		}
 	}
 }

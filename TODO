@@ -3,7 +3,8 @@
  ✔ Far rifunzionare le checkbox "amenities" @done(19-12-14 16:30)
  ☐ In caso di carta non funzionante Stripe punta a /user/billing, ma lì non ci sono i campi per cambiare carta
  ☐ Assicurarsi che /user/venues non sia visibile a chi non è owner
- ☐ Rimuovere la ricerca dalla navbar
+ ✔ Rimuovere la ricerca dalla navbar @done (19-12-31 17:31)
+ ☐ Caricare la libreria di Stripe solo quando serve
 
  ☐ Email di benvenuto (verifica) all'utente dopo la registrazione
  ☐ Aggiungere i link a terms of service e privacy policy (footer, registrazione utente e modifica piano)

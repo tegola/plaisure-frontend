@@ -1,0 +1,45 @@
+.nav-tabs {
+	border-bottom: 0; // Override bootstrap
+
+	.nav-item {
+		margin-bottom: 0; // Override bootstrap
+	}
+	.nav-link {
+		border: 0; // Override bootstrap
+		color: $gray-600;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		font-size: $font-size-sm;
+		position: relative;
+
+		&::after {
+			content: '';
+			position: absolute;
+			bottom: 0;
+			left: $nav-link-padding-x;
+			right: $nav-link-padding-x;
+			height: $nav-tabs-border-width;
+			transform: scaleX(0);
+			opacity: 0;
+			background-color: $nav-tabs-link-active-border-color;
+			transition: transform 150ms ease-in-out, opacity 100ms 50ms ease-in-out;
+			pointer-events: none;
+		}
+	}
+	.nav-item:first-child .nav-link {
+		padding-left: 0;
+
+		&::after {
+			left: 0;
+		}
+	}
+	.nav-link.active,
+	.nav-item.show .nav-link {
+		color: $body-color;
+
+		&::after {
+			transform: scaleX(1);
+			opacity: 1;
+		}
+	}
+}

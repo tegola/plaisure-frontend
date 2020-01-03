@@ -25,7 +25,7 @@ export const toSearchParams = input => {
 	// b = bounds
 	// e.g.: b=42.519,15.293,41.634,13.138
 	if (input.b) {
-		const [neLat, neLng, swLat, swLng] = input.c
+		const [neLat, neLng, swLat, swLng] = input.b
 			.split(',')
 			.map(i => parseFloat(i))
 
@@ -70,7 +70,9 @@ export const toQueryParams = input => {
 
 	// bounds = b
 	if (input.ne_lat && input.ne_lng && input.sw_lat && input.sw_lng) {
-		output.b = [input.c_lat, input.c_lng, input.sw_lat, input.sw_lng].join(',')
+		output.b = [input.ne_lat, input.ne_lng, input.sw_lat, input.sw_lng].join(
+			','
+		)
 	}
 
 	// radius = r

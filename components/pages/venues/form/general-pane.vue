@@ -208,9 +208,9 @@ export default {
 
 		concessionaireOptions() {
 			return this.concessionaires.filter(concessionaire => {
-				return Boolean(
+				return !!(
 					concessionaire.country === this.venue.country ||
-						!concessionaire.country
+					!concessionaire.country
 				)
 			})
 		},
@@ -253,9 +253,7 @@ export default {
 
 		categoryOptions() {
 			return this.categories.filter(category => {
-				return Boolean(
-					category.country === this.venue.country || !category.country
-				)
+				return !!(category.country === this.venue.country || !category.country)
 			})
 		},
 
@@ -324,7 +322,8 @@ export default {
 
 		showMap() {
 			const a = this.venueAddress
-			return Boolean(a.line1 && a.postcode && a.city && a.province)
+
+			return !!(a.line1 && a.postcode && a.city && a.province)
 		},
 
 		canDragMarker() {

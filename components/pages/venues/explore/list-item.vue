@@ -1,5 +1,5 @@
 <template>
-	<div :class="classes" class="list-group-item venue-list-item" @mouseover="onMouseOver" @mouseout="onMouseOut" @click="onClick">
+	<div>
 		<div class="row align-items-center">
 			<div class="col-3 pr-0">
 				<pg-image-frame
@@ -38,38 +38,6 @@ export default {
 		PgImageFrame
 	},
 
-	mixins: [PgVenueItemMixin],
-
-	props: {
-		highlighted: {
-			type: Boolean,
-			default: false
-		},
-		selected: {
-			type: Boolean,
-			default: false
-		}
-	},
-
-	computed: {
-		classes() {
-			return {
-				'venue-list-item--highlighted': this.highlighted,
-				active: this.selected
-			}
-		}
-	},
-
-	methods: {
-		onMouseOver() {
-			this.$emit('mouseover')
-		},
-		onMouseOut() {
-			this.$emit('mouseout')
-		},
-		onClick() {
-			this.$emit('click')
-		}
-	}
+	mixins: [PgVenueItemMixin]
 }
 </script>

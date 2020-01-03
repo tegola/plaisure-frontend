@@ -29,8 +29,7 @@
 										<pg-place-textbox
 											:value="query"
 											:placeholder="placeholder"
-											:options="placeTextboxOptions"
-											class="form-control form-control-lg pg-home-page__search-form-control pg-home-page__search-query-control"
+											class="form-control-lg pg-home-page__search-form-control pg-home-page__search-query-control"
 											@place-changed="onPlaceChanged"
 											@input="onPlaceTextboxInput"
 											@keydown.enter="submit"
@@ -202,9 +201,6 @@ export default {
 		return {
 			query: null,
 			placeholder: this.$t('pages.home.search.city_placeholder'),
-			placeTextboxOptions: {
-				types: ['geocode'] // Limit search to cities, addresses, etc.
-			},
 			locating: false,
 			useUserLocation: false,
 			searchParams: {
@@ -221,7 +217,7 @@ export default {
 
 	computed: {
 		canSubmit() {
-			return Boolean(this.searchParams.c_lat && this.searchParams.c_lng)
+			return !!(this.searchParams.c_lat && this.searchParams.c_lng)
 		},
 
 		tokenPresets() {

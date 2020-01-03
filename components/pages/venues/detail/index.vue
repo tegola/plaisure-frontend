@@ -526,7 +526,7 @@ export default {
 		},
 
 		showEditAction() {
-			return Boolean(this.isMine || !this.venue.has_owner)
+			return !!(this.isMine || !this.venue.has_owner)
 		},
 
 		editRoute() {
@@ -601,10 +601,8 @@ export default {
 		},
 
 		isInCategory(categoryMachineName) {
-			return Boolean(
-				this.venue.categories.find(
-					category => category.machine_name === categoryMachineName
-				)
+			return !!this.venue.categories.find(
+				category => category.machine_name === categoryMachineName
 			)
 		},
 

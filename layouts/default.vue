@@ -38,13 +38,6 @@ import PgStandoutAlert from '@/components/standout-alert'
 export default {
 	components: {
 		PgStandoutAlert
-	},
-
-	methods: {
-		acceptCookies() {
-			// eslint-disable-next-line
-			console.log('acceptCookies')
-		}
 	}
 }
 </script>

@@ -176,10 +176,7 @@ export default {
 			}
 
 			// Automatic upload
-			if (
-				Boolean(newFile) !== Boolean(oldFile) ||
-				oldFile.error !== newFile.error
-			) {
+			if (!!newFile !== !!oldFile || oldFile.error !== newFile.error) {
 				if (!this.$refs.uploader.active) {
 					this.$refs.uploader.active = true
 				}

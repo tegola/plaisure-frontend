@@ -39,8 +39,8 @@ export default {
 	// Components -------------------------------------------------------------
 	components: {
 		navbar: {
-			search: 'Search...',
 			home: 'Home',
+			search: 'Search venues',
 			login: 'Sign in',
 			register: 'Register',
 			promote: 'Promote your venue',
@@ -247,24 +247,26 @@ export default {
 
 		explore: {
 			meta_title: 'Explore',
-			view: {
-				list: 'Show list',
-				map: 'Show map'
+			form: {
+				location: {
+					label: 'Location',
+					geolocalization: 'User your current location',
+					geolocalization_error: "We couldn't find your location.",
+					placeholder: {
+						default: 'Search...',
+						geolocalization: 'Near you',
+						in_map: 'Inside map bounds'
+					}
+				},
+				distance: 'Distance',
+				category: 'Type',
+				amenities: 'Amenities',
+				view: {
+					list: 'List',
+					map: 'Map'
+				},
+				results: 'No results | 1 result | {count} results'
 			},
-			filters: {
-				all: 'All',
-				selected: 'No selection | 1 selected | {count} selected',
-				category_label: 'Type',
-				radius_label: 'Distance',
-				amenity_label: 'Amenities'
-			},
-			placeholder: {
-				location: 'Near you',
-				in_map: 'Inside map bounds'
-			},
-			location: 'Use your current location',
-			location_error: "We couldn't find your location.",
-			results: 'No venues found | 1 result | {count} results',
 			limited_results:
 				'Results have been limited. Search a specific area to get more details.',
 			search_area: 'Search this area',

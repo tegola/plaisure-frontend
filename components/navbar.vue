@@ -1,56 +1,38 @@
 <template>
 	<div>
 		<nav :class="classes">
-			<!-- Small logo, toggles menu -->
-			<div
-				v-if="$mq === 'xs' || $mq === 'sm'"
-				:aria-label="$constants.APP_NAME"
-				class="navbar-brand"
-				@click="toggleDrawer()">
-				<pg-logo
-					:flat="variant != 'light' || drawerOpen"
-					:text="false"
-					class="navbar__logo" />
-				<pg-icon icon="chevron-down" class="navbar__logo-arrow" />
-			</div>
+			<div class="container">
+				<!-- Small logo, toggles menu -->
+				<div
+					v-if="['xs', 'sm'].indexOf($mq) >= 0"
+					:aria-label="$constants.APP_NAME"
+					class="navbar-brand"
+					@click="toggleDrawer()">
+					<pg-logo
+						:flat="variant != 'light' || drawerOpen"
+						:text="false"
+						class="navbar__logo" />
+					<pg-icon icon="chevron-down" class="navbar__logo-arrow" />
+				</div>
 
-			<!-- Normal logo, goes to home page -->
-			<nuxt-link
-				v-if="$mq === 'md' || $mq === 'lg' || $mq === 'xl'"
-				:aria-label="$constants.APP_NAME"
-				class="navbar-brand"
-				:to="localePath('index')">
-				<pg-logo
-					:flat="variant != 'light'"
-					class="navbar__logo" />
-			</nuxt-link>
+				<!-- Normal logo, goes to home page -->
+				<nuxt-link
+					v-if="['md', 'lg', 'xl'].indexOf($mq) >= 0"
+					:aria-label="$constants.APP_NAME"
+					class="navbar-brand"
+					:to="localePath('index')">
+					<pg-logo
+						:flat="variant != 'light'"
+						class="navbar__logo" />
+				</nuxt-link>
 
-			<b-input-group v-if="search" :class="searchClasses">
-				<template #prepend>
-					<b-input-group-text class="navbar__search-icon-addon">
-						<pg-icon icon="search" />
-					</b-input-group-text>
-				</template>
-				<pg-place-textbox
-					:placeholder="placeholder"
-					:value="mutableQuery"
-					:options="{ types: ['geocode'] }"
-					class="form-control navbar__search-input"
-					name="query"
-					@focus="onSearchFocus"
-					@blur="onSearchBlur"
-					@place-changed="onPlaceChanged"
-				/>
-				<b-input-group-append v-if="$slots.searchAppend">
-					<slot name="searchAppend" />
-				</b-input-group-append>
-			</b-input-group>
-
-			<div class="ml-auto d-flex">
-				<slot name="right" />
-				<b-navbar-nav v-if="$mq === 'md' || $mq === 'lg' || $mq === 'xl'">
+				<b-navbar-nav>
 					<template v-if="!$auth.loggedIn">
-						<b-nav-item :to="localePath('promote')">{{ $t('components.navbar.promote') }}</b-nav-item>
+						<b-nav-item
+							v-if="['md', 'lg', 'xl'].indexOf($mq) >= 0"
+							:to="localePath('promote')">
+							{{ $t('components.navbar.promote') }}
+						</b-nav-item>
 						<b-nav-item :to="localePath('register')">{{ $t('components.navbar.register') }}</b-nav-item>
 						<b-nav-item :to="localePath('login')">{{ $t('components.navbar.login') }}</b-nav-item>
 					</template>
@@ -65,26 +47,28 @@
 		<transition>
 			<div v-if="drawerOpen" class="navbar__drawer" @click.self="toggleDrawer()">
 				<b-nav vertical class="navbar__drawer-nav">
-					<b-nav-item :to="localePath('index')" exact>{{ $t('components.navbar.home') }}</b-nav-item>
-					<b-nav-item
-						v-if="$auth.user"
-						:to="localePath('user')"
-						exact
-						link-classes="d-flex justify-content-between align-items-center">
-						{{ $auth.user.name }}
-						<pg-icon icon="user" />
-					</b-nav-item>
-					<template v-if="!$auth.loggedIn">
-						<b-nav-item :to="localePath('register')">{{ $t('components.navbar.register') }}</b-nav-item>
-						<b-nav-item :to="localePath('login')">{{ $t('components.navbar.login') }}</b-nav-item>
-					</template>
-					<b-nav-item :to="localePath('promote')">{{ $t('components.navbar.promote') }}</b-nav-item>
-					<b-nav-item :to="localePath('about')">{{ $t('components.navbar.company') }}</b-nav-item>
-					<b-nav-item
-						v-if="$i18n.locale == 'it'"
-						:to="localePath('play-responsibly')">
-						{{ $t('components.navbar.responsible') }}
-					</b-nav-item>
+					<div class="container px-0">
+						<b-nav-item :to="localePath('index')" exact>{{ $t('components.navbar.home') }}</b-nav-item>
+						<b-nav-item :to="localePath('venues-explore')">{{ $t('components.navbar.search') }}</b-nav-item>
+						<b-nav-item
+							v-if="$auth.user"
+							:to="localePath('user')"
+							link-classes="d-flex justify-content-between align-items-center">
+							{{ $auth.user.name }}
+							<pg-icon icon="user" />
+						</b-nav-item>
+						<template v-if="!$auth.loggedIn">
+							<b-nav-item :to="localePath('register')">{{ $t('components.navbar.register') }}</b-nav-item>
+							<b-nav-item :to="localePath('login')">{{ $t('components.navbar.login') }}</b-nav-item>
+						</template>
+						<b-nav-item :to="localePath('promote')">{{ $t('components.navbar.promote') }}</b-nav-item>
+						<b-nav-item :to="localePath('about')">{{ $t('components.navbar.company') }}</b-nav-item>
+						<b-nav-item
+							v-if="$i18n.locale == 'it'"
+							:to="localePath('play-responsibly')">
+							{{ $t('components.navbar.responsible') }}
+						</b-nav-item>
+					</div>
 				</b-nav>
 			</div>
 		</transition>
@@ -92,104 +76,43 @@
 </template>
 
 <script>
-import {
-	BInputGroup,
-	BInputGroupText,
-	BInputGroupAppend,
-	BNav,
-	BNavbarNav,
-	BNavItem
-} from 'bootstrap-vue'
+import { BNav, BNavbarNav, BNavItem } from 'bootstrap-vue'
 import PgLogo from './logo'
 import PgIcon from './icon'
-import PgPlaceTextbox from './place-textbox'
-import { toQueryParams } from '@/utilities/explore-params-converter'
 
 export default {
 	name: 'PgNavbar',
 
 	components: {
-		BInputGroup,
-		BInputGroupText,
-		BInputGroupAppend,
 		BNav,
 		BNavbarNav,
 		BNavItem,
 		PgLogo,
-		PgIcon,
-		PgPlaceTextbox
+		PgIcon
 	},
 
 	props: {
 		variant: {
 			type: String,
 			default: 'light'
-		},
-		search: {
-			type: Boolean,
-			default: false
-		},
-		placeholder: {
-			type: String,
-			default() {
-				return this.$t('components.navbar.search')
-			}
-		},
-		query: {
-			type: String,
-			default: null
-		},
-		center: {
-			type: Object,
-			default: () => null
-		},
-		autoSubmit: {
-			type: Boolean,
-			default: true
 		}
 	},
 
 	data() {
 		return {
-			mutableQuery: this.query,
-			mutableCenter: this.center,
-			drawerOpen: false,
-			searchFocused: false
+			drawerOpen: false
 		}
 	},
 
 	computed: {
 		classes() {
 			return [
+				'navbar',
+				'navbar-expand',
 				this.drawerOpen
 					? 'navbar-dark navbar--drawer-open'
-					: `navbar-${this.variant}`,
-				'navbar',
-				'navbar-expand'
+					: `navbar-${this.variant}`
 			]
-		},
-
-		searchClasses() {
-			return {
-				navbar__search: true,
-				'navbar__search--focused': this.searchFocused
-			}
-		},
-
-		lat() {
-			const center = this.mutableCenter
-			return center && center.lat ? center.lat : null
-		},
-
-		lng() {
-			const center = this.mutableCenter
-			return center && center.lng ? center.lng : null
-		}
-	},
-
-	watch: {
-		query() {
-			this.mutableQuery = this.query
 		}
 	},
 
@@ -207,55 +130,6 @@ export default {
 
 		toggleOverflow(open) {
 			document.body.classList.toggle('pg--pg-overlay-open', open)
-		},
-
-		onSearchFocus() {
-			this.searchFocused = true
-
-			this.toggleDrawer(false)
-		},
-
-		onSearchBlur() {
-			this.searchFocused = false
-		},
-
-		onPlaceChanged(place) {
-			if (place) {
-				const viewport = place.geometry.viewport
-				const center = viewport.getCenter()
-
-				// Update center
-				this.mutableCenter = {
-					lat: center.lat(),
-					lng: center.lng()
-				}
-
-				// Update query
-				if (place.vicinity && place.name !== place.vicinity) {
-					this.mutableQuery = `${place.name}, ${place.vicinity}`
-				} else {
-					this.mutableQuery = place.name
-				}
-
-				// Autosubmit if choosen to
-				if (this.autoSubmit) {
-					this.$router.push(
-						this.localePath({
-							path: '/venues/explore',
-							query: toQueryParams({
-								query: this.mutableQuery,
-								c_lat: this.lat,
-								c_lng: this.lng
-							})
-						})
-					)
-				}
-			} else {
-				this.mutableQuery = null
-				this.mutableCenter = null
-			}
-
-			this.$emit('place-changed', place)
 		}
 	}
 }
@@ -267,6 +141,16 @@ export default {
 	transition: background-color $navbar-transition-duration,
 		color $navbar-transition-duration;
 }
+
+// Fix navbar expand having wrong padding on sm+ sizes
+// https://github.com/twbs/bootstrap/issues/22471#issuecomment-338770768
+@include media-breakpoint-up('sm') {
+	.navbar-expand > .container {
+		padding-left: $navbar-padding-x;
+		padding-right: $navbar-padding-x;
+	}
+}
+
 // Notch support with hack
 // https://github.com/webpack-contrib/sass-loader/issues/528#issuecomment-362259216
 @supports (padding: m#{a}x(0px)) {
@@ -301,50 +185,6 @@ export default {
 	}
 }
 
-// Search
-.navbar__search {
-	flex: 1;
-	border-radius: $input-border-radius-lg;
-	transition: $navbar-transition-duration;
-	margin-right: $navbar-padding-x / 2; // Same spacing between it and the brand
-	max-width: 30rem; // Avoid full width search
-}
-.navbar__search-icon-addon {
-	display: none;
-}
-.navbar__search-input {
-	border: 0;
-	border-color: transparent !important;
-	background-color: transparent !important;
-	font-size: $input-font-size !important;
-
-	&::placeholder {
-		transition: $navbar-transition-duration;
-	}
-
-	&:focus {
-		border-color: none;
-		box-shadow: none;
-	}
-}
-.navbar__search-btn {
-	border: 0;
-	padding-left: 0;
-	outline: none;
-}
-
-@include media-breakpoint-up(md) {
-	.navbar__search {
-		position: relative;
-	}
-	.navbar__search-icon-addon {
-		background: transparent;
-		border: 0;
-		padding-right: 0;
-		display: flex; // Inverse of display: none on the previous media query
-	}
-}
-
 // Drawer
 .navbar__drawer {
 	padding-top: 64px;
@@ -364,16 +204,16 @@ export default {
 	padding-bottom: $spacer / 2;
 
 	.nav-item {
-		color: #000;
+		color: $black;
 		position: relative;
-		font-size: $font-size-lg;
+		font-size: $font-size-xl;
 	}
 	.nav-item + .nav-item::after {
 		content: '';
 		position: absolute;
 		top: 0;
 		left: $nav-link-padding-x;
-		right: 0;
+		right: $nav-link-padding-x;
 		height: 1px;
 		background-color: $gray-200;
 		pointer-events: none;
@@ -386,6 +226,13 @@ export default {
 		&.active {
 			color: $primary;
 		}
+	}
+	.pg-icon--user {
+		background-color: $green-100;
+		padding: 0.2rem;
+		border-radius: 50%;
+		height: 1.85rem;
+		width: 1.85rem;
 	}
 }
 .navbar__drawer {
@@ -415,82 +262,11 @@ export default {
 	.navbar__logo-arrow {
 		color: $gray-500;
 	}
-
-	.navbar__search {
-		background-color: $gray-100;
-	}
-	.navbar__search-icon-addon {
-		color: rgba($body-color, 0.5);
-		transition-duration: $navbar-transition-duration;
-	}
-	.navbar__search-input {
-		color: rgba($body-color, 0.5);
-
-		&::placeholder {
-			color: rgba($body-color, 0.5);
-		}
-		&:focus {
-			color: $body-color;
-
-			&::placeholder {
-				color: rgba($body-color, 0.25);
-			}
-		}
-	}
-	.navbar__search-btn {
-		color: $gray-500;
-
-		&:hover {
-			color: $gray-400;
-		}
-	}
-	.navbar__search--focused {
-		background-color: transparent;
-		color: rgba($body-color, 0.25);
-		box-shadow: inset 0 0 0 2px $primary;
-
-		.navbar__search-icon-addon {
-			color: $primary;
-		}
-	}
 }
 
 // Dark style (dark green)
 .navbar-dark {
 	background-color: $olive-900;
 	color: $white;
-
-	.navbar__search {
-		background-color: $olive-800;
-	}
-	.navbar__search-icon-addon {
-		color: rgba($white, 0.5);
-		transition-duration: $navbar-transition-duration;
-	}
-	.navbar__search-input {
-		color: $white;
-
-		&::placeholder {
-			color: rgba($white, 0.5);
-		}
-		&:focus::placeholder {
-			color: rgba($white, 0.25);
-		}
-	}
-	.navbar__search-btn {
-		color: rgba($white, 0.5);
-
-		&:hover {
-			color: rgba($white, 0.75);
-		}
-	}
-	.navbar__search--focused {
-		color: rgba($white, 0.25);
-		box-shadow: inset 0 0 0 2px $olive-300;
-
-		.navbar__search-icon-addon {
-			color: $olive-300;
-		}
-	}
 }
 </style>

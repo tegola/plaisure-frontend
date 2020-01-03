@@ -30,7 +30,7 @@
 				</div>
 				<div ref="sectionNavWrapper" class="section-nav-wrapper">
 					<div class="container">
-						<b-nav v-b-scrollspy="123" class="section-nav">
+						<b-nav v-b-scrollspy="123" tabs class="section-nav">
 							<b-nav-item
 								v-for="pane in panes"
 								:key="pane"
@@ -235,8 +235,8 @@ export default {
 		position: sticky;
 		top: 0;
 		z-index: $zindex-dropdown - 1; // Keep it below dropdowns
-		background-color: $white;
-		border-bottom: 1px solid rgba($black, 0.08);
+		background-color: $body-bg;
+		border-bottom: 1px solid $gray-200;
 	}
 	.title-wrapper {
 		padding: $navbar-padding-y 0;
@@ -250,49 +250,6 @@ export default {
 	.section-nav {
 		flex-wrap: nowrap;
 		white-space: nowrap;
-
-		.nav-item {
-			position: relative;
-			text-transform: uppercase;
-			letter-spacing: 0.05em;
-			font-size: $font-size-sm;
-
-			&::after {
-				content: '';
-				position: absolute;
-				bottom: 0;
-				left: 0;
-				right: 0;
-				height: 2px;
-				transform: scaleX(0);
-				opacity: 0;
-				background-color: $primary;
-				transition: transform 150ms ease-in-out, opacity 100ms 50ms ease-in-out;
-				pointer-events: none;
-			}
-		}
-		.nav-item {
-			margin-left: $nav-link-padding-x;
-			margin-right: $nav-link-padding-x;
-		}
-		.nav-item:first-child {
-			margin-left: 0;
-		}
-		.nav-link {
-			transition: color 150ms;
-			color: $gray-600;
-			padding-left: 0;
-			padding-right: 0;
-		}
-		.nav-item.active {
-			&::after {
-				transform: scaleX(1);
-				opacity: 1;
-			}
-			.nav-link {
-				color: inherit;
-			}
-		}
 	}
 }
 </style>
