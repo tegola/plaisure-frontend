@@ -33,7 +33,6 @@ module.exports = {
 				content: '0F83EB755446F01A87E89E5439AB1573'
 			}
 		],
-		script: [{ src: 'https://js.stripe.com/v3/' }],
 		link: [
 			{
 				rel: 'apple-touch-icon',

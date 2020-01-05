@@ -564,7 +564,8 @@ export default {
 
 	head() {
 		return {
-			title: this.$t('pages.venue_plan.title')
+			title: this.$t('pages.venue_plan.title'),
+			script: [{ src: 'https://js.stripe.com/v3/' }]
 		}
 	},
 

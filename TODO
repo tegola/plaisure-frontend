@@ -5,12 +5,11 @@
  ☐ Assicurarsi che /user/venues non sia visibile a chi non è owner
  ✔ Rimuovere la ricerca dalla navbar @done (19-12-31 17:31)
  ☐ Completare la nuova ricerca
- ☐ Caricare la libreria di Stripe solo quando serve
+ ✔ Caricare la libreria di Stripe solo quando serve @done (20-01-05 16:53)
  ☐ Aggiustare "registrati come owner" quando l'utente è già registrato e renderlo owner in qualche modo
  ☐ Disattivare il reporting delle eccezioni di OAuth
- ☐ Controllare che succede quando la place textbox non trova niente e si premve invio
- ☐ Convertire tutti i [ nome => JSONResource ] in JSONResource + metadata
  ☐ Ricerca con cluster di marker numerati nella mappa
+ ☐ aggiustare text-dark-green-muted
 
  ☐ Email di benvenuto (verifica) all'utente dopo la registrazione
  ☐ Aggiungere i link a terms of service e privacy policy (footer, registrazione utente e modifica piano)
