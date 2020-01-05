@@ -72,8 +72,12 @@ export default {
 		}
 	},
 
-	asyncData({ $axios, params }) {
-		return $axios.$get(`/venues/${params.id}/claim`)
+	async asyncData({ $axios, params }) {
+		const data = await $axios.$get(`/venues/${params.id}/claim`)
+
+		return {
+			venue: data.data
+		}
 	},
 
 	head() {

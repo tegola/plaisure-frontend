@@ -1,5 +1,5 @@
 <template>
-	<div class="pg-explore-page" :class="currentView === 'map' ? 'pg-explore-page--with-map' : null">
+	<div class="pg-explore-page">
 		<pg-navbar variant="dark" />
 
 		<!-- Filters -->
@@ -42,15 +42,15 @@
 						label-sr-only
 						class="col-sm-3">
 						<b-form-select
-							v-model="searchParams.radius"
 							:options="radiusOptions"
+							:value="searchParams.radius"
+							@input="onRadiusChange"
 						/>
 					</b-form-group>
 				</div>
 				<b-form-group
 					:label="$t('pages.explore.form.category')"
-					label-sr-only
-					class="mb-0">
+					label-sr-only>
 					<b-form-checkbox-group
 						:stacked="isSmallScreen"
 						:options="categoryOptions"
@@ -58,7 +58,7 @@
 						@change="onCategoryChange"
 					/>
 				</b-form-group>
-				<hr class="mb-1">
+				<hr v-if="hasSearchParams" class="mb-0">
 				<!--
 				<b-form-group :label="$t('pages.explore.form.amenities')">
 					<b-form-checkbox-group
@@ -73,60 +73,73 @@
 			</div>
 		</div>
 
-
-		<!-- Tabs + results -->
-		<div ref="scrollAnchor" />
-		<div class="pg-explore-page__view" :class="scrollPast ? 'pg-explore-page__view--stuck' : null">
+		<!-- Tabs + result count -->
+		<div ref="tabsAnchor" />
+		<div v-if="hasSearchParams" class="pg-explore-page__view" :class="scrollPastTabs ? 'pg-explore-page__view--stuck' : null">
 			<div class="container">
 				<b-nav tabs class="align-items-center">
-					<b-nav-item :active="currentView === 'list'" @click="currentView = 'list'">
+					<b-nav-item :active="currentView === 'list'" @click="switchView('list')">
 						<pg-icon icon="list" class="mr-1" />
 						{{ $t('pages.explore.form.view.list') }}
 					</b-nav-item>
-					<b-nav-item :active="currentView === 'map'" @click="currentView = 'map'">
+					<b-nav-item :active="currentView === 'map'" @click="switchView('map')">
 						<pg-icon icon="map" class="mr-1" />
 						{{ $t('pages.explore.form.view.map') }}
 					</b-nav-item>
-					<div v-if="venues.length" class="ml-auto small text-muted">
-						{{
-							$tc('pages.explore.form.results', venues.length, {
-								count: hasMorePages ? `${venues.length}+` : venues.length
-							})
-						}}
+					<div class="ml-auto small text-muted">
+						{{ $tc('pages.explore.form.results', pagination.total || null) }}
 					</div>
 				</b-nav>
 			</div>
 		</div>
 
 		<!-- List -->
-		<div v-if="currentView === 'list'" class="container">
-			<!-- Loader -->
-			<div v-if="loading" key="loader" class="list-group-item venue-list-placeholder-item text-muted">
+		<div v-if="currentView === 'list'" class="container flex-fill d-flex flex-column">
+			<!-- Initial loader (outside the button) -->
+			<div
+				v-if="loading && !venues.length"
+				key="loader"
+				class="my-auto py-5 text-center text-muted">
 				<pg-icon icon="circle-outline-notch" spinning />
 				<p class="mb-0">{{ $t('common.status.loading') }}&hellip;</p>
 			</div>
-			<template v-else>
-				<!-- Empty list -->
-				<div v-if="!venues.length" key="no-items" class="list-group-item venue-list-placeholder-item text-muted">
-					<pg-icon icon="search" size="3x" />
-					<h4 class="mt-3">{{ $t('pages.explore.no_items.title') }}</h4>
-					<p>{{ $t('pages.explore.no_items.subtitle') }}</p>
-				</div>
 
-				<!-- Venue list -->
-				<pg-venue-list-item
-					v-for="venue in venues"
-					:key="venue.id"
-					:venue="venue"
-					class="pg-explore-page__list-item"
-				/>
+			<!-- Search to start -->
+			<pg-no-items
+				v-if="!hasSearchParams"
+				key="hint"
+				class="my-auto py-5"
+				icon="search"
+				:title="$t('pages.explore.start.title')"
+			/>
 
-				<!-- Limited results -->
-				<div v-if="hasMorePages" class="list-group-item text-muted text-center border-0 mt-0 mb-5">
-					<div class="h1">&hellip;</div>
-					<p>{{ $t('pages.explore.limited_results') }}</p>
-				</div>
-			</template>
+			<!-- Empty list -->
+			<pg-no-items
+				v-if="hasSearchParams && !loading && !venues.length"
+				key="no-items"
+				class="my-auto py-5"
+				:title="$t('pages.explore.no_items.title')"
+				:subtitle="$t('pages.explore.no_items.subtitle')"
+			/>
+
+			<!-- Venue list (always visible) -->
+			<pg-venue-list-item
+				v-for="venue in venues"
+				:key="venue.id"
+				:venue="venue"
+				class="pg-explore-page__list-item"
+			/>
+			<div ref="listAnchor" />
+
+			<!-- Load button -->
+			<div v-if="hasMorePages" class="text-center mt-4">
+				<pg-button
+					variant="primary"
+					:loading="loading"
+					@click="loadMore">
+					{{ $t('pages.explore.list.load_more') }}
+				</pg-button>
+			</div>
 		</div>
 
 		<!-- Map -->
@@ -137,24 +150,37 @@
 			:zoom="mapZoom"
 			:bounds="mapBounds"
 			:options="mapOptions"
-			class="pg-explore-page__map"
+			class="flex-fill"
+			@zoom_changed="onMapZoomChange"
 			@bounds_changed="onMapBoundsChange"
 			@click="selectedVenueId = null">
-			<pg-map-marker v-if="userLocation" :position="userLocation" icon="/img/map/pin-user.svg" title="La tua posizione" />
-			<pg-map-marker v-for="(venue, index) in venues" :key="venue.id" :position="venue.coords" :icon="mapMarkerIcon(venue, index)" @click="select(venue)">
-				<pg-map-info-window :opened="venue.id === selectedVenueId" @closeclick="select(null)">
+			<pg-map-marker
+				v-if="userLocation"
+				:position="userLocation"
+				icon="/img/map/pin-user.svg"
+				title="La tua posizione"
+			/>
+			<pg-map-marker
+				v-for="(venue, index) in venues"
+				:key="venue.id"
+				:position="venue.coords"
+				:icon="mapMarkerIcon(venue, index)"
+				@click="selectMarker(venue)">
+				<pg-map-info-window
+					:opened="venue.id === selectedVenueId"
+					@closeclick="selectMarker(null)">
 					<pg-venue-infowindow-item
 						class="pg-explore-page__map-infowindow-content"
 						:venue="venue"
 					/>
 				</pg-map-info-window>
 			</pg-map-marker>
-			<template slot="visible">
+			<template #visible>
 				<!-- Refresh buttons -->
 				<template v-if="isLargeScreen && mapNeedsRefresh">
 					<pg-button
 						id="desktop-refresh-btn"
-						:aria-label="$t('pages.explore.search_area')"
+						:aria-label="$t('pages.explore.map.search_area')"
 						variant="accent"
 						class="pg-explore-page__map-refresh-btn"
 						icon="refresh"
@@ -165,7 +191,7 @@
 						placement="left"
 						triggers=""
 						show>
-						{{ $t('pages.explore.search_area') }}
+						{{ $t('pages.explore.map.search_area') }}
 					</b-tooltip>
 				</template>
 				<div v-if="isSmallScreen && mapNeedsRefresh" class="container pg-explore-page__map-floating-controls">
@@ -197,10 +223,8 @@ import {
 import PgVenueListItem from './list-item'
 import PgVenueInfowindowItem from './infowindow-item'
 import PgPlaceTextbox from '@/components/place-textbox'
-import {
-	toSearchParams,
-	toQueryParams
-} from '@/utilities/explore-params-converter'
+import PgNoItems from '@/components/no-items'
+import paramsConverter from '@/utilities/explore-params-converter'
 import { formatGoogleMapsResult } from '@/utilities'
 
 const searchRadiuses = [10, 20, 30, 50, 100]
@@ -220,11 +244,11 @@ export default {
 		BTooltip,
 		PgVenueListItem,
 		PgVenueInfowindowItem,
-		PgPlaceTextbox
+		PgPlaceTextbox,
+		PgNoItems
 	},
 
 	data() {
-		let mapZoom = 13
 		let mapCenter = extend(
 			{},
 			this.$constants[`MAP_DEFAULT_CENTER_${this.$i18n.region}`]
@@ -232,19 +256,29 @@ export default {
 		let mapBounds = null
 		let searchMode = 'center'
 		const queryParams = this.$route.query
+		const viewParams = paramsConverter.queryToViewParams(queryParams)
 		const searchParams = extend(
 			{
+				page: 1,
+				query: '',
 				country: this.$i18n.region,
-				radius: searchRadiuses[0]
+				radius: searchRadiuses[0],
+				c_lat: null,
+				c_lng: null,
+				ne_lat: null,
+				ne_lng: null,
+				sw_lat: null,
+				sw_lng: null
 			},
-			toSearchParams(queryParams)
+			paramsConverter.queryToSearchParams(queryParams)
 		)
 
-		// Prepare map zoom
-		if (queryParams.zoom) mapZoom = parseInt(queryParams.zoom)
+		// Prepare view
+		const currentView = viewParams.view || 'list'
+		const mapZoom = viewParams.zoom || 13
 
 		// Prepare map center
-		const gotMapCenter = ['c_lat', 'c_lng'].every(key => key in searchParams)
+		const gotMapCenter = ['c_lat', 'c_lng'].every(key => searchParams[key])
 
 		if (gotMapCenter) {
 			mapCenter = {
@@ -255,7 +289,7 @@ export default {
 
 		// Prepare map bounds (end eventually change search mode)
 		const gotMapBounds = ['ne_lat', 'ne_lng', 'sw_lat', 'sw_lng'].every(
-			key => key in searchParams
+			key => searchParams[key]
 		)
 
 		if (gotMapBounds) {
@@ -284,17 +318,14 @@ export default {
 			loading: false,
 			locating: false,
 			userLocation: null,
-			scrollPast: false,
-
+			scrollPastTabs: false,
 			searchMode, // bounds, center
 			searchParams,
-			searchFieldFocused: false,
 			query: searchParams.query,
 			venues: [],
-			currentView: 'list',
-			highlightedVenueId: null,
+			pagination: {},
+			currentView,
 			selectedVenueId: null,
-
 			mapNeedsRefresh: false,
 			mapBoundsEventEnabled: false,
 			mapCenter,
@@ -366,7 +397,7 @@ export default {
 
 		categoryOptions() {
 			return this.categoriesForCountry(this.searchParams.country)
-				.slice() // make immutable
+				.slice() // make a copy
 				.sort((a, b) => {
 					a = this.$t(`data.categories.${a.machine_name}`)
 					b = this.$t(`data.categories.${b.machine_name}`)
@@ -393,21 +424,38 @@ export default {
 		},
 
 		hasMorePages() {
-			return this.venues ? this.venues.length >= 100 : false
+			return this.pagination
+				? this.pagination.current_page !== this.pagination.last_page
+				: false
 		}
 	},
 
 	head() {
 		return {
-			title: this.query || this.$t('pages.explore.meta_title')
+			title: this.searchParams.query || this.$t('pages.explore.meta_title')
 		}
 	},
 
 	watch: {
-		searchParams: {
-			deep: true,
+		// Conditionally connect observers, since the initial view could be the
+		// map
+		currentView: {
 			immediate: true,
-			handler: 'search'
+			async handler() {
+				if (!process.client) return
+
+				await this.$nextTick()
+
+				const target = this.$refs.listAnchor
+
+				if (target) {
+					if (this.currentView === 'list') {
+						this.listObserver.observe(target)
+					} else if (this.currentView === 'map') {
+						this.listObserver.unobserve(target)
+					}
+				}
+			}
 		}
 	},
 
@@ -418,19 +466,24 @@ export default {
 	mounted() {
 		this.setSearchParams({}) // Init defaults (and search)
 
-		// Add sticky class change for filters
 		if (process.client) {
-			this.scrollObserver = new IntersectionObserver(entries => {
-				this.scrollPast = !entries[0].isIntersecting
+			// Add sticky tabs observer
+			this.tabsObserver = new IntersectionObserver(([entry]) => {
+				this.scrollPastTabs = !entry.isIntersecting
 			})
+			this.tabsObserver.observe(this.$refs.tabsAnchor)
 
-			this.scrollObserver.observe(this.$refs.scrollAnchor)
+			// Add infinite loading observer
+			this.listObserver = new IntersectionObserver(([entry]) => {
+				if (entry.isIntersecting) this.loadMore()
+			})
 		}
 	},
 
 	destroyed() {
-		// Destroy sticky class change for filters
-		this.scrollObserver.disconnect()
+		// Destroy intersection observers
+		this.tabsObserver.disconnect()
+		this.listObserver.disconnect()
 	},
 
 	methods: {
@@ -443,6 +496,10 @@ export default {
 		setSearchParams(params) {
 			const searchParams = this.searchParams
 			const country = params.country || this.country
+
+			// Reset page if not specified otherwise, so any filter change would
+			// restart from the first one
+			if (!params.page) params.page = 1
 
 			// Set categories
 			if (
@@ -468,12 +525,18 @@ export default {
 			// Force set country
 			params.country = country
 
+			// Save params and search
 			extend(this.searchParams, params)
+			this.search()
 		},
 
 		// Location search ----------------------------------------------------
 		onPlaceChanged(place) {
-			if (!place) return
+			// Reset old query if there's no place
+			if (!place) {
+				this.query = this.searchParams.query
+				return
+			}
 
 			const bounds =
 				place.geometry && place.geometry.viewport
@@ -488,15 +551,21 @@ export default {
 			this.mapNeedsRefresh = false
 			this.userLocation = null
 
-			place = formatGoogleMapsResult(place)
-
-			this.query = place.readableAddress
+			// Update map center so view switching will be in sync
+			this.mapCenter = {
+				lat: center.lat(),
+				lng: center.lng()
+			}
 
 			// Move map, but disable map bounds tracking first
 			if (bounds && this.$refs.map) {
 				this.mapBoundsEventEnabled = false
 				this.$refs.map.fitBounds(bounds)
 			}
+
+			place = formatGoogleMapsResult(place)
+
+			this.query = place.readableAddress
 
 			// Update search params
 			this.setSearchParams({
@@ -589,6 +658,12 @@ export default {
 		},
 
 		// Filters -------------------------------------------------------------
+		onRadiusChange(value) {
+			this.setSearchParams({
+				radius: value
+			})
+		},
+
 		async onCategoryChange(value) {
 			if (!value.length) {
 				value = this.categoriesForCountry(this.country).map(
@@ -604,6 +679,30 @@ export default {
 		},
 
 		// Map -----------------------------------------------------------------
+		mapMarkerIcon(venue, index) {
+			const variant = venue.id === this.selectedVenueId ? 'inverse' : 'normal'
+			const firstCategoryMachineName =
+				venue.categories && venue.categories.length
+					? venue.categories[0].machine_name
+					: null
+			const glyph =
+				index < 25 && firstCategoryMachineName
+					? firstCategoryMachineName
+					: 'collapsed'
+
+			return `/img/map/pin-${variant}/${glyph}.svg`
+		},
+
+		selectMarker(venue) {
+			this.selectedVenueId =
+				venue && venue.id !== this.selectedVenueId ? venue.id : null
+		},
+
+		onMapZoomChange(value) {
+			this.mapZoom = value
+			this.updateUrl()
+		},
+
 		// Fat arrow functions do not work with debounce
 		onMapBoundsChange: debounce(function(bounds) {
 			// Store bounds
@@ -619,37 +718,28 @@ export default {
 			this.mapNeedsRefresh = true
 		}, 200),
 
-		mapMarkerIcon(venue, index) {
-			const variant =
-				venue.id === this.selectedVenueId ||
-				venue.id === this.highlightedVenueId
-					? 'inverse'
-					: 'normal'
-			const firstCategoryMachineName =
-				venue.categories && venue.categories.length
-					? venue.categories[0].machine_name
-					: null
-			const glyph =
-				index < 25 && firstCategoryMachineName
-					? firstCategoryMachineName
-					: 'collapsed'
-
-			return `/img/map/pin-${variant}/${glyph}.svg`
-		},
-
 		onSearchBoundsClick() {
-			// Change search mode
-			this.searchMode = 'bounds'
-
-			// Update view
-			this.mapNeedsRefresh = false
-			this.query = null
-
-			// Update search params
 			const c = this.mapBounds.getCenter()
 			const ne = this.mapBounds.getNorthEast()
 			const sw = this.mapBounds.getSouthWest()
 
+			// Change search mode
+			this.searchMode = 'bounds'
+
+			// Update view
+			this.selectedVenueId = null
+			this.mapNeedsRefresh = false
+			this.query = null
+
+			// Update map center so view switching will be in sync, but disable
+			// map bounds tracking first
+			this.mapBoundsEventEnabled = false
+			this.mapCenter = {
+				lat: c.lat(),
+				lng: c.lng()
+			}
+
+			// Update search params
 			this.setSearchParams({
 				query: '',
 				// country: this.$i18n.region,
@@ -675,37 +765,46 @@ export default {
 					'/venues/explore',
 					this.searchParams
 				)
-				this.venues = data.venues
+				this.venues =
+					this.searchParams.page === 1
+						? data.data
+						: [...this.venues, ...data.data]
+				this.pagination = data.meta
 			} finally {
 				this.loading = false
 			}
 
 			// Update URL
+			this.updateUrl()
+		},
+
+		loadMore() {
+			if (
+				this.hasSearchParams &&
+				this.hasMorePages &&
+				this.currentView === 'list'
+			) {
+				this.setSearchParams({
+					page: this.pagination.current_page + 1
+				})
+			}
+		},
+
+		updateUrl() {
 			this.$router.replace({
-				query: toQueryParams(this.searchParams)
+				query: paramsConverter.toQueryParams({
+					...this.searchParams,
+					...{
+						view: this.currentView,
+						zoom: this.currentView === 'map' ? this.mapZoom : null
+					}
+				})
 			})
 		},
 
-		// List support -------------------------------------------------------
-		highlight(venue) {
-			// Disabled when map is not visible
-			if (this.currentView !== 'map') return
-
-			this.highlightedVenueId = venue ? venue.id : null
-		},
-
-		select(venue) {
-			// Disabled when map is not visible
-			if (this.currentView !== 'map') return
-
-			// Always hide if no venue is passed
-			if (!venue) {
-				this.selectedVenueId = null
-				return
-			}
-
-			// Select/deselect
-			this.selectedVenueId = this.selectedVenueId !== venue.id ? venue.id : null
+		switchView(view) {
+			this.currentView = view
+			this.updateUrl()
 		}
 	}
 }
@@ -713,6 +812,10 @@ export default {
 
 <style lang="scss">
 .pg-explore-page {
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+
 	// Search + filters
 	&__search-field {
 		display: flex;
@@ -748,25 +851,12 @@ export default {
 	}
 
 	// Venue list
-	.venue-list-placeholder-item {
-		text-align: center;
-		border: 0;
-		flex: auto;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-	}
-
 	&__list-item {
 		margin-top: $spacer;
 		border-bottom: 1px solid #eee;
 	}
 
 	// Map
-	&__map {
-		flex: 1;
-	}
 	&__map-infowindow-content {
 		min-width: 200px;
 		max-width: 280px;
@@ -793,12 +883,6 @@ export default {
 		left: 0;
 		right: 0;
 		padding-bottom: 1rem;
-	}
-
-	&--with-map {
-		height: 100vh;
-		display: flex;
-		flex-direction: column;
 	}
 }
 </style>

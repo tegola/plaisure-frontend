@@ -77,7 +77,8 @@ export default {
 	},
 
 	async asyncData({ $axios }) {
-		const { user } = await $axios.$get('/user/edit')
+		const data = await $axios.$get('/user/edit')
+		const user = data.data
 
 		return {
 			model: {

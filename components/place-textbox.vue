@@ -46,6 +46,12 @@ export default {
 		}
 	},
 
+	watch: {
+		place() {
+			this.$emit('place-changed', this.place)
+		}
+	},
+
 	methods: {
 		isMenuOpen() {
 			// Get menus as array
@@ -79,10 +85,7 @@ export default {
 			this.$emit('input', e.target.value)
 
 			// Remove place if present
-			if (this.place) {
-				this.place = null
-				this.$emit('place-changed', this.place)
-			}
+			if (this.place) this.place = null
 		},
 
 		onEscKey(e) {
@@ -91,7 +94,6 @@ export default {
 			this.$emit('input', '')
 
 			this.place = null
-			this.$emit('place-changed', this.place)
 		},
 
 		onEnterKey(e) {
@@ -104,10 +106,9 @@ export default {
 		},
 
 		onPlaceChanged(place) {
-			if (place && place.name) {
+			if (place && place.place_id) {
 				// Store place locally
 				this.place = place
-				this.$emit('place-changed', this.place)
 
 				// Emit clean place name as input
 				let value = place.name
@@ -118,7 +119,6 @@ export default {
 				this.$emit('input', value)
 			} else {
 				this.place = null
-				this.$emit('place-changed', null)
 				this.$emit('input', '')
 			}
 		}

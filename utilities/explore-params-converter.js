@@ -1,4 +1,20 @@
-export const toSearchParams = input => {
+export const queryToViewParams = input => {
+	const output = {}
+
+	// view = v (to query params only)
+	if (['list', 'map'].indexOf(input.v) !== -1) {
+		output.view = input.v
+	}
+
+	// zoom = z (to query params only)
+	if (parseInt(input.z) > 0) {
+		output.zoom = parseInt(input.z)
+	}
+
+	return output
+}
+
+export const queryToSearchParams = input => {
 	const output = {}
 
 	// q = query
@@ -85,7 +101,17 @@ export const toQueryParams = input => {
 		output.t = input.categories.join(',')
 	}
 
+	// view = v (to query params only)
+	if (['list', 'map'].indexOf(input.view) !== -1) {
+		output.v = input.view
+	}
+
+	// zoom = z (to query params only)
+	if (input.zoom) {
+		output.z = input.zoom
+	}
+
 	return output
 }
 
-export default { toSearchParams, toQueryParams }
+export default { queryToViewParams, queryToSearchParams, toQueryParams }

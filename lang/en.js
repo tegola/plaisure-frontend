@@ -267,9 +267,15 @@ export default {
 				},
 				results: 'No results | 1 result | {count} results'
 			},
-			limited_results:
-				'Results have been limited. Search a specific area to get more details.',
-			search_area: 'Search this area',
+			list: {
+				load_more: 'Load more results'
+			},
+			map: {
+				search_area: 'Search this area'
+			},
+			start: {
+				title: 'Enter your city name to begin'
+			},
 			no_items: {
 				title: 'No venues found',
 				subtitle: 'Move to a different area or change search filters.'

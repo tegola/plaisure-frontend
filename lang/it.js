@@ -274,9 +274,15 @@ export default {
 				},
 				results: 'Nessun risultato | 1 risultato | {count} risultati'
 			},
-			limited_results:
-				'Il numero di risultati è stato limitato automaticamente. Cerca una zona specifica per visualizzare più dettagli.',
-			search_area: 'Cerca in questa zona',
+			start: {
+				title: 'Inserisci una posizione per iniziare'
+			},
+			list: {
+				load_more: 'Load more results'
+			},
+			map: {
+				search_area: 'Cerca in questa zona'
+			},
 			no_items: {
 				title: 'Nessuna attività trovata',
 				subtitle: 'Cerca in un altra zona o modifica i criteri ricerca.'

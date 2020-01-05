@@ -36,15 +36,15 @@ export default {
 		},
 
 		photo() {
-			if (!this.venue.photos || !this.venue.photos.length) return null
+			const photos = this.venue.photos
 
-			return this.venue.photos[0]
+			return photos && photos.length ? photos[0] : null
 		},
 
 		address() {
-			const a = this.venue.address
+			const address = this.venue.address
 
-			return [a.line1, a.city].join(', ')
+			return [address.line1, address.city].join(', ')
 		},
 
 		isOpen() {

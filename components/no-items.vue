@@ -38,13 +38,20 @@ export default {
 
 <style lang="scss">
 .pg-no-items {
-	color: $text-muted;
+	color: $gray-400;
 	text-align: center;
 
 	&__icon {
 		width: $icon-size-base * 4;
 		height: $icon-size-base * 4;
 		margin-bottom: $spacer / 2;
+	}
+	&__title,
+	&__subtitle {
+		margin-bottom: 0;
+	}
+	&__title + &__subtitle {
+		margin-top: $headings-margin-bottom;
 	}
 }
 </style>

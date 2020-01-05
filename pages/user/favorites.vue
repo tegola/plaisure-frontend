@@ -54,8 +54,12 @@ export default {
 		}
 	},
 
-	asyncData({ $axios }) {
-		return $axios.$get('/user/favorites')
+	async asyncData({ $axios }) {
+		const data = await $axios.$get('/user/favorites')
+
+		return {
+			venues: data.data
+		}
 	},
 
 	methods: {

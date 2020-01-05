@@ -55,8 +55,12 @@ export default {
 		}
 	},
 
-	asyncData({ $axios }) {
-		return $axios.$get('/user/venues')
+	async asyncData({ $axios }) {
+		const data = await $axios.$get('/user/venues')
+
+		return {
+			venues: data.data
+		}
 	}
 }
 </script>

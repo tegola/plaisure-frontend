@@ -4,14 +4,19 @@
  ☐ In caso di carta non funzionante Stripe punta a /user/billing, ma lì non ci sono i campi per cambiare carta
  ☐ Assicurarsi che /user/venues non sia visibile a chi non è owner
  ✔ Rimuovere la ricerca dalla navbar @done (19-12-31 17:31)
+ ☐ Completare la nuova ricerca
  ☐ Caricare la libreria di Stripe solo quando serve
+ ☐ Aggiustare "registrati come owner" quando l'utente è già registrato e renderlo owner in qualche modo
+ ☐ Disattivare il reporting delle eccezioni di OAuth
+ ☐ Controllare che succede quando la place textbox non trova niente e si premve invio
+ ☐ Convertire tutti i [ nome => JSONResource ] in JSONResource + metadata
+ ☐ Ricerca con cluster di marker numerati nella mappa
 
  ☐ Email di benvenuto (verifica) all'utente dopo la registrazione
  ☐ Aggiungere i link a terms of service e privacy policy (footer, registrazione utente e modifica piano)
  ☐ Aggiungere pezzi per permettere alle sale premium di salire nella ricerca o essere più visibili
  ☐ Dettaglio: scorrimento foto come sale in home page + "altre foto"
  ☐ Porting delle funzionalità di localizzazione in home nella pagina explore
- ☐ Ottimizzare la pagina di ricerca per i cellulari
  ✔ Riattivare la validazione degli orari una volta che il gruppo di campi riempie un array di ore solo per i giorni dove ci sono effettivamente @done (19-12-01 22:44)
  ☐ Edit sala: focus all'elemento giusto quando c'è errore
  ☐ Edit sala: drag della mappa più che del marker
@@ -47,14 +52,11 @@ Generale:
  ☐ Aggiungere i link di Plaisure ai social network
  ☐ Servizi aggiuntivi
    - Area privè (privee?, privet?)
-   - Aria condizionata
    - Tabacchi
    - Ricariche e pagamenti
    - Servizio bar _gratuito_
-   - Area relax
    - Punto ristoro invece di Ristorante
    - Servizio navetta
- ☐ Rimuovere i campi amenity dalla tabella venues e il codice di refactoring dopo aver lanciato quest'ultimo
  ☐ Notifica al proprietario quando ci sono nuove recensioni
  ☐ Rimuovere il campo "name" e aggiungere gli unique a "machine_name" nelle tabelle di categories, amenities, vlt_platform, concessionaries, ecc.
  ✔ Aggiungere softdelete alle sale e, quando vengono eliminate, far apparire comunque una pagina che dice "questa sala non esiste, forse è stata chiusa, ma ci sono queste altre" e mostrare le sale più vicine nel raggio di... 10km? @done (19-12-28 03:01)
