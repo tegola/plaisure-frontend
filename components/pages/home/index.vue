@@ -18,7 +18,7 @@
 							<div class="row">
 								<div class="col-md-10 col-lg-11">
 									<h1 class="display-3 text-olive-900 mb-4 font-weight-bold">{{ $t('pages.home.search.title') }}</h1>
-									<p class="lead text-gray-500 font-weight-semibold mb-4">{{ $t('pages.home.search.subtitle', { name: $constants.APP_NAME }) }}</p>
+									<p class="lead text-olive-800 font-weight-semibold mb-4">{{ $t('pages.home.search.subtitle', { name: $constants.APP_NAME }) }}</p>
 								</div>
 							</div>
 
@@ -148,7 +148,7 @@
 						/>
 					</div>
 					<div class="col-md-8 col-xl-6 mr-auto">
-						<p class="text-dark-green-muted mb-1">{{ $t('pages.home.promote.intro') }}</p>
+						<p class="text-olive-800 mb-1">{{ $t('pages.home.promote.intro') }}</p>
 						<h3 class="display-4 text-olive-900 mb-3">{{ $t('pages.home.promote.title') }}</h3>
 						<p class="lead text-olive-900 mb-4">{{ $t('pages.home.promote.paragraph') }}</p>
 						<pg-button

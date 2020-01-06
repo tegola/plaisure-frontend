@@ -49,7 +49,7 @@
 							<div class="d-flex align-items-center">
 								<div class="flex-grow-1">
 									<h2 class="h4 text-olive-900">{{ venue.name }}</h2>
-									<ul class="list-inline text-dark-green-muted mb-0">
+									<ul class="list-inline text-olive-800 mb-0">
 										<li class="list-inline-item">{{ subtitle }}</li>
 										<li v-if="venue.business_hours.length" class="list-inline-item">
 											<span v-if="isOpen" class="text-success">{{ $t('pages.venue_detail.card.open_now') }}</span>
