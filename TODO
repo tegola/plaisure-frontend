@@ -1,15 +1,11 @@
  ✔ IMPORTANTE: limitare le informazioni al caricamento di /user, l'utente non deve ricevere tutti i dati @done (19-09-12 19:42)
  ☐ IMPORTANTE: trovare il modo di disabilitare l'accesso esterno alle api pubbliche (es. http://localhost:8888/api/venues/7NQlVQRny1) facendo accedere solo lo stesso dominio (CORS?)
- ✔ Far rifunzionare le checkbox "amenities" @done(19-12-14 16:30)
  ☐ In caso di carta non funzionante Stripe punta a /user/billing, ma lì non ci sono i campi per cambiare carta
  ☐ Assicurarsi che /user/venues non sia visibile a chi non è owner
- ✔ Rimuovere la ricerca dalla navbar @done (19-12-31 17:31)
- ☐ Completare la nuova ricerca
  ✔ Caricare la libreria di Stripe solo quando serve @done (20-01-05 16:53)
  ☐ Aggiustare "registrati come owner" quando l'utente è già registrato e renderlo owner in qualche modo
  ☐ Disattivare il reporting delle eccezioni di OAuth
  ☐ Ricerca con cluster di marker numerati nella mappa
- ☐ aggiustare text-dark-green-muted
 
  ☐ Email di benvenuto (verifica) all'utente dopo la registrazione
  ☐ Aggiungere i link a terms of service e privacy policy (footer, registrazione utente e modifica piano)

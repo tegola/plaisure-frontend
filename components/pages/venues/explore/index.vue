@@ -37,7 +37,7 @@
 						</div>
 					</b-form-group>
 					<b-form-group
-						v-if="showRadiusFilter"
+						v-if="searchMode === 'center'"
 						:label="$t('pages.explore.form.distance')"
 						label-sr-only
 						class="col-sm-3">
@@ -94,12 +94,12 @@
 		</div>
 
 		<!-- List -->
-		<div v-if="currentView === 'list'" class="container flex-fill d-flex flex-column">
+		<div v-if="currentView === 'list'" class="container flex-fill d-flex flex-column py-5">
 			<!-- Initial loader (outside the button) -->
 			<div
 				v-if="loading && !venues.length"
 				key="loader"
-				class="my-auto py-5 text-center text-muted">
+				class="my-auto text-center text-muted">
 				<pg-icon icon="circle-outline-notch" spinning />
 				<p class="mb-0">{{ $t('common.status.loading') }}&hellip;</p>
 			</div>
@@ -108,7 +108,7 @@
 			<pg-no-items
 				v-if="!hasSearchParams"
 				key="hint"
-				class="my-auto py-5"
+				class="my-auto"
 				icon="search"
 				:title="$t('pages.explore.start.title')"
 			/>
@@ -117,18 +117,20 @@
 			<pg-no-items
 				v-if="hasSearchParams && !loading && !venues.length"
 				key="no-items"
-				class="my-auto py-5"
+				class="my-auto"
 				:title="$t('pages.explore.no_items.title')"
 				:subtitle="$t('pages.explore.no_items.subtitle')"
 			/>
 
 			<!-- Venue list (always visible) -->
-			<pg-venue-list-item
-				v-for="venue in venues"
-				:key="venue.id"
-				:venue="venue"
-				class="pg-explore-page__list-item"
-			/>
+			<template v-for="(venue, index) in venues">
+				<hr v-if="index" :key="`separator-${venue.id}`" class="w-100" />
+				<pg-venue-list-item
+					:key="`venue-${venue.id}`"
+					:venue="venue"
+					class="pg-explore-page__list-item"
+				/>
+			</template>
 			<div ref="listAnchor" />
 
 			<!-- Load button -->
@@ -195,7 +197,7 @@
 					</b-tooltip>
 				</template>
 				<div v-if="isSmallScreen && mapNeedsRefresh" class="container pg-explore-page__map-floating-controls">
-					<pg-button variant="accent" block @click="onSearchBoundsClick">{{ $t('pages.explore.search_area') }}</pg-button>
+					<pg-button variant="accent" block @click="onSearchBoundsClick">{{ $t('pages.explore.map.search_area') }}</pg-button>
 				</div>
 			</template>
 		</pg-map>
@@ -254,7 +256,6 @@ export default {
 			this.$constants[`MAP_DEFAULT_CENTER_${this.$i18n.region}`]
 		)
 		let mapBounds = null
-		let searchMode = 'center'
 		const queryParams = this.$route.query
 		const viewParams = paramsConverter.queryToViewParams(queryParams)
 		const searchParams = extend(
@@ -299,7 +300,6 @@ export default {
 				south: searchParams.sw_lat,
 				west: searchParams.sw_lng
 			}
-			searchMode = 'bounds'
 			extend(searchParams, {
 				query: '',
 				ne_lat: searchParams.ne_lat,
@@ -319,7 +319,6 @@ export default {
 			locating: false,
 			userLocation: null,
 			scrollPastTabs: false,
-			searchMode, // bounds, center
 			searchParams,
 			query: searchParams.query,
 			venues: [],
@@ -345,6 +344,14 @@ export default {
 
 		country() {
 			return this.searchParams.country || this.$i18n.region
+		},
+
+		searchMode() {
+			const hasBounds = ['ne_lat', 'ne_lng', 'sw_lat', 'sw_lng'].every(
+				key => this.searchParams[key]
+			)
+
+			return hasBounds ? 'bounds' : 'center'
 		},
 
 		searchFieldPlaceholder() {
@@ -389,10 +396,6 @@ export default {
 				value: radius,
 				text: `${radius} km`
 			}))
-		},
-
-		showRadiusFilter() {
-			return this.searchMode === 'center'
 		},
 
 		categoryOptions() {
@@ -544,9 +547,6 @@ export default {
 					: null
 			const center = bounds && bounds.getCenter() ? bounds.getCenter() : null
 
-			// Change search mode
-			this.searchMode = 'center'
-
 			// Update view
 			this.mapNeedsRefresh = false
 			this.userLocation = null
@@ -601,9 +601,6 @@ export default {
 			if (!position) return
 
 			const { latitude, longitude } = position.coords
-
-			// Change search mode
-			this.searchMode = 'center'
 
 			// Update view
 			this.mapNeedsRefresh = false
@@ -722,9 +719,6 @@ export default {
 			const c = this.mapBounds.getCenter()
 			const ne = this.mapBounds.getNorthEast()
 			const sw = this.mapBounds.getSouthWest()
-
-			// Change search mode
-			this.searchMode = 'bounds'
 
 			// Update view
 			this.selectedVenueId = null
@@ -848,12 +842,6 @@ export default {
 		&--stuck {
 			background-color: $body-bg;
 		}
-	}
-
-	// Venue list
-	&__list-item {
-		margin-top: $spacer;
-		border-bottom: 1px solid #eee;
 	}
 
 	// Map

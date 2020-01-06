@@ -1,6 +1,8 @@
+// FIXME: rename to pg-venue-collection-item and apply margin depending on grid or list item
 .pg-venue-grid-item {
 	color: inherit;
 
+	// Image
 	&__image {
 		border-radius: $border-radius;
 		margin-bottom: $spacer / 2;
@@ -36,6 +38,12 @@
 			fill: $gray-300;
 		}
 	}
+
+	&:hover &__image::after {
+		box-shadow: inset 0 0 0 2px $primary;
+	}
+
+	// Category
 	&__category {
 		text-transform: uppercase;
 		letter-spacing: .025rem;
@@ -43,21 +51,40 @@
 		font-size: $font-size-xs;
 		font-weight: $font-weight-semibold;
 	}
+
+	// Name
 	&__name {
 		font-weight: $font-weight-semibold;
 	}
+
+	// Address
 	&__address {
 		color: $text-muted;
 		font-size: $font-size-xs;
 	}
-	&__highlight {
-		text-transform: uppercase;
-		letter-spacing: .025rem;
-		font-size: $font-size-xs;
-		font-weight: $font-weight-bold;
+
+	// Rating
+	&__rating {
+		border-radius: 50rem;
+		background-color: $orange-100;
+		padding: 0.1rem 0.25rem;
+
+		.pg-rating__icon {
+			width: $font-size-sm;
+			height: $font-size-sm;
+		}
+		.pg-rating__label {
+			font-size: $font-size-sm;
+			margin-left: 0.15rem;
+			margin-right: 0.15rem;
+		}
 	}
 
-	&:hover &__image::after {
-		box-shadow: inset 0 0 0 2px $primary;
+	// Highlight
+	&__highlight {
+		text-transform: uppercase;
+		letter-spacing: .025rem; // FIXME?
+		font-size: $font-size-xs;
+		font-weight: $font-weight-bold;
 	}
 }

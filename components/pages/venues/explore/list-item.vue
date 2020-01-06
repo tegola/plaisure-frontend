@@ -1,27 +1,50 @@
 <template>
 	<div>
-		<div class="row">
-			<div class="col-3 pr-0">
-				<pg-image-frame
-					:src="photo ? photo.resized_url : null"
-					:content-class="photo ? null : 'pg-venue-grid-item__image-content'"
-					class="pg-venue-grid-item__image">
-					<component
-						:is="iconComponent"
-						v-if="!photo"
-						class="pg-venue-grid-item__image-icon"
-					/>
-				</pg-image-frame>
+		<div class="row align-items-center">
+			<div class="col-sm-3 pr-sm-0 align-self-start">
+				<nuxt-link :to="url">
+					<pg-image-frame
+						:src="photo ? photo.resized_url : null"
+						:content-class="photo ? null : 'pg-venue-grid-item__image-content'"
+						class="pg-venue-grid-item__image mb-sm-0">
+						<component
+							:is="iconComponent"
+							v-if="!photo"
+							class="pg-venue-grid-item__image-icon"
+						/>
+					</pg-image-frame>
+				</nuxt-link>
 			</div>
-			<div class="col-9">
-				<p class="mb-0 font-weight-bold">
-					<nuxt-link :to="localePath({ name: 'venues-id', params: { id: venue.id }})">{{ venue.name }}</nuxt-link>
+			<div class="col-sm-9">
+				<p class="pg-venue-grid-item__name mb-1">
+					<nuxt-link :to="url">{{ venue.name }}</nuxt-link>
 				</p>
-				<p v-if="venue.distance" class="text-muted">{{ venue.distance | formatDistance }}</p>
-				<p v-if="venue.categories.length" class="small text-uppercase text-muted mb-1">{{ categories }}</p>
-				<p class="mb-0">{{ address }}</p>
+				<p v-if="categories.length || venue.rating.count" class="small mb-0">
+					<template v-if="categories.length">{{ categories }}</template>
+					<pg-rating
+						v-if="venue.rating.count"
+						simple
+						:value="venue.rating.average"
+						:class="['pg-venue-grid-item__rating', categories.length ? 'ml-1' : null]"
+					/>
+				</p>
+				<p class="small">
+					{{ address }}
+					<span v-if="venue.distance" class="text-muted">&mdash; {{ venue.distance | formatDistance }}</span>
+				</p>
 
-				<p v-if="truncatedDescription" class="small">{{ truncatedDescription }}</p>
+				<ul v-if="amenities.length" class="list-inline small" :class="$mq === 'xs' || !truncatedDescription ? 'mb-0' : null">
+					<li v-for="amenity in amenities" :key="amenity.machine_name" class="list-inline-item">
+						<pg-icon
+							v-if="amenity.icon"
+							:icon="amenity.icon"
+							class="mr-1"
+						/>
+						{{ $t(`data.amenities.${amenity.machine_name}`) }}
+					</li>
+				</ul>
+
+				<p v-if="truncatedDescription && $mq !== 'xs'" class="small mb-0">{{ truncatedDescription }}</p>
 			</div>
 		</div>
 	</div>
@@ -31,10 +54,12 @@
 import { truncate } from 'lodash'
 import PgVenueItemMixin from '@/mixins/venue-collection-item'
 import PgImageFrame from '@/components/image-frame'
+import PgRating from '@/components/rating'
 
 export default {
 	components: {
-		PgImageFrame
+		PgImageFrame,
+		PgRating
 	},
 
 	mixins: [PgVenueItemMixin],
