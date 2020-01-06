@@ -36,7 +36,6 @@
 
 <script>
 import { BListGroup, BListGroupItem } from 'bootstrap-vue'
-import PgImageFrame from '@/components/image-frame'
 import PgUserVenueListItem from '@/components/pages/user/venue-list-item'
 
 export default {
@@ -45,8 +44,7 @@ export default {
 	components: {
 		BListGroup,
 		BListGroupItem,
-		PgUserVenueListItem,
-		PgImageFrame
+		PgUserVenueListItem
 	},
 
 	head() {

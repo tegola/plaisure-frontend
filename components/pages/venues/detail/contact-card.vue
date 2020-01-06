@@ -76,7 +76,6 @@
 
 <script>
 import capitalize from 'lodash/capitalize'
-import PgImageFrame from '@/components/image-frame'
 import { isVenueOpen } from '@/utilities'
 
 const indexToDayName = (index, locale) => {
@@ -91,10 +90,6 @@ const indexToDayName = (index, locale) => {
 
 export default {
 	name: 'PgVenueDetailPageContactCard',
-
-	components: {
-		PgImageFrame
-	},
 
 	props: {
 		venue: {

@@ -53,15 +53,8 @@
 <script>
 import { truncate } from 'lodash'
 import PgVenueItemMixin from '@/mixins/venue-collection-item'
-import PgImageFrame from '@/components/image-frame'
-import PgRating from '@/components/rating'
 
 export default {
-	components: {
-		PgImageFrame,
-		PgRating
-	},
-
 	mixins: [PgVenueItemMixin],
 
 	computed: {

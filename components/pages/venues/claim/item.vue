@@ -21,14 +21,9 @@
 
 <script>
 import PgVenueItemMixin from '@/mixins/venue-collection-item'
-import PgImageFrame from '@/components/image-frame'
 
 export default {
 	name: 'PgVenueClaimPageItem',
-
-	components: {
-		PgImageFrame
-	},
 
 	mixins: [PgVenueItemMixin]
 }

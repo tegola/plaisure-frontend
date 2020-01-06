@@ -46,14 +46,12 @@
 <script>
 import { BListGroupItem } from 'bootstrap-vue'
 import PgVenueItemMixin from '@/mixins/venue-collection-item'
-import PgImageFrame from '@/components/image-frame'
 
 export default {
 	name: 'PgUserVenueListItem',
 
 	components: {
-		BListGroupItem,
-		PgImageFrame
+		BListGroupItem
 	},
 
 	mixins: [PgVenueItemMixin],

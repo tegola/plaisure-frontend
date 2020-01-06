@@ -102,15 +102,12 @@ import draggable from 'vuedraggable'
 import { BProgress } from 'bootstrap-vue'
 import VueUploader from 'vue-upload-component/dist/vue-upload-component.part.js' // FIXME: Make custom component
 
-import PgImageFrame from '@/components/image-frame'
-
 export default {
 	name: 'PhotosPane',
 
 	components: {
 		draggable,
 		BProgress,
-		PgImageFrame,
 		VueUploader
 	},
 
