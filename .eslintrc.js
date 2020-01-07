@@ -22,6 +22,7 @@ module.exports = {
     'indent': ['error', 'tab', {
       'SwitchCase': 1
     }],
+    'no-console': ['warn'],
     'vue/html-indent': ['error', 'tab'],
     'vue/html-closing-bracket-newline': false,
     'vue/singleline-html-element-content-newline': false,

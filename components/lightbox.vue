@@ -1,5 +1,5 @@
 <template>
-	<transition name="pg-lightbox--visible" @before-leave="beforeLeave" @after-leave="afterLeave">
+	<transition @before-leave="beforeLeave" @after-leave="afterLeave">
 		<div
 			class="pg-lightbox"
 			tabindex="0"
@@ -221,149 +221,149 @@ export default {
 	transition: opacity 200ms;
 	display: flex;
 	flex-direction: column;
-}
 
-// Header
-.pg-lightbox__header {
-	display: flex;
-	padding: 1rem;
-	align-items: center;
-}
-.pg-lightbox__title-container {
-	flex: 1;
-	min-width: 0; // Allow text-overflow to work
-}
-.pg-lightbox__title {
-	color: inherit;
-	margin: 0;
-	overflow: hidden;
-	white-space: nowrap;
-	text-overflow: ellipsis;
-}
-.pg-lightbox__subtitle {
-	color: rgba($white, 0.5);
-	margin-bottom: 0;
-	overflow: hidden;
-	white-space: nowrap;
-	text-overflow: ellipsis;
-}
-.pg-lightbox__close {
-	margin-left: 1rem;
-	cursor: pointer;
-	border: 0;
-	background-color: transparent;
-	color: inherit;
-	outline: none !important;
-	cursor: pointer;
-	opacity: 0.75;
-	transition: 100ms;
-
-	&:hover {
-		opacity: 1;
+	// Header
+	&__header {
+		display: flex;
+		padding: 1rem;
+		align-items: center;
 	}
-}
-.pg-lightbox__close-icon {
-	width: 40px;
-	height: 40px;
-}
-
-// Slider + images
-.pg-lightbox__display {
-	flex: 1;
-	display: flex;
-	flex-direction: column;
-
-	.flickity-viewport {
-		overflow: visible;
+	&__title-container {
+		flex: 1;
+		min-width: 0; // Allow text-overflow to work
 	}
-}
-.pg-lightbox__slide {
-	height: 100%;
-	width: 80%;
-	margin-left: 2.5%;
-	margin-right: 2.5%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
-.pg-lightbox__image {
-	border-radius: $border-radius-lg;
-	max-width: 100%;
-	max-height: 100%;
-	pointer-events: none;
-}
-
-// Arrows
-.pg-lightbox__arrow {
-	width: 80px;
-	height: 100%;
-	position: absolute;
-	background-color: transparent;
-	border-radius: 50%;
-	border: $border-width solid transparent;
-	z-index: 1;
-	opacity: 0.5;
-	padding-left: 1rem;
-	padding-right: 1rem;
-	color: inherit;
-	outline: none !important;
-	cursor: pointer;
-	transition: 100ms;
-
-	&:hover {
-		opacity: 1;
+	&__title {
+		color: inherit;
+		margin: 0;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
 	}
-}
-.pg-lightbox__prev-arrow {
-	left: 0;
-}
-.pg-lightbox__next-arrow {
-	right: 0;
-}
-.pg-lightbox__arrow-icon {
-	width: 40px;
-	height: 40px;
-}
-
-// Thumbnails
-.pg-lightbox__thumbnail-list {
-	padding: 2rem;
-	display: flex;
-	justify-content: center;
-	overflow-x: auto;
-}
-.pg-lightbox__thumbnail {
-	flex: 0 0 auto;
-	width: 80px;
-	height: 60px;
-	background-size: cover;
-	background-position: center center;
-	background-repeat: no-repeat;
-	border-radius: $border-radius-sm;
-	opacity: 0.5;
-	border: ($border-width * 2) solid transparent;
-	cursor: pointer;
-	transition: 200ms, transform 100ms;
-
-	& + & {
+	&__subtitle {
+		color: rgba($white, 0.5);
+		margin-bottom: 0;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+	}
+	&__close {
 		margin-left: 1rem;
+		cursor: pointer;
+		border: 0;
+		background-color: transparent;
+		color: inherit;
+		outline: none !important;
+		cursor: pointer;
+		opacity: 0.75;
+		transition: 100ms;
+
+		&:hover {
+			opacity: 1;
+		}
+	}
+	&__close-icon {
+		width: 40px;
+		height: 40px;
 	}
 
-	&:hover {
-		opacity: 1;
-	}
-	&#{&}--selected {
-		border-color: $light;
-		opacity: 1;
-	}
-}
+	// Slider + images
+	&__display {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
 
-.pg-lightbox--visible-enter-active,
-.pg-lightbox--visible-leave-active {
-	transition: opacity 200ms;
-}
-.pg-lightbox--visible-enter,
-.pg-lightbox--visible-leave-to /* .fade-leave-active below version 2.1.8 */ {
-	opacity: 0;
+		.flickity-viewport {
+			overflow: visible;
+		}
+	}
+	&__slide {
+		height: 100%;
+		width: 80%;
+		margin-left: 2.5%;
+		margin-right: 2.5%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	&__image {
+		border-radius: $border-radius-lg;
+		max-width: 100%;
+		max-height: 100%;
+		pointer-events: none;
+	}
+
+	// Arrows
+	&__arrow {
+		width: 80px;
+		height: 100%;
+		position: absolute;
+		background-color: transparent;
+		border-radius: 50%;
+		border: $border-width solid transparent;
+		z-index: 1;
+		opacity: 0.5;
+		padding-left: 1rem;
+		padding-right: 1rem;
+		color: inherit;
+		outline: none !important;
+		cursor: pointer;
+		transition: 100ms;
+
+		&:hover {
+			opacity: 1;
+		}
+	}
+	&__prev-arrow {
+		left: 0;
+	}
+	&__next-arrow {
+		right: 0;
+	}
+	&__arrow-icon {
+		width: 40px;
+		height: 40px;
+	}
+
+	// Thumbnails
+	&__thumbnail-list {
+		padding: 2rem;
+		display: flex;
+		justify-content: center;
+		overflow-x: auto;
+	}
+	&__thumbnail {
+		flex: 0 0 auto;
+		width: 80px;
+		height: 60px;
+		background-size: cover;
+		background-position: center center;
+		background-repeat: no-repeat;
+		border-radius: $border-radius-sm;
+		opacity: 0.5;
+		border: ($border-width * 2) solid transparent;
+		cursor: pointer;
+		transition: 200ms, transform 100ms;
+
+		& + & {
+			margin-left: 1rem;
+		}
+
+		&:hover {
+			opacity: 1;
+		}
+		&--selected {
+			border-color: $light;
+			opacity: 1;
+		}
+	}
+
+	&.v-enter-active,
+	&.v-leave-active {
+		transition: opacity 200ms;
+	}
+	&.v-enter,
+	&.v-leave-to /* .fade-leave-active below version 2.1.8 */ {
+		opacity: 0;
+	}
 }
 </style>

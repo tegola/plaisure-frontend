@@ -124,7 +124,7 @@
 
 			<!-- Venue list (always visible) -->
 			<template v-for="(venue, index) in venues">
-				<hr v-if="index" :key="`separator-${venue.id}`" class="w-100" />
+				<hr v-if="index" :key="`separator-${venue.id}`" class="w-100">
 				<pg-venue-list-item
 					:key="`venue-${venue.id}`"
 					:venue="venue"

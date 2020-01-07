@@ -6,7 +6,8 @@
  ☐ Aggiustare "registrati come owner" quando l'utente è già registrato e renderlo owner in qualche modo
  ☐ Disattivare il reporting delle eccezioni di OAuth
  ☐ Ricerca con cluster di marker numerati nella mappa
-
+ ☐ Importer per Coral
+ ☐ Affiliazione Eurobet e Snai
  ☐ Email di benvenuto (verifica) all'utente dopo la registrazione
  ☐ Aggiungere i link a terms of service e privacy policy (footer, registrazione utente e modifica piano)
  ☐ Aggiungere pezzi per permettere alle sale premium di salire nella ricerca o essere più visibili
@@ -24,10 +25,8 @@
  ☐ Passare la lingua selezionata al client @low
  ☐ Modifica dati utente: aggiungere validazioni lato client in cui non si possono nullare i campi di fatturazione se ci sono sottoscrizioni attive @low
 
- ☐ Sistema di importazione dati
  ☐ Cookie law + GDPR
  ☐ Fatturazione utente (IVA) per nazione
- ☐ Prezzi, limiti e bonus iniziali
 
 Recensioni:
  ☐ Aggiungere gestione recensioni lato profilo utente
@@ -65,16 +64,13 @@ SEO e analytics:
 Pagina dettaglio:
  ☐ Ottimizzazione per mobile
  ☐ Link di facebook/twitter/messenger nella card a destra
- ☐ Iconcine ai servizi disponibili
+ ✔ Iconcine ai servizi disponibili @done (20-01-06 19:16)
  ☐ Link a ricerca automatica di hotel e ristoranti nelle vicinanze con programma affiliazione TripAdvisor o Booking.com
 
 Home:
  ☐ Il pulsante di localizzazione deve funzionare con un solo tap
 
 Ricerca:
- ☐ Aggiungere indicatore "sto cercando"
- ☐ Mobile: la ricerca deve partire da sola quando si sceglie la città da dropdown
- ☐ Fare in modo che se non ci sono dati da cui partire, appaia "inserisci la tua città qui"
  ☐ Quando non c'è nessun risultato, mostrare il "nessun risultato" più carino e con la possibilità di impostare il tipo a "tutto"
  ☐ Priorità alle attività paganti, con indicatore più visibile
  ☐ Se una sala con un bonus di distanza esce dalla mappa sparisce completamente, mentre dovrebbe comunque rimanere (ha un bonus!)
@@ -82,9 +78,6 @@ Ricerca:
 Azienda:
  ☐ Abbellire
  ☐ Testo in inglese
-
-Rivendica attività:
- ☐ Mostrare le altre attività dopo aver inserito il codice aams del soggetto
 
 Gioca responsabilmente:
  ☐ Aggiustare graficamente
