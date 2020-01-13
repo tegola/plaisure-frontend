@@ -148,7 +148,7 @@
 										</li>
 										<li class="mt-2">
 											{{ $t('pages.venue_detail.details.online_casino') }}:
-											<a v-if="venue.urls.online_casino" :href="venue.urls.online_casino" target="_blank">{{ venue.urls.online_casino }}</a>
+											<a v-if="venue.urls.online_casino" v-track-link :href="venue.urls.online_casino" target="_blank">{{ venue.urls.online_casino }}</a>
 											<span v-else class="text-muted">{{ $t('pages.venue_detail.common.unknown') }}</span>
 										</li>
 									</ul>

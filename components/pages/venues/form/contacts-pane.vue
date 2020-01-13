@@ -122,7 +122,6 @@ import { mapState } from 'vuex'
 import extend from 'lodash/extend'
 import { BFormGroup, BFormInput, BInputGroup } from 'bootstrap-vue'
 import formGroupProps from './form-group-props'
-import autoHttps from '@/directives/auto-https'
 
 export default {
 	name: 'ContactsPane',
@@ -134,7 +133,23 @@ export default {
 	},
 
 	directives: {
-		autoHttps
+		autoHttps: {
+			bind(el, binding, vnode) {
+				const prefix = 'https://'
+				const re = new RegExp('^http(s?)://', 'i')
+
+				const handler = function(e) {
+					const value = e.target.value
+
+					if (value.length > prefix.length && !re.test(value)) {
+						e.target.value = prefix + value
+						vnode.elm.dispatchEvent(new CustomEvent('input'))
+					}
+				}
+
+				el.addEventListener('input', handler)
+			}
+		}
 	},
 
 	data() {

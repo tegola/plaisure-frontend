@@ -145,8 +145,14 @@ module.exports = {
 		[
 			'@nuxtjs/google-analytics',
 			{
-				id: process.env.GOOGLE_ANALYTICS_ID,
-				dev: false // Disable in dev environment
+				id: process.env.GOOGLE_ANALYTICS_ID
+				/*
+				// dev: false, // Disable in dev environment,
+				debug: {
+					enabled: true,
+					sendHitTask: true // Needed for testing in dev environn
+				}
+				*/
 			}
 		]
 	],

@@ -20,7 +20,7 @@
 					<strong>{{ venue.name }}</strong>
 					<div v-for="(line, index) in addressLines" :key="index">{{ line }}</div>
 				</div>
-				<p class="mb-0"><a :href="googleMapsUrl" target="_blank">{{ $t('pages.venue_detail.card.directions') }}</a></p>
+				<p class="mb-0"><a v-track-link :href="googleMapsUrl" target="_blank">{{ $t('pages.venue_detail.card.directions') }}</a></p>
 			</div>
 
 			<!-- Business hours -->
@@ -54,8 +54,8 @@
 				<ul v-if="hasContacts" class="list-unstyled mb-0">
 					<li v-if="venue.contacts.phone"><a :href="`tel://${venue.contacts.phone}`">{{ venue.contacts.phone }}</a></li>
 					<li v-if="venue.contacts.email"><a :href="`mailto:${venue.contacts.email}`">{{ venue.contacts.email }}</a></li>
-					<li v-if="facebookMessengerUrl"><a :href="facebookMessengerUrl" target="_blank">Facebook Messenger</a></li>
-					<li v-if="twitterUrl"><a :href="twitterUrl" target="_blank">@{{ venue.contacts.twitter }}</a> <span class="text-muted">(Twitter)</span></li>
+					<li v-if="facebookMessengerUrl"><a v-track-link :href="facebookMessengerUrl" target="_blank">Facebook Messenger</a></li>
+					<li v-if="twitterUrl"><a v-track-link :href="twitterUrl" target="_blank">@{{ venue.contacts.twitter }}</a> <span class="text-muted">(Twitter)</span></li>
 				</ul>
 				<p v-else class="mb-0 text-muted">{{ $t('pages.venue_detail.card.no_contact') }}</p>
 			</div>
@@ -65,8 +65,8 @@
 				<nuxt-link v-if="showEditAction" :to="editRoute" class="float-right">{{ $t('pages.venue_detail.common.edit') }}</nuxt-link>
 				<pg-icon :class="['contact-card-list-item-icon', hasUrls ? null : 'text-muted']" icon="globe" />
 				<ul v-if="hasUrls" class="list-unstyled mb-0">
-					<li v-if="venue.urls.site"><a :href="venue.urls.site" target="_blank">{{ readableSiteUrl }}</a></li>
-					<li v-if="venue.urls.facebook"><a :href="venue.urls.facebook" target="_blank">Facebook</a></li>
+					<li v-if="venue.urls.site"><a v-track-link :href="venue.urls.site" target="_blank">{{ readableSiteUrl }}</a></li>
+					<li v-if="venue.urls.facebook"><a v-track-link :href="venue.urls.facebook" target="_blank">Facebook</a></li>
 				</ul>
 				<p v-else class="mb-0 text-muted">{{ $t('pages.venue_detail.card.no_urls') }}</p>
 			</div>

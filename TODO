@@ -25,7 +25,7 @@
  ☐ Passare la lingua selezionata al client @low
  ☐ Modifica dati utente: aggiungere validazioni lato client in cui non si possono nullare i campi di fatturazione se ci sono sottoscrizioni attive @low
 
- ☐ Cookie law + GDPR
+ ☐ Cookie law + GDPR + disabilitare analytics quando l'utente non accetta
  ☐ Fatturazione utente (IVA) per nazione
 
 Recensioni:
