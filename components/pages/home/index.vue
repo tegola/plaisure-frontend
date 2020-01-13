@@ -87,16 +87,20 @@
 				<h5>{{ $t('pages.home.explore.title') }}</h5>
 			</div>
 			<pg-scrollable-pane>
-				<div class="container">
-					<pg-token
-						v-for="preset in tokenPresets"
-						:key="preset.value"
-						:icon="preset.icon"
-						:type="preset.type"
-						:to="preset.route">
-						{{ preset.label }}
-					</pg-token>
-				</div>
+				<template #default="{ innerClass }">
+					<div class="container">
+						<div :class="innerClass">
+							<pg-token
+								v-for="preset in tokenPresets"
+								:key="preset.value"
+								:icon="preset.icon"
+								:type="preset.type"
+								:to="preset.route">
+								{{ preset.label }}
+							</pg-token>
+						</div>
+					</div>
+				</template>
 			</pg-scrollable-pane>
 		</div>
 
@@ -104,16 +108,18 @@
 			<div class="container">
 				<h5>{{ $t('pages.home.highlights.title') }}</h5>
 			</div>
-			<pg-scrollable-pane selector=".row">
-				<div class="container mb-4">
-					<div class="row">
-						<div v-for="venue in highlightedVenues" :key="venue.id" class="col-11 col-md-6 mb-4">
-							<nuxt-link :to="localePath({ name: 'venues-id', params: { id: venue.id }})" class="text-reset">
-								<pg-venue-grid-item :venue="venue" />
-							</nuxt-link>
+			<pg-scrollable-pane>
+				<template #default="{ innerClass }">
+					<div class="container mb-4">
+						<div :class="['row', innerClass]">
+							<div v-for="venue in highlightedVenues" :key="venue.id" class="col-11 col-md-6 mb-4">
+								<nuxt-link :to="localePath({ name: 'venues-id', params: { id: venue.id }})" class="text-reset">
+									<pg-venue-grid-item :venue="venue" />
+								</nuxt-link>
+							</div>
 						</div>
 					</div>
-				</div>
+				</template>
 			</pg-scrollable-pane>
 		</div>
 
@@ -121,20 +127,22 @@
 			<div class="container">
 				<h5>{{ $t('pages.home.new.title') }}</h5>
 			</div>
-			<pg-scrollable-pane selector=".row">
-				<div class="container">
-					<div class="row">
-						<div
-							v-for="(venue, index) in newVenues"
-							:key="venue.id"
-							:class="index == newVenues.length - 1 ? 'd-xl-none' : null"
-							class="col-8 col-sm-7 col-md-4 col-xl-3 mb-4">
-							<nuxt-link :to="localePath({ name: 'venues-id', params: { id: venue.id }})" class="text-reset">
-								<pg-venue-grid-item :venue="venue" />
-							</nuxt-link>
+			<pg-scrollable-pane>
+				<template #default="{ innerClass }">
+					<div class="container">
+						<div :class="['row', innerClass]">
+							<div
+								v-for="(venue, index) in newVenues"
+								:key="venue.id"
+								:class="index == newVenues.length - 1 ? 'd-xl-none' : null"
+								class="col-8 col-sm-7 col-md-4 col-xl-3 mb-4">
+								<nuxt-link :to="localePath({ name: 'venues-id', params: { id: venue.id }})" class="text-reset">
+									<pg-venue-grid-item :venue="venue" />
+								</nuxt-link>
+							</div>
 						</div>
 					</div>
-				</div>
+				</template>
 			</pg-scrollable-pane>
 		</div>
 

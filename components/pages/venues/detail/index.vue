@@ -362,22 +362,24 @@
 						<hr class="mt-3 mb-5">
 						<h5 class="mb-3">{{ $t('pages.venue_detail.nearby') }}</h5>
 					</div>
-					<pg-scrollable-pane selector=".row" class="pb-5">
-						<div class="container">
-							<div class="row">
-								<div
-									v-for="nearbyVenue in nearbyVenuesForSize"
-									:key="nearbyVenue.id"
-									class="col-11 col-sm-7 col-md-4 col-xl-3">
-									<nuxt-link :to="localePath({ name: 'venues-id', params: { id: nearbyVenue.id }})" class="text-reset">
-										<pg-venue-grid-item
-											:venue="nearbyVenue"
-											class="pg-venue-detail-page__nearby-venue-item"
-										/>
-									</nuxt-link>
+					<pg-scrollable-pane class="pb-5">
+						<template #default="{ innerClass }">
+							<div class="container">
+								<div :class="['row', innerClass]">
+									<div
+										v-for="nearbyVenue in nearbyVenuesForSize"
+										:key="nearbyVenue.id"
+										class="col-11 col-sm-7 col-md-4 col-xl-3">
+										<nuxt-link :to="localePath({ name: 'venues-id', params: { id: nearbyVenue.id }})" class="text-reset">
+											<pg-venue-grid-item
+												:venue="nearbyVenue"
+												class="pg-venue-detail-page__nearby-venue-item"
+											/>
+										</nuxt-link>
+									</div>
 								</div>
 							</div>
-						</div>
+						</template>
 					</pg-scrollable-pane>
 				</div>
 			</div>
