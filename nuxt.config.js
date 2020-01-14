@@ -121,6 +121,7 @@ module.exports = {
 			'nuxt-i18n',
 			{
 				lazy: true,
+				// seo: false, // https://nuxt-community.github.io/nuxt-i18n/seo.html#improving-performance
 				langDir: 'lang/',
 				locales: [
 					{ code: 'en', iso: 'en-GB', file: 'en', name: 'English' },

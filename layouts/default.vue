@@ -38,6 +38,11 @@ import PgStandoutAlert from '@/components/standout-alert'
 export default {
 	components: {
 		PgStandoutAlert
+	},
+
+	head() {
+		// https://nuxt-community.github.io/nuxt-i18n/seo.html#improving-performance
+		return this.$nuxtI18nSeo()
 	}
 }
 </script>

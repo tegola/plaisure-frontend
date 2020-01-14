@@ -22,6 +22,11 @@ export default {
 		PgVenueClosedErrorPage
 	},
 
+	head() {
+		// https://nuxt-community.github.io/nuxt-i18n/seo.html#improving-performance
+		return this.$nuxtI18nSeo()
+	},
+
 	props: {
 		error: {
 			type: Object,
