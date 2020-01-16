@@ -165,7 +165,7 @@ export default {
 				// Upload successful
 				if (newFile.success !== oldFile.success) {
 					const photos = this.venuePhotos.slice()
-					photos.push(newFile.response)
+					photos.push(newFile.response.data)
 					this.venuePhotos = photos
 
 					this.$refs.uploader.remove(newFile)
