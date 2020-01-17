@@ -1,6 +1,6 @@
 <template>
-	<div :class="isScrollable ? 'pg-scrollable-pane' : null">
-		<slot :inner-class="isScrollable ? 'pg-scrollable-pane__content' : null" />
+	<div :class="classes">
+		<slot :inner-class="innerClasses" />
 	</div>
 </template>
 
@@ -9,6 +9,7 @@ export default {
 	name: 'PgScrollablePane',
 
 	props: {
+		disabled: Boolean,
 		breakpoints: {
 			type: Array,
 			default: () => ['xs', 'sm']
@@ -16,6 +17,17 @@ export default {
 	},
 
 	computed: {
+		classes() {
+			return {
+				'pg-scrollable-pane': this.isScrollable,
+				'pg-scrollable-pane--disabled': this.disabled
+			}
+		},
+
+		innerClasses() {
+			return this.isScrollable ? 'pg-scrollable-pane__content' : null
+		},
+
 		isScrollable() {
 			return (
 				!this.breakpoints.length || this.breakpoints.indexOf(this.$mq) !== -1
@@ -29,6 +41,10 @@ export default {
 .pg-scrollable-pane {
 	overflow-x: auto;
 	-webkit-overflow-scrolling: touch;
+
+	&--disabled {
+		overflow-x: hidden;
+	}
 
 	&__content {
 		white-space: nowrap;

@@ -4,45 +4,57 @@
 
 		<template v-if="venue">
 			<!-- Header -->
-			<div class="header">
-				<div class="container">
-					<!-- Gallery -->
-					<div ref="gallery" class="header-gallery">
-						<div class="header-gallery-bg">
-							<div v-for="i in 6" :key="i" class="header-photo header-photo-placeholder" />
-						</div>
-						<nuxt-link v-if="showEditAction" :to="editRoute" rel="nofollow" class="header-photo header-photo-add">
-							<pg-icon icon="plus" />
-							<div>{{ $t('pages.venue_detail.gallery.add') }}</div>
-						</nuxt-link>
-						<template v-for="(file, index) in venue.photos">
-							<a
-								v-if="index < 10"
-								:key="index"
-								:href="file.resized_url"
-								class="header-photo"
-								@click.prevent="showLightbox(index)">
-								<div
-									:style="'background-image: url(' + file.thumbnail_url + ')'"
-									class="embed-responsive embed-responsive-1by1 header-photo-img"
-								/>
-							</a>
-							<a
-								v-if="index == 10"
-								:key="index"
-								:href="file.resized_url"
-								class="header-photo"
-								@click.prevent="showLightbox(index)">
-								<div :style="'background-image: url(' + file.thumbnail_url + ')'" class="embed-responsive embed-responsive-1by1 header-photo-img">
-									<div class="header-photo-zoom">
-										<pg-icon icon="search" class="mb-1" />
-										{{ $t('pages.venue_detail.gallery.all') }}
-									</div>
+			<div class="pg-venue-detail-page__header">
+				<!-- Image strip -->
+				<pg-scrollable-pane :breakpoints="[]" :disabled="!stripImages.length">
+					<template #default="{ innerClass }">
+						<div class="container">
+							<div :class="['pg-venue-detail-page__strip', innerClass]">
+								<div class="pg-venue-detail-page__strip-bg">
+									<pg-image-frame
+										v-for="index in 6"
+										:key="index"
+										ratio="1:1"
+										class="pg-venue-detail-page__strip-image"
+									/>
 								</div>
-							</a>
-						</template>
-					</div>
+								<nuxt-link v-if="showEditAction" :to="editRoute" rel="nofollow">
+									<pg-image-frame
+										ratio="1:1"
+										class="pg-venue-detail-page__strip-image"
+										content-class="pg-venue-detail-page__strip-image-content">
+										<pg-icon icon="plus" />
+										<div>{{ $t('pages.venue_detail.gallery.add') }}</div>
+									</pg-image-frame>
+								</nuxt-link>
+								<template v-for="(photo, index) in stripImages">
+									<a
+										v-if="index < stripImages.length"
+										:key="photo.id"
+										:href="photo.resized_url"
+										@click.prevent="showLightbox(index)">
+										<pg-image-frame
+											:src="photo.resized_url"
+											ratio="1:1"
+											class="pg-venue-detail-page__strip-image"
+										/>
+									</a>
+								</template>
+								<pg-image-frame
+									v-if="venue.photos.length > stripImages.length"
+									ratio="1:1"
+									class="pg-venue-detail-page__strip-image"
+									content-class="pg-venue-detail-page__strip-image-content"
+									@click.prevent="showLightbox(stripImages.length)">
+									<pg-icon icon="search" class="mb-1" />
+									<div>{{ $t('pages.venue_detail.gallery.all') }}</div>
+								</pg-image-frame>
+							</div>
+						</div>
+					</template>
+				</pg-scrollable-pane>
 
+				<div class="container">
 					<!-- Title -->
 					<div class="row">
 						<div class="col-lg-8">
@@ -389,8 +401,8 @@
 				:title="venue.name"
 				:images="lightboxImages"
 				:index="lightboxIndex"
-				:arrows="$mq === 'md' || $mq === 'lg' || $mq === 'xl'"
-				:thumbnails="$mq === 'md' || $mq === 'lg' || $mq === 'xl'"
+				:arrows="['md', 'lg', 'xl'].indexOf($mq) !== -1"
+				:thumbnails="['md', 'lg', 'xl'].indexOf($mq) !== -1"
 				@close="closeLightbox"
 			/>
 		</template>
@@ -497,6 +509,12 @@ export default {
 					? this.$t('pages.venue_detail.favorites.remove')
 					: this.$t('pages.venue_detail.favorites.add')
 			}
+		},
+
+		stripImages() {
+			const photos = this.venue.photos
+
+			return photos ? photos.slice(0, 7) : []
 		},
 
 		lightboxImages() {
@@ -684,80 +702,42 @@ export default {
 }
 </script>
 
-
 <style lang="scss">
 .pg-venue-detail-page {
-	// Header
-	.header {
+	&__header {
 		background-color: $green-100;
 		padding-top: $spacer;
 		padding-bottom: $spacer * 6; // Space for the contact card
 	}
-	.header-gallery {
+
+	&__strip {
 		display: flex;
-		overflow: auto;
 		position: relative;
 		margin-bottom: $spacer * 2;
 	}
-	.header-gallery-bg {
+	&__strip-bg {
 		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
 		overflow: hidden;
 		z-index: 0;
 		display: flex;
 		pointer-events: none;
 	}
-	.header-photo {
-		position: relative; // Stay above the background boxes
-		width: 100px;
-		height: 100px;
+	&__strip-image {
 		background-color: $body-bg;
-		border: $border-width solid $olive-200;
-		border-radius: $border-radius;
-		display: flex;
+		width: 40vw;
 		flex-shrink: 0;
-		align-items: center;
-		justify-content: center;
-		overflow: hidden;
-		padding: 0.25rem;
-		transition: $transition-base, padding 0ms, width 0ms, height 0ms;
-
-		&:hover,
-		&:focus {
-			color: $primary;
-			border-color: $primary;
-			box-shadow: inset 0 0 0 1px $primary;
-		}
-	}
-	.header-photo + .header-photo {
-		margin-left: map-get($spacers, 2);
-	}
-	.header-photo-img {
-		background-position: center center;
-		background-size: cover;
-	}
-	.header-photo-add {
-		flex-direction: column;
-		text-decoration: none;
 		color: $gray-500;
-		text-align: center;
+		border: $border-width solid transparent;
+		border-radius: $border-radius;
+		margin-right: $grid-gutter-width / 2;
 	}
-	.header-photo-zoom {
-		background-color: rgba(#000, 0.33);
-		color: #fff;
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		padding: 0.5rem;
+	&__strip-image-content {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
+		text-decoration: none;
+		text-align: center;
 	}
 
 	// Contact card
@@ -889,21 +869,29 @@ export default {
 	}
 
 	@include media-breakpoint-up(sm) {
+		&__strip-image {
+			width: 33vw;
+		}
 		.contact-card-map {
 			background-size: 150%;
 		}
 	}
 
 	@include media-breakpoint-up(md) {
-		.header-gallery {
-			margin-top: $spacer * 2;
+		&__strip {
 			margin-bottom: $spacer * 4.5;
-			overflow: hidden;
 		}
-		.header-photo {
+		&__strip-image {
+			cursor: pointer;
 			width: 200px;
-			height: 200px;
-			padding: 0.5rem;
+			transition: $transition-base, padding 0ms, width 0ms, height 0ms;
+
+			&:hover,
+			&:focus {
+				color: $primary;
+				border-color: $primary;
+				box-shadow: inset 0 0 0 1px $primary;
+			}
 		}
 		.contact-card-map {
 			background-size: 100%;
@@ -911,7 +899,7 @@ export default {
 	}
 
 	@include media-breakpoint-up(lg) {
-		.header {
+		&__header {
 			padding-bottom: $spacer;
 		}
 		.contact-card {
