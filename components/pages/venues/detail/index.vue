@@ -6,7 +6,7 @@
 			<!-- Header -->
 			<div class="pg-venue-detail-page__header">
 				<!-- Image strip -->
-				<pg-scrollable-pane :breakpoints="[]" :disabled="!stripImages.length">
+				<pg-scrollable-pane :breakpoints="[]" :disabled="!stripImages.length" class="pg-venue-detail-page__strip-container">
 					<template #default="{ innerClass }">
 						<div class="container">
 							<div :class="['pg-venue-detail-page__strip', innerClass]">
@@ -710,10 +710,12 @@ export default {
 		padding-bottom: $spacer * 6; // Space for the contact card
 	}
 
+	&__strip-container {
+		margin-bottom: $spacer * 2;
+	}
 	&__strip {
 		display: flex;
 		position: relative;
-		margin-bottom: $spacer * 2;
 	}
 	&__strip-bg {
 		position: absolute;
@@ -722,7 +724,8 @@ export default {
 		display: flex;
 		pointer-events: none;
 	}
-	&__strip-image {
+	// FIXME: https://github.com/nuxt/nuxt.js/issues/4219
+	& &__strip-image {
 		background-color: $body-bg;
 		width: 40vw;
 		flex-shrink: 0;
@@ -831,9 +834,10 @@ export default {
 		line-height: 0;
 		margin-right: ($spacer / 2);
 	}
-	&__rating-division-star {
-		width: 10px !important;
-		height: 10px !important;
+	// FIXME: https://github.com/nuxt/nuxt.js/issues/4219
+	& &__rating-division-star {
+		width: 10px;
+		height: 10px;
 		color: $gray-600;
 	}
 	&__rating-division-progress {
@@ -869,7 +873,8 @@ export default {
 	}
 
 	@include media-breakpoint-up(sm) {
-		&__strip-image {
+		// FIXME: https://github.com/nuxt/nuxt.js/issues/4219
+		& &__strip-image {
 			width: 33vw;
 		}
 		.contact-card-map {
@@ -878,10 +883,8 @@ export default {
 	}
 
 	@include media-breakpoint-up(md) {
-		&__strip {
-			margin-bottom: $spacer * 4.5;
-		}
-		&__strip-image {
+		// FIXME: https://github.com/nuxt/nuxt.js/issues/4219
+		& &__strip-image {
 			cursor: pointer;
 			width: 200px;
 			transition: $transition-base, padding 0ms, width 0ms, height 0ms;
@@ -902,6 +905,10 @@ export default {
 		&__header {
 			padding-bottom: $spacer;
 		}
+		&__strip-container {
+			margin-bottom: $spacer * 4.5;
+		}
+
 		.contact-card {
 			margin-top: -($spacer * 7.5);
 			position: sticky;
