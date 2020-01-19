@@ -10,6 +10,12 @@ body,
 	min-height: 100vh;
 }
 
+// Remove focus ring added in bootstrap 4.4
+// https://github.com/twbs/bootstrap/pull/28437/files
+[tabindex="-1"]:focus {
+	outline: 0 !important;
+}
+
 // Prevent scroling the container/body
 .pg--pg-overlay-open {
 	overflow: hidden; // Disable scroll

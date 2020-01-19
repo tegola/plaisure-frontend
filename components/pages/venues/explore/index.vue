@@ -592,7 +592,7 @@ export default {
 				})
 			} catch (err) {
 				this.userLocation = null
-				alert(this.$t('pages.explore.form.location_error'))
+				alert(this.$t('pages.explore.form.location.geolocalization_error'))
 			} finally {
 				this.locating = false
 			}
