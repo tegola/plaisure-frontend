@@ -86,7 +86,13 @@
 						<pg-icon icon="map" class="mr-1" />
 						{{ $t('pages.explore.form.view.map') }}
 					</b-nav-item>
-					<div class="ml-auto small text-muted">
+					<div class="ml-auto small text-muted d-flex align-items-center">
+						<pg-icon
+							v-if="loading"
+							icon="circle-outline-notch"
+							spinning
+							class="mr-1"
+						/>
 						{{ $tc('pages.explore.form.results', pagination.total || null) }}
 					</div>
 				</b-nav>
@@ -346,12 +352,22 @@ export default {
 			return this.searchParams.country || this.$i18n.region
 		},
 
-		searchMode() {
-			const hasBounds = ['ne_lat', 'ne_lng', 'sw_lat', 'sw_lng'].every(
+		hasSearchBounds() {
+			return ['ne_lat', 'ne_lng', 'sw_lat', 'sw_lng'].every(
 				key => this.searchParams[key]
 			)
+		},
 
-			return hasBounds ? 'bounds' : 'center'
+		hasSearchCenter() {
+			return ['c_lat', 'c_lng'].every(key => this.searchParams[key])
+		},
+
+		hasSearchParams() {
+			return this.hasSearchBounds || this.hasSearchCenter
+		},
+
+		searchMode() {
+			return this.hasSearchBounds ? 'bounds' : 'center'
 		},
 
 		searchFieldPlaceholder() {
@@ -421,10 +437,6 @@ export default {
 			}));
 		},
 		*/
-
-		hasSearchParams() {
-			return !!(this.searchParams.c_lat && this.searchParams.c_lng)
-		},
 
 		hasMorePages() {
 			return this.pagination

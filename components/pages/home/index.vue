@@ -242,15 +242,16 @@ export default {
 					label: this.$t(`data.categories.${category.machine_name}`),
 					route: this.localePath({
 						name: 'venues-explore',
-						query: {
+						query: toQueryParams({
 							country: this.$i18n.region,
 							categories: [category.id],
 							ne_lat: this.$constants[defaultBoundsKey].ne.lat,
 							ne_lng: this.$constants[defaultBoundsKey].ne.lng,
 							sw_lat: this.$constants[defaultBoundsKey].sw.lat,
 							sw_lng: this.$constants[defaultBoundsKey].sw.lng,
-							zoom: this.$constants[defaultZoomKey]
-						}
+							zoom: this.$constants[defaultZoomKey],
+							view: 'map'
+						})
 					})
 				})
 			})
@@ -264,7 +265,7 @@ export default {
 					label: city.query,
 					route: this.localePath({
 						name: 'venues-explore',
-						query: city
+						query: toQueryParams(city)
 					})
 				})
 			})
