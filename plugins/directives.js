@@ -12,20 +12,8 @@ Vue.directive('track-link', {
 		if (!ga) return
 
 		el.addEventListener('click', e => {
-			const url = e.target.href
-			const newWindow = e.target.target
-
-			e.preventDefault()
-
-			ga.event('outbound', 'link', url, {
-				transport: 'beacon',
-				hitCallback() {
-					if (newWindow) {
-						window.open(url)
-					} else {
-						document.location = url
-					}
-				}
+			ga.event('outbound', 'link', e.target.href, {
+				transport: 'beacon'
 			})
 		})
 	}
