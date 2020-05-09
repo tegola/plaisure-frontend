@@ -19,7 +19,6 @@ export default ({ app }) => {
 	}
 
 	// Language setup with lazy loading ---------------------------------------
-	/*
 	i18n.loadLanguage = language => {
 		if (i18n.locale !== language && !i18n.loadedLanguages.includes(language)) {
 			return import(`@/lang/${language}`).then(messages => {
@@ -30,5 +29,4 @@ export default ({ app }) => {
 		}
 		return Promise.resolve(language)
 	}
-	*/
 }

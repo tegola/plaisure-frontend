@@ -7,7 +7,7 @@ export default function({ $axios, app, redirect }) {
 	$axios.onError(error => {
 		const code = parseInt(error.response && error.response.status)
 
-		if ([401, 403].includes(code)) {
+		if (code === 401) {
 			auth.logout()
 			redirect('/login')
 		}

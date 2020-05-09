@@ -73,7 +73,7 @@ import { required, email, minLength } from 'vuelidate/lib/validators'
 export default {
 	name: 'PgRegisterPage',
 
-	middleware: 'redirect-if-authenticated',
+	middleware: 'guest',
 
 	components: {
 		BFormGroup,
@@ -154,9 +154,13 @@ export default {
 					this.$route.query.redirect ||
 					this.$auth.$storage.getUniversal('redirect')
 
+				const defaultRedirect = this.asOwner
+					? this.localePath('index')
+					: this.localePath('user-venues-add')
+
 				this.$auth.$storage.setUniversal('redirect', null)
 
-				this.$router.push(redirect || this.localePath('index'))
+				this.$router.push(redirect || defaultRedirect)
 			} catch (err) {
 				const data = err.response.data
 

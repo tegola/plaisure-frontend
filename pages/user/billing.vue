@@ -1,76 +1,86 @@
 <template>
 	<div>
-		<h3 class="h4">{{ $t('pages.user_billing.title') }}</h3>
-		<p class="text-muted">{{ $t('pages.user_billing.intro') }}</p>
+		<pg-navbar variant="dark" />
 
-		<form method="post" class="mt-4" @submit.prevent="submit">
-			<b-form-group
-				:state="!$v.model.legal_name.$error"
-				:label="$t('pages.user_billing.legal_name')"
-				:invalid-feedback="$t('pages.user_billing.legal_name_error')">
-				<b-form-input v-model="model.legal_name" type="text" autocomplete="organization" />
-			</b-form-group>
-			<b-form-group
-				:state="!$v.model.address_line1.$error"
-				:label="$t('pages.user_billing.address')"
-				:invalid-feedback="$t('pages.user_billing.address_error')">
-				<b-form-input v-model="model.address_line1" type="text" autocomplete="address-line1" class="mb-2" />
-				<b-form-input v-model="model.address_line2" type="text" autocomplete="address-line2" />
-			</b-form-group>
-			<div class="form-row">
-				<div class="col-sm-4">
-					<b-form-group
-						:state="!$v.model.address_postcode.$error"
-						:label="$t('pages.user_billing.postcode')"
-						:invalid-feedback="$t('pages.user_billing.postcode_error')">
-						<b-form-input v-model="model.address_postcode" type="text" autocomplete="postal-code" />
-					</b-form-group>
-				</div>
-				<div class="col-sm-8">
-					<b-form-group
-						:state="!$v.model.address_city.$error"
-						:label="$t('pages.user_billing.city')"
-						:invalid-feedback="$t('pages.user_billing.city_error')">
-						<b-form-input v-model="model.address_city" type="text" autocomplete="address-level2" />
-					</b-form-group>
+		<div class="container my-5">
+			<pg-breadcrumb :items="breadcrumbItems" />
+
+			<div class="row">
+				<div class="mx-md-auto col-md-8 col-lg-6">
+					<h1 class="h4">{{ $t('pages.user.billing.title') }}</h1>
+					<p class="text-muted">{{ $t('pages.user.billing.intro') }}</p>
+
+					<form method="post" class="mt-4" @submit.prevent="submit">
+						<b-form-group
+							:state="!$v.model.legal_name.$error"
+							:label="$t('pages.user.billing.legal_name')"
+							:invalid-feedback="$t('pages.user.billing.legal_name_error')">
+							<b-form-input v-model="model.legal_name" type="text" autocomplete="organization" />
+						</b-form-group>
+						<b-form-group
+							:state="!$v.model.address_line1.$error"
+							:label="$t('pages.user.billing.address')"
+							:invalid-feedback="$t('pages.user.billing.address_error')">
+							<b-form-input v-model="model.address_line1" type="text" autocomplete="address-line1" class="mb-2" />
+							<b-form-input v-model="model.address_line2" type="text" autocomplete="address-line2" />
+						</b-form-group>
+						<div class="form-row">
+							<div class="col-sm-4">
+								<b-form-group
+									:state="!$v.model.address_postcode.$error"
+									:label="$t('pages.user.billing.postcode')"
+									:invalid-feedback="$t('pages.user.billing.postcode_error')">
+									<b-form-input v-model="model.address_postcode" type="text" autocomplete="postal-code" />
+								</b-form-group>
+							</div>
+							<div class="col-sm-8">
+								<b-form-group
+									:state="!$v.model.address_city.$error"
+									:label="$t('pages.user.billing.city')"
+									:invalid-feedback="$t('pages.user.billing.city_error')">
+									<b-form-input v-model="model.address_city" type="text" autocomplete="address-level2" />
+								</b-form-group>
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="col-sm">
+								<b-form-group
+									:state="!$v.model.address_region.$error"
+									:label="$t('pages.user.billing.region')"
+									:invalid-feedback="$t('pages.user.billing.region_error')">
+									<b-form-input v-model="model.address_region" type="text" autocomplete="address-level1" />
+								</b-form-group>
+							</div>
+							<div class="col-sm">
+								<b-form-group
+									:state="!$v.model.country.$error"
+									:label="$t('pages.user.billing.country')"
+									:invalid-feedback="$t('pages.user.billing.country_error')">
+									<b-form-select v-model="model.country" :options="$countrySelectOptions" />
+								</b-form-group>
+							</div>
+						</div>
+						<b-form-group
+							:state="!$v.model.vat_number.$error"
+							:label="$t('pages.user.billing.vat_number')"
+							:invalid-feedback="$t('pages.user.billing.vat_number_error')">
+							<b-form-input v-model="model.vat_number" type="text" />
+						</b-form-group>
+
+						<div class="mt-4 text-right">
+							<pg-button
+								:loading="loading"
+								type="submit"
+								variant="primary">
+								{{ $t('common.actions.save') }}
+							</pg-button>
+						</div>
+					</form>
 				</div>
 			</div>
-			<div class="form-row">
-				<div class="col-sm">
-					<b-form-group
-						:state="!$v.model.address_region.$error"
-						:label="$t('pages.user_billing.region')"
-						:invalid-feedback="$t('pages.user_billing.region_error')">
-						<b-form-input v-model="model.address_region" type="text" autocomplete="address-level1" />
-					</b-form-group>
-				</div>
-				<div class="col-sm">
-					<b-form-group
-						:state="!$v.model.country.$error"
-						:label="$t('pages.user_billing.country')"
-						:invalid-feedback="$t('pages.user_billing.country_error')">
-						<b-form-select v-model="model.country" :options="$countrySelectOptions" />
-					</b-form-group>
-				</div>
-			</div>
-			<b-form-group
-				:state="!$v.model.vat_number.$error"
-				:label="$t('pages.user_billing.vat_number')"
-				:invalid-feedback="$t('pages.user_billing.vat_number_error')">
-				<b-form-input v-model="model.vat_number" type="text" />
-			</b-form-group>
+		</div>
 
-			<b-form-group class="mt-3 text-right">
-				<pg-button
-					ref="submit"
-					:block="$mq === 'xs' || $mq === 'sm'"
-					:loading="loading"
-					type="submit"
-					variant="primary">
-					{{ $t('common.actions.save') }}
-				</pg-button>
-			</b-form-group>
-		</form>
+		<pg-page-footer />
 	</div>
 </template>
 
@@ -88,6 +98,8 @@ export default {
 		BFormSelect
 	},
 
+	middleware: 'auth',
+
 	mixins: [validationMixin],
 
 	data() {
@@ -98,6 +110,19 @@ export default {
 	},
 
 	computed: {
+		breadcrumbItems() {
+			return [
+				{
+					text: this.$t('pages.user.index.title'),
+					to: this.localePath('user')
+				},
+				{
+					text: this.$t('pages.user.billing.title'),
+					active: true
+				}
+			]
+		},
+
 		hasAnyLegalField() {
 			const m = this.model
 			const hasAny = [
@@ -136,7 +161,7 @@ export default {
 
 	head() {
 		return {
-			title: this.$t('pages.user_billing.title')
+			title: this.$t('pages.user.billing.title')
 		}
 	},
 
@@ -194,8 +219,15 @@ export default {
 				await this.$axios.post('/user/billing', this.model)
 				await this.$auth.fetchUser()
 
-				// Show button as successful
-				this.$refs.submit.showSuccess()
+				// Notify of success
+				this.$notify({
+					title: this.$t('pages.user.billing.submit_success_title'),
+					text: this.$t('pages.user.billing.submit_success_text'),
+					type: 'success'
+				})
+
+				// Back to user page
+				this.$router.push(this.localePath('user'))
 			} catch (err) {
 				this.$bvModal.msgBoxOk(this.$t('common.status.save_error'), {
 					centered: true,

@@ -107,6 +107,7 @@ export default {
 	computed: {
 		classes() {
 			return [
+				'pg-navbar',
 				'navbar',
 				'navbar-expand',
 				this.drawerOpen
@@ -136,7 +137,7 @@ export default {
 </script>
 
 <style lang="scss">
-.navbar {
+.pg-navbar {
 	z-index: $zindex-modal-backdrop; // Stay above fullscreen menu
 	transition: background-color $navbar-transition-duration,
 		color $navbar-transition-duration;
@@ -146,8 +147,8 @@ export default {
 // https://github.com/twbs/bootstrap/issues/22471#issuecomment-338770768
 @include media-breakpoint-up('sm') {
 	.navbar-expand > .container {
-		padding-left: $navbar-padding-x;
-		padding-right: $navbar-padding-x;
+		padding-left: $navbar-nav-link-padding-x;
+		padding-right: $navbar-nav-link-padding-x;
 	}
 }
 

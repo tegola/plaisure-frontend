@@ -33,14 +33,12 @@
 </template>
 
 <script>
-import PgScrollablePane from '@/components/scrollable-pane'
 import PgVenueGridItem from '@/components/venue-grid-item'
 
 export default {
 	name: 'ApVenueClosedErrorPage',
 
 	components: {
-		PgScrollablePane,
 		PgVenueGridItem
 	},
 

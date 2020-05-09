@@ -4,4 +4,7 @@
 }
 
 // Contextual colors
-// @include text-emphasis-variant('.text-green-500', $green-500);
+@include text-emphasis-variant('.text-green-600', $green-600, true);
+@include text-emphasis-variant('.text-orange-500', $orange-500, true);
+@include text-emphasis-variant('.text-orange-600', $orange-600, true);
+@include text-emphasis-variant('.text-yellow-700', $yellow-700, true);

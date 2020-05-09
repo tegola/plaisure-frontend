@@ -87,14 +87,14 @@ export default {
 
 	computed: {
 		classes() {
+			const hasContent = this.label || this.$slots.default
+
 			return {
 				'pg-button': true,
 				'pg-button--loading': this.loading,
 				'pg-button--successful': this.successful,
-				'pg-button--icon-left':
-					(this.label || this.$slots.default) && this.iconPosition === 'left',
-				'pg-button--icon-right':
-					(this.label || this.$slots.default) && this.iconPosition === 'right'
+				'pg-button--icon-left': hasContent && this.iconPosition === 'left',
+				'pg-button--icon-right': hasContent && this.iconPosition === 'right'
 			}
 		},
 

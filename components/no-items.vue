@@ -38,7 +38,7 @@ export default {
 
 <style lang="scss">
 .pg-no-items {
-	color: $gray-400;
+	color: $gray-500;
 	text-align: center;
 
 	&__icon {

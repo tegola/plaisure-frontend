@@ -1,6 +1,8 @@
-import extend from 'lodash/extend'
-import cloneDeep from 'lodash/cloneDeep' // FIXME: replace with extend({}, ..., ...)
-import isEqual from 'lodash/isEqual'
+import {
+	extend,
+	cloneDeep, // FIXME: replace with extend({}, ..., ...)
+	isEqual
+} from 'lodash'
 
 const initialState = {
 	venue: null,

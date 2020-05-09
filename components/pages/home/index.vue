@@ -9,7 +9,7 @@
 				</svg>
 			</div>
 
-			<pg-navbar :search="false" />
+			<pg-navbar />
 
 			<div class="pg-home-page__hero-content">
 				<div class="container">
@@ -59,7 +59,6 @@
 										:disabled="!canSubmit"
 										variant="accent"
 										size="lg"
-										class="pg-home-page__search-submit-btn"
 										block
 										@click="submit">
 										{{ $t('pages.home.search.submit') }}
@@ -185,13 +184,11 @@
 
 <script>
 // import { mapState } from 'vuex'
-import extend from 'lodash/extend'
-import sortBy from 'lodash/sortBy'
+import { extend, sortBy } from 'lodash'
 import PgToken from './token'
 import searchCities from './search-cities'
 import { toQueryParams } from '@/utilities/explore-params-converter'
 import { formatGoogleMapsResult } from '@/utilities'
-import PgScrollablePane from '@/components/scrollable-pane'
 import PgPlaceTextbox from '@/components/place-textbox'
 import PgVenueGridItem from '@/components/venue-grid-item'
 
@@ -199,7 +196,6 @@ export default {
 	name: 'PgHomePage',
 
 	components: {
-		PgScrollablePane,
 		PgPlaceTextbox,
 		PgVenueGridItem,
 		PgToken

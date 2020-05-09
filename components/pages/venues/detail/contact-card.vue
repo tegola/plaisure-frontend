@@ -75,7 +75,7 @@
 </template>
 
 <script>
-import capitalize from 'lodash/capitalize'
+import { capitalize } from 'lodash'
 import { isVenueOpen } from '@/utilities'
 
 const indexToDayName = (index, locale) => {

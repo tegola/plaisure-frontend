@@ -1,4 +1,4 @@
-import extend from 'lodash/extend'
+import { extend } from 'lodash'
 
 export default venue => {
 	// General

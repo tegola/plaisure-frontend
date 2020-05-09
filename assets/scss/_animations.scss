@@ -1,4 +1,14 @@
+// Generic fade
+.fade-enter-active,
+.fade-leave-active {
+	transition: opacity 250ms;
+}
+.fade-enter,
+.fade-leave-to {
+	opacity: 0;
+}
 
+// Slide (up/down/left/right)
 .slide-up-enter-active,
 .slide-up-leave-active,
 .slide-down-enter-active,
@@ -8,7 +18,7 @@
 .slide-right-enter-active,
 .slide-right-leave-active {
 	position: absolute;
-	transition: 200ms;
+	transition: 250ms;
 	width: 100%;
 }
 

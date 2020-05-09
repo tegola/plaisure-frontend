@@ -127,7 +127,62 @@ module.exports = {
 					{ code: 'en', iso: 'en-GB', file: 'en', name: 'English' },
 					{ code: 'it', iso: 'it-IT', file: 'it', name: 'Italiano' }
 				],
-				defaultLocale: 'en'
+				defaultLocale: 'en', // for routing
+				vueI18n: {
+					fallbackLocale: 'en', // for language options
+					numberFormats: {
+						en: {
+							currency: {
+								style: 'currency',
+								currency: 'EUR'
+							}
+						},
+						it: {
+							currency: {
+								style: 'currency',
+								currency: 'EUR'
+							}
+						}
+					},
+					dateTimeFormats: {
+						en: {
+							short: {
+								year: 'numeric',
+								month: '2-digit',
+								day: '2-digit'
+							},
+							long: {
+								year: 'numeric',
+								month: 'long',
+								day: 'numeric'
+							},
+							extraLong: {
+								year: 'numeric',
+								month: 'long',
+								day: 'numeric',
+								weekday: 'long'
+							}
+						},
+						it: {
+							short: {
+								year: 'numeric',
+								month: '2-digit',
+								day: '2-digit'
+							},
+							long: {
+								year: 'numeric',
+								month: 'long',
+								day: 'numeric'
+							},
+							extraLong: {
+								year: 'numeric',
+								month: 'long',
+								day: 'numeric',
+								weekday: 'long'
+							}
+						}
+					}
+				}
 			}
 		],
 		[
@@ -173,7 +228,7 @@ module.exports = {
 	styleResources: {
 		scss: [
 			'bootstrap/scss/_functions.scss',
-			'~/assets/scss/_variables.scss',
+			'~/assets/scss/variables/_variables.scss',
 			'bootstrap/scss/_variables.scss',
 			'bootstrap/scss/_mixins.scss'
 		]

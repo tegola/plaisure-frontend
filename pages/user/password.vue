@@ -1,33 +1,43 @@
 <template>
 	<div>
-		<h3 class="h4">{{ $t('pages.user_password.title') }}</h3>
-		<p class="text-muted">{{ $t('pages.user_password.intro') }}</p>
+		<pg-navbar variant="dark" />
 
-		<form method="post" class="mt-4" @submit.prevent="submit">
-			<b-form-group
-				:state="!$v.model.new_password.$error"
-				:label="$t('pages.user_password.password')"
-				:invalid-feedback="$t('pages.user_password.password_error')"
-				:description="$v.model.new_password.$error ? null : $t('pages.user_password.password_hint')">
-				<b-form-input v-model="model.new_password" type="password" autocomplete="new-password" />
-			</b-form-group>
-			<b-form-group
-				:state="!$v.model.new_password_confirmation.$error"
-				:label="$t('pages.user_password.password_confirmation')"
-				:invalid-feedback="$t('pages.user_password.password_confirmation_error')">
-				<b-form-input v-model="model.new_password_confirmation" type="password" autocomplete="new-password" />
-			</b-form-group>
-			<b-form-group class="mt-3 text-right">
-				<pg-button
-					ref="submit"
-					:block="$mq === 'xs' || $mq === 'sm'"
-					:loading="loading"
-					type="submit"
-					variant="primary">
-					{{ $t('pages.user_password.submit') }}
-				</pg-button>
-			</b-form-group>
-		</form>
+		<div class="container my-5">
+			<pg-breadcrumb :items="breadcrumbItems" />
+
+			<div class="row">
+				<div class="mx-md-auto col-md-8 col-lg-6">
+					<h1 class="h4">{{ $t('pages.user.password.title') }}</h1>
+					<p class="text-muted">{{ $t('pages.user.password.intro') }}</p>
+
+					<form method="post" class="mt-4" @submit.prevent="submit">
+						<b-form-group
+							:state="!$v.model.new_password.$error"
+							:label="$t('pages.user.password.password')"
+							:invalid-feedback="$t('pages.user.password.password_error')"
+							:description="$v.model.new_password.$error ? null : $t('pages.user.password.password_hint')">
+							<b-form-input v-model="model.new_password" type="password" autocomplete="new-password" />
+						</b-form-group>
+						<b-form-group
+							:state="!$v.model.new_password_confirmation.$error"
+							:label="$t('pages.user.password.password_confirmation')"
+							:invalid-feedback="$t('pages.user.password.password_confirmation_error')">
+							<b-form-input v-model="model.new_password_confirmation" type="password" autocomplete="new-password" />
+						</b-form-group>
+						<div class="mt-4 text-right">
+							<pg-button
+								:loading="loading"
+								type="submit"
+								variant="primary">
+								{{ $t('pages.user.password.submit') }}
+							</pg-button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<pg-page-footer />
 	</div>
 </template>
 
@@ -38,6 +48,8 @@ import { required, minLength, sameAs } from 'vuelidate/lib/validators'
 
 export default {
 	name: 'PgUserFormPage',
+
+	middleware: 'auth',
 
 	components: {
 		BFormGroup,
@@ -56,9 +68,24 @@ export default {
 		}
 	},
 
+	computed: {
+		breadcrumbItems() {
+			return [
+				{
+					text: this.$t('pages.user.index.title'),
+					to: this.localePath('user')
+				},
+				{
+					text: this.$t('pages.user.password.title'),
+					active: true
+				}
+			]
+		}
+	},
+
 	head() {
 		return {
-			title: this.$t('pages.user_password.title')
+			title: this.$t('pages.user.password.title')
 		}
 	},
 
@@ -88,15 +115,15 @@ export default {
 			try {
 				await this.$axios.post('/user/password', this.model)
 
-				// Show button as successful
-				this.$refs.submit.showSuccess()
-
 				// Notify of success
 				this.$notify({
-					title: this.$t('pages.user_password.submit_success_title'),
-					text: this.$t('pages.user_password.submit_success_text'),
+					title: this.$t('pages.user.password.submit_success_title'),
+					text: this.$t('pages.user.password.submit_success_text'),
 					type: 'success'
 				})
+
+				// Back to user page
+				this.$router.push(this.localePath('user'))
 			} catch (err) {
 				this.$bvModal.msgBoxOk(this.$t('common.status.save_error'), {
 					centered: true,

@@ -25,12 +25,16 @@
  ☐ Passare la lingua selezionata al client @low
  ☐ Modifica dati utente: aggiungere validazioni lato client in cui non si possono nullare i campi di fatturazione se ci sono sottoscrizioni attive @low
  ☐ Rimpiazzare gli alert con i dialoghi bootstrap
+ ☐ Rimpiazzare il toast di notifica fatti con card con i toast di bootstrap
+ ☐ Upgrade a Laravel 7 e vedere cosa si può usare delle novità
 
  ☐ Cookie law + GDPR + disabilitare analytics quando l'utente non accetta
  ☐ Fatturazione utente (IVA) per nazione
 
-Recensioni:
- ☐ Aggiungere gestione recensioni lato profilo utente
+Profilo utente:
+ ☐ Aggiungere gestione recensioni personali
+ ☐ Aggiungere confronto visite nelle sale vicine nel dettaglio attività
+ ☐ Aggiungere gestione recensioni nel dettaglio attività
  
 
 Generale:
@@ -68,9 +72,6 @@ Pagina dettaglio:
  ✔ Iconcine ai servizi disponibili @done (20-01-06 19:16)
  ☐ Link a ricerca automatica di hotel e ristoranti nelle vicinanze con programma affiliazione TripAdvisor o Booking.com
 
-Home:
- ☐ Il pulsante di localizzazione deve funzionare con un solo tap
-
 Ricerca:
  ☐ Quando non c'è nessun risultato, mostrare il "nessun risultato" più carino e con la possibilità di impostare il tipo a "tutto"
  ☐ Priorità alle attività paganti, con indicatore più visibile
@@ -104,15 +105,6 @@ Sale premium:
     hanno fatto i corsi) puoi applicare il badge
  ☐ Eventi
 
-NUXT:
- ✔ Al primo caricamento di un route protetto vengo rimandato alla login anche se ho già il token @done (19-09-12 19:55)
- ✔ Controllare che il redirect dopo la login e register vada alla pagina localizzata @done (19-09-12 19:54)
- ✔ Dopo la login da /it/login vengo rimandato a / (inglese) @done (19-09-12 19:41)
- ✔ Scelta del piano non carica i dati @done (19-03-30 13:47)
- ✔ Cashier: currency in GBP? @done (19-05-01 19:35)
- ✔ ssl / https @done (19-05-01 19:35)
- ✔ deploy @done (19-05-01 19:35)
-
 Dopo il primo deploy backend:
   ✔ Aggiornare i file .env @done (19-05-01 19:00)
   ✔ Creare le chiavi (artisan passport:keys) @done (19-05-01 19:00)
@@ -142,6 +134,14 @@ Per andare online su plaisure.com:
   ✔ Cambiare le chiavi di google maps (frontend) @done (19-05-01 19:00)
   ✔ Cambiare env da test a production (così vengono usati i piani di produzione in stripe) @done (19-05-01 19:00)
   ✔ Disabilitare mailtrap @done (19-04-22 19:21)
+
+Per il prossimo deploy (analytics + nuova gestione attività):
+  ☐ PHP 7.2 sul server
+  ☐ Inserire view id giusto nel file env ONLINE
+  ☐ Togliere APP_LOCALE dal file env ONLINE
+  ☐ Copiare le credenziali json nella directory di storage
+  ☐ Deploy
+  ☐ Lanciare artisan analytics:import --days(15)
 
 Dopo OGNI deploy backend:
   ☐ /opt/plesk/php/7.2/bin/php /usr/lib64/plesk-9.0/composer.phar install

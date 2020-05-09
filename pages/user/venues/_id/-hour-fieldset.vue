@@ -2,16 +2,16 @@
 	<div>
 		<b-form-group :class="showControls ? 'mb-2' : 'mb-0'">
 			<b-form-select v-model="mode">
-				<option value="always">{{ $t('pages.venue_form.hours.always') }}</option>
-				<option value="full">{{ $t('pages.venue_form.hours.full') }}</option>
-				<option value="split">{{ $t('pages.venue_form.hours.split') }}</option>
-				<option value="closed">{{ $t('pages.venue_form.hours.closed') }}</option>
+				<option value="always">{{ $t('pages.user.venues.detail.hours.always') }}</option>
+				<option value="full">{{ $t('pages.user.venues.detail.hours.full') }}</option>
+				<option value="split">{{ $t('pages.user.venues.detail.hours.split') }}</option>
+				<option value="closed">{{ $t('pages.user.venues.detail.hours.closed') }}</option>
 			</b-form-select>
 		</b-form-group>
 
 		<div v-if="showControls" class="form-row">
 			<b-form-group
-				:label="showSecondaryControls ? $t('pages.venue_form.hours.morning') : $t('pages.venue_form.hours.from_to')"
+				:label="showSecondaryControls ? $t('pages.user.venues.detail.hours.morning') : $t('pages.user.venues.detail.hours.from_to')"
 				class="col-sm-6">
 				<b-input-group>
 					<b-form-select
@@ -28,7 +28,7 @@
 			</b-form-group>
 			<b-form-group
 				v-if="showSecondaryControls"
-				:label="$t('pages.venue_form.hours.afternoon')"
+				:label="$t('pages.user.venues.detail.hours.afternoon')"
 				class="col-sm-6">
 				<b-input-group>
 					<b-form-select
@@ -65,8 +65,6 @@ for (let h = 0; h <= 24; h++) {
 }
 
 export default {
-	name: 'PgVenuEditorHourFieldset',
-
 	components: {
 		BFormGroup,
 		BInputGroup,

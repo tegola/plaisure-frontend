@@ -6,24 +6,24 @@
 	}
 	.nav-link {
 		border: 0; // Override bootstrap
+		padding-left: $nav-tabs-link-padding-x;
+		padding-right: $nav-tabs-link-padding-x;
 		color: $gray-600;
-		text-transform: uppercase;
-		letter-spacing: 0.05em;
-		font-size: $font-size-sm;
 		position: relative;
 
 		&::after {
 			content: '';
 			position: absolute;
 			bottom: 0;
-			left: $nav-link-padding-x;
-			right: $nav-link-padding-x;
+			left: $nav-tabs-link-padding-x;
+			right: $nav-tabs-link-padding-x;
 			height: $nav-tabs-border-width;
 			transform: scaleX(0);
 			opacity: 0;
-			background-color: $nav-tabs-link-active-border-color;
-			transition: transform 150ms ease-in-out, opacity 100ms 50ms ease-in-out;
+			transition: transform 200ms ease-in-out, opacity 100ms 50ms ease-in-out;
 			pointer-events: none;
+			border-top-left-radius: $nav-tabs-border-width;
+			border-top-right-radius: $nav-tabs-border-width;
 		}
 	}
 	.nav-item:first-child .nav-link {
@@ -33,13 +33,32 @@
 			left: 0;
 		}
 	}
+	.nav-link:hover::after {
+		background-color: $nav-tabs-link-hover-border-color;
+		transform: scaleX(1);
+		opacity: 1;
+	}
 	.nav-link.active,
 	.nav-item.show .nav-link {
-		color: $body-color;
-
 		&::after {
+			background-color: $nav-tabs-link-active-border-color;
 			transform: scaleX(1);
 			opacity: 1;
+		}
+	}
+}
+
+.nav-pills {
+	.nav-link {
+		color: $gray-600;
+		transition: transform 100ms ease-in-out;
+
+		&:not(.active):hover {
+			color: $dark;
+			background-color: $light;
+		}
+		&:active {
+			transform: scale(0.97);
 		}
 	}
 }

@@ -20,15 +20,19 @@ export default {
 		},
 		actions: {
 			add: 'Add',
-			edit: 'Edit',
+			back: 'Indietro',
 			cancel: 'Cancel',
-			save: 'Save',
-			delete: 'Delete',
-			remove: 'Remove',
-			select: 'Select',
-			continue: 'Continue',
+			change: 'Change',
 			close: 'Close',
-			change: 'Change'
+			continue: 'Continue',
+			delete: 'Delete',
+			done: 'Done',
+			edit: 'Edit',
+			remove: 'Remove',
+			save: 'Save',
+			select: 'Select',
+			sort: 'Sort',
+			upload: 'Upload'
 		},
 		cookie: {
 			agree: 'By using this website, you agree to our {policy_link}',
@@ -297,6 +301,7 @@ export default {
 				title: 'Details',
 				concessionaire: 'Concessionaire',
 				surface_size: 'Surface size',
+				surface_size_unit: 'm²',
 				vlt_machine_count: 'Slot machines',
 				vlt_platforms: 'VLT platforms',
 				awp_machine_count: 'AWP machines',
@@ -377,122 +382,308 @@ export default {
 			}
 		},
 
-		venue_form: {
-			title: {
-				add: 'Add venue',
-				edit: 'Edit venue'
+		// /user ---------------------------------------------------------------
+		user: {
+			// /user/
+			index: {
+				title: 'My account',
+				logout: 'Logout',
+				venues_label: 'Manage venues',
+				venues_count: 'No venue added | 1 venue | {count} venues',
+				info_label: 'Personal information',
+				info_sublabel: 'Name, e-mail, language',
+				billing: 'Billing information',
+				favorites: 'Favorites',
+				password: 'Change password'
 			},
-			general: {
-				title: 'General info',
-				name: 'Name',
-				name_placeholder: 'Ex.: Las Vegas Casino',
-				name_error: 'Type the venue name.',
-				concessionaire: 'Concessionaire',
-				concessionaire_none: 'None',
-				description: 'Description',
-				surface_size: 'Surface size',
-				surface_size_unit: 'm²',
-				surface_size_error: "Insert the venue's surface size.",
-				category: 'Category',
-				category_error: 'Pick at least a category.',
-				address: 'Address',
-				address_line1_placeholder: 'Line 1',
-				address_line2_placeholder: 'Line 2',
-				address_error: 'Fill in all address data.',
-				city: 'City',
-				zipcode_province: 'Zip code & province',
-				zipcode_placeholder: 'Zip code',
-				province_placeholder: 'Province',
-				country: 'Country',
-				location: 'Location',
-				location_searching: 'Searching',
-				location_hint: 'Drag to reposition'
-			},
-			services: {
-				title: 'Services',
-				invalid_value: 'Invalid value.',
-				sports_betting: 'Sports betting',
-				virtual_betting: 'Virtual betting',
-				horse_betting: 'Horse betting',
-				arcade_roulette: 'Roulette',
-				vlt_machine_count: 'Slot machines',
-				awp_machine_count: 'AWP machines',
-				seating_capacity: 'Seatings',
-				parking_capacity: 'Parking spots',
-				vlt_platforms: 'VLT platforms',
-				amenities: 'Amenities'
-			},
-			contacts: {
-				title: 'Contacts',
-				phone: 'Phone number',
-				email: 'E-mail',
-				email_placeholder: 'Ex.: name@gmail.com',
-				email_error: 'Type a valid e-mail address.',
-				url_placeholder: 'https://',
-				url_error: "Type a valid URL, starting with 'http://' or 'https://'.",
-				site: 'Website URL',
-				online_casino: 'Online casino',
-				facebook: 'Facebook page'
-			},
-			hours: {
-				title: 'Business hours',
-				always: 'Always open (24h)',
-				full: 'All day',
-				split: 'Split hours',
-				closed: 'Closed',
-				from_to: 'From/to',
-				morning: 'Morning (from/to)',
-				afternoon: 'Afternoon (from/to)'
-			},
-			photos: {
-				title: 'Photos',
-				upload: 'Upload photo',
-				delete: {
-					title: 'Delete photo',
-					intro:
-						'Do you want to {action}?. It will be removed from the gallery but will be really deleted only once you save this venue.',
-					intro_action: 'delete this photo'
+
+			// /user/venues
+			venues: {
+				// /user/venues/
+				index: {
+					title: 'Manage venues',
+					subtitle_first: 'Start by adding your first venue.',
+					subtitle_edit: 'Click one of them to edit.',
+					add_first: 'Add your first venue',
+					add_another: 'Add another venue'
+				},
+
+				// /user/venues/add
+				add: {
+					meta_title: 'Add venue',
+					title: 'Add your venue',
+					step_1: {
+						title: "What's the name of your venue?",
+						subtitle: "Make sure it's the same as the venue sign outside.",
+						name: 'Name',
+						name_error: 'Type the venue name.'
+					},
+					step_2: {
+						title: 'Where is it?',
+						subtitle: 'Insert the full address.',
+						address: 'Address',
+						address_line1_placeholder: 'Line 1',
+						address_line2_placeholder: 'Line 2',
+						address_error: 'Fill in all address data.',
+						city: 'City',
+						zipcode_province: 'Zip code & province',
+						zipcode_placeholder: 'Zip code',
+						province_placeholder: 'Province',
+						country: 'Country'
+					},
+					step_3: {
+						title: "What's the exact location?",
+						subtitle:
+							"Let your customer find you mor easily. Drag the map so the pin matches your venue's building.",
+						location: 'Location'
+					},
+					step_4: {
+						title: 'Which of the following categories apply?',
+						subtitle: 'Choose at least one.',
+						categories: 'Categories',
+						categories_error: 'Please choose at least one category.'
+					}
+				},
+
+				// /user/venues/{id}
+				detail: {
+					title: 'Venue detail',
+					menus: {
+						overview: 'Overview',
+						general: 'General info',
+						services: 'Services',
+						photos: 'Photos',
+						contacts: 'Contacts',
+						hours: 'Business hours',
+						jackpots: 'Jackpots',
+						// reviews: 'Reviews',
+						plan: 'Plan'
+					},
+					overview: {
+						title: 'Overview',
+						stats: {
+							ratings: '{count} rating | {count} ratings',
+							reviews: 'No reviews | 1 review | {count} reviews',
+							favorites:
+								'Favorited by {count} person | Favorited by {count} people'
+						},
+						visits: {
+							title: 'Visits',
+							count: '{count} visit | {count} visits',
+							total: 'No visits | 1 total visit | {count} total visits'
+						}
+					},
+					general: {
+						title: 'General info',
+						name: 'Name',
+						name_placeholder: 'Ex.: Las Vegas Casino',
+						name_error: 'Type the venue name.',
+						concessionaire: 'Concessionaire',
+						concessionaire_none: 'None',
+						description: 'Description',
+						surface_size: 'Surface size',
+						surface_size_unit: 'm²',
+						surface_size_error: "Insert the venue's surface size.",
+						category: 'Category',
+						category_error: 'Choose at least a category.',
+						address: 'Address',
+						address_line1_placeholder: 'Line 1',
+						address_line2_placeholder: 'Line 2',
+						address_error: 'Fill in all address data.',
+						city: 'City',
+						zipcode_province: 'Zip code & province',
+						zipcode_placeholder: 'Zip code',
+						province_placeholder: 'Province',
+						country: 'Country',
+						location: 'Location',
+						location_searching: 'Searching',
+						location_hint: 'Drag to reposition'
+					},
+					services: {
+						title: 'Services',
+						invalid_value: 'Invalid value.',
+						sports_betting: 'Sports betting',
+						virtual_betting: 'Virtual betting',
+						horse_betting: 'Horse betting',
+						arcade_roulette: 'Roulette',
+						vlt_machine_count: 'Slot machines',
+						awp_machine_count: 'AWP machines',
+						seating_capacity: 'Seatings',
+						parking_capacity: 'Parking spots',
+						vlt_platforms: 'VLT platforms',
+						amenities: 'Amenities'
+					},
+					photos: {
+						title: 'Photos',
+						reorder: 'Drag images to reorder.',
+						delete: {
+							title: 'Delete photo',
+							intro:
+								'Do you want to {action}?. It will be removed from the gallery but will be really deleted only once you save this venue.',
+							intro_action: 'delete this photo'
+						},
+						no_items: {
+							title: 'No photos',
+							subtitle: 'Add the first one using the Upload button.'
+						}
+					},
+					contacts: {
+						title: 'Contacts',
+						phone: 'Phone number',
+						email: 'E-mail',
+						email_placeholder: 'Ex.: name@gmail.com',
+						email_error: 'Type a valid e-mail address.',
+						url_placeholder: 'https://',
+						url_error:
+							"Type a valid URL, starting with 'http://' or 'https://'.",
+						site: 'Website',
+						online_casino: 'Online casino',
+						facebook: 'Facebook page'
+					},
+					hours: {
+						title: 'Business hours',
+						always: 'Always open (24h)',
+						full: 'All day',
+						split: 'Split hours',
+						closed: 'Closed',
+						from_to: 'From/to',
+						morning: 'Morning (from/to)',
+						afternoon: 'Afternoon (from/to)'
+					},
+					jackpots: {
+						title: 'Jackpots',
+						name: 'Jackpot {number}',
+						name_placeholder: 'Name',
+						amount_placeholder: 'Amount'
+					},
+					reviews: {
+						title: 'Reviews'
+					},
+					plan: {
+						title: 'Plan',
+						current: {
+							title: 'Current plan',
+							price: '{price}/month',
+							payment_pending: {
+								title: 'Payment confirmation pending',
+								check:
+									'Check your e-mail inbox for any payment confirmation requests and follow the on-screen instructions.',
+								cancel:
+									'If you want to cancel the subscription and start over, click the button below.',
+								action: 'Start over'
+							},
+							ends: {
+								title: 'Ends {date}',
+								cancelled: 'You cancelled {date}.',
+								action: 'Edit subscription'
+							},
+							renews: {
+								title: 'Renews {date}',
+								action: 'Edit subscription'
+							}
+						},
+						pick_new: 'Pick a new subscription plan',
+						selected_free:
+							'You selected the free plan. This will deactivate your current subscription and your credit card will not be charged anymore. The subscription will keep working till the end of the period, on {date}.',
+						selected_paid: 'You selected a paid plan.',
+						selected_paid_input_data:
+							'Please insert you billing information and payment method.',
+						selected_paid_review_data:
+							'Make sure your billing information and payment method are up to date.',
+						resume:
+							"You cancelled this subscription on {last_update_date}, but it was being kept active until {end_date}. Subscribing again won't charge your card until that date!",
+						billing: {
+							title: 'Billing',
+							current: 'Use the currently registered billing address',
+							new: 'Use a new address',
+							new_warning: {
+								message:
+									'{warning} if you have an active subscription on your other venues, they will be updated to use the new billing information.',
+								warning: 'Warning:'
+							},
+							legal_name: 'Legal name',
+							legal_name_error: 'Please type your company legal name.',
+							address: 'Address',
+							address_error: 'Please type the address.',
+							postcode: 'Postal code',
+							postcode_error: 'Please type the postal code.',
+							city: 'City',
+							city_error: 'Please type the city name.',
+							region: 'Region',
+							region_error: 'Please type the region.',
+							country: 'Country',
+							country_error: 'Please select the country.',
+							vat_number: 'VAT number',
+							vat_number_error: 'Please type the VAT number.'
+						},
+						payment: {
+							title: 'Payment method',
+							current: 'Use the currently registered credit card',
+							new: 'Use a new credit card',
+							new_warning: {
+								message:
+									'{warning} if you have an active subscription on your other venues, they will be updated to use the new payment method.',
+								warning: 'Warning:'
+							},
+							card: 'Credit card',
+							card_expiration: 'Expiration date',
+							card_holder_name: 'Card holder name',
+							card_holder_name_error:
+								'Please type the card holder name as shown on the card itself'
+						},
+						cancel: 'Cancel subscription',
+						confirm: {
+							title: 'Confirm subscription',
+							paragraph1:
+								'This is a continuous subscription. By clicking {confirm}, you authorise {name} to charge you the subscription cost monthly (currently {price}/month). You can cancel at any time.',
+							paragraph2:
+								"By continuing, you agree to the {name}'s {tos} and {privacy}. You also agree that your purchase will be available immediately and that you waive your statutory right of withdrawal.",
+							paragraph2_tos: 'Terms of Service',
+							paragraph2_privacy: 'Privacy policy',
+							submit: 'Confirm subscription'
+						},
+						form_error:
+							'Looks like the form is incomplete: please fill out all required fields before continuing.',
+						submit_error:
+							'There was an error while trying to setup your subscription. The support team has already been informed. Please try again later.',
+						subscription_confirm: {
+							title: 'Payment confirmation required',
+							message:
+								'We need your payment confirmation. Please check your e-mail and follow the instructions.'
+						},
+						subscription_success: {
+							title: 'Subscription successful',
+							message:
+								'You subscription is now active. It will renew automatically on {date}, unless you cancel it before that date.'
+						},
+						cancellation_success: {
+							title: 'Subscription cancelled',
+							message:
+								"You subscription's auto renew has been disabled. The subscription will remain active until {date}, but you won't be charged again."
+						}
+					}
 				}
 			},
-			jackpots: {
-				title: 'Jackpots',
-				name: 'Jackpot {number}',
-				name_placeholder: 'Name',
-				amount_placeholder: 'Amount'
-			},
-			subscription: {
-				title: 'Subscription'
-			}
-		},
 
-		venue_plan: {
-			title: 'Select plan',
-			needs_payment: {
-				title: 'Payment pending',
-				line1:
-					"This venue's subscription is waiting for a payment confirmation. Check your e-mail inbox for any payment confirmation requests and follow the on-screen instructions.",
-				line2:
-					'If you want to cancel the subscription and start over, click the button below.',
-				action: 'Cancel pending subscription'
+			// /user/info
+			info: {
+				title: 'Personal information',
+				name: 'Name',
+				name_error: 'Please type your name.',
+				name_hint:
+					'Shown on your venue reviews and on messages and/or notifications you may receive from {name}.',
+				email: 'E-mail address',
+				newsletter: 'Keep me informed with new features and deals',
+				locale: 'Language and region',
+				locale_error: 'Please select your preferred language and region',
+				submit_success_title: 'Information saved',
+				submit_success_text: 'Your personal information have been updated.'
 			},
-			selected_free:
-				'You selected the free plan. This will deactivate your current subscription and your credit card will not be charged anymore. The subscription will keep working till the end of the period, on {date}.',
-			selected_paid: 'You selected a paid plan.',
-			selected_paid_input_data:
-				'Please insert you billing information and payment method.',
-			selected_paid_review_data:
-				'Make sure your billing information and payment method are up to date.',
-			resume:
-				"You cancelled this subscription on {last_update_date}, but it was being kept active until {end_date}. Subscribing again won't charge your card until that date!",
+
+			// /user/billing
 			billing: {
-				title: 'Billing',
-				current: 'Use the currently registered billing address',
-				new: 'Use a new address',
-				new_warning: {
-					message:
-						'{warning} if you have an active subscription on your other venues, they will be updated to use the new billing information.',
-					warning: 'Warning:'
-				},
+				title: 'Billing information',
+				intro: 'Will be used to generate all your invoices.',
 				legal_name: 'Legal name',
 				legal_name_error: 'Please type your company legal name.',
 				address: 'Address',
@@ -506,124 +697,33 @@ export default {
 				country: 'Country',
 				country_error: 'Please select the country.',
 				vat_number: 'VAT number',
-				vat_number_error: 'Please type the VAT number.'
+				vat_number_error: 'Please type the VAT number.',
+				submit_success_title: 'Billing info saved',
+				submit_success_text: 'Your billing information have been updated.'
 			},
-			payment: {
-				title: 'Payment method',
-				current: 'Use the currently registered credit card',
-				new: 'Use a new credit card',
-				new_warning: {
-					message:
-						'{warning} if you have an active subscription on your other venues, they will be updated to use the new payment method.',
-					warning: 'Warning:'
-				},
-				card: 'Credit card',
-				card_expiration: 'Expiration date',
-				card_holder_name: 'Card holder name',
-				card_holder_name_error:
-					'Please type the card holder name as shown on the card itself'
+
+			// /user/favorites
+			favorites: {
+				title: 'Manage favorites',
+				no_items: {
+					title: 'No favorites saved',
+					subtitle: 'You can add a favorite anytime while browsing the site.'
+				}
 			},
-			cancel: 'Cancel subscription',
-			confirm: {
-				title: 'Confirm subscription',
-				paragraph1:
-					'This is a continuous subscription. By clicking {confirm}, you authorise {name} to charge you the subscription cost monthly (currently {currency} {price}/month). You can cancel at any time.',
-				paragraph2:
-					"By continuing, you agree to the {name}'s {tos} and {privacy}. You also agree that your purchase will be available immediately and that you waive your statutory right of withdrawal.",
-				paragraph2_tos: 'Terms of Service',
-				paragraph2_privacy: 'Privacy policy',
-				submit: 'Confirm subscription'
-			},
-			form_error:
-				'Looks like the form is incomplete: please fill out all required fields before continuing.',
-			submit_error:
-				'There was an error while trying to setup your subscription. The support team has already been informed. Please try again later.',
-			subscription_confirm: {
-				title: 'Payment confirmation required',
-				message:
-					'We need your payment confirmation. Please check your e-mail and follow the instructions.'
-			},
-			subscription_success: {
-				title: 'Subscription successful',
-				message:
-					'You subscription is now active. It will renew automatically on {date}, unless you cancel it before that date.'
-			},
-			cancellation_success: {
-				title: 'Subscription cancelled',
-				message:
-					"You subscription's auto renew has been disabled. The subscription will remain active until {date}, but you won't be charged again."
+
+			// /user/password
+			password: {
+				title: 'Change password',
+				intro: 'Type a new password below to change it.',
+				password: 'New password',
+				password_hint: 'At least 8 chars, letters and numbers',
+				password_error: 'Please type at least 8 chars, letters and numbers.',
+				password_confirmation: 'Repeat password',
+				password_confirmation_error: "Passwords don't match.",
+				submit: 'Change password',
+				submit_success_title: 'Password changed',
+				submit_success_text: 'Your password has been changed successfully.'
 			}
-		},
-
-		user: {
-			menu: {
-				venues: 'Your venues',
-				info: 'Personal information',
-				billing: 'Billing information',
-				favorites: 'Favorites',
-				password: 'Change password',
-				logout: 'Logout'
-			}
-		},
-
-		user_info: {
-			title: 'Personal information',
-			name: 'Name',
-			name_error: 'Please type your name.',
-			name_hint:
-				'Shown on your venue reviews and on messages and/or notifications you may receive from {name}.',
-			email: 'E-mail address',
-			newsletter: 'Keep me informed with new features and deals',
-			locale: 'Language and region',
-			locale_error: 'Please select your preferred language and region'
-		},
-
-		user_venues: {
-			title: 'Manage your venues',
-			intro_first: 'Start by adding your first venue.',
-			intro_edit: 'Click one of them to edit.',
-			add_first: 'Add your first venue',
-			add_another: 'Add another venue'
-		},
-
-		user_billing: {
-			title: 'Billing information',
-			intro: 'Will be used to generate all your invoices.',
-			legal_name: 'Legal name',
-			legal_name_error: 'Please type your company legal name.',
-			address: 'Address',
-			address_error: 'Please type the address.',
-			postcode: 'Postal code',
-			postcode_error: 'Please type the postal code.',
-			city: 'City',
-			city_error: 'Please type the city name.',
-			region: 'Region',
-			region_error: 'Please type the region.',
-			country: 'Country',
-			country_error: 'Please select the country.',
-			vat_number: 'VAT number',
-			vat_number_error: 'Please type the VAT number.'
-		},
-
-		user_favorites: {
-			title: 'Manage favorites',
-			no_items: {
-				title: 'No favorites saved',
-				subtitle: 'You can add a favorite anytime while browsing the site.'
-			}
-		},
-
-		user_password: {
-			title: 'Change password',
-			intro: 'Type a new password below to change it.',
-			password: 'New password',
-			password_hint: 'At least 8 chars, letters and numbers',
-			password_error: 'Please type at least 8 chars, letters and numbers.',
-			password_confirmation: 'Repeat password',
-			password_confirmation_error: "Passwords don't match.",
-			submit: 'Change password',
-			submit_success_title: 'Password changed',
-			submit_success_text: 'Your password has been changed successfully.'
 		},
 
 		promote: {

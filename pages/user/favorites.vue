@@ -1,46 +1,58 @@
 <template>
 	<div class="pg-user-favorites-page">
-		<template v-if="venues.length">
-			<h3 class="h4">{{ $t('pages.user_favorites.title') }}</h3>
+		<pg-navbar variant="dark" />
 
-			<b-list-group flush class="mt-4">
-				<pg-user-venue-list-item
-					v-for="venue in venues"
-					:key="venue.id"
-					:to="localePath({ name: 'venues-id', params: { id: venue.id }})"
-					:venue="venue"
-					class="pg-user-favorites-page__list-item">
-					<div class="col-auto">
-						<pg-button
-							class="mt-2 px-2"
-							pill
-							variant="accent"
-							icon="heart"
-							:title="$t('common.actions.remove')"
-							@click="remove(venue)"
-						/>
-					</div>
-				</pg-user-venue-list-item>
-			</b-list-group>
-		</template>
+		<div class="container my-5">
+			<pg-breadcrumb :items="breadcrumbItems" />
 
-		<pg-no-items 
-			v-if="!venues.length"
-			icon="heart-outline"
-			:title="$t('pages.user_favorites.no_items.title')"
-			:subtitle="$t('pages.user_favorites.no_items.subtitle')"
-			class="py-5"
-		/>
+			<div class="row">
+				<div class="mx-md-auto col-lg-10">
+					<h1 class="h4">{{ $t('pages.user.favorites.title') }}</h1>
+
+					<b-list-group v-if="!venues.length" flush class="mt-4">
+						<pg-user-venue-list-item
+							v-for="venue in venues"
+							:key="venue.id"
+							:to="localePath({ name: 'venues-id', params: { id: venue.id }})"
+							:venue="venue"
+							class="pg-user-favorites-page__list-item">
+							<div class="col-auto">
+								<pg-button
+									class="mt-2 px-2"
+									pill
+									variant="accent"
+									icon="heart"
+									:title="$t('common.actions.remove')"
+									@click="remove(venue)"
+								/>
+							</div>
+						</pg-user-venue-list-item>
+					</b-list-group>
+
+					<pg-no-items 
+						v-if="venues.length"
+						icon="heart"
+						:title="$t('pages.user.favorites.no_items.title')"
+						:subtitle="$t('pages.user.favorites.no_items.subtitle')"
+						class="py-5"
+					/>
+				</div>
+			</div>
+		</div>
+
+		<pg-page-footer />
 	</div>
 </template>
 
 <script>
 import { BListGroup } from 'bootstrap-vue'
-import PgUserVenueListItem from '@/components/pages/user/venue-list-item'
+import PgUserVenueListItem from './-venue-list-item'
 import PgNoItems from '@/components/no-items'
 
 export default {
 	name: 'PgUserFavoritesPage',
+
+	middleware: 'auth',
 
 	components: {
 		BListGroup,
@@ -48,9 +60,24 @@ export default {
 		PgNoItems
 	},
 
+	computed: {
+		breadcrumbItems() {
+			return [
+				{
+					text: this.$t('pages.user.index.title'),
+					to: this.localePath('user')
+				},
+				{
+					text: this.$t('pages.user.favorites.title'),
+					active: true
+				}
+			]
+		}
+	},
+
 	head() {
 		return {
-			title: this.$t('pages.user_favorites.title')
+			title: this.$t('pages.user.favorites.title')
 		}
 	},
 

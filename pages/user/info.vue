@@ -1,40 +1,50 @@
 <template>
 	<div>
-		<h3 class="h4">{{ $t('pages.user_info.title') }}</h3>
+		<pg-navbar variant="dark" />
 
-		<form method="post" class="mt-4" @submit.prevent="submit">
-			<b-form-group
-				:state="!$v.model.name.$error"
-				:label="$t('pages.user_info.name')"
-				:invalid-feedback="$t('pages.user_info.name_error')"
-				:description="$v.model.name.$error ? null : $t('pages.user_info.name_hint', { name: this.$constants.APP_NAME })">
-				<b-form-input v-model="model.name" type="text" autocomplete="name" />
-			</b-form-group>
-			<b-form-group
-				:label="$t('pages.user_info.email')">
-				<b-form-input v-model="model.email" type="email" autocomplete="email" disabled />
-			</b-form-group>
-			<b-form-group>
-				<b-form-checkbox v-model="model.send_newsletter">{{ $t('pages.user_info.newsletter') }}</b-form-checkbox>
-			</b-form-group>
-			<b-form-group
-				:state="!$v.model.locale.$error"
-				:label="$t('pages.user_info.locale')"
-				:invalid-feedback="$t('pages.user_info.locale_error')">
-				<b-form-select v-model="model.locale" :options="localeOptions" />
-			</b-form-group>
+		<div class="container my-5">
+			<pg-breadcrumb :items="breadcrumbItems" />
 
-			<b-form-group class="mt-3 text-right">
-				<pg-button
-					ref="submit"
-					:block="$mq === 'xs' || $mq === 'sm'"
-					:loading="loading"
-					type="submit"
-					variant="primary">
-					{{ $t('common.actions.save') }}
-				</pg-button>
-			</b-form-group>
-		</form>
+			<div class="row">
+				<div class="mx-md-auto col-md-8 col-lg-6">
+					<h1 class="h4">{{ $t('pages.user.info.title') }}</h1>
+
+					<form method="post" class="mt-4" @submit.prevent="submit">
+						<b-form-group
+							:state="!$v.model.name.$error"
+							:label="$t('pages.user.info.name')"
+							:invalid-feedback="$t('pages.user.info.name_error')"
+							:description="$v.model.name.$error ? null : $t('pages.user.info.name_hint', { name: this.$constants.APP_NAME })">
+							<b-form-input v-model="model.name" type="text" autocomplete="name" />
+						</b-form-group>
+						<b-form-group
+							:label="$t('pages.user.info.email')">
+							<b-form-input v-model="model.email" type="email" autocomplete="email" disabled />
+						</b-form-group>
+						<b-form-group>
+							<b-form-checkbox v-model="model.send_newsletter">{{ $t('pages.user.info.newsletter') }}</b-form-checkbox>
+						</b-form-group>
+						<b-form-group
+							:state="!$v.model.locale.$error"
+							:label="$t('pages.user.info.locale')"
+							:invalid-feedback="$t('pages.user.info.locale_error')">
+							<b-form-select v-model="model.locale" :options="localeOptions" />
+						</b-form-group>
+
+						<div class="mt-4 text-right">
+							<pg-button
+								:loading="loading"
+								type="submit"
+								variant="primary">
+								{{ $t('common.actions.save') }}
+							</pg-button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<pg-page-footer />
 	</div>
 </template>
 
@@ -50,6 +60,8 @@ import { required, email } from 'vuelidate/lib/validators'
 
 export default {
 	name: 'PgUserInfoPage',
+
+	middleware: 'auth',
 
 	components: {
 		BFormGroup,
@@ -68,6 +80,19 @@ export default {
 	},
 
 	computed: {
+		breadcrumbItems() {
+			return [
+				{
+					text: this.$t('pages.user.index.title'),
+					to: this.localePath('user')
+				},
+				{
+					text: this.$t('pages.user.info.title'),
+					active: true
+				}
+			]
+		},
+
 		localeOptions() {
 			return [
 				{ value: 'en-GB', text: 'English (Great Britain)' },
@@ -92,7 +117,7 @@ export default {
 
 	head() {
 		return {
-			title: this.$t('pages.user_info.title')
+			title: this.$t('pages.user.info.title')
 		}
 	},
 
@@ -125,13 +150,19 @@ export default {
 				await this.$axios.post('/user/info', this.model)
 				await this.$auth.fetchUser()
 
-				// Show button as successful
-				this.$refs.submit.showSuccess()
-
-				// Switch page language
+				// Load the new language
 				const language = this.$auth.user.locale.split(/-|_/)[0]
+				await this.$i18n.loadLanguage(language)
 
-				this.$router.replace(this.switchLocalePath(language))
+				// Notify of success in the new language
+				this.$notify({
+					title: this.$t('pages.user.info.submit_success_title', language),
+					text: this.$t('pages.user.info.submit_success_text', language),
+					type: 'success'
+				})
+
+				// Back to user page with the new language
+				this.$router.push(this.localePath('user', language))
 			} catch (err) {
 				this.$bvModal.msgBoxOk(this.$t('common.status.save_error'), {
 					centered: true,

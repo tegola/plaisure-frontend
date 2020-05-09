@@ -213,8 +213,7 @@
 </template>
 
 <script>
-import extend from 'lodash/extend'
-import { debounce } from 'lodash'
+import { extend, debounce } from 'lodash'
 import {
 	Map as PgMap,
 	Marker as PgMapMarker,
@@ -340,12 +339,12 @@ export default {
 	},
 
 	computed: {
-		isLargeScreen() {
-			return ['md', 'lg', 'xl'].indexOf(this.$mq) >= 0
+		isSmallScreen() {
+			return ['xs', 'sm'].includes(this.$mq)
 		},
 
-		isSmallScreen() {
-			return ['xs', 'sm'].indexOf(this.$mq) >= 0
+		isLargeScreen() {
+			return ['md', 'lg', 'xl'].includes(this.$mq)
 		},
 
 		country() {

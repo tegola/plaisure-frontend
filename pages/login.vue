@@ -63,7 +63,7 @@ import { required, email } from 'vuelidate/lib/validators'
 export default {
 	name: 'PgLoginPage',
 
-	middleware: 'redirect-if-authenticated',
+	middleware: 'guest',
 
 	components: {
 		BFormGroup,

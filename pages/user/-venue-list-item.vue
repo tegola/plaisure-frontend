@@ -4,7 +4,7 @@
 		:class="$mq === 'xs' ? 'px-0' : null"
 		v-bind="$attrs">
 		<div class="row align-items-sm-center">
-			<div class="col-sm-5 col-md-4">
+			<div class="col-sm-5 col-md-4 col-lg-3">
 				<pg-image-frame
 					:src="photo ? photo.resized_url : null"
 					:content-class="photo ? null : 'pg-venue-grid-item__image-content'"
@@ -31,7 +31,7 @@
 				<p class="mb-0">{{ address }}</p>
 			</div>
 			<div 
-				v-if="venue.subscription && venue.subscription.needs_payment"
+				v-if="venue.subscription && venue.subscription.payment_pending"
 				class="col-auto text-danger">
 				<pg-icon
 					icon="exclamation-circle-outline"

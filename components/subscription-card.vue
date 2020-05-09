@@ -8,7 +8,7 @@
 				<li v-for="(line, index) in subscription.lines" :key="index">{{ line }}</li>
 			</ul>
 		</div>
-		<template v-if="subscription.needs_payment">
+		<template v-if="subscription.payment_pending">
 			<hr class="my-0">
 			<div class="card-body text-danger d-flex align-items-center">
 				{{ this.$t('components.subscription_card.error.payment') }}
@@ -130,15 +130,13 @@ export default {
 		cursor: pointer;
 		transition: 200ms;
 	}
-	&--clickable:hover {
-		transform: scale(1.02);
-		border-color: $primary;
-		box-shadow: inset 0 0 0 $border-width $primary,
-			0 3px 20px rgba($primary, 0.25);
-	}
+	&--clickable:hover,
 	&--selected {
 		border-color: $primary;
 		box-shadow: inset 0 0 0 $border-width $primary;
+	}
+	&--clickable:active {
+		transform: scale(0.98);
 	}
 	&--disabled {
 		background-color: $gray-100;

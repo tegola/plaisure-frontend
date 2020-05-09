@@ -135,7 +135,7 @@
 										</li>
 										<li class="mt-2">
 											{{ $t('pages.venue_detail.details.surface_size') }}:
-											<strong v-if="venue.surface_size">{{ venue.surface_size }} {{ $t('pages.venue_form.general.surface_size_unit') }}</strong>
+											<strong v-if="venue.surface_size">{{ venue.surface_size }} {{ $t('pages.venue_detail.details.surface_size_unit') }}</strong>
 											<span v-else class="text-muted">{{ $t('pages.venue_detail.common.unknown') }}</span>
 										</li>
 										<li class="mt-2">
@@ -412,11 +412,10 @@
 </template>
 
 <script>
-import extend from 'lodash/extend'
+import { extend } from 'lodash'
 import { getAllInfoByISO } from 'iso-country-currency'
 import makeStructuredData from './make-structured-data'
 import PgVenueDetailPageContactCard from './contact-card'
-import PgScrollablePane from '@/components/scrollable-pane'
 import PgVenueGridItem from '@/components/venue-grid-item'
 import PgReviewItem from '@/components/review-item'
 import PgReviewForm from '@/components/review-form'
@@ -430,7 +429,6 @@ export default {
 		PgLightbox,
 		PgReviewForm,
 		PgReviewItem,
-		PgScrollablePane,
 		PgVenueDetailPageContactCard,
 		PgVenueGridItem
 	},
@@ -477,7 +475,7 @@ export default {
 		metadata.script = [
 			{
 				type: 'application/ld+json',
-				innerHTML: JSON.stringify(makeStructuredData(venue))
+				json: makeStructuredData(venue)
 			}
 		]
 
@@ -762,7 +760,7 @@ export default {
 		transform: translateY(-50%); // Use bottom part to point to center
 	}
 	.contact-card-list-item {
-		margin-left: $grid-gutter-width;
+		margin-left: 2rem;
 		padding: 1rem 0;
 		position: relative;
 
@@ -776,7 +774,7 @@ export default {
 	}
 	.contact-card-list-item-icon {
 		position: absolute;
-		left: -($grid-gutter-width);
+		left: -1.75rem;
 	}
 	.contact-card-chevron-icon {
 		height: 0.75rem;
@@ -932,7 +930,7 @@ export default {
 			@include border-bottom-radius(0);
 		}
 		.contact-card-list-item {
-			margin-left: $grid-gutter-width * 1.5;
+			margin-left: $grid-gutter-width * 1.75;
 			padding-right: 1.25rem;
 		}
 	}

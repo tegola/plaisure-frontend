@@ -6,7 +6,6 @@
 		v-bind="$attrs"
 		centered
 		hide-header-close
-		cancel-variant="light"
 		:visible="value"
 		@change="$emit('input', $event)"
 		v-on="$listeners">

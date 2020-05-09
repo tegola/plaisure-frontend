@@ -64,7 +64,7 @@ import { required, email, minLength, sameAs } from 'vuelidate/lib/validators'
 export default {
 	name: 'PgResetPasswordPage',
 
-	middleware: 'redirect-if-authenticated',
+	middleware: 'guest',
 
 	components: {
 		BFormGroup,

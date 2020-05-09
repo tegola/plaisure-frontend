@@ -10,6 +10,10 @@
 .btn-primary {
 	color: $white !important;
 }
+.btn-yellow-300 {
+	@include button-variant($yellow-300, $yellow-300);
+	color: $yellow-900 !important;
+}
 
 // Outline buttons
 .btn-outline-olive-800 {

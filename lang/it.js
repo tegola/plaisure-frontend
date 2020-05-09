@@ -23,15 +23,19 @@ export default {
 		},
 		actions: {
 			add: 'Aggiungi',
-			edit: 'Modifica',
+			back: 'Indietro',
 			cancel: 'Annulla',
-			save: 'Salva',
-			delete: 'Elimina',
-			remove: 'Rimuovi',
-			select: 'Scegli',
-			continue: 'Continua',
+			change: 'Cambia',
 			close: 'Chiudi',
-			change: 'Cambia'
+			continue: 'Continua',
+			delete: 'Elimina',
+			done: 'Fatto',
+			edit: 'Modifica',
+			remove: 'Rimuovi',
+			save: 'Salva',
+			select: 'Scegli',
+			sort: 'Riordina',
+			upload: 'Carica'
 		},
 		cookie: {
 			agree: 'Utilizzando questo sito acconsenti alla nostra {policy_link}',
@@ -304,6 +308,7 @@ export default {
 				title: 'Dettagli',
 				concessionaire: 'Concessionario',
 				surface_size: 'Dimensioni',
+				surface_size_unit: 'mq.',
 				vlt_machine_count: 'Numero di VLT',
 				vlt_platforms: 'Piattaforme VLT',
 				awp_machine_count: 'Numero di AWP',
@@ -385,123 +390,311 @@ export default {
 			}
 		},
 
-		venue_form: {
-			title: {
-				add: 'Aggiungi attività',
-				edit: 'Modifica attività'
+		// /user ---------------------------------------------------------------
+		user: {
+			// /user/
+			index: {
+				title: 'Il mio account',
+				logout: 'Esci',
+				venues_label: 'Gestione attività',
+				venues_count:
+					'Nessuna attività registrata | 1 attività | {count} attività',
+				info_label: 'Dati personali',
+				info_sublabel: 'Nome, e-mail, lingua',
+				billing: 'Fatturazione',
+				favorites: 'Preferiti',
+				password: 'Cambia password'
 			},
-			general: {
-				title: 'Generale',
-				name: 'Nome',
-				name_placeholder: 'Es.: Casinò Las Vegas',
-				name_error: 'Inserisci il nome della tua attività.',
-				concessionaire: 'Concessionario',
-				concessionaire_none: 'Nessuno',
-				description: 'Descrizione',
-				surface_size: 'Dimensioni',
-				surface_size_unit: 'mq.',
-				surface_size_error: 'Inserisci le dimensioni.',
-				category: 'Categoria',
-				category_error: 'Scegli almeno una categoria.',
-				address: 'Indirizzo',
-				address_line1_placeholder: 'Riga 1',
-				address_line2_placeholder: 'Riga 2',
-				address_error: "Inserisci tutti i dati dell'indirizzo.",
-				city: 'Città',
-				zipcode_province: 'CAP e provincia',
-				zipcode_placeholder: 'CAP',
-				province_placeholder: 'Provincia',
-				country: 'Paese',
-				location: 'Posizione esatta',
-				location_searching: 'Cerco',
-				location_hint: 'Trascina per riposizionare'
-			},
-			services: {
-				title: 'Servizi',
-				invalid_value: 'Valore non valido.',
-				sports_betting: 'Scommesse sportive',
-				virtual_betting: 'Scommesse virtuali',
-				horse_betting: 'Scommesse ippiche',
-				arcade_roulette: 'Roulette arcade',
-				vlt_machine_count: 'N. macchine VLT',
-				awp_machine_count: 'N. macchine AWP',
-				seating_capacity: 'Posti a sedere',
-				parking_capacity: 'Posti auto',
-				vlt_platforms: 'Piattaforme VLT',
-				amenities: 'Comodità'
-			},
-			contacts: {
-				title: 'Contatti',
-				phone: 'Telefono',
-				email: 'E-mail',
-				email_placeholder: 'Es.: nome@gmail.com',
-				email_error: 'Inserisci un indirizzo e-mail valido.',
-				url_placeholder: 'https://',
-				url_error:
-					"Inserisci un URL valido, che inizi con 'http://' o 'https://'.",
-				site: 'Sito web',
-				online_casino: 'Casinò online',
-				facebook: 'Pagina Facebook'
-			},
-			hours: {
-				title: 'Orari',
-				always: 'Sempre aperto (24h)',
-				full: 'Orario continuato',
-				split: 'Orario spezzato',
-				closed: 'Chiuso',
-				from_to: 'Dalle/alle',
-				morning: 'Mattina (dalle/alle)',
-				afternoon: 'Pomeriggio (dalle/alle)'
-			},
-			photos: {
-				title: 'Foto',
-				upload: 'Carica foto',
-				delete: {
-					title: 'Elimina foto',
-					intro:
-						"Vuoi {action}? Essa verrà rimossa dalla galleria ma sarà effettivamente eliminata solo dopo il salvataggio dei dati dell'attività.",
-					intro_action: 'eliminare questa foto'
+
+			// /user/venues
+			venues: {
+				// /user/venues/
+				index: {
+					title: 'Gestione attività',
+					subtitle_first: 'Inizia aggiungendo una nuova attività.',
+					subtitle_edit: 'Fai click su una di esse per modificarla.',
+					add_first: 'Aggiungi la tua prima attività',
+					add_another: "Aggiungi un'altra attività"
+				},
+
+				// /user/venues/add
+				add: {
+					meta_title: 'Aggiungi attività',
+					title: 'Aggiungi la tua attività',
+					step_1: {
+						title: 'Come si chiama la tua attività?',
+						subtitle: "Scrivi il nome come mostrato sull'insegna",
+						name: 'Nome',
+						name_error: 'Inserisci il nome della tua attività.'
+					},
+					step_2: {
+						title: 'Dove si trova?',
+						subtitle: "Inserisci l'indirizzo completo.",
+						address: 'Indirizzo',
+						address_line1_placeholder: 'Riga 1',
+						address_line2_placeholder: 'Riga 2',
+						address_error: "Inserisci tutti i dati dell'indirizzo.",
+						city: 'Città',
+						zipcode_province: 'CAP e provincia',
+						zipcode_placeholder: 'CAP',
+						province_placeholder: 'Provincia',
+						country: 'Paese'
+					},
+					step_3: {
+						title: 'Dove si trova esattamente?',
+						subtitle:
+							"Fatti trovare più facilmente! Sposta la mappa fino a far combaciare la puntina sull'edificio della tua attività.",
+						location: 'Posizione'
+					},
+					step_4: {
+						title: 'Che tipo di attività è?',
+						subtitle: 'Seleziona una o più categorie.',
+						categories: 'Categorie',
+						categories_error: 'Scegli almeno una categoria.'
+					}
+				},
+
+				// /user/venues/{id}
+				detail: {
+					title: 'Dettagli attività',
+					menus: {
+						overview: 'Panoramica',
+						general: 'Nome e posizione',
+						services: 'Servizi',
+						photos: 'Foto',
+						contacts: 'Contatti',
+						hours: 'Orari',
+						jackpots: 'Jackpot',
+						// reviews: 'Recensioni',
+						plan: 'Abbonamento'
+					},
+					overview: {
+						title: 'Panoramica',
+						stats: {
+							ratings: '{count} valutazione | {count} valutazioni',
+							reviews: 'Nessuna recensione | 1 recensione | {count} recensioni',
+							favorites:
+								'Preferito da {count} persona | Preferito da {count} persone'
+						},
+						visits: {
+							title: 'Visite',
+							count: '{count} visita | {count} visite',
+							total: 'Nessuna visita | 1 visita totale | {count} visite totali'
+						}
+					},
+					general: {
+						title: 'Informazioni',
+						name: 'Nome',
+						name_placeholder: 'Es.: Casinò Las Vegas',
+						name_error: 'Inserisci il nome della tua attività.',
+						concessionaire: 'Concessionario',
+						concessionaire_none: 'Nessuno',
+						description: 'Descrizione',
+						surface_size: 'Dimensioni',
+						surface_size_unit: 'mq.',
+						surface_size_error: 'Inserisci le dimensioni.',
+						category: 'Categoria',
+						category_error: 'Scegli almeno una categoria.',
+						address: 'Indirizzo',
+						address_line1_placeholder: 'Riga 1',
+						address_line2_placeholder: 'Riga 2',
+						address_error: "Inserisci tutti i dati dell'indirizzo.",
+						city: 'Città',
+						zipcode_province: 'CAP e provincia',
+						zipcode_placeholder: 'CAP',
+						province_placeholder: 'Provincia',
+						country: 'Paese',
+						location: 'Posizione esatta',
+						location_searching: 'Cerco',
+						location_hint: 'Trascina per riposizionare'
+					},
+					services: {
+						title: 'Servizi',
+						invalid_value: 'Valore non valido.',
+						sports_betting: 'Scommesse sportive',
+						virtual_betting: 'Scommesse virtuali',
+						horse_betting: 'Scommesse ippiche',
+						arcade_roulette: 'Roulette arcade',
+						vlt_machine_count: 'N. macchine VLT',
+						awp_machine_count: 'N. macchine AWP',
+						seating_capacity: 'Posti a sedere',
+						parking_capacity: 'Posti auto',
+						vlt_platforms: 'Piattaforme VLT',
+						amenities: 'Comodità'
+					},
+					photos: {
+						title: 'Foto',
+						reorder: 'Sposta le immagini per riordinarle.',
+						delete: {
+							title: 'Elimina foto',
+							intro:
+								"Vuoi {action}? Essa verrà rimossa dalla galleria ma sarà effettivamente eliminata solo dopo il salvataggio dei dati dell'attività.",
+							intro_action: 'eliminare questa foto'
+						},
+						no_items: {
+							title: 'Nessuna foto',
+							subtitle: 'Aggiungi la prima foto tramite il pulsante Carica.'
+						}
+					},
+					contacts: {
+						title: 'Contatti',
+						phone: 'Telefono',
+						email: 'E-mail',
+						email_placeholder: 'Es.: nome@gmail.com',
+						email_error: 'Inserisci un indirizzo e-mail valido.',
+						url_placeholder: 'https://',
+						url_error:
+							"Inserisci un URL valido, che inizi con 'http://' o 'https://'.",
+						site: 'Sito web',
+						online_casino: 'Casinò online',
+						facebook: 'Pagina Facebook'
+					},
+					hours: {
+						title: 'Orari',
+						always: 'Sempre aperto (24h)',
+						full: 'Orario continuato',
+						split: 'Orario spezzato',
+						closed: 'Chiuso',
+						from_to: 'Dalle/alle',
+						morning: 'Mattina (dalle/alle)',
+						afternoon: 'Pomeriggio (dalle/alle)'
+					},
+					jackpots: {
+						title: 'Jackpot',
+						name: 'Jackpot {number}',
+						name_placeholder: 'Nome',
+						amount_placeholder: 'Valore'
+					},
+					reviews: {
+						title: 'Recensioni'
+					},
+					plan: {
+						title: 'Abbonamento',
+						current: {
+							title: 'Abbonamento corrente',
+							price: '{price}/mese',
+							payment_pending: {
+								title: 'In attesa della conferma di pagamento',
+								check:
+									'Controlla la tua casella di posta elettronica per eventuali richieste di conferma e segui le istruzioni indicate.',
+								cancel:
+									"Se invece vuoi annullare l'abbonamento scelto e ricominciare da capo, fai click sul pulsante qui sotto.",
+								action: 'Ricomincia'
+							},
+							ends: {
+								title: 'Scade {date}',
+								cancelled: 'Hai disattivato {date}.',
+								action: 'Cambia abbonamento'
+							},
+							renews: {
+								title: 'Si rinnova {date}',
+								action: 'Cambia abbonamento'
+							}
+						},
+						pick_new: "Scegli un piano d'abbonamento",
+						selected_free:
+							"Hai scelto l'abbonamento gratuito. Questo annullerà il rinnovo mensile e non ti verrà addebitato nessun altro costo. L'attuale abbonamento rimarrà comunque attivo fino allo scadere del periodo già pagato, ovvero fino al {date}.",
+						selected_paid: 'Hai scelto un abbonamento a pagamento.',
+						selected_paid_input_data:
+							'Inserisci qui di seguito le tue informazioni di fatturazione e pagamento.',
+						selected_paid_review_data:
+							'Assicurati che le tue informazioni di fatturazione e pagamento siano corretti.',
+						resume:
+							'Hai disattivato questo abbonamento il {last_update_date}, ma non sarebbe scaduto fino al {end_date}. Riattivandolo non ti sarà addebitato nulla fino a tale data!',
+						billing: {
+							title: 'Fatturazione',
+							current: "Usa l'indirizzo registrato",
+							new: 'Inserisci un nuovo indirizzo',
+							new_warning: {
+								message:
+									'{warning} se hai abbonamenti attivi sulle altre attività, esse verranno aggiornate le nuove informazioni di fatturazione.',
+								warning: 'Attenzione:'
+							},
+							legal_name: "Denominazione legale dell'azienda",
+							legal_name_error:
+								"Inserisci la denominazione legale dell'azienda.",
+							address: 'Indirizzo',
+							address_error: "Inserisci l'indirizzo.",
+							postcode: 'CAP',
+							postcode_error: 'Inserisci il CAP.',
+							city: 'Città',
+							city_error: 'Inserisci la città.',
+							region: 'Provincia',
+							region_error: 'Inserisci la provincia.',
+							country: 'Paese',
+							country_error: 'Scegli il paese.',
+							vat_number: 'Partita IVA',
+							vat_number_error: 'Inserisci la partita IVA.'
+						},
+						payment: {
+							title: 'Pagamento',
+							current: 'Usa la carta di credito registrata',
+							new: 'Usa una carta di credito diversa',
+							new_warning: {
+								message:
+									'{warning} se hai abbonamenti attivi sulle altre attività, esse verranno aggiornate con le nuove informazioni di pagamento.',
+								warning: 'Attenzione:'
+							},
+							card: 'Carda di credito',
+							card_expiration: 'Scadenza',
+							card_holder_name: 'Nome e cognome intestatario',
+							card_holder_name_error:
+								"Inserisci il nome e cognome dell'intestatario così come mostrati sulla carta stessa"
+						},
+						cancel: 'Cancella abbonamento',
+						confirm: {
+							title: 'Conferma abbonamento',
+							paragraph1:
+								"Stai per attivare un abbonamento costante. Se fai click su {confirm}, autorizzi {name} ad addebitarti mensilmente il costo dell'abbonamento (pari a {price}/mese). Puoi annullare l'abbonamento in qualsiasi momento.",
+							paragraph2:
+								"Se continui accetti i {tos} e l'{privacy} di {name}. Accetti inoltre che il tuo acquisto sarà subito disponibile e di rinunciare al diritto di recesso previsto dalla legge.",
+							paragraph2_tos: 'Termini di servizio',
+							paragraph2_privacy: 'Informativa sulla privacy',
+							submit: 'Conferma abbonamento'
+						},
+						form_error:
+							'Sembra che il modulo sia incompleto: inserisci tutti i dati richiesti prima di continuare.',
+						submit_error:
+							'È avvenuto un errore nel tentativo di modificare il tuo abbonamento. Il nostro staff di supporto è già stato informato. Ti preghiamo di riprovare più tardi.',
+						subscription_confirm: {
+							title: 'Conferma richiesta',
+							message:
+								'È necessaria la conferma del pagamento. Controlla la posta elettronica e segui le indicazioni fornite.'
+						},
+						subscription_success: {
+							title: 'Abbonamento attivato',
+							message:
+								"L'abbonamento che hai scelto è stato attivato. Si rinnoverà automaticamente il {date}, salvo cancellazione da parte tua prima di tale data."
+						},
+						cancellation_success: {
+							title: 'Abbonamendo cancellato',
+							message:
+								"Il rinnovo automatico del tuo abbonamento è stato disattivato. L'abbonamento rimarrà comunque attivo fino al {date}. Non ti sarà addebitato nessun altro costo."
+						}
+					}
 				}
 			},
-			jackpots: {
-				title: 'Jackpot',
-				name: 'Jackpot {number}',
-				name_placeholder: 'Nome',
-				amount_placeholder: 'Valore'
-			},
-			subscription: {
-				title: 'Abbonamento corrente'
-			}
-		},
 
-		venue_plan: {
-			title: 'Scegli abbonamento',
-			needs_payment: {
-				title: 'Abbonamento in attesa di pagamento',
-				line1:
-					'Questa attività ha un abbonamento in attesa di conferma del pagamento. Controlla la tua casella di posta elettronica per eventuali richieste di conferma e segui le istruzioni indicate.',
-				line2:
-					"Se invece vuoi annullare l'abbonamento scelto e ricominciare da capo, fai click sul pulsante qui sotto.",
-				action: 'Annulla abbonamento'
+			// /user/info
+			info: {
+				title: 'Dati personali',
+				name: 'Nome',
+				name_error: 'Inserisci il tuo nome.',
+				name_hint:
+					'Viene visualizzato nelle tue recensioni e nei messaggi e/o notifiche che potresti ricevere da {name}',
+				email: 'Indirizzo e-mail',
+				newsletter:
+					'Voglio essere informato sulle nuove offerte e funzionalità',
+				locale: 'Lingua e zona',
+				locale_error: 'Scegli la tua lingua.',
+				submit_success_title: 'Informazioni salvate',
+				submit_success_text:
+					'Le tue informazioni personali sono state aggiornate.'
 			},
-			selected_free:
-				"Hai scelto l'abbonamento gratuito. Questo annullerà il rinnovo mensile e non ti verrà addebitato nessun altro costo. L'attuale abbonamento rimarrà comunque attivo fino allo scadere del periodo già pagato, ovvero fino al {date}.",
-			selected_paid: 'Hai scelto un abbonamento a pagamento.',
-			selected_paid_input_data:
-				'Inserisci qui di seguito le tue informazioni di fatturazione e pagamento.',
-			selected_paid_review_data:
-				'Assicurati che le tue informazioni di fatturazione e pagamento siano corretti.',
-			resume:
-				"Hai disattivato questo abbonamento il {last_update_date}, ma non sarebbe scaduta fino al {end_date}. Riattivando l'iscrizione non ti sarà addebitato niente fino a tale data!",
+
 			billing: {
-				title: 'Fatturazione',
-				current: "Usa l'indirizzo registrato",
-				new: 'Inserisci un nuovo indirizzo',
-				new_warning: {
-					message:
-						'{warning} se hai abbonamenti attivi sulle altre attività, esse verranno aggiornate le nuove informazioni di fatturazione.',
-					warning: 'Attenzione:'
-				},
+				title: 'Informazioni di fatturazione',
+				intro: 'Saranno usate per generare tutte le tue fatture.',
 				legal_name: "Denominazione legale dell'azienda",
 				legal_name_error: "Inserisci la denominazione legale dell'azienda.",
 				address: 'Indirizzo',
@@ -515,125 +708,35 @@ export default {
 				country: 'Paese',
 				country_error: 'Scegli il paese.',
 				vat_number: 'Partita IVA',
-				vat_number_error: 'Inserisci la partita IVA.'
+				vat_number_error: 'Inserisci la partita IVA.',
+				submit_success_title: 'Informazioni salvate',
+				submit_success_text:
+					'Le tue informazioni di fatturazione sono state aggiornate.'
 			},
-			payment: {
-				title: 'Pagamento',
-				current: 'Usa la carta di credito registrata',
-				new: 'Usa una carta di credito diversa',
-				new_warning: {
-					message:
-						'{warning} se hai abbonamenti attivi sulle altre attività, esse verranno aggiornate con le nuove informazioni di pagamento.',
-					warning: 'Attenzione:'
-				},
-				card: 'Carda di credito',
-				card_expiration: 'Scadenza',
-				card_holder_name: 'Nome e cognome intestatario',
-				card_holder_name_error:
-					"Inserisci il nome e cognome dell'intestatario così come mostrati sulla carta stessa"
+
+			// /user/favorites
+			favorites: {
+				title: 'Gestione preferiti',
+				no_items: {
+					title: 'Non hai preferiti',
+					subtitle:
+						"Puoi aggiungere un'attività ai preferiti in qualsiasi momento durante la navigazione."
+				}
 			},
-			cancel: 'Cancella abbonamento',
-			confirm: {
-				title: 'Conferma abbonamento',
-				paragraph1:
-					"Stai per attivare un abbonamento costante. Se fai click su {confirm}, autorizzi {name} ad addebitarti mensilmente il costo dell'abbonamento (pari a {price} {currency}/mese). Puoi annullare l'abbonamento in qualsiasi momento.",
-				paragraph2:
-					"Se continui accetti i {tos} e l'{privacy} di {name}. Accetti inoltre che il tuo acquisto sarà subito disponibile e di rinunciare al diritto di recesso previsto dalla legge.",
-				paragraph2_tos: 'Termini di servizio',
-				paragraph2_privacy: 'Informativa sulla privacy',
-				submit: 'Conferma abbonamento'
-			},
-			form_error:
-				'Sembra che il modulo sia incompleto: inserisci tutti i dati richiesti prima di continuare.',
-			submit_error:
-				'È avvenuto un errore nel tentativo di modificare il tuo abbonamento. Il nostro staff di supporto è già stato informato. Ti preghiamo di riprovare più tardi.',
-			subscription_confirm: {
-				title: 'Conferma richiesta',
-				message:
-					'È necessaria la conferma del pagamento. Controlla la posta elettronica e segui le indicazioni fornite.'
-			},
-			subscription_success: {
-				title: 'Abbonamento attivato',
-				message:
-					"L'abbonamento che hai scelto è stato attivato. Si rinnoverà automaticamente il {date}, salvo cancellazione da parte tua prima di tale data."
-			},
-			cancellation_success: {
-				title: 'Abbonamendo cancellato',
-				message:
-					"Il rinnovo automatico del tuo abbonamento è stato disattivato. L'abbonamento rimarrà comunque attivo fino al {date}. Non ti sarà addebitato nessun altro costo."
+
+			// /user/password
+			password: {
+				title: 'Cambia password',
+				intro: 'Scegli una nuova password e ripetila per cambiarla.',
+				password: 'Nuova password',
+				password_hint: 'Almeno 8 caratteri tra lettere e numeri',
+				password_error: 'Inserisci almeno 8 caratteri tra lettere e numeri.',
+				password_confirmation: 'Ripeti password',
+				password_confirmation_error: 'Le password non coincidono.',
+				submit: 'Cambia password',
+				submit_success_title: 'Password modificata',
+				submit_success_text: 'La tua password è stata modificata correttamente.'
 			}
-		},
-
-		user: {
-			menu: {
-				venues: 'Le tue attività',
-				info: 'Dati personali',
-				billing: 'Fatturazione',
-				favorites: 'Preferiti',
-				password: 'Cambia password',
-				logout: 'Esci'
-			}
-		},
-
-		user_info: {
-			title: 'Dati personali',
-			name: 'Nome',
-			name_error: 'Inserisci il tuo nome.',
-			name_hint:
-				'Viene visualizzato nelle tue recensioni e nei messaggi e/o notifiche che potresti ricevere da {name}',
-			email: 'Indirizzo e-mail',
-			newsletter: 'Voglio essere informato sulle nuove offerte e funzionalità',
-			locale: 'Lingua e zona',
-			locale_error: 'Scegli la tua lingua.'
-		},
-
-		user_venues: {
-			title: 'Le tue attività',
-			intro_first: 'Inizia aggiungendo una nuova attività.',
-			intro_edit: 'Fai click su una di esse per modificarla.',
-			add_first: 'Aggiungi la tua prima attività',
-			add_another: "Aggiungi un'altra attività"
-		},
-
-		user_billing: {
-			title: 'Informazioni di fatturazione',
-			intro: 'Saranno usate per generare tutte le tue fatture.',
-			legal_name: "Denominazione legale dell'azienda",
-			legal_name_error: "Inserisci la denominazione legale dell'azienda.",
-			address: 'Indirizzo',
-			address_error: "Inserisci l'indirizzo.",
-			postcode: 'CAP',
-			postcode_error: 'Inserisci il CAP.',
-			city: 'Città',
-			city_error: 'Inserisci la città.',
-			region: 'Provincia',
-			region_error: 'Inserisci la provincia.',
-			country: 'Paese',
-			country_error: 'Scegli il paese.',
-			vat_number: 'Partita IVA',
-			vat_number_error: 'Inserisci la partita IVA.'
-		},
-
-		user_favorites: {
-			title: 'Gestione preferiti',
-			no_items: {
-				title: 'Non hai preferiti',
-				subtitle:
-					"Puoi aggiungere un'attività ai preferiti in qualsiasi momento durante la navigazione."
-			}
-		},
-
-		user_password: {
-			title: 'Cambia password',
-			intro: 'Scegli una nuova password e ripetila per cambiarla.',
-			password: 'Nuova password',
-			password_hint: 'Almeno 8 caratteri tra lettere e numeri',
-			password_error: 'Inserisci almeno 8 caratteri tra lettere e numeri.',
-			password_confirmation: 'Ripeti password',
-			password_confirmation_error: 'Le password non coincidono.',
-			submit: 'Cambia password',
-			submit_success_title: 'Password modificata',
-			submit_success_text: 'La tua password è stata modificata correttamente.'
 		},
 
 		promote: {
