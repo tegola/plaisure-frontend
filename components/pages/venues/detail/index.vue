@@ -532,7 +532,7 @@ export default {
 		editRoute () {
 			if (this.isMine) {
 				return this.localePath({
-					name: 'venues-id-edit',
+					name: 'user-venues-id',
 					params: { id: this.venue.id }
 				})
 			} else if (this.$auth.user) {

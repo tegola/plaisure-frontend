@@ -9,7 +9,7 @@
 				<div class="mx-md-auto col-lg-10">
 					<h1 class="h4">{{ $t('pages.user.favorites.title') }}</h1>
 
-					<b-list-group v-if="!venues.length" flush class="mt-4">
+					<b-list-group v-if="venues.length" flush class="mt-4">
 						<pg-user-venue-list-item
 							v-for="venue in venues"
 							:key="venue.id"
@@ -30,7 +30,7 @@
 					</b-list-group>
 
 					<pg-no-items
-						v-if="venues.length"
+						v-if="!venues.length"
 						icon="heart"
 						:title="$t('pages.user.favorites.no_items.title')"
 						:subtitle="$t('pages.user.favorites.no_items.subtitle')"
