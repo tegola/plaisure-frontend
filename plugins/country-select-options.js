@@ -17,7 +17,7 @@ export default ({ app }, inject) => {
 			break
 	}
 
-	Object.keys(countries).forEach(code => {
+	Object.keys(countries).forEach((code) => {
 		const obj = {
 			value: code,
 			text: countries[code]

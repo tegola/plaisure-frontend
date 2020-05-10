@@ -34,18 +34,20 @@ export default {
 	},
 
 	computed: {
-		highlight() {
-			if (this.isNew)
+		highlight () {
+			if (this.isNew) {
 				return {
 					class: 'text-info',
 					label: this.$t('components.venue_item.highlight.new')
 				}
+			}
 
-			if (this.isOpen)
+			if (this.isOpen) {
 				return {
 					class: 'text-success',
 					label: this.$t('components.venue_item.highlight.open')
 				}
+			}
 
 			return null
 		}

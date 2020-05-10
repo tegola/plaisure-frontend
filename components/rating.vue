@@ -43,7 +43,7 @@ export default {
 	props: {
 		size: {
 			type: String,
-			validator: value => ['sm', 'md'].indexOf(value) !== -1,
+			validator: value => ['sm', 'md'].includes(value),
 			default: 'md'
 		},
 		value: {
@@ -58,14 +58,14 @@ export default {
 		simple: Boolean
 	},
 
-	data() {
+	data () {
 		return {
 			hoverValue: 0
 		}
 	},
 
 	computed: {
-		classes() {
+		classes () {
 			return {
 				'pg-rating': true,
 				'pg-rating--clickable': !this.readonly && !this.simple,
@@ -73,18 +73,18 @@ export default {
 			}
 		},
 
-		displayedValue() {
+		displayedValue () {
 			return this.hoverValue || this.value
 		},
 
-		title() {
+		title () {
 			return this.$t('components.rating.tooltip', {
 				value: this.displayedValue,
 				max: this.max
 			})
 		},
 
-		fillStyle() {
+		fillStyle () {
 			const width = (this.displayedValue / this.max) * 100
 
 			return {
@@ -94,16 +94,16 @@ export default {
 	},
 
 	methods: {
-		onMouseOver(value) {
-			if (!this.readonly) this.hoverValue = value
+		onMouseOver (value) {
+			if (!this.readonly) { this.hoverValue = value }
 		},
 
-		onMouseLeave(value) {
-			if (!this.readonly) this.hoverValue = null
+		onMouseLeave (value) {
+			if (!this.readonly) { this.hoverValue = null }
 		},
 
-		onClick(value) {
-			if (!this.readonly && this.value !== value) this.$emit('input', value)
+		onClick (value) {
+			if (!this.readonly && this.value !== value) { this.$emit('input', value) }
 		}
 	}
 }

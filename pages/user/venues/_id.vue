@@ -63,7 +63,13 @@ export default {
 		BCollapse
 	},
 
-	data() {
+	async fetch ({ $axios, params, store }) {
+		const { data } = await $axios.$get(`/user/venues/${params.id}`)
+
+		store.commit('user-venue-detail/setVenue', data)
+	},
+
+	data () {
 		return {
 			menuOpen: false,
 			menus: [
@@ -130,15 +136,15 @@ export default {
 	computed: {
 		...mapState('user-venue-detail', ['venue']),
 
-		isSmallScreen() {
+		isSmallScreen () {
 			return ['xs', 'sm', 'md'].includes(this.$mq)
 		},
 
-		isLargeScreen() {
+		isLargeScreen () {
 			return ['lg', 'xl'].includes(this.$mq)
 		},
 
-		breadcrumbItems() {
+		breadcrumbItems () {
 			return [
 				{
 					text: this.$t('pages.user.index.title'),
@@ -155,7 +161,7 @@ export default {
 			]
 		},
 
-		navProps() {
+		navProps () {
 			return {
 				vertical: this.isSmallScreen,
 				pills: this.isSmallScreen,
@@ -163,30 +169,24 @@ export default {
 			}
 		},
 
-		currentMenu() {
+		currentMenu () {
 			return this.menus.find(menu => menu.url === this.$route.path)
 		}
 	},
 
-	async fetch({ $axios, params, store }) {
-		const { data } = await $axios.$get(`/user/venues/${params.id}`)
-
-		store.commit('user-venue-detail/setVenue', data)
-	},
-
-	head() {
-		return {
-			title: this.$t('pages.user.venues.detail.title')
-		}
-	},
-
 	methods: {
-		async fetch() {
+		async fetch () {
 			const { data } = await this.$axios.$get(
 				`/user/venues/${this.$route.params.id}`
 			)
 
 			this.$store.commit('user-venue-detail/setVenue', data)
+		}
+	},
+
+	head () {
+		return {
+			title: this.$t('pages.user.venues.detail.title')
 		}
 	}
 }

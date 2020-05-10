@@ -17,20 +17,20 @@ export default {
 	},
 
 	computed: {
-		classes() {
+		classes () {
 			return {
 				'pg-scrollable-pane': this.isScrollable,
 				'pg-scrollable-pane--disabled': this.disabled
 			}
 		},
 
-		innerClasses() {
+		innerClasses () {
 			return this.isScrollable ? 'pg-scrollable-pane__content' : null
 		},
 
-		isScrollable() {
+		isScrollable () {
 			return (
-				!this.breakpoints.length || this.breakpoints.indexOf(this.$mq) !== -1
+				!this.breakpoints.length || this.breakpoints.includes(this.$mq)
 			)
 		}
 	}

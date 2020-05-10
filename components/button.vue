@@ -75,18 +75,18 @@ export default {
 		iconPosition: {
 			type: String,
 			default: 'left',
-			validator: value => ['left', 'right'].indexOf(value) !== -1
+			validator: value => ['left', 'right'].includes(value)
 		}
 	},
 
-	data() {
+	data () {
 		return {
 			successful: false
 		}
 	},
 
 	computed: {
-		classes() {
+		classes () {
 			const hasContent = this.label || this.$slots.default
 
 			return {
@@ -98,13 +98,13 @@ export default {
 			}
 		},
 
-		isDisabled() {
+		isDisabled () {
 			return this.disabled || this.loading
 		}
 	},
 
 	methods: {
-		showSuccess(time = 1500) {
+		showSuccess (time = 1500) {
 			this.successful = true
 			setTimeout(() => {
 				this.successful = false

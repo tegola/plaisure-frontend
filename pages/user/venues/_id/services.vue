@@ -139,8 +139,8 @@ import {
 	BFormCheckbox,
 	BFormCheckboxGroup
 } from 'bootstrap-vue'
-import formGroupProps from './-form-group-props'
 import { amenityIconMap } from '@/utilities'
+import formGroupProps from './-form-group-props'
 
 export default {
 	name: 'PgUserVenueDetailPageServicesSection',
@@ -154,7 +154,14 @@ export default {
 
 	mixins: [validationMixin],
 
-	data() {
+	async fetch ({ $axios, params, store }) {
+		const data = await $axios.$get(`/user/venues/${params.id}/services`)
+
+		store.commit('user-venue-detail/setAmenities', data.amenities)
+		store.commit('user-venue-detail/setVltPlatforms', data.vltPlatforms)
+	},
+
+	data () {
 		return {
 			formGroupProps,
 			amenityIconMap,
@@ -170,16 +177,16 @@ export default {
 			'saving'
 		]),
 
-		vltPlatformOptions() {
-			return this.vltPlatforms.filter(vltPlatform => {
+		vltPlatformOptions () {
+			return this.vltPlatforms.filter((vltPlatform) => {
 				return !!(
 					vltPlatform.country === this.venue.country || !vltPlatform.country
 				)
 			})
 		},
 
-		amenityOptions() {
-			return this.amenities.filter(amenity => {
+		amenityOptions () {
+			return this.amenities.filter((amenity) => {
 				return !!(amenity.country === this.venue.country || !amenity.country)
 			})
 		}
@@ -191,16 +198,16 @@ export default {
 			immediate: true
 		},
 
-		'venue.country'() {
+		'venue.country' () {
 			// Keep only VLT platforms for the selected country
-			this.model.vlt_platform_ids = this.model.vlt_platform_ids.filter(id => {
+			this.model.vlt_platform_ids = this.model.vlt_platform_ids.filter((id) => {
 				return this.vltPlatformOptions.some(
 					vltPlatform => vltPlatform.id === id
 				)
 			})
 
 			// Keep only venue amenities for the selected country
-			this.model.amenity_ids = this.model.amenity_ids.filter(id => {
+			this.model.amenity_ids = this.model.amenity_ids.filter((id) => {
 				return this.amenityOptions.some(amenity => amenity.id === id)
 			})
 		}
@@ -227,15 +234,8 @@ export default {
 		}
 	},
 
-	async fetch({ $axios, params, store }) {
-		const data = await $axios.$get(`/user/venues/${params.id}/services`)
-
-		store.commit('user-venue-detail/setAmenities', data.amenities)
-		store.commit('user-venue-detail/setVltPlatforms', data.vltPlatforms)
-	},
-
 	methods: {
-		prepareModel() {
+		prepareModel () {
 			const v = this.venue
 
 			this.model = {
@@ -252,12 +252,12 @@ export default {
 			}
 		},
 
-		async submit() {
+		async submit () {
 			// Validate
 			this.$v.model.$touch()
 
 			// Stop on validation errors
-			if (this.$v.model.$error) return
+			if (this.$v.model.$error) { return }
 
 			this.$store.commit('user-venue-detail/setSaving', true)
 

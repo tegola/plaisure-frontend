@@ -226,7 +226,14 @@ export default {
 
 	mixins: [validationMixin],
 
-	data() {
+	async fetch ({ $axios, params, store }) {
+		const data = await $axios.$get(`/user/venues/${params.id}/general`)
+
+		store.commit('user-venue-detail/setCategories', data.categories)
+		store.commit('user-venue-detail/setConcessionaires', data.concessionaires)
+	},
+
+	data () {
 		return {
 			formGroupProps,
 			mapCenter: this.$constants[`MAP_DEFAULT_CENTER_${this.$i18n.region}`],
@@ -244,8 +251,8 @@ export default {
 			'saving'
 		]),
 
-		concessionaireOptions() {
-			return this.concessionaires.filter(concessionaire => {
+		concessionaireOptions () {
+			return this.concessionaires.filter((concessionaire) => {
 				return !!(
 					concessionaire.country === this.model.country ||
 					!concessionaire.country
@@ -253,21 +260,21 @@ export default {
 			})
 		},
 
-		categoryOptions() {
-			return this.categories.filter(category => {
+		categoryOptions () {
+			return this.categories.filter((category) => {
 				return !!(category.country === this.model.country || !category.country)
 			})
 		},
 
-		coords() {
+		coords () {
 			return {
 				lat: this.model.geo_latitude,
 				lng: this.model.geo_longitude
 			}
 		},
 
-		markerPosition() {
-			if (!this.coords.lat || !this.coords.lng) return null
+		markerPosition () {
+			if (!this.coords.lat || !this.coords.lng) { return null }
 
 			return {
 				lat: this.coords.lat,
@@ -275,13 +282,13 @@ export default {
 			}
 		},
 
-		showMap() {
+		showMap () {
 			const a = this.venue.address
 
 			return !!(a.line1 && a.postcode && a.city && a.province)
 		},
 
-		canDragMarker() {
+		canDragMarker () {
 			return this.showMap && !this.searchingMarkerCoords
 		}
 	},
@@ -292,9 +299,9 @@ export default {
 			immediate: true
 		},
 
-		'venue.country'() {
+		'venue.country' () {
 			// Keep only categories for the selected country
-			this.model.category_ids = this.model.category_ids.filter(id => {
+			this.model.category_ids = this.model.category_ids.filter((id) => {
 				return this.categoryOptions.some(category => category.id === id)
 			})
 
@@ -302,12 +309,12 @@ export default {
 			const concessionaireFound = this.concessionaireOptions.some(
 				concessionaire => concessionaire.id === this.model.concessionaire_id
 			)
-			if (!concessionaireFound) this.model.concessionaire_id = null
+			if (!concessionaireFound) { this.model.concessionaire_id = null }
 		},
 
 		coords: {
 			immediate: true,
-			handler() {
+			handler () {
 				const defaultCenterKey = `MAP_DEFAULT_CENTER_${this.$i18n.region}`
 
 				this.mapCenter = this.coords
@@ -381,15 +388,8 @@ export default {
 		}
 	},
 
-	async fetch({ $axios, params, store }) {
-		const data = await $axios.$get(`/user/venues/${params.id}/general`)
-
-		store.commit('user-venue-detail/setCategories', data.categories)
-		store.commit('user-venue-detail/setConcessionaires', data.concessionaires)
-	},
-
 	methods: {
-		prepareModel() {
+		prepareModel () {
 			const v = this.venue
 
 			this.model = {
@@ -413,14 +413,14 @@ export default {
 			}
 		},
 
-		onAddressInput(field, value) {
+		onAddressInput (field, value) {
 			this.model[field] = value
 
 			// Find marker location
 			this.findMarkerCoords()
 		},
 
-		findMarkerCoords: throttle(function() {
+		findMarkerCoords: throttle(function () {
 			const m = this.model
 
 			if (
@@ -428,8 +428,7 @@ export default {
 				!m.address_postcode ||
 				!m.address_city ||
 				!m.address_province
-			)
-				return
+			) { return }
 
 			const address = [
 				m.address_line1,
@@ -441,12 +440,12 @@ export default {
 
 			this.searchingMarkerCoords = true
 
-			if (!this.geocoder) this.geocoder = new google.maps.Geocoder()
+			if (!this.geocoder) { this.geocoder = new google.maps.Geocoder() }
 
 			this.geocoder.geocode({ address }, (results, status) => {
 				this.searchingMarkerCoords = false
 
-				if (status !== 'OK') return
+				if (status !== 'OK') { return }
 
 				const location = results[0].geometry.location
 
@@ -461,19 +460,19 @@ export default {
 			})
 		}, 1000),
 
-		onMarkerDragEnd(location) {
+		onMarkerDragEnd (location) {
 			const markerCoords = location.latLng
 
 			this.model.geo_latitude = markerCoords.lat()
 			this.model.geo_longitude = markerCoords.lng()
 		},
 
-		async submit() {
+		async submit () {
 			// Validate
 			this.$v.model.$touch()
 
 			// Stop on validation errors
-			if (this.$v.model.$error) return
+			if (this.$v.model.$error) { return }
 
 			this.$store.commit('user-venue-detail/setSaving', true)
 

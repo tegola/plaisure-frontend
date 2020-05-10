@@ -35,9 +35,9 @@
 </template>
 
 <script>
-import PgVenueReviewsPageItem from './item'
 import PgReviewItem from '@/components/review-item'
 import PgNoItems from '@/components/no-items'
+import PgVenueReviewsPageItem from './item'
 
 export default {
 	name: 'PgVenueReviewsPage',
@@ -48,13 +48,7 @@ export default {
 		PgVenueReviewsPageItem
 	},
 
-	computed: {
-		reviews() {
-			return this.venue.reviews
-		}
-	},
-
-	async asyncData({ $axios, params }) {
+	async asyncData ({ $axios, params }) {
 		const data = await $axios.$get(`/venues/${params.id}/reviews`)
 
 		return {
@@ -62,8 +56,14 @@ export default {
 		}
 	},
 
-	head() {
-		if (!this.venue) return
+	computed: {
+		reviews () {
+			return this.venue.reviews
+		}
+	},
+
+	head () {
+		if (!this.venue) { return }
 
 		return {
 			title: this.$t('pages.venue_reviews.meta_title', {

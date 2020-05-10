@@ -1,5 +1,5 @@
 export default {
-	state() {
+	state () {
 		return {
 			venue: null,
 			saving: false,

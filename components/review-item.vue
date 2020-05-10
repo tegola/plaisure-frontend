@@ -110,7 +110,7 @@ export default {
 		}
 	},
 
-	data() {
+	data () {
 		return {
 			reporting: false,
 			reported: false,
@@ -121,15 +121,15 @@ export default {
 	},
 
 	computed: {
-		canReply() {
+		canReply () {
 			const user = this.$auth.user
 			const venueIsMine =
-				user && user.venue_ids && user.venue_ids.indexOf(this.venue.id) !== -1
+				user && user.venue_ids && user.venue_ids.includes(this.venue.id)
 
 			return venueIsMine && !this.noReply
 		},
 
-		submitButtonProps() {
+		submitButtonProps () {
 			if (!this.review.reply) {
 				return {
 					label: this.$t('components.review_item.reply_form.post'),
@@ -149,7 +149,7 @@ export default {
 	},
 
 	methods: {
-		formatDate(date) {
+		formatDate (date) {
 			// FIXME: usare i18n date formatter
 			return new Date(date).toLocaleDateString(this.$i18n.isoCode, {
 				day: 'numeric',
@@ -158,7 +158,7 @@ export default {
 			})
 		},
 
-		async reply() {
+		async reply () {
 			this.replyText = this.review.reply
 			this.showReplyForm = true
 
@@ -167,11 +167,11 @@ export default {
 			this.$refs.textarea.focus()
 		},
 
-		cancelReply() {
+		cancelReply () {
 			this.showReplyForm = false
 		},
 
-		async submitReply() {
+		async submitReply () {
 			const url = `/venues/${this.venue.id}/reviews/${this.review.id}/reply`
 
 			this.replying = true
@@ -195,7 +195,7 @@ export default {
 			}
 		},
 
-		async report() {
+		async report () {
 			const answer = await this.$bvModal.msgBoxConfirm(
 				this.$t('components.review_item.report_dialog.text'),
 				{

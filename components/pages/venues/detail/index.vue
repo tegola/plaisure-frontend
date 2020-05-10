@@ -414,13 +414,13 @@
 <script>
 import { extend } from 'lodash'
 import { getAllInfoByISO } from 'iso-country-currency'
-import makeStructuredData from './make-structured-data'
-import PgVenueDetailPageContactCard from './contact-card'
 import PgVenueGridItem from '@/components/venue-grid-item'
 import PgReviewItem from '@/components/review-item'
 import PgReviewForm from '@/components/review-form'
 import PgLightbox from '@/components/lightbox'
 import { amenityIconMap, isVenueOpen } from '@/utilities'
+import PgVenueDetailPageContactCard from './contact-card'
+import makeStructuredData from './make-structured-data'
 
 export default {
 	name: 'PgVenueDetailPage',
@@ -433,7 +433,22 @@ export default {
 		PgVenueGridItem
 	},
 
-	data() {
+	async asyncData ({ $axios, params, error }) {
+		try {
+			return await $axios.$get(`/venues/${params.id}`)
+		} catch (e) {
+			const response = e.response
+
+			// Go to error page with nearby venues
+			error({
+				statusCode: response.status,
+				message: response.statusText,
+				nearbyVenues: response.data && response.data.nearbyVenues
+			})
+		}
+	},
+
+	data () {
 		return {
 			// Async
 			venue: null,
@@ -449,7 +464,208 @@ export default {
 		}
 	},
 
-	head() {
+	computed: {
+		subtitle () {
+			const categories = this.venue.categories
+			const city = this.venue.address.city
+
+			if (categories.length) {
+				return this.$t('pages.venue_detail.subtitle', {
+					category: this.$t(`data.categories.${categories[0].machine_name}`),
+					city
+				})
+			} else {
+				return city
+			}
+		},
+
+		favoriteButtonProps () {
+			return {
+				class: 'px-2',
+				pill: true,
+				variant: this.isFavorite ? 'accent' : 'outline-olive-800',
+				icon: this.isFavorite ? 'heart' : 'heart-outline',
+				title: this.isFavorite
+					? this.$t('pages.venue_detail.favorites.remove')
+					: this.$t('pages.venue_detail.favorites.add')
+			}
+		},
+
+		stripImages () {
+			const photos = this.venue.photos
+
+			return photos ? photos.slice(0, 7) : []
+		},
+
+		lightboxImages () {
+			const photos = this.venue.photos
+
+			if (!photos || !photos.length) { return null }
+
+			return photos.map(file => ({
+				caption: file.caption,
+				url: file.resized_url,
+				thumbnail_url: file.thumbnail_url
+			}))
+		},
+
+		isFavorite () {
+			if (this.$auth.loggedIn) {
+				return this.mutableFavorite !== null
+					? this.mutableFavorite
+					: this.$auth.user.favorite_ids.includes(this.venue.id)
+			} else {
+				return false
+			}
+		},
+
+		isMine () {
+			const u = this.$auth.user
+
+			return u && u.venue_ids && u.venue_ids.includes(this.venue.id)
+		},
+
+		showEditAction () {
+			return !!(this.isMine || !this.venue.has_owner)
+		},
+
+		editRoute () {
+			if (this.isMine) {
+				return this.localePath({
+					name: 'venues-id-edit',
+					params: { id: this.venue.id }
+				})
+			} else if (this.$auth.user) {
+				return this.localePath({
+					name: 'venues-id-claim',
+					params: { id: this.venue.id }
+				})
+			} else {
+				return this.localePath('promote')
+			}
+		},
+
+		isOpen () {
+			return isVenueOpen(this.venue.business_hours)
+		},
+
+		vltPlatformNames () {
+			return this.venue.vlt_platforms.map(platform => platform.name).join(', ')
+		},
+
+		currencySymbol () {
+			if (!this.venue.country) { return null }
+
+			const { symbol } = getAllInfoByISO(this.venue.country)
+
+			return symbol
+		},
+
+		hasJackpots () {
+			const j = this.venue.jackpots
+
+			return j[1].value || j[2].value || j[3].value
+		},
+
+		amenityIconMap () {
+			return amenityIconMap
+		},
+
+		nearbyVenuesForSize () {
+			return this.$mq === 'md' || this.$mq === 'lg'
+				? this.nearbyVenues.slice(0, 3)
+				: this.nearbyVenues
+		}
+	},
+
+	methods: {
+		async loadData () {
+			const data = await this.$axios.$get(`/venues/${this.$route.params.id}`)
+
+			extend(this, data)
+		},
+
+		isInCategory (categoryMachineName) {
+			return !!this.venue.categories.find(
+				category => category.machine_name === categoryMachineName
+			)
+		},
+
+		showLightbox (index) {
+			this.lightboxIndex = index
+			this.lightboxOpen = true
+		},
+
+		closeLightbox () {
+			this.lightboxOpen = false
+		},
+
+		formatCurrency (number) {
+			const { currency } = getAllInfoByISO(this.venue.country)
+
+			// FIXME: usare vue18n number formatter
+			return number.toLocaleString(undefined, {
+				style: 'currency',
+				currency,
+				minimumFractionDigits: 2
+			})
+		},
+
+		async toggleFavorite () {
+			// Send to login
+			if (!this.$auth.loggedIn) {
+				this.$router.push(this.localePath('login'))
+				return
+			}
+
+			// Fill mutableFavorite with current real value
+			this.mutableFavorite = this.isFavorite
+
+			// Keep old status and define server action
+			const old = this.mutableFavorite
+			const action = this.isFavorite ? 'remove' : 'add'
+
+			// Toggle status locally
+			this.mutableFavorite = !this.mutableFavorite
+
+			try {
+				// Change status remotely and reload user
+				await this.$axios.post(`/user/favorites/${action}`, {
+					id: this.venue.id
+				})
+				await this.$auth.fetchUser()
+			} catch {
+				// Error, restore status locally
+				this.mutableFavorite = old
+			}
+		},
+
+		prepareEmailLink (address, subject) {
+			return `mailto:${address}?subject=${encodeURIComponent(subject)}`
+		},
+
+		async onRatingInput (value) {
+			// Store rating
+			await this.$axios.post(`/venues/${this.venue.id}/reviews`, {
+				rating: value
+			})
+
+			// Show confirmation / thanks
+			this.$notify({
+				text: this.$t('pages.venue_detail.reviews.rate_success')
+			})
+
+			// Reload venue
+			this.loadData()
+		},
+
+		onReviewFormSubmit () {
+			this.reviewFormOpen = false
+			this.loadData()
+		}
+	},
+
+	head () {
 		const venue = this.venue
 		const metadata = {
 			// Don't encode json ld
@@ -480,222 +696,6 @@ export default {
 		]
 
 		return metadata
-	},
-
-	computed: {
-		subtitle() {
-			const categories = this.venue.categories
-			const city = this.venue.address.city
-
-			if (categories.length) {
-				return this.$t('pages.venue_detail.subtitle', {
-					category: this.$t(`data.categories.${categories[0].machine_name}`),
-					city
-				})
-			} else {
-				return city
-			}
-		},
-
-		favoriteButtonProps() {
-			return {
-				class: 'px-2',
-				pill: true,
-				variant: this.isFavorite ? 'accent' : 'outline-olive-800',
-				icon: this.isFavorite ? 'heart' : 'heart-outline',
-				title: this.isFavorite
-					? this.$t('pages.venue_detail.favorites.remove')
-					: this.$t('pages.venue_detail.favorites.add')
-			}
-		},
-
-		stripImages() {
-			const photos = this.venue.photos
-
-			return photos ? photos.slice(0, 7) : []
-		},
-
-		lightboxImages() {
-			const photos = this.venue.photos
-
-			if (!photos || !photos.length) return null
-
-			return photos.map(file => ({
-				caption: file.caption,
-				url: file.resized_url,
-				thumbnail_url: file.thumbnail_url
-			}))
-		},
-
-		isFavorite() {
-			if (this.$auth.loggedIn) {
-				return this.mutableFavorite !== null
-					? this.mutableFavorite
-					: this.$auth.user.favorite_ids.indexOf(this.venue.id) !== -1
-			} else {
-				return false
-			}
-		},
-
-		isMine() {
-			const u = this.$auth.user
-
-			return u && u.venue_ids && u.venue_ids.indexOf(this.venue.id) !== -1
-		},
-
-		showEditAction() {
-			return !!(this.isMine || !this.venue.has_owner)
-		},
-
-		editRoute() {
-			if (this.isMine) {
-				return this.localePath({
-					name: 'venues-id-edit',
-					params: { id: this.venue.id }
-				})
-			} else if (this.$auth.user) {
-				return this.localePath({
-					name: 'venues-id-claim',
-					params: { id: this.venue.id }
-				})
-			} else {
-				return this.localePath('promote')
-			}
-		},
-
-		isOpen() {
-			return isVenueOpen(this.venue.business_hours)
-		},
-
-		vltPlatformNames() {
-			return this.venue.vlt_platforms.map(platform => platform.name).join(', ')
-		},
-
-		currencySymbol() {
-			if (!this.venue.country) return null
-
-			const { symbol } = getAllInfoByISO(this.venue.country)
-
-			return symbol
-		},
-
-		hasJackpots() {
-			const j = this.venue.jackpots
-
-			return j[1].value || j[2].value || j[3].value
-		},
-
-		amenityIconMap() {
-			return amenityIconMap
-		},
-
-		nearbyVenuesForSize() {
-			return this.$mq === 'md' || this.$mq === 'lg'
-				? this.nearbyVenues.slice(0, 3)
-				: this.nearbyVenues
-		}
-	},
-
-	async asyncData({ $axios, params, error }) {
-		try {
-			return await $axios.$get(`/venues/${params.id}`)
-		} catch (e) {
-			const response = e.response
-
-			// Go to error page with nearby venues
-			error({
-				statusCode: response.status,
-				message: response.statusText,
-				nearbyVenues: response.data && response.data.nearbyVenues
-			})
-		}
-	},
-
-	methods: {
-		async loadData() {
-			const data = await this.$axios.$get(`/venues/${this.$route.params.id}`)
-
-			extend(this, data)
-		},
-
-		isInCategory(categoryMachineName) {
-			return !!this.venue.categories.find(
-				category => category.machine_name === categoryMachineName
-			)
-		},
-
-		showLightbox(index) {
-			this.lightboxIndex = index
-			this.lightboxOpen = true
-		},
-
-		closeLightbox() {
-			this.lightboxOpen = false
-		},
-
-		formatCurrency(number) {
-			const { currency } = getAllInfoByISO(this.venue.country)
-
-			// FIXME: usare vue18n number formatter
-			return number.toLocaleString(undefined, {
-				style: 'currency',
-				currency,
-				minimumFractionDigits: 2
-			})
-		},
-
-		async toggleFavorite() {
-			// Send to login
-			if (!this.$auth.loggedIn) {
-				this.$router.push(this.localePath('login'))
-				return
-			}
-
-			// Fill mutableFavorite with current real value
-			this.mutableFavorite = this.isFavorite
-
-			// Keep old status and define server action
-			const old = this.mutableFavorite
-			const action = this.isFavorite ? 'remove' : 'add'
-
-			// Toggle status locally
-			this.mutableFavorite = !this.mutableFavorite
-
-			try {
-				// Change status remotely and reload user
-				await this.$axios.post(`/user/favorites/${action}`, {
-					id: this.venue.id
-				})
-				await this.$auth.fetchUser()
-			} catch {
-				// Error, restore status locally
-				this.mutableFavorite = old
-			}
-		},
-
-		prepareEmailLink(address, subject) {
-			return `mailto:${address}?subject=${encodeURIComponent(subject)}`
-		},
-
-		async onRatingInput(value) {
-			// Store rating
-			await this.$axios.post(`/venues/${this.venue.id}/reviews`, {
-				rating: value
-			})
-
-			// Show confirmation / thanks
-			this.$notify({
-				text: this.$t('pages.venue_detail.reviews.rate_success')
-			})
-
-			// Reload venue
-			this.loadData()
-		},
-
-		onReviewFormSubmit() {
-			this.reviewFormOpen = false
-			this.loadData()
-		}
 	}
 }
 </script>

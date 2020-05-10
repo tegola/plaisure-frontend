@@ -1,4 +1,4 @@
-export default result => {
+export default (result) => {
 	const googleConfidenceLookup = {
 		ROOFTOP: 1,
 		RANGE_INTERPOLATED: 0.9,

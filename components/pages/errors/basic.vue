@@ -21,11 +21,11 @@ export default {
 	},
 
 	computed: {
-		code() {
+		code () {
 			return (this.error && this.error.statusCode) || 500
 		},
 
-		message() {
+		message () {
 			switch (this.code) {
 				case 404:
 					return this.$t('pages.errors.basic.not_found')

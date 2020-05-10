@@ -63,8 +63,16 @@ export default {
 		PgUserVenueListItem
 	},
 
+	async asyncData ({ $axios }) {
+		const data = await $axios.$get('/user/venues')
+
+		return {
+			venues: data.data
+		}
+	},
+
 	computed: {
-		breadcrumbItems() {
+		breadcrumbItems () {
 			return [
 				{
 					text: this.$t('pages.user.index.title'),
@@ -78,17 +86,9 @@ export default {
 		}
 	},
 
-	head() {
+	head () {
 		return {
 			title: this.$t('pages.user.venues.index.title')
-		}
-	},
-
-	async asyncData({ $axios }) {
-		const data = await $axios.$get('/user/venues')
-
-		return {
-			venues: data.data
 		}
 	}
 }

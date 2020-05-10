@@ -74,7 +74,7 @@ export default {
 	},
 
 	computed: {
-		classes() {
+		classes () {
 			return {
 				card: true,
 				'pg-subscription-card--clickable': this.clickable && !this.disabled,
@@ -83,7 +83,7 @@ export default {
 			}
 		},
 
-		price() {
+		price () {
 			const currency = getParamByParam(
 				'currency',
 				this.subscription.currency,
@@ -100,8 +100,8 @@ export default {
 	},
 
 	methods: {
-		formatDate(date) {
-			if (!date) return
+		formatDate (date) {
+			if (!date) { return }
 
 			// FIXME: usare i18n date formatter
 			return new Date(date).toLocaleDateString(this.$i18n.isoCode, {
@@ -111,8 +111,8 @@ export default {
 			})
 		},
 
-		onClick() {
-			if (!this.clickable || this.disabled) return
+		onClick () {
+			if (!this.clickable || this.disabled) { return }
 
 			this.$emit('select')
 		}

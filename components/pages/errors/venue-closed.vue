@@ -50,7 +50,7 @@ export default {
 	},
 
 	computed: {
-		nearbyVenues() {
+		nearbyVenues () {
 			if (this.error.nearbyVenues) {
 				return this.$mq === 'md' || this.$mq === 'lg'
 					? this.error.nearbyVenues.slice(0, 3)

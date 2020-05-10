@@ -58,7 +58,7 @@ export default {
 
 	mixins: [validationMixin],
 
-	data() {
+	data () {
 		return {
 			loading: false,
 			model: {
@@ -69,7 +69,7 @@ export default {
 	},
 
 	computed: {
-		breadcrumbItems() {
+		breadcrumbItems () {
 			return [
 				{
 					text: this.$t('pages.user.index.title'),
@@ -80,12 +80,6 @@ export default {
 					active: true
 				}
 			]
-		}
-	},
-
-	head() {
-		return {
-			title: this.$t('pages.user.password.title')
 		}
 	},
 
@@ -103,12 +97,12 @@ export default {
 	},
 
 	methods: {
-		async submit() {
+		async submit () {
 			// Validate
 			this.$v.$touch()
 
 			// Stop if there are errors
-			if (this.$v.$error) return
+			if (this.$v.$error) { return }
 
 			this.loading = true
 
@@ -135,6 +129,12 @@ export default {
 			} finally {
 				this.loading = false
 			}
+		}
+	},
+
+	head () {
+		return {
+			title: this.$t('pages.user.password.title')
 		}
 	}
 }

@@ -63,7 +63,7 @@ export default {
 	name: 'PgPageFooter',
 
 	computed: {
-		year() {
+		year () {
 			return new Date().getFullYear()
 		}
 	}

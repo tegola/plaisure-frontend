@@ -56,7 +56,7 @@ export default {
 		BInputGroup
 	},
 
-	data() {
+	data () {
 		return {
 			formGroupProps,
 			model: null
@@ -66,8 +66,8 @@ export default {
 	computed: {
 		...mapState('user-venue-detail', ['venue', 'saving']),
 
-		currencySymbol() {
-			if (!this.venue.country) return null
+		currencySymbol () {
+			if (!this.venue.country) { return null }
 
 			const { symbol } = getAllInfoByISO(this.venue.country)
 
@@ -83,7 +83,7 @@ export default {
 	},
 
 	methods: {
-		prepareModel() {
+		prepareModel () {
 			const v = this.venue
 
 			this.model = {
@@ -96,7 +96,7 @@ export default {
 			}
 		},
 
-		async submit() {
+		async submit () {
 			this.$store.commit('user-venue-detail/setSaving', true)
 
 			try {

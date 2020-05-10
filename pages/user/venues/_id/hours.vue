@@ -42,7 +42,7 @@ export default {
 		PgHourFieldset
 	},
 
-	data() {
+	data () {
 		return {
 			formGroupProps,
 			days: [
@@ -70,13 +70,13 @@ export default {
 	},
 
 	methods: {
-		prepareModel() {
+		prepareModel () {
 			this.model = {
 				business_hours: this.venue.business_hours.slice()
 			}
 		},
 
-		async submit() {
+		async submit () {
 			this.$store.commit('user-venue-detail/setSaving', true)
 
 			try {

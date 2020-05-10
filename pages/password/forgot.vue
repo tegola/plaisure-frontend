@@ -58,7 +58,7 @@ export default {
 
 	mixins: [validationMixin],
 
-	data() {
+	data () {
 		return {
 			loading: false,
 			done: false,
@@ -68,7 +68,26 @@ export default {
 		}
 	},
 
-	head() {
+	methods: {
+		async submit () {
+			// Validate
+			this.$v.$touch()
+
+			// Stop on validation errors
+			if (this.$v.$error) { return }
+
+			this.loading = true
+
+			await this.$axios.post('/auth/password/forgot', this.model)
+
+			this.model.email = ''
+			this.$v.$reset()
+			this.done = true
+			this.loading = false
+		}
+	},
+
+	head () {
 		return {
 			title: this.$t('pages.forgot_password.title')
 		}
@@ -80,25 +99,6 @@ export default {
 				email,
 				required
 			}
-		}
-	},
-
-	methods: {
-		async submit() {
-			// Validate
-			this.$v.$touch()
-
-			// Stop on validation errors
-			if (this.$v.$error) return
-
-			this.loading = true
-
-			await this.$axios.post('/auth/password/forgot', this.model)
-
-			this.model.email = ''
-			this.$v.$reset()
-			this.done = true
-			this.loading = false
 		}
 	}
 }

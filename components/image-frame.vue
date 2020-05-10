@@ -28,25 +28,25 @@ export default {
 		sizing: {
 			type: String,
 			default: 'cover',
-			validator: value => ['cover', 'contain'].indexOf(value) !== -1
+			validator: value => ['cover', 'contain'].includes(value)
 		}
 	},
 
 	computed: {
-		classes() {
+		classes () {
 			return [
 				'pg-image-frame',
 				this.sizing ? `pg-image-frame--${this.sizing}` : null
 			]
 		},
 
-		styles() {
+		styles () {
 			return {
 				backgroundImage: this.src ? `url(${this.src})` : null
 			}
 		},
 
-		sizerStyles() {
+		sizerStyles () {
 			const ratio = this.ratio.split(':')
 			const padding = (ratio[1] / ratio[0]) * 100
 

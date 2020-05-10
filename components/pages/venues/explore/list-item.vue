@@ -58,7 +58,7 @@ export default {
 	mixins: [PgVenueItemMixin],
 
 	computed: {
-		truncatedDescription() {
+		truncatedDescription () {
 			return truncate(this.venue.description, {
 				length: 200,
 				separator: ' '

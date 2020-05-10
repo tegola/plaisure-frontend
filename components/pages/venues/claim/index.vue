@@ -64,15 +64,7 @@ export default {
 		PgVenueClaimPageItem
 	},
 
-	data() {
-		return {
-			saving: false,
-			error: false,
-			venue: null
-		}
-	},
-
-	async asyncData({ $axios, params }) {
+	async asyncData ({ $axios, params }) {
 		const data = await $axios.$get(`/venues/${params.id}/claim`)
 
 		return {
@@ -80,18 +72,16 @@ export default {
 		}
 	},
 
-	head() {
-		if (!this.venue) return
-
+	data () {
 		return {
-			title: this.$t('pages.venue_claim.meta_title', {
-				name: this.venue.name
-			})
+			saving: false,
+			error: false,
+			venue: null
 		}
 	},
 
 	methods: {
-		async submit() {
+		async submit () {
 			this.saving = true
 
 			try {
@@ -106,6 +96,16 @@ export default {
 				this.saving = false
 				alert(this.$t('common.status.save_error'))
 			}
+		}
+	},
+
+	head () {
+		if (!this.venue) { return }
+
+		return {
+			title: this.$t('pages.venue_claim.meta_title', {
+				name: this.venue.name
+			})
 		}
 	}
 }

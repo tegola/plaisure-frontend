@@ -133,11 +133,11 @@ export default {
 
 	directives: {
 		autoHttps: {
-			bind(el, binding, vnode) {
+			bind (el, binding, vnode) {
 				const prefix = 'https://'
 				const re = new RegExp('^http(s?)://', 'i')
 
-				const handler = function(e) {
+				const handler = function (e) {
 					const value = e.target.value
 
 					if (value.length > prefix.length && !re.test(value)) {
@@ -153,7 +153,7 @@ export default {
 
 	mixins: [validationMixin],
 
-	data() {
+	data () {
 		return {
 			formGroupProps,
 			model: null
@@ -181,7 +181,7 @@ export default {
 	},
 
 	methods: {
-		prepareModel() {
+		prepareModel () {
 			const v = this.venue
 
 			this.model = {
@@ -195,12 +195,12 @@ export default {
 			}
 		},
 
-		async submit() {
+		async submit () {
 			// Validate
 			this.$v.$touch()
 
 			// Stop on validation errors
-			if (this.$v.$error) return
+			if (this.$v.$error) { return }
 
 			this.$store.commit('user-venue-detail/setSaving', true)
 

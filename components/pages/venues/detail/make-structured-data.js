@@ -1,6 +1,6 @@
 import { extend } from 'lodash'
 
-export default venue => {
+export default (venue) => {
 	// General
 	const structuredData = {
 		'@context': 'https://schema.org',
@@ -28,9 +28,9 @@ export default venue => {
 	}
 
 	// Conditional fields
-	if (venue.description) structuredData.description = venue.description
-	if (venue.contacts.phone) structuredData.telephone = venue.contacts.phone
-	if (venue.contacts.email) structuredData.email = venue.contacts.email
+	if (venue.description) { structuredData.description = venue.description }
+	if (venue.contacts.phone) { structuredData.telephone = venue.contacts.phone }
+	if (venue.contacts.email) { structuredData.email = venue.contacts.email }
 
 	// Photos
 	if (venue.photos.length) {

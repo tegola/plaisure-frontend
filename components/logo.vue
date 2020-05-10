@@ -51,7 +51,7 @@ export default {
 	},
 
 	computed: {
-		viewBox() {
+		viewBox () {
 			if (this.symbol && this.text) {
 				return '0 0 145 42'
 			} else if (!this.symbol) {
@@ -63,7 +63,7 @@ export default {
 			}
 		},
 
-		classes() {
+		classes () {
 			return {
 				'pg-logo': true,
 				'pg-logo--color': !this.flat

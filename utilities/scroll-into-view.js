@@ -12,7 +12,7 @@ export default (element, options = defaultOptions) => {
 	const container =
 		document.scrollingElement || document.body || document.documentElement
 
-	if (!element || !container) return
+	if (!element || !container) { return }
 
 	anime({
 		targets: container,

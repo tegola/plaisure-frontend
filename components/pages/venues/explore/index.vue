@@ -227,12 +227,12 @@ import {
 	BNavItem,
 	BTooltip
 } from 'bootstrap-vue'
-import PgVenueListItem from './list-item'
-import PgVenueInfowindowItem from './infowindow-item'
 import PgPlaceTextbox from '@/components/place-textbox'
 import PgNoItems from '@/components/no-items'
 import paramsConverter from '@/utilities/explore-params-converter'
 import { formatGoogleMapsResult } from '@/utilities'
+import PgVenueInfowindowItem from './infowindow-item'
+import PgVenueListItem from './list-item'
 
 const searchRadiuses = [10, 20, 30, 50, 100]
 
@@ -255,7 +255,11 @@ export default {
 		PgNoItems
 	},
 
-	data() {
+	asyncData ({ $axios }) {
+		return $axios.$get('/venues/explore')
+	},
+
+	data () {
 		let mapCenter = extend(
 			{},
 			this.$constants[`MAP_DEFAULT_CENTER_${this.$i18n.region}`]
@@ -339,37 +343,37 @@ export default {
 	},
 
 	computed: {
-		isSmallScreen() {
+		isSmallScreen () {
 			return ['xs', 'sm'].includes(this.$mq)
 		},
 
-		isLargeScreen() {
+		isLargeScreen () {
 			return ['md', 'lg', 'xl'].includes(this.$mq)
 		},
 
-		country() {
+		country () {
 			return this.searchParams.country || this.$i18n.region
 		},
 
-		hasSearchBounds() {
+		hasSearchBounds () {
 			return ['ne_lat', 'ne_lng', 'sw_lat', 'sw_lng'].every(
 				key => this.searchParams[key]
 			)
 		},
 
-		hasSearchCenter() {
+		hasSearchCenter () {
 			return ['c_lat', 'c_lng'].every(key => this.searchParams[key])
 		},
 
-		hasSearchParams() {
+		hasSearchParams () {
 			return this.hasSearchBounds || this.hasSearchCenter
 		},
 
-		searchMode() {
+		searchMode () {
 			return this.hasSearchBounds ? 'bounds' : 'center'
 		},
 
-		searchFieldPlaceholder() {
+		searchFieldPlaceholder () {
 			if (this.searchMode === 'bounds') {
 				return `(${this.$t('pages.explore.form.location.placeholder.in_map')})`
 			} else if (this.searchMode === 'center' && this.userLocation) {
@@ -381,7 +385,7 @@ export default {
 			}
 		},
 
-		mapOptions() {
+		mapOptions () {
 			return {
 				gestureHandling: 'greedy',
 				fullscreenControl: false,
@@ -406,14 +410,14 @@ export default {
 			}
 		},
 
-		radiusOptions() {
+		radiusOptions () {
 			return searchRadiuses.map(radius => ({
 				value: radius,
 				text: `${radius} km`
 			}))
 		},
 
-		categoryOptions() {
+		categoryOptions () {
 			return this.categoriesForCountry(this.searchParams.country)
 				.slice() // make a copy
 				.sort((a, b) => {
@@ -437,16 +441,10 @@ export default {
 		},
 		*/
 
-		hasMorePages() {
+		hasMorePages () {
 			return this.pagination
 				? this.pagination.current_page !== this.pagination.last_page
 				: false
-		}
-	},
-
-	head() {
-		return {
-			title: this.searchParams.query || this.$t('pages.explore.meta_title')
 		}
 	},
 
@@ -455,8 +453,8 @@ export default {
 		// map
 		currentView: {
 			immediate: true,
-			async handler() {
-				if (!process.client) return
+			async handler () {
+				if (!process.client) { return }
 
 				await this.$nextTick()
 
@@ -473,11 +471,7 @@ export default {
 		}
 	},
 
-	asyncData({ $axios }) {
-		return $axios.$get('/venues/explore')
-	},
-
-	mounted() {
+	mounted () {
 		this.setSearchParams({}) // Init defaults (and search)
 
 		if (process.client) {
@@ -489,31 +483,31 @@ export default {
 
 			// Add infinite loading observer
 			this.listObserver = new IntersectionObserver(([entry]) => {
-				if (entry.isIntersecting) this.loadMore()
+				if (entry.isIntersecting) { this.loadMore() }
 			})
 		}
 	},
 
-	destroyed() {
+	destroyed () {
 		// Destroy intersection observers
 		this.tabsObserver.disconnect()
 		this.listObserver.disconnect()
 	},
 
 	methods: {
-		categoriesForCountry(country) {
+		categoriesForCountry (country) {
 			return this.categories.filter(
 				category => !category.country || category.country === country
 			)
 		},
 
-		setSearchParams(params) {
+		setSearchParams (params) {
 			const searchParams = this.searchParams
 			const country = params.country || this.country
 
 			// Reset page if not specified otherwise, so any filter change would
 			// restart from the first one
-			if (!params.page) params.page = 1
+			if (!params.page) { params.page = 1 }
 
 			// Set categories
 			if (
@@ -527,7 +521,7 @@ export default {
 				)
 			} else if (params.categories && params.categories.length) {
 				// Limited categories depending on the country
-				params.categories = params.categories.filter(categoryId => {
+				params.categories = params.categories.filter((categoryId) => {
 					const cat = this.categoriesForCountry(country).find(
 						category => category.id === categoryId
 					)
@@ -545,7 +539,7 @@ export default {
 		},
 
 		// Location search ----------------------------------------------------
-		onPlaceChanged(place) {
+		onPlaceChanged (place) {
 			// Reset old query if there's no place
 			if (!place) {
 				this.query = this.searchParams.query
@@ -592,7 +586,7 @@ export default {
 		},
 
 		// User location ------------------------------------------------------
-		async findUserLocation() {
+		async findUserLocation () {
 			this.locating = true
 			let position
 
@@ -609,7 +603,7 @@ export default {
 			}
 
 			// Stop if there's no position
-			if (!position) return
+			if (!position) { return }
 
 			const { latitude, longitude } = position.coords
 
@@ -630,7 +624,7 @@ export default {
 				lat: latitude,
 				lng: longitude
 			}
-			if (this.$refs.map) this.$refs.map.panTo(this.mapCenter)
+			if (this.$refs.map) { this.$refs.map.panTo(this.mapCenter) }
 
 			// Init search params update
 			const searchParams = {
@@ -645,7 +639,7 @@ export default {
 			}
 
 			// Find city name
-			if (!this.geocoder) this.geocoder = new google.maps.Geocoder()
+			if (!this.geocoder) { this.geocoder = new google.maps.Geocoder() }
 
 			const coords = {
 				lat: latitude,
@@ -666,13 +660,13 @@ export default {
 		},
 
 		// Filters -------------------------------------------------------------
-		onRadiusChange(value) {
+		onRadiusChange (value) {
 			this.setSearchParams({
 				radius: value
 			})
 		},
 
-		async onCategoryChange(value) {
+		async onCategoryChange (value) {
 			if (!value.length) {
 				value = this.categoriesForCountry(this.country).map(
 					category => category.id
@@ -687,7 +681,7 @@ export default {
 		},
 
 		// Map -----------------------------------------------------------------
-		mapMarkerIcon(venue, index) {
+		mapMarkerIcon (venue, index) {
 			const variant = venue.id === this.selectedVenueId ? 'inverse' : 'normal'
 			const firstCategoryMachineName =
 				venue.categories && venue.categories.length
@@ -701,18 +695,18 @@ export default {
 			return `/img/map/pin-${variant}/${glyph}.svg`
 		},
 
-		selectMarker(venue) {
+		selectMarker (venue) {
 			this.selectedVenueId =
 				venue && venue.id !== this.selectedVenueId ? venue.id : null
 		},
 
-		onMapZoomChange(value) {
+		onMapZoomChange (value) {
 			this.mapZoom = value
 			this.updateUrl()
 		},
 
 		// Fat arrow functions do not work with debounce
-		onMapBoundsChange: debounce(function(bounds) {
+		onMapBoundsChange: debounce(function (bounds) {
 			// Store bounds
 			this.mapBounds = bounds
 
@@ -726,7 +720,7 @@ export default {
 			this.mapNeedsRefresh = true
 		}, 200),
 
-		onSearchBoundsClick() {
+		onSearchBoundsClick () {
 			const c = this.mapBounds.getCenter()
 			const ne = this.mapBounds.getNorthEast()
 			const sw = this.mapBounds.getSouthWest()
@@ -758,9 +752,9 @@ export default {
 		},
 
 		// Search -------------------------------------------------------------
-		async search() {
+		async search () {
 			// Stop if there is no location for searching
-			if (!this.hasSearchParams) return
+			if (!this.hasSearchParams) { return }
 
 			// Load venues
 			this.loading = true
@@ -783,7 +777,7 @@ export default {
 			this.updateUrl()
 		},
 
-		loadMore() {
+		loadMore () {
 			if (
 				this.hasSearchParams &&
 				this.hasMorePages &&
@@ -795,7 +789,7 @@ export default {
 			}
 		},
 
-		updateUrl() {
+		updateUrl () {
 			this.$router.replace({
 				query: paramsConverter.toQueryParams({
 					...this.searchParams,
@@ -807,9 +801,15 @@ export default {
 			})
 		},
 
-		switchView(view) {
+		switchView (view) {
 			this.currentView = view
 			this.updateUrl()
+		}
+	},
+
+	head () {
+		return {
+			title: this.searchParams.query || this.$t('pages.explore.meta_title')
 		}
 	}
 }

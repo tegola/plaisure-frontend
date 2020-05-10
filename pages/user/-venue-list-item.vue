@@ -30,7 +30,7 @@
 				<p v-if="venue.categories.length" class="small text-uppercase text-muted mb-1">{{ categories }}</p>
 				<p class="mb-0">{{ address }}</p>
 			</div>
-			<div 
+			<div
 				v-if="venue.subscription && venue.subscription.payment_pending"
 				class="col-auto text-danger">
 				<pg-icon
@@ -64,7 +64,7 @@ export default {
 
 		target: {
 			type: String,
-			validator: value => ['name', 'item'].indexOf(value) !== -1,
+			validator: value => ['name', 'item'].includes(value),
 			default: 'name'
 		}
 	}

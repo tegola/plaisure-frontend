@@ -14,7 +14,7 @@ export default {
 		size: {
 			type: String,
 			default: null,
-			validator: value => ['2x', '3x', '4x'].indexOf(value) !== -1
+			validator: value => ['2x', '3x', '4x'].includes(value)
 		},
 		spinning: {
 			type: Boolean,
@@ -23,7 +23,7 @@ export default {
 	},
 
 	computed: {
-		classes() {
+		classes () {
 			return [
 				'pg-icon',
 				`pg-icon--${this.icon}`,
@@ -31,8 +31,8 @@ export default {
 				this.spinning ? 'pg-icon--spinning' : null
 			]
 		},
-		svg() {
-			return require(`@/assets/svg/icons/${this.icon}.svg?inline`).default
+		svg () {
+			return () => import(`@/assets/svg/icons/${this.icon}.svg?inline`)
 		}
 	}
 }

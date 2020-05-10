@@ -98,14 +98,14 @@ export default {
 		}
 	},
 
-	data() {
+	data () {
 		return {
 			drawerOpen: false
 		}
 	},
 
 	computed: {
-		classes() {
+		classes () {
 			return [
 				'pg-navbar',
 				'navbar',
@@ -117,19 +117,19 @@ export default {
 		}
 	},
 
-	destroyed() {
+	destroyed () {
 		this.toggleOverflow(false)
 	},
 
 	methods: {
-		toggleDrawer(force) {
+		toggleDrawer (force) {
 			const open = force !== undefined ? force : !this.drawerOpen
 
 			this.drawerOpen = open
 			this.toggleOverflow(open)
 		},
 
-		toggleOverflow(open) {
+		toggleOverflow (open) {
 			document.body.classList.toggle('pg--pg-overlay-open', open)
 		}
 	}

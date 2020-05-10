@@ -71,7 +71,7 @@ export default {
 		}
 	},
 
-	data() {
+	data () {
 		return {
 			saving: false,
 			model: {
@@ -86,8 +86,8 @@ export default {
 	watch: {
 		review: {
 			immediate: true,
-			handler(review) {
-				if (!review) return
+			handler (review) {
+				if (!review) { return }
 
 				extend(this.model, {
 					rating: review.rating,
@@ -113,16 +113,16 @@ export default {
 	},
 
 	methods: {
-		cancel() {
+		cancel () {
 			this.$emit('cancel')
 		},
 
-		async submit(value) {
+		async submit (value) {
 			// Validate
 			this.$v.$touch()
 
 			// Stop on validation errors
-			if (this.$v.$error) return
+			if (this.$v.$error) { return }
 
 			this.saving = true
 

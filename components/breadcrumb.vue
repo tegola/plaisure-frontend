@@ -35,11 +35,11 @@ export default {
 	},
 
 	computed: {
-		short() {
+		short () {
 			return ['xs', 'sm'].includes(this.$mq)
 		},
 
-		visibleItems() {
+		visibleItems () {
 			return this.short ? this.items.slice(-2) : this.items
 		}
 	}

@@ -118,7 +118,7 @@
 			</template>
 		</draggable>
 
-		<pg-no-items 
+		<pg-no-items
 			v-if="!totalPhotoCount"
 			:title="$t('pages.user.venues.detail.photos.no_items.title')"
 			:subtitle="$t('pages.user.venues.detail.photos.no_items.subtitle')"
@@ -155,7 +155,13 @@ export default {
 		PgNoItems
 	},
 
-	data() {
+	async fetch ({ $axios, params, store }) {
+		const { data } = await $axios.$get(`/user/venues/${params.id}/photos`)
+
+		store.commit('user-venue-detail/setPhotos', data)
+	},
+
+	data () {
 		return {
 			uploaderFiles: [],
 			photoItemClass: 'col-6 col-sm-4 col-md-3 col-lg-2 mb-3',
@@ -169,18 +175,18 @@ export default {
 	computed: {
 		...mapState('user-venue-detail', ['venue', 'photos', 'saving']),
 
-		uploaderUrl() {
+		uploaderUrl () {
 			return `${process.env.API_URL}/files`
 		},
 
-		uploaderHeaders() {
+		uploaderHeaders () {
 			return {
 				Authorization: this.$auth.$storage.getUniversal('_token.local'),
 				'X-Requested-With': 'XMLHttpRequest'
 			}
 		},
 
-		totalPhotoCount() {
+		totalPhotoCount () {
 			return this.photos.length + this.uploaderFiles.length
 		}
 	},
@@ -192,20 +198,14 @@ export default {
 		}
 	},
 
-	async fetch({ $axios, params, store }) {
-		const { data } = await $axios.$get(`/user/venues/${params.id}/photos`)
-
-		store.commit('user-venue-detail/setPhotos', data)
-	},
-
 	methods: {
-		prepareModel() {
+		prepareModel () {
 			this.model = {
 				photos: this.photos.slice()
 			}
 		},
 
-		onUploaderFileInput(newFile, oldFile) {
+		onUploaderFileInput (newFile, oldFile) {
 			// Update
 			if (newFile && oldFile) {
 				// FIXME: Qui dovremmo controllare l'errore del server e
@@ -236,16 +236,16 @@ export default {
 			}
 		},
 
-		deletePhoto(photo) {
+		deletePhoto (photo) {
 			this.currentPhoto = photo
 			this.confirmDeleteOpen = true
 		},
 
-		confirmDeletePhoto() {
+		confirmDeletePhoto () {
 			this.model.photos.splice(this.model.photos.indexOf(this.currentPhoto), 1)
 		},
 
-		async submit() {
+		async submit () {
 			this.$store.commit('user-venue-detail/setSaving', true)
 
 			try {

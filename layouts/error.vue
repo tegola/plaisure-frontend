@@ -22,11 +22,6 @@ export default {
 		PgVenueClosedErrorPage
 	},
 
-	head() {
-		// https://nuxt-community.github.io/nuxt-i18n/seo.html#improving-performance
-		return this.$nuxtI18nSeo()
-	},
-
 	props: {
 		error: {
 			type: Object,
@@ -35,7 +30,7 @@ export default {
 	},
 
 	computed: {
-		component() {
+		component () {
 			const routeName = this.$route.name
 
 			return routeName &&
@@ -44,6 +39,11 @@ export default {
 				? 'pg-venue-closed-error-page'
 				: 'pg-basic-error-page'
 		}
+	},
+
+	head () {
+		// https://nuxt-community.github.io/nuxt-i18n/seo.html#improving-performance
+		return this.$nuxtI18nSeo()
 	}
 }
 </script>

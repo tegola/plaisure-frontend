@@ -24,7 +24,7 @@ export default {
 		},
 		title: {
 			type: String,
-			default: function() {
+			default () {
 				return this.$t('components.no_items.title')
 			}
 		},

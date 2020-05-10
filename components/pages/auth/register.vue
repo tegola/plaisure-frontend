@@ -89,7 +89,7 @@ export default {
 		}
 	},
 
-	data() {
+	data () {
 		return {
 			loading: false,
 			model: {
@@ -99,16 +99,6 @@ export default {
 				locale: this.$i18n.isoCode,
 				is_owner: this.asOwner
 			}
-		}
-	},
-
-	head() {
-		return {
-			title: this.$t(
-				this.asOwner
-					? 'pages.register.owner.meta_title'
-					: 'pages.register.user.meta_title'
-			)
 		}
 	},
 
@@ -129,12 +119,14 @@ export default {
 	},
 
 	methods: {
-		async submit() {
+		async submit () {
 			// Validate
 			this.$v.$touch()
 
 			// Stop on validation errors
-			if (this.$v.$error) return
+			if (this.$v.$error) {
+				return
+			}
 
 			this.loading = true
 
@@ -171,6 +163,16 @@ export default {
 			} finally {
 				this.loading = false
 			}
+		}
+	},
+
+	head () {
+		return {
+			title: this.$t(
+				this.asOwner
+					? 'pages.register.owner.meta_title'
+					: 'pages.register.user.meta_title'
+			)
 		}
 	}
 }

@@ -40,24 +40,24 @@ export default {
 		}
 	},
 
-	data() {
+	data () {
 		return {
 			place: null
 		}
 	},
 
 	watch: {
-		place() {
+		place () {
 			this.$emit('place-changed', this.place)
 		}
 	},
 
 	methods: {
-		isMenuOpen() {
+		isMenuOpen () {
 			// Get menus as array
 			const menus = [].slice.call(document.querySelectorAll('.pac-container'))
 
-			const anyMenuOpen = menus.some(menu => {
+			const anyMenuOpen = menus.some((menu) => {
 				return (
 					menu.offsetWidth || menu.offsetHeight || menu.getClientRects().length
 				)
@@ -66,37 +66,37 @@ export default {
 			return anyMenuOpen
 		},
 
-		focus() {
+		focus () {
 			this.$refs.input.$refs.input.focus()
 		},
 
-		onFocus(e) {
+		onFocus (e) {
 			// Auto select text
 			e.target.select()
 
 			this.$emit('focus', e)
 		},
 
-		onBlur(e) {
+		onBlur (e) {
 			this.$emit('blur', e)
 		},
 
-		onInput(e) {
+		onInput (e) {
 			this.$emit('input', e.target.value)
 
 			// Remove place if present
-			if (this.place) this.place = null
+			if (this.place) { this.place = null }
 		},
 
-		onEscKey(e) {
-			if (this.isMenuOpen()) return
+		onEscKey (e) {
+			if (this.isMenuOpen()) { return }
 
 			this.$emit('input', '')
 
 			this.place = null
 		},
 
-		onEnterKey(e) {
+		onEnterKey (e) {
 			// Prevent enter key if menu is open
 			if (this.isMenuOpen()) {
 				e.preventDefault()
@@ -105,7 +105,7 @@ export default {
 			}
 		},
 
-		onPlaceChanged(place) {
+		onPlaceChanged (place) {
 			if (place && place.place_id) {
 				// Store place locally
 				this.place = place

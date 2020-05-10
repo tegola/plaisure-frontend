@@ -40,7 +40,7 @@
 export default {
 	name: 'PgAboutPage',
 
-	head() {
+	head () {
 		return {
 			title: this.$t('pages.about.meta_title')
 		}

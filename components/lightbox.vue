@@ -102,37 +102,37 @@ export default {
 		}
 	},
 
-	data() {
+	data () {
 		return {
 			mutableIndex: this.index
 		}
 	},
 
 	computed: {
-		counter() {
+		counter () {
 			return this.$t('components.lightbox.counter', {
 				current: this.mutableIndex + 1,
 				total: this.images.length
 			})
 		},
-		caption() {
+		caption () {
 			return this.images[this.mutableIndex].caption
 		},
-		showArrows() {
+		showArrows () {
 			return this.arrows && this.images.length > 1
 		},
-		showThumbnails() {
+		showThumbnails () {
 			return this.thumbnails && this.images.length > 1
 		}
 	},
 
 	watch: {
-		index() {
+		index () {
 			this.select(this.index, true)
 		}
 	},
 
-	mounted() {
+	mounted () {
 		this.flickity = new Flickity(this.$refs.display, {
 			cellSelector: '.pg-lightbox__slide',
 			wrapAround: true,
@@ -165,41 +165,41 @@ export default {
 	},
 
 	methods: {
-		thumbnailStyle(image) {
+		thumbnailStyle (image) {
 			return {
 				'background-image': `url(${image.thumbnail_url})`
 			}
 		},
 
-		thumbnailClass(image) {
+		thumbnailClass (image) {
 			return {
 				'pg-lightbox__thumbnail--selected':
 					this.images.indexOf(image) === this.mutableIndex
 			}
 		},
 
-		prev() {
+		prev () {
 			this.flickity.previous(true)
 		},
 
-		next() {
+		next () {
 			this.flickity.next(true)
 		},
 
-		select(index, instant = false) {
+		select (index, instant = false) {
 			this.flickity.select(index, true, instant)
 		},
 
-		close() {
+		close () {
 			this.$emit('close')
 		},
 
-		beforeLeave() {
+		beforeLeave () {
 			// Remove body class
 			document.body.classList.remove('pg--pg-overlay-open')
 		},
 
-		afterLeave() {
+		afterLeave () {
 			// Destroy slider
 			this.flickity.destroy()
 			this.flickity = null

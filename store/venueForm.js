@@ -20,7 +20,7 @@ export const getters = {
 }
 
 export const mutations = {
-	reset: state => {
+	reset: (state) => {
 		extend(state, initialState)
 	},
 

@@ -1,8 +1,8 @@
-export const queryToViewParams = input => {
+export const queryToViewParams = (input) => {
 	const output = {}
 
 	// view = v (to query params only)
-	if (['list', 'map'].indexOf(input.v) !== -1) {
+	if (['list', 'map'].includes(input.v)) {
 		output.view = input.v
 	}
 
@@ -14,7 +14,7 @@ export const queryToViewParams = input => {
 	return output
 }
 
-export const queryToSearchParams = input => {
+export const queryToSearchParams = (input) => {
 	const output = {}
 
 	// q = query
@@ -66,7 +66,7 @@ export const queryToSearchParams = input => {
 	return output
 }
 
-export const toQueryParams = input => {
+export const toQueryParams = (input) => {
 	const output = {}
 
 	// query = q
@@ -102,7 +102,7 @@ export const toQueryParams = input => {
 	}
 
 	// view = v (to query params only)
-	if (['list', 'map'].indexOf(input.view) !== -1) {
+	if (['list', 'map'].includes(input.view)) {
 		output.v = input.view
 	}
 

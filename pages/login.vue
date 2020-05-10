@@ -72,7 +72,7 @@ export default {
 
 	mixins: [validationMixin],
 
-	data() {
+	data () {
 		return {
 			loading: false,
 			error: false,
@@ -83,31 +83,13 @@ export default {
 		}
 	},
 
-	head() {
-		return {
-			title: this.$t('pages.login.meta_title')
-		}
-	},
-
-	validations: {
-		model: {
-			email: {
-				email,
-				required
-			},
-			password: {
-				required
-			}
-		}
-	},
-
 	methods: {
-		async submit() {
+		async submit () {
 			// Validate
 			this.$v.$touch()
 
 			// Stop on validation errors
-			if (this.$v.$error) return
+			if (this.$v.$error) { return }
 
 			this.loading = true
 
@@ -123,10 +105,28 @@ export default {
 
 				this.$auth.$storage.setUniversal('redirect', null)
 
-				if (redirect) this.$router.push(redirect)
+				if (redirect) { this.$router.push(redirect) }
 			} catch (err) {
 				this.loading = false
 				this.error = true
+			}
+		}
+	},
+
+	head () {
+		return {
+			title: this.$t('pages.login.meta_title')
+		}
+	},
+
+	validations: {
+		model: {
+			email: {
+				email,
+				required
+			},
+			password: {
+				required
 			}
 		}
 	}

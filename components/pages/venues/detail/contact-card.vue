@@ -106,7 +106,7 @@ export default {
 		}
 	},
 
-	data() {
+	data () {
 		return {
 			mapOptions: {
 				styles: [
@@ -123,7 +123,7 @@ export default {
 	},
 
 	computed: {
-		mapImgUrl() {
+		mapImgUrl () {
 			return [
 				'https://maps.googleapis.com/maps/api/staticmap',
 				`?center=${this.venue.coords.lat},${this.venue.coords.lng}`,
@@ -135,7 +135,7 @@ export default {
 			].join('')
 		},
 
-		addressLines() {
+		addressLines () {
 			const a = this.venue.address
 			return [
 				[a.line1, a.line2].join(', '),
@@ -144,30 +144,30 @@ export default {
 			]
 		},
 
-		isOpen() {
+		isOpen () {
 			return isVenueOpen(this.venue.business_hours)
 		},
 
-		businessHoursRows() {
+		businessHoursRows () {
 			return this.venue.business_hours.map((hours, index) => ({
 				day: indexToDayName(index, this.$i18n.locale),
-				hours: hours
+				hours
 			}))
 		},
 
-		hasContacts() {
+		hasContacts () {
 			const c = this.venue.contacts
 
 			return c.phone || c.email || c.facebook || c.twitter
 		},
 
-		hasUrls() {
+		hasUrls () {
 			const u = this.venue.urls
 
 			return u.site || u.facebook
 		},
 
-		googleMapsUrl() {
+		googleMapsUrl () {
 			const baseUrl =
 				'https://www.google.com/maps/dir/?api=1&map_action=map&destination='
 			let address = this.venue.address
@@ -177,7 +177,7 @@ export default {
 			return `${baseUrl}${address}`
 		},
 
-		facebookMessengerUrl() {
+		facebookMessengerUrl () {
 			// Get handle from the specfied contact
 			let handle = this.venue.contacts.facebook
 
@@ -186,26 +186,26 @@ export default {
 				const re = /^.*\.facebook\.com\/.*-(\d{5,})\/?$/i
 				const matches = this.venue.urls.facebook.match(re)
 
-				if (matches.length > 1) handle = matches[matches.length - 1]
+				if (matches.length > 1) { handle = matches[matches.length - 1] }
 			}
 
 			return handle ? `https://www.messenger.com/t/${handle}` : null
 		},
 
-		twitterUrl() {
+		twitterUrl () {
 			const handle = this.venue.contacts.twitter
 
 			return handle ? `https://www.twitter.com/${handle}` : null
 		},
 
-		readableSiteUrl() {
+		readableSiteUrl () {
 			const url = this.venue.urls.site
 
 			// Stop if there's no url
-			if (!url) return null
+			if (!url) { return null }
 
 			// Return the full url on SSR
-			if (process.server) return url
+			if (process.server) { return url }
 
 			// Return clean url on client
 			const parser = document.createElement('a') // cannot use new URL() on ie11
@@ -216,7 +216,7 @@ export default {
 	},
 
 	methods: {
-		toggleHours() {
+		toggleHours () {
 			this.hoursExpanded = !this.hoursExpanded
 		}
 	}

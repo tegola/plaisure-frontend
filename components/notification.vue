@@ -38,7 +38,7 @@ export default {
 	},
 
 	computed: {
-		classes() {
+		classes () {
 			return ['pg-notification', 'pg-notification--' + this.variant]
 		}
 	}

@@ -102,45 +102,7 @@ export default {
 
 	mixins: [validationMixin],
 
-	data() {
-		return {
-			loading: false,
-			model: {}
-		}
-	},
-
-	computed: {
-		breadcrumbItems() {
-			return [
-				{
-					text: this.$t('pages.user.index.title'),
-					to: this.localePath('user')
-				},
-				{
-					text: this.$t('pages.user.billing.title'),
-					active: true
-				}
-			]
-		},
-
-		hasAnyLegalField() {
-			const m = this.model
-			const hasAny = [
-				m.legal_name,
-				m.address_line1,
-				m.address_line2,
-				m.address_city,
-				m.address_postcode,
-				m.address_region,
-				m.country,
-				m.vat_number
-			].some(item => item)
-
-			return hasAny
-		}
-	},
-
-	async asyncData({ $axios }) {
+	async asyncData ({ $axios }) {
 		const data = await $axios.$get('/user/edit')
 		const user = data.data
 
@@ -159,46 +121,78 @@ export default {
 		}
 	},
 
-	head() {
+	data () {
 		return {
-			title: this.$t('pages.user.billing.title')
+			loading: false,
+			model: {}
+		}
+	},
+
+	computed: {
+		breadcrumbItems () {
+			return [
+				{
+					text: this.$t('pages.user.index.title'),
+					to: this.localePath('user')
+				},
+				{
+					text: this.$t('pages.user.billing.title'),
+					active: true
+				}
+			]
+		},
+
+		hasAnyLegalField () {
+			const m = this.model
+			const hasAny = [
+				m.legal_name,
+				m.address_line1,
+				m.address_line2,
+				m.address_city,
+				m.address_postcode,
+				m.address_region,
+				m.country,
+				m.vat_number
+			].some(item => item)
+
+			return hasAny
 		}
 	},
 
 	validations: {
 		model: {
 			legal_name: {
-				required: requiredIf(function() {
+				required: requiredIf(function () {
 					return this.hasAnyLegalField
 				})
 			},
 			address_line1: {
-				required: requiredIf(function() {
+				required: requiredIf(function () {
 					return this.hasAnyLegalField
 				})
 			},
 			address_city: {
-				required: requiredIf(function() {
+				required: requiredIf(function () {
 					return this.hasAnyLegalField
 				})
 			},
 			address_postcode: {
-				required: requiredIf(function() {
+				required: requiredIf(function () {
 					return this.hasAnyLegalField
 				})
 			},
 			address_region: {
-				required: requiredIf(function() {
+				required: requiredIf(function () {
 					return this.hasAnyLegalField
 				})
 			},
 			country: {
-				required: requiredIf(function() {
+				required: requiredIf(function () {
 					return this.hasAnyLegalField
 				})
 			},
 			vat_number: {
-				required: requiredIf(function() {
+				required: requiredIf(function () {
 					return this.hasAnyLegalField
 				})
 			}
@@ -206,12 +200,12 @@ export default {
 	},
 
 	methods: {
-		async submit() {
+		async submit () {
 			// Validate
 			this.$v.$touch()
 
 			// Stop if there are errors
-			if (this.$v.$error) return
+			if (this.$v.$error) { return }
 
 			this.loading = true
 
@@ -239,6 +233,12 @@ export default {
 			} finally {
 				this.loading = false
 			}
+		}
+	},
+
+	head () {
+		return {
+			title: this.$t('pages.user.billing.title')
 		}
 	}
 }

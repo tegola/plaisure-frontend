@@ -149,10 +149,9 @@
 			<div class="container">
 				<div class="row align-items-md-center">
 					<div class="col-md-3 mx-auto">
-						<div
-							:is="svg('illustrations/venue.svg')"
-							class="pg-home-page__promote-img"
-						/>
+						<img
+							src="@/assets/svg/illustrations/venue.svg"
+							class="pg-home-page__promote-img">
 					</div>
 					<div class="col-md-8 col-xl-6 mr-auto">
 						<p class="text-olive-800 mb-1">{{ $t('pages.home.promote.intro') }}</p>
@@ -185,12 +184,12 @@
 <script>
 // import { mapState } from 'vuex'
 import { extend, sortBy } from 'lodash'
-import PgToken from './token'
-import searchCities from './search-cities'
 import { toQueryParams } from '@/utilities/explore-params-converter'
 import { formatGoogleMapsResult } from '@/utilities'
 import PgPlaceTextbox from '@/components/place-textbox'
 import PgVenueGridItem from '@/components/venue-grid-item'
+import searchCities from './search-cities'
+import PgToken from './token'
 
 export default {
 	name: 'PgHomePage',
@@ -201,7 +200,15 @@ export default {
 		PgToken
 	},
 
-	data() {
+	asyncData ({ $axios, app }) {
+		return $axios.$get('/home', {
+			params: {
+				country: app.i18n.region
+			}
+		})
+	},
+
+	data () {
 		return {
 			query: null,
 			placeholder: this.$t('pages.home.search.city_placeholder'),
@@ -220,17 +227,17 @@ export default {
 	},
 
 	computed: {
-		canSubmit() {
+		canSubmit () {
 			return !!(this.searchParams.c_lat && this.searchParams.c_lng)
 		},
 
-		tokenPresets() {
+		tokenPresets () {
 			const defaultBoundsKey = `MAP_DEFAULT_BOUNDS_${this.$i18n.region}`
 			const defaultZoomKey = `MAP_DEFAULT_ZOOM_${this.$i18n.region}`
 			const presets = []
 
 			// Categories
-			this.categories.forEach(category => {
+			this.categories.forEach((category) => {
 				presets.push({
 					type: 'category',
 					value: category.machine_name,
@@ -253,7 +260,7 @@ export default {
 			})
 
 			// Cities
-			searchCities[this.$i18n.region].forEach(city => {
+			searchCities[this.$i18n.region].forEach((city) => {
 				presets.push({
 					type: 'city',
 					value: city.query,
@@ -269,7 +276,7 @@ export default {
 			return sortBy(presets, 'label')
 		},
 
-		promoteButton() {
+		promoteButton () {
 			const user = this.$auth.user
 
 			// Unregistered user or non owner
@@ -296,20 +303,8 @@ export default {
 		}
 	},
 
-	asyncData({ $axios, app }) {
-		return $axios.$get('/home', {
-			params: {
-				country: app.i18n.region
-			}
-		})
-	},
-
 	methods: {
-		svg(path) {
-			return require(`@/assets/svg/${path}?inline`).default
-		},
-
-		async findUserLocation() {
+		async findUserLocation () {
 			this.locating = true
 			let position
 
@@ -342,7 +337,7 @@ export default {
 			this.useUserLocation = true
 
 			// Find city name
-			if (!this.geocoder) this.geocoder = new google.maps.Geocoder()
+			if (!this.geocoder) { this.geocoder = new google.maps.Geocoder() }
 
 			const coords = {
 				lat: position.coords.latitude,
@@ -364,13 +359,13 @@ export default {
 			})
 		},
 
-		onPlaceTextboxInput(value) {
+		onPlaceTextboxInput (value) {
 			this.useUserLocation = false
 			this.placeholder = this.$t('pages.home.search.city_placeholder')
 			this.query = value
 		},
 
-		onPlaceChanged(place) {
+		onPlaceChanged (place) {
 			// Reset user location indicator
 			this.useUserLocation = false
 			this.placeholder = this.$t('pages.home.search.city_placeholder')
@@ -394,8 +389,8 @@ export default {
 			}
 		},
 
-		submit() {
-			if (!this.canSubmit) return
+		submit () {
+			if (!this.canSubmit) { return }
 
 			this.$router.push(
 				this.localePath({

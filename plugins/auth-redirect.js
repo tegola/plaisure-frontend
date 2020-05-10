@@ -1,10 +1,10 @@
-export default function({ $axios, app, redirect }) {
+export default function ({ $axios, app, redirect }) {
 	const auth = app.$auth
 	// const router = app.router
 	// const i18n = app.i18n
 
 	// Redirect to login on axios error ---------------------------------------
-	$axios.onError(error => {
+	$axios.onError((error) => {
 		const code = parseInt(error.response && error.response.status)
 
 		if (code === 401) {

@@ -21,7 +21,6 @@
 			</template>
 		</notifications>
 
-
 		<!--
 		<pg-standout-alert position="bottom" dismissible @dismiss="acceptCookies">
 			<i18n path="common.cookie.agree">
@@ -40,7 +39,7 @@ export default {
 		PgStandoutAlert
 	},
 
-	head() {
+	head () {
 		// https://nuxt-community.github.io/nuxt-i18n/seo.html#improving-performance
 		return this.$nuxtI18nSeo()
 	}

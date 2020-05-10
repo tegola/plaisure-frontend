@@ -43,7 +43,7 @@ export default {
 		},
 		cancelTitle: {
 			type: String,
-			default: function() {
+			default () {
 				return this.$t('common.actions.cancel')
 			}
 		}

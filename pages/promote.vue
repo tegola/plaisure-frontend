@@ -79,7 +79,7 @@
 export default {
 	name: 'PgPromotePage',
 
-	head() {
+	head () {
 		return {
 			title: this.$t('pages.promote.meta_title')
 		}

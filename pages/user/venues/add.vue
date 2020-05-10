@@ -245,7 +245,15 @@ export default {
 
 	mixins: [validationMixin],
 
-	data() {
+	async asyncData ({ $axios }) {
+		const data = await $axios.$get('/user/venues/add')
+
+		return {
+			categories: data.categories
+		}
+	},
+
+	data () {
 		return {
 			currentStep: 1,
 			categories: [],
@@ -269,7 +277,7 @@ export default {
 	},
 
 	computed: {
-		breadcrumbItems() {
+		breadcrumbItems () {
 			return [
 				{
 					text: this.$t('pages.user.index.title'),
@@ -289,15 +297,15 @@ export default {
 		// Use a reference to the model to make sure it holds both the old and
 		// new values.
 		// https://github.com/vuejs/vue/issues/2164#issuecomment-432872718
-		tempModel() {
+		tempModel () {
 			return extend({}, this.model)
 		},
 
-		isLargeScreen() {
+		isLargeScreen () {
 			return ['md', 'lg', 'xl'].includes(this.$mq)
 		},
 
-		mapOptions() {
+		mapOptions () {
 			return {
 				fullscreenControl: false,
 				mapTypeControl: false,
@@ -315,7 +323,7 @@ export default {
 			}
 		},
 
-		mapCenter() {
+		mapCenter () {
 			const lat = this.model.geo_latitude
 			const lng = this.model.geo_longitude
 			const def = this.$constants[`MAP_DEFAULT_CENTER_${this.$i18n.region}`]
@@ -323,8 +331,8 @@ export default {
 			return lat && lng ? { lat, lng } : def
 		},
 
-		categoryOptions() {
-			return this.categories.filter(category => {
+		categoryOptions () {
+			return this.categories.filter((category) => {
 				return !!(category.country === this.model.country || !category.country)
 			})
 		}
@@ -334,7 +342,7 @@ export default {
 		// Find coordinates when the address changes
 		tempModel: {
 			deep: true,
-			handler(oldModel, newModel) {
+			handler (oldModel, newModel) {
 				const fields = [
 					'address_line1',
 					'address_line2',
@@ -344,7 +352,7 @@ export default {
 					'address_country'
 				]
 
-				const changed = fields.some(field => {
+				const changed = fields.some((field) => {
 					return oldModel[field] !== newModel[field]
 				})
 
@@ -355,24 +363,10 @@ export default {
 		},
 
 		// Keep only categories for the selected country
-		'model.country'() {
-			this.model.category_ids = this.model.category_ids.filter(id => {
+		'model.country' () {
+			this.model.category_ids = this.model.category_ids.filter((id) => {
 				return this.categoryOptions.some(category => category.id === id)
 			})
-		}
-	},
-
-	head() {
-		return {
-			title: this.$t('pages.user.venues.add.meta_title')
-		}
-	},
-
-	async asyncData({ $axios }) {
-		const data = await $axios.$get('/user/venues/add')
-
-		return {
-			categories: data.categories
 		}
 	},
 
@@ -423,20 +417,20 @@ export default {
 		step_4: ['model.category_ids']
 	},
 
-	async created() {
+	async created () {
 		const google = await this.$gmapApiPromiseLazy()
 
 		this.geocoder = new google.maps.Geocoder()
 	},
 
 	methods: {
-		next() {
+		next () {
 			// Validate current step
 			const validation = this.$v[`step_${this.currentStep}`]
 
 			validation.$touch()
 
-			if (validation.$error) return
+			if (validation.$error) { return }
 
 			// Advance step or submit
 			if (this.currentStep < 4) {
@@ -447,26 +441,26 @@ export default {
 			}
 		},
 
-		previous() {
+		previous () {
 			if (this.currentStep > 1) {
 				this.transition = 'pane-slide-right'
 				this.currentStep--
 			}
 		},
 
-		onTransitionEnter(el) {
+		onTransitionEnter (el) {
 			this.$refs.paneContainer.style.height = `${el.offsetHeight}px`
 		},
 
-		onTransitionAfterEnter(el) {
+		onTransitionAfterEnter (el) {
 			this.$refs.paneContainer.style.height = ''
 		},
 
-		onTransitionLeave(el) {
+		onTransitionLeave (el) {
 			this.$refs.paneContainer.style.height = `${el.offsetHeight}px`
 		},
 
-		findCoords: debounce(function() {
+		findCoords: debounce(function () {
 			if (
 				!this.model.address_line1 ||
 				!this.model.address_postcode ||
@@ -508,7 +502,7 @@ export default {
 			})
 		}, 1000),
 
-		onMapDragEnd() {
+		onMapDragEnd () {
 			const coords = this.$refs.map.$mapObject.center
 
 			this.model = extend({}, this.model, {
@@ -517,12 +511,12 @@ export default {
 			})
 		},
 
-		async submit() {
+		async submit () {
 			this.saving = true
 
 			try {
 				// Save
-				const data = await this.$axios.$post(`/user/venues`, this.model)
+				const data = await this.$axios.$post('/user/venues', this.model)
 				const venue = data.data
 
 				// Reload the user (with the updated venue ids)
@@ -544,6 +538,12 @@ export default {
 					type: 'danger'
 				})
 			}
+		}
+	},
+
+	head () {
+		return {
+			title: this.$t('pages.user.venues.add.meta_title')
 		}
 	}
 }

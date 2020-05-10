@@ -34,7 +34,7 @@ export default {
 	},
 
 	computed: {
-		classes() {
+		classes () {
 			return {
 				'pg-standout-alert': true,
 				'pg-standout-alert--top': this.position === 'top',

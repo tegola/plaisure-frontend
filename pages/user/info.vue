@@ -72,36 +72,7 @@ export default {
 
 	mixins: [validationMixin],
 
-	data() {
-		return {
-			loading: false,
-			model: {}
-		}
-	},
-
-	computed: {
-		breadcrumbItems() {
-			return [
-				{
-					text: this.$t('pages.user.index.title'),
-					to: this.localePath('user')
-				},
-				{
-					text: this.$t('pages.user.info.title'),
-					active: true
-				}
-			]
-		},
-
-		localeOptions() {
-			return [
-				{ value: 'en-GB', text: 'English (Great Britain)' },
-				{ value: 'it-IT', text: 'Italiano' }
-			]
-		}
-	},
-
-	async asyncData({ $axios }) {
+	async asyncData ({ $axios }) {
 		const data = await $axios.$get('/user/edit')
 		const user = data.data
 
@@ -115,34 +86,42 @@ export default {
 		}
 	},
 
-	head() {
+	data () {
 		return {
-			title: this.$t('pages.user.info.title')
+			loading: false,
+			model: {}
 		}
 	},
 
-	validations: {
-		model: {
-			name: {
-				required
-			},
-			email: {
-				required,
-				email
-			},
-			locale: {
-				required
-			}
+	computed: {
+		breadcrumbItems () {
+			return [
+				{
+					text: this.$t('pages.user.index.title'),
+					to: this.localePath('user')
+				},
+				{
+					text: this.$t('pages.user.info.title'),
+					active: true
+				}
+			]
+		},
+
+		localeOptions () {
+			return [
+				{ value: 'en-GB', text: 'English (Great Britain)' },
+				{ value: 'it-IT', text: 'Italiano' }
+			]
 		}
 	},
 
 	methods: {
-		async submit() {
+		async submit () {
 			// Validate
 			this.$v.$touch()
 
 			// Stop if there are errors
-			if (this.$v.$error) return
+			if (this.$v.$error) { return }
 
 			this.loading = true
 
@@ -173,6 +152,27 @@ export default {
 				})
 			} finally {
 				this.loading = false
+			}
+		}
+	},
+
+	head () {
+		return {
+			title: this.$t('pages.user.info.title')
+		}
+	},
+
+	validations: {
+		model: {
+			name: {
+				required
+			},
+			email: {
+				required,
+				email
+			},
+			locale: {
+				required
 			}
 		}
 	}

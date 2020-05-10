@@ -73,7 +73,16 @@ export default {
 
 	mixins: [validationMixin],
 
-	data() {
+	asyncData ({ query }) {
+		return {
+			model: {
+				token: query.token,
+				email: query.email
+			}
+		}
+	},
+
+	data () {
 		return {
 			loading: false,
 			error: false,
@@ -86,23 +95,8 @@ export default {
 		}
 	},
 
-	validate({ query }) {
+	validate ({ query }) {
 		return query.token && query.email
-	},
-
-	asyncData({ query }) {
-		return {
-			model: {
-				token: query.token,
-				email: query.email
-			}
-		}
-	},
-
-	head() {
-		return {
-			title: this.$t('pages.reset_password.title')
-		}
 	},
 
 	validations: {
@@ -122,12 +116,12 @@ export default {
 	},
 
 	methods: {
-		async submit() {
+		async submit () {
 			// Validate
 			this.$v.$touch()
 
 			// Stop on validation errors
-			if (this.$v.$error) return
+			if (this.$v.$error) { return }
 
 			this.loading = true
 
@@ -148,6 +142,12 @@ export default {
 				this.error = true
 				this.loading = false
 			}
+		}
+	},
+
+	head () {
+		return {
+			title: this.$t('pages.reset_password.title')
 		}
 	}
 }

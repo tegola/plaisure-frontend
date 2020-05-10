@@ -55,6 +55,14 @@ import { sortBy, map } from 'lodash'
 export default {
 	name: 'PgUserVenueDetailPageOverviewSection',
 
+	async fetch ({ $axios, params, store }) {
+		const data = await $axios.$get(`/user/venues/${params.id}/overview`)
+
+		store.commit('user-venue-detail/setVisits', data.visits)
+		store.commit('user-venue-detail/setVisitCount', data.visitCount)
+		store.commit('user-venue-detail/setFavoriteCount', data.favoriteCount)
+	},
+
 	computed: {
 		...mapState('user-venue-detail', [
 			'venue',
@@ -63,7 +71,7 @@ export default {
 			'favoriteCount'
 		]),
 
-		chartDates() {
+		chartDates () {
 			// Today with UTC conversion
 			const today = new Date()
 			today.setTime(today.getTime() + today.getTimezoneOffset() * 60 * 1000)
@@ -80,11 +88,11 @@ export default {
 			}
 		},
 
-		chartData() {
+		chartData () {
 			// Prepare data
 			const data = {}
 
-			this.visits.forEach(day => {
+			this.visits.forEach((day) => {
 				data[day.date] = day
 			})
 
@@ -108,7 +116,7 @@ export default {
 			return sortBy(data, 'date')
 		},
 
-		chartMax() {
+		chartMax () {
 			const counts = map(this.chartData, 'count')
 			const max = Math.max.apply(null, counts)
 
@@ -116,18 +124,10 @@ export default {
 		}
 	},
 
-	async fetch({ $axios, params, store }) {
-		const data = await $axios.$get(`/user/venues/${params.id}/overview`)
-
-		store.commit('user-venue-detail/setVisits', data.visits)
-		store.commit('user-venue-detail/setVisitCount', data.visitCount)
-		store.commit('user-venue-detail/setFavoriteCount', data.favoriteCount)
-	},
-
 	methods: {
-		formatChartDate(date) {
+		formatChartDate (date) {
 			// FIXME: Use vue-i18n $d
-			if (!(date instanceof Date)) date = new Date(date)
+			if (!(date instanceof Date)) { date = new Date(date) }
 
 			return date.toLocaleDateString(this.$i18n.isoCode, {
 				day: 'numeric',
@@ -135,7 +135,7 @@ export default {
 			})
 		},
 
-		chartItemFillStyle(day) {
+		chartItemFillStyle (day) {
 			const height = (day.count / this.chartMax) * 100
 			const max = Math.max(height, 1)
 
@@ -144,7 +144,7 @@ export default {
 			}
 		},
 
-		chartItemTooltipProps(day) {
+		chartItemTooltipProps (day) {
 			const date = this.formatChartDate(day.date)
 			const visits = this.$tc(
 				'pages.user.venues.detail.overview.visits.count',
@@ -160,7 +160,7 @@ export default {
 			}
 		},
 
-		chartItemBeforeEnter(el) {
+		chartItemBeforeEnter (el) {
 			const label = el.querySelector('.chart-item__label')
 			const fill = el.querySelector('.chart-item__fill')
 
@@ -171,7 +171,7 @@ export default {
 			fill.style.transformOrigin = 'bottom center'
 		},
 
-		chartItemEnter(el, done) {
+		chartItemEnter (el, done) {
 			anime({
 				targets: el.querySelector('.chart-item__fill'),
 				delay: el.dataset.index * 20,

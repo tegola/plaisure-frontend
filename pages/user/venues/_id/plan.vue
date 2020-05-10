@@ -392,7 +392,17 @@ export default {
 
 	mixins: [validationMixin],
 
-	data() {
+	async fetch ({ $axios, params, store }) {
+		const data = await $axios.$get(`/user/venues/${params.id}/subscription`)
+
+		store.commit(
+			'user-venue-detail/setPaymentIntentSecret',
+			data.paymentIntentSecret
+		)
+		store.commit('user-venue-detail/setSubscription', data.subscription)
+	},
+
+	data () {
 		const manropeFont = {
 			family: 'Manrope',
 			src: `url(${this.$constants.APP_URL}/fonts/regular.otf)`
@@ -434,7 +444,7 @@ export default {
 
 		...mapState('auth', ['user']),
 
-		subscriptions() {
+		subscriptions () {
 			const subscriptions = [
 				{
 					base: {
@@ -489,7 +499,7 @@ export default {
 				}
 			]
 
-			return subscriptions.map(subscription => {
+			return subscriptions.map((subscription) => {
 				const config = subscription.base
 
 				if (subscription[this.venue.country]) {
@@ -500,13 +510,13 @@ export default {
 			})
 		},
 
-		selectedSubscription() {
+		selectedSubscription () {
 			return this.subscriptions.find(
 				subscription => subscription.name === this.model.subscription_name
 			)
 		},
 
-		isResuming() {
+		isResuming () {
 			return (
 				this.subscription &&
 				this.subscription.name === this.model.subscription_name &&
@@ -515,7 +525,7 @@ export default {
 			)
 		},
 
-		hasExistingBilling() {
+		hasExistingBilling () {
 			const u = this.user
 
 			return (
@@ -529,19 +539,19 @@ export default {
 			)
 		},
 
-		hasExistingPayment() {
+		hasExistingPayment () {
 			return !!this.user.card_brand
 		},
 
-		showBillingForm() {
+		showBillingForm () {
 			return !this.hasExistingBilling || this.model.new_billing
 		},
 
-		showPaymentForm() {
+		showPaymentForm () {
 			return !this.hasExistingPayment || this.model.new_payment
 		},
 
-		showNewBillingWarning() {
+		showNewBillingWarning () {
 			return (
 				this.model.new_billing &&
 				this.hasExistingBilling &&
@@ -549,7 +559,7 @@ export default {
 			)
 		},
 
-		showNewPaymentWarning() {
+		showNewPaymentWarning () {
 			return (
 				this.model.new_payment &&
 				this.hasExistingPayment &&
@@ -569,80 +579,8 @@ export default {
 		}
 	},
 
-	head() {
-		// Prevent double loading Stripe lib
-		const loadStripe = process.server || (process.client && !window.Stripe)
-
-		return {
-			title: this.$t('pages.user.venues.detail.plan.title'),
-			script: loadStripe ? [{ src: 'https://js.stripe.com/v3/' }] : null
-		}
-	},
-
-	validations: {
-		model: {
-			legal_name: {
-				required: requiredIf(function() {
-					return !this.hasExistingBilling || this.model.new_billing
-				})
-			},
-			address_line1: {
-				required: requiredIf(function() {
-					return !this.hasExistingBilling || this.model.new_billing
-				})
-			},
-			address_city: {
-				required: requiredIf(function() {
-					return !this.hasExistingBilling || this.model.new_billing
-				})
-			},
-			address_postcode: {
-				required: requiredIf(function() {
-					return !this.hasExistingBilling || this.model.new_billing
-				})
-			},
-			address_region: {
-				required: requiredIf(function() {
-					return !this.hasExistingBilling || this.model.new_billing
-				})
-			},
-			country: {
-				required: requiredIf(function() {
-					return !this.hasExistingBilling || this.model.new_billing
-				})
-			},
-			vat_number: {
-				required: requiredIf(function() {
-					return !this.hasExistingBilling || this.model.new_billing
-				})
-			},
-			/*
-			payment_method_id: {
-				required: requiredIf(function() {
-					return !this.hasExistingPayment || this.model.new_payment
-				})
-			},
-			*/
-			card_holder_name: {
-				required: requiredIf(function() {
-					return !this.hasExistingPayment || this.model.new_payment
-				})
-			}
-		}
-	},
-
-	async fetch({ $axios, params, store }) {
-		const data = await $axios.$get(`/user/venues/${params.id}/subscription`)
-
-		store.commit(
-			'user-venue-detail/setPaymentIntentSecret',
-			data.paymentIntentSecret
-		)
-		store.commit('user-venue-detail/setSubscription', data.subscription)
-	},
-
 	methods: {
-		async fetch() {
+		async fetch () {
 			const response = await this.$axios.get(
 				`/user/venues/${this.venue.id}/subscription`
 			)
@@ -657,7 +595,7 @@ export default {
 			return response
 		},
 
-		prepareModel() {
+		prepareModel () {
 			const u = this.user
 
 			this.model = {
@@ -677,7 +615,7 @@ export default {
 			}
 		},
 
-		propsForSubscription(newSubscription) {
+		propsForSubscription (newSubscription) {
 			const props = {
 				subscription: newSubscription,
 				highlight: newSubscription.highlight,
@@ -710,7 +648,7 @@ export default {
 			return props
 		},
 
-		async select() {
+		async select () {
 			this.selecting = true
 
 			await this.$nextTick()
@@ -721,7 +659,7 @@ export default {
 			})
 		},
 
-		async onSubscriptionSelect(name) {
+		async onSubscriptionSelect (name) {
 			// Save selected subscription
 			this.model.subscription_name = name
 
@@ -737,11 +675,11 @@ export default {
 			})
 		},
 
-		onCardChange({ error }) {
+		onCardChange ({ error }) {
 			this.cardError = error ? error.message : null
 		},
 
-		validateAndContinue() {
+		validateAndContinue () {
 			if (this.model.subscription_name === 'default') {
 				// Default subscription doesn't ask for additional fields, so
 				// it just continues
@@ -754,7 +692,7 @@ export default {
 					this.$v.$touch()
 
 					// Stop on validation errors
-					if (this.$v.$error) throw new Error()
+					if (this.$v.$error) { throw new Error('Validation failed.') }
 
 					// Show confirm modal
 					this.confirmModalOpen = true
@@ -774,7 +712,7 @@ export default {
 			}
 		},
 
-		async cancelPending() {
+		async cancelPending () {
 			this.$store.commit('user-venue-detail/setSaving', true)
 
 			try {
@@ -792,7 +730,7 @@ export default {
 			}
 		},
 
-		async submit() {
+		async submit () {
 			this.$store.commit('user-venue-detail/setSaving', true)
 
 			try {
@@ -816,7 +754,7 @@ export default {
 						}
 					)
 
-					if (error) throw error
+					if (error) { throw error }
 
 					this.model.payment_method_id = setupIntent.payment_method
 				}
@@ -903,7 +841,7 @@ export default {
 			}
 		},
 
-		showSubmitError() {
+		showSubmitError () {
 			this.$bvModal.msgBoxOk(
 				this.$t('pages.user.venues.detail.plan.submit_error'),
 				{
@@ -913,6 +851,68 @@ export default {
 					okTitle: this.$t('common.actions.close')
 				}
 			)
+		}
+	},
+
+	head () {
+		// Prevent double loading Stripe lib
+		const loadStripe = process.server || (process.client && !window.Stripe)
+
+		return {
+			title: this.$t('pages.user.venues.detail.plan.title'),
+			script: loadStripe ? [{ src: 'https://js.stripe.com/v3/' }] : null
+		}
+	},
+
+	validations: {
+		model: {
+			legal_name: {
+				required: requiredIf(function () {
+					return !this.hasExistingBilling || this.model.new_billing
+				})
+			},
+			address_line1: {
+				required: requiredIf(function () {
+					return !this.hasExistingBilling || this.model.new_billing
+				})
+			},
+			address_city: {
+				required: requiredIf(function () {
+					return !this.hasExistingBilling || this.model.new_billing
+				})
+			},
+			address_postcode: {
+				required: requiredIf(function () {
+					return !this.hasExistingBilling || this.model.new_billing
+				})
+			},
+			address_region: {
+				required: requiredIf(function () {
+					return !this.hasExistingBilling || this.model.new_billing
+				})
+			},
+			country: {
+				required: requiredIf(function () {
+					return !this.hasExistingBilling || this.model.new_billing
+				})
+			},
+			vat_number: {
+				required: requiredIf(function () {
+					return !this.hasExistingBilling || this.model.new_billing
+				})
+			},
+			/*
+			payment_method_id: {
+				required: requiredIf(function() {
+					return !this.hasExistingPayment || this.model.new_payment
+				})
+			},
+			*/
+			card_holder_name: {
+				required: requiredIf(function () {
+					return !this.hasExistingPayment || this.model.new_payment
+				})
+			}
 		}
 	}
 }

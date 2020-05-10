@@ -58,8 +58,8 @@ for (let h = 0; h <= 24; h++) {
 
 	const halfs = ['00', '30']
 
-	halfs.forEach(minutes => {
-		if (h === 24 && minutes === '30') return // No 24:30
+	halfs.forEach((minutes) => {
+		if (h === 24 && minutes === '30') { return } // No 24:30
 		options.push(`${hours}:${minutes}`)
 	})
 }
@@ -78,26 +78,25 @@ export default {
 		}
 	},
 
-	data() {
+	data () {
 		return {
 			mutableValue: this.value,
-			options: options
+			options
 		}
 	},
 
 	computed: {
 		mode: {
-			get() {
+			get () {
 				const v = this.value
 
-				if (!v.length) return 'closed'
-				if (v.length > 2) return 'split'
-				if (v.length === 2 && v[0] === '00:00' && v[1] === '24:00')
-					return 'always'
-				if (v.length === 2) return 'full'
+				if (!v.length) { return 'closed' }
+				if (v.length > 2) { return 'split' }
+				if (v.length === 2 && v[0] === '00:00' && v[1] === '24:00') { return 'always' }
+				if (v.length === 2) { return 'full' }
 				return null
 			},
-			set(value) {
+			set (value) {
 				switch (value) {
 					case 'closed':
 						this.mutableValue = []
@@ -119,23 +118,23 @@ export default {
 			}
 		},
 
-		showControls() {
-			return ['full', 'split'].indexOf(this.mode) !== -1
+		showControls () {
+			return ['full', 'split'].includes(this.mode)
 		},
 
-		showSecondaryControls() {
+		showSecondaryControls () {
 			return this.mode === 'split'
 		}
 	},
 
 	watch: {
-		value() {
+		value () {
 			this.mutableValue = this.value
 		}
 	},
 
 	methods: {
-		onTimeChange(index, value) {
+		onTimeChange (index, value) {
 			this.mutableValue = this.mutableValue.slice(0)
 			this.mutableValue[index] = value
 			this.$emit('input', this.mutableValue)

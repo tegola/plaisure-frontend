@@ -112,7 +112,7 @@
 export default {
 	name: 'PgPlayResponsiblyPage',
 
-	head() {
+	head () {
 		return {
 			title: this.$t('pages.play_responsibly.meta_title')
 		}

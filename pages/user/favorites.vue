@@ -29,7 +29,7 @@
 						</pg-user-venue-list-item>
 					</b-list-group>
 
-					<pg-no-items 
+					<pg-no-items
 						v-if="venues.length"
 						icon="heart"
 						:title="$t('pages.user.favorites.no_items.title')"
@@ -46,8 +46,8 @@
 
 <script>
 import { BListGroup } from 'bootstrap-vue'
-import PgUserVenueListItem from './-venue-list-item'
 import PgNoItems from '@/components/no-items'
+import PgUserVenueListItem from './-venue-list-item'
 
 export default {
 	name: 'PgUserFavoritesPage',
@@ -60,8 +60,16 @@ export default {
 		PgNoItems
 	},
 
+	async asyncData ({ $axios }) {
+		const data = await $axios.$get('/user/favorites')
+
+		return {
+			venues: data.data
+		}
+	},
+
 	computed: {
-		breadcrumbItems() {
+		breadcrumbItems () {
 			return [
 				{
 					text: this.$t('pages.user.index.title'),
@@ -75,22 +83,8 @@ export default {
 		}
 	},
 
-	head() {
-		return {
-			title: this.$t('pages.user.favorites.title')
-		}
-	},
-
-	async asyncData({ $axios }) {
-		const data = await $axios.$get('/user/favorites')
-
-		return {
-			venues: data.data
-		}
-	},
-
 	methods: {
-		async remove(venue) {
+		async remove (venue) {
 			try {
 				await this.$axios.post('/user/favorites/remove', {
 					id: venue.id
@@ -108,6 +102,12 @@ export default {
 					okVariant: 'danger'
 				})
 			}
+		}
+	},
+
+	head () {
+		return {
+			title: this.$t('pages.user.favorites.title')
 		}
 	}
 }
