@@ -131,7 +131,15 @@ export default {
 			this.loading = true
 
 			try {
+				// Register
 				await this.$axios.post('/auth/register', this.model)
+
+				// Set redirect url after login
+				const redirect = this.asOwner
+					? this.localePath('user-venues-add')
+					: this.localePath('index')
+
+				this.$auth.$storage.setUniversal('redirect', redirect)
 
 				// Login
 				await this.$auth.loginWith('local', {
@@ -140,19 +148,6 @@ export default {
 						password: this.model.password
 					}
 				})
-
-				// Go to the next page
-				const redirect =
-					this.$route.query.redirect ||
-					this.$auth.$storage.getUniversal('redirect')
-
-				const defaultRedirect = this.asOwner
-					? this.localePath('index')
-					: this.localePath('user-venues-add')
-
-				this.$auth.$storage.setUniversal('redirect', null)
-
-				this.$router.push(redirect || defaultRedirect)
 			} catch (err) {
 				const data = err.response.data
 

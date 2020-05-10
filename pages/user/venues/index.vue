@@ -15,7 +15,7 @@
 						<template v-else>{{ $t('pages.user.venues.index.subtitle_first') }}</template>
 					</p>
 
-					<b-list-group v-if="venues.length" flush class="mt-4">
+					<b-list-group flush class="mt-4">
 						<pg-user-venue-list-item
 							v-for="venue in venues"
 							:key="venue.id"

@@ -57,6 +57,8 @@
 import { BCard, BListGroup, BListGroupItem } from 'bootstrap-vue'
 
 export default {
+	name: 'PgUserPage',
+
 	components: {
 		BCard,
 		BListGroup,

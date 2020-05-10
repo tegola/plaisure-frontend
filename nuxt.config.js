@@ -95,7 +95,8 @@ module.exports = {
 		[
 			'@nuxtjs/auth',
 			{
-				plugins: ['@/plugins/auth-redirect.js'],
+				watchLoggedIn: false, // Managed with the custom plugin below
+				plugins: ['@/plugins/auth-watch.js'],
 				strategies: {
 					local: {
 						endpoints: {

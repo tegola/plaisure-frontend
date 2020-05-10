@@ -423,7 +423,7 @@ export default {
 					title: 'Aggiungi la tua attività',
 					step_1: {
 						title: 'Come si chiama la tua attività?',
-						subtitle: "Scrivi il nome come mostrato sull'insegna",
+						subtitle: "Scrivi il nome come mostrato sull'insegna.",
 						name: 'Nome',
 						name_error: 'Inserisci il nome della tua attività.'
 					},
