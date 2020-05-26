@@ -14,6 +14,9 @@ module.exports = {
 		'@nuxtjs',
 		'plugin:vue/recommended'
 	],
+	plugins: [
+		'vue'
+	],
 	// add your custom rules here
 	rules: {
 		indent: ['error', 'tab', {
