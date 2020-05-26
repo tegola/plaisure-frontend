@@ -53,7 +53,7 @@
 
 						<p class="text-center">
 							<i18n path="pages.register.login1">
-								<nuxt-link slot="link" :to="localePath('login')">{{ $t('pages.register.login2') }}</nuxt-link>
+								<nuxt-link slot="link" :to="localePath({ name: 'login', query: $route.query })">{{ $t('pages.register.login2') }}</nuxt-link>
 							</i18n>
 						</p>
 					</form>
@@ -135,9 +135,15 @@ export default {
 				await this.$axios.post('/auth/register', this.model)
 
 				// Set redirect url after login
-				const redirect = this.asOwner
-					? this.localePath('user-venues-add')
-					: this.localePath('index')
+				let redirect
+
+				if (this.$route.query.redirect) {
+					redirect = this.$route.query.redirect
+				} else {
+					redirect = this.asOwner
+						? this.localePath('user-venues-add')
+						: this.localePath('index')
+				}
 
 				this.$auth.$storage.setUniversal('redirect', redirect)
 

@@ -286,14 +286,15 @@
 									</div>
 								</div>
 							</template>
-							<p v-else class="text-muted text-center">
+							<p v-else class="text-muted text-center mt-3">
 								<i18n path="pages.venue_detail.reviews.login">
-									<nuxt-link slot="action" :to="localePath({ name: 'login', query: { redirect: $route.path }})">{{ $t('pages.venue_detail.reviews.login_action') }}</nuxt-link>
+									<nuxt-link slot="action" :to="loginAndRedirectUrl">{{ $t('pages.venue_detail.reviews.login_action') }}</nuxt-link>
 								</i18n>
 							</p>
 
 							<pg-review-form
 								v-if="reviewFormOpen"
+								class="mt-3"
 								:venue="venue"
 								:review="userReview"
 								@cancel="reviewFormOpen = false"
@@ -414,13 +415,13 @@
 <script>
 import { extend } from 'lodash'
 import { getAllInfoByISO } from 'iso-country-currency'
+import PgVenueDetailPageContactCard from './contact-card'
+import makeStructuredData from './make-structured-data'
 import PgVenueGridItem from '@/components/venue-grid-item'
 import PgReviewItem from '@/components/review-item'
 import PgReviewForm from '@/components/review-form'
 import PgLightbox from '@/components/lightbox'
 import { amenityIconMap, isVenueOpen } from '@/utilities'
-import PgVenueDetailPageContactCard from './contact-card'
-import makeStructuredData from './make-structured-data'
 
 export default {
 	name: 'PgVenueDetailPage',
@@ -465,6 +466,15 @@ export default {
 	},
 
 	computed: {
+		loginAndRedirectUrl () {
+			return this.localePath({
+				name: 'login',
+				query: {
+					redirect: this.switchLocalePath('en') // en -> prefixless url
+				}
+			})
+		},
+
 		subtitle () {
 			const categories = this.venue.categories
 			const city = this.venue.address.city

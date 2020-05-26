@@ -139,8 +139,8 @@ import {
 	BFormCheckbox,
 	BFormCheckboxGroup
 } from 'bootstrap-vue'
-import { amenityIconMap } from '@/utilities'
 import formGroupProps from './-form-group-props'
+import { amenityIconMap } from '@/utilities'
 
 export default {
 	name: 'PgUserVenueDetailPageServicesSection',

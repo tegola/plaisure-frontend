@@ -184,12 +184,12 @@
 <script>
 // import { mapState } from 'vuex'
 import { extend, sortBy } from 'lodash'
+import searchCities from './search-cities'
+import PgToken from './token'
 import { toQueryParams } from '@/utilities/explore-params-converter'
 import { formatGoogleMapsResult } from '@/utilities'
 import PgPlaceTextbox from '@/components/place-textbox'
 import PgVenueGridItem from '@/components/venue-grid-item'
-import searchCities from './search-cities'
-import PgToken from './token'
 
 export default {
 	name: 'PgHomePage',

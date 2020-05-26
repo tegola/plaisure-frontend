@@ -227,12 +227,12 @@ import {
 	BNavItem,
 	BTooltip
 } from 'bootstrap-vue'
+import PgVenueInfowindowItem from './infowindow-item'
+import PgVenueListItem from './list-item'
 import PgPlaceTextbox from '@/components/place-textbox'
 import PgNoItems from '@/components/no-items'
 import paramsConverter from '@/utilities/explore-params-converter'
 import { formatGoogleMapsResult } from '@/utilities'
-import PgVenueInfowindowItem from './infowindow-item'
-import PgVenueListItem from './list-item'
 
 const searchRadiuses = [10, 20, 30, 50, 100]
 

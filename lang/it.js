@@ -338,7 +338,7 @@ export default {
 				rate_success: 'Grazie della valutazione!',
 				write: 'Lascia una recensione',
 				login:
-					'{action} per valutare o lasciare una recensione a questa attività.',
+					'{action} per valutare o recensire questa attività.',
 				login_action: 'Accedi'
 			},
 			claim: {

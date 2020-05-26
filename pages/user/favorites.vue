@@ -46,8 +46,8 @@
 
 <script>
 import { BListGroup } from 'bootstrap-vue'
-import PgNoItems from '@/components/no-items'
 import PgUserVenueListItem from './-venue-list-item'
+import PgNoItems from '@/components/no-items'
 
 export default {
 	name: 'PgUserFavoritesPage',

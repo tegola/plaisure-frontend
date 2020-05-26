@@ -35,7 +35,7 @@ Profilo utente:
  ☐ Aggiungere gestione recensioni personali
  ☐ Aggiungere confronto visite nelle sale vicine nel dettaglio attività
  ☐ Aggiungere gestione recensioni nel dettaglio attività
- 
+
 
 Generale:
  ☐ Aggiungere il lazy load alla galleria foto
@@ -136,11 +136,15 @@ Per andare online su plaisure.com:
   ✔ Disabilitare mailtrap @done (19-04-22 19:21)
 
 Per il prossimo deploy (analytics + nuova gestione attività):
-  ☐ PHP 7.2 sul server
+  ✔ PHP 7.2 sul server @done (20-05-10 23:28)
+	☐ Attivare php 7.2 per backend
+	☐ Controllare che ci sia yarn
+  ☐ sostituire MAIL_DRIVER CON MAIL_MAILER nel file env ONLINE
   ☐ Inserire view id giusto nel file env ONLINE
   ☐ Togliere APP_LOCALE dal file env ONLINE
   ☐ Copiare le credenziali json nella directory di storage
   ☐ Deploy
+	☐ @high Provare CORS
   ☐ Lanciare artisan analytics:import --days(15)
 
 Dopo OGNI deploy backend:
@@ -150,6 +154,6 @@ Dopo OGNI deploy backend:
   ☐ /opt/plesk/php/7.2/bin/php artisan migrate --force --seed
 
 Dopo OGNI deploy frontend:
-  ☐ npm install
+  ☐ yarn install
   ☐ npm run build
   ☐ touch tmp/restart.txt

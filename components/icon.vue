@@ -32,7 +32,7 @@ export default {
 			]
 		},
 		svg () {
-			return () => import(`@/assets/svg/icons/${this.icon}.svg?inline`)
+			return require(`@/assets/svg/icons/${this.icon}.svg?inline`)
 		}
 	}
 }

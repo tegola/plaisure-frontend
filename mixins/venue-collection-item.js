@@ -14,7 +14,7 @@ export default {
 	},
 
 	computed: {
-		url() {
+		url () {
 			return this.localePath({
 				name: 'venues-id',
 				params: {
@@ -23,8 +23,10 @@ export default {
 			})
 		},
 
-		categories() {
-			if (!this.venue.categories || !this.venue.categories.length) return null
+		categories () {
+			if (!this.venue.categories || !this.venue.categories.length) {
+				return null
+			}
 
 			return this.venue.categories
 				.slice(0, 2)
@@ -32,8 +34,10 @@ export default {
 				.join(', ')
 		},
 
-		firstCategoryMachineName() {
-			if (!this.venue.categories || !this.venue.categories.length) return null
+		firstCategoryMachineName () {
+			if (!this.venue.categories || !this.venue.categories.length) {
+				return null
+			}
 
 			return this.venue.categories[0].machine_name
 		},
@@ -44,7 +48,7 @@ export default {
 		 *
 		 * @return {array}
 		 */
-		amenities() {
+		amenities () {
 			const categories = this.venue.categories
 			const amenities = this.venue.amenities
 
@@ -85,7 +89,7 @@ export default {
 
 			// Pick amenities and add icon
 			const pickedAmenitiesWithIcon = amenities
-				.filter(amenity => machineNames.indexOf(amenity.machine_name) !== -1)
+				.filter(amenity => machineNames.includes(amenity.machine_name))
 				.map(amenity => ({
 					...amenity,
 					icon: amenityIconMap[amenity.machine_name] || null
@@ -94,29 +98,29 @@ export default {
 			return pickedAmenitiesWithIcon
 		},
 
-		iconComponent() {
+		iconComponent () {
 			const name = this.firstCategoryMachineName.replace(/_/g, '-')
 
-			return () => import(`@/assets/svg/category-icons/${name}.svg?inline`)
+			return require(`@/assets/svg/category-icons/${name}.svg?inline`)
 		},
 
-		photo() {
+		photo () {
 			const photos = this.venue.photos
 
 			return photos && photos.length ? photos[0] : null
 		},
 
-		address() {
+		address () {
 			const address = this.venue.address
 
 			return [address.line1, address.city].join(', ')
 		},
 
-		isOpen() {
+		isOpen () {
 			return isVenueOpen(this.venue.business_hours)
 		},
 
-		isNew() {
+		isNew () {
 			const created = new Date(this.venue.created_at)
 			const now = new Date()
 			const days = (now - created) / (1000 * 60 * 60 * 24)
