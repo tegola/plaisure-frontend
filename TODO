@@ -138,6 +138,7 @@ Per andare online su plaisure.com:
 Per il prossimo deploy (analytics + nuova gestione attività):
   ✔ PHP 7.2 sul server @done (20-05-10 23:28)
 	☐ Attivare php 7.2 per backend
+	☐ Controllare che ci sia una versione nuova di node (14) per far funzionare le modifiche fatte
 	☐ Controllare che ci sia yarn
   ☐ sostituire MAIL_DRIVER CON MAIL_MAILER nel file env ONLINE
   ☐ Inserire view id giusto nel file env ONLINE

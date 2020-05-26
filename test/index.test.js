@@ -7,7 +7,7 @@ const host = 'localhost'
 const url = `http://${host}:${port}/`
 
 // Init nuxt on localhost:4000
-test.before('Init Nuxt.js', async t => {
+test.before('Init Nuxt.js', async (t) => {
 	// Prepare config
 	let config = {}
 	const rootDir = resolve(__dirname, '..')
@@ -24,7 +24,7 @@ test.before('Init Nuxt.js', async t => {
 	await nuxt.listen(port, host)
 })
 
-test('Home / Renders new venues', async t => {
+test('Home / Renders new venues', async (t) => {
 	const { nuxt } = t.context
 	const window = await nuxt.renderAndGetWindow(url)
 	const newItems = window.document.querySelectorAll('.pg-venue-grid-item')
@@ -33,7 +33,7 @@ test('Home / Renders new venues', async t => {
 })
 
 // Close the Nuxt server
-test.after('Closing server', t => {
+test.after('Closing server', (t) => {
 	const { nuxt } = t.context
 
 	nuxt.close()
