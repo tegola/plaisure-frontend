@@ -6,7 +6,7 @@
 	&__image {
 		border-radius: $border-radius;
 		margin-bottom: $spacer / 2;
-		background-color: $gray-100;
+		background-color: $gray-200;
 		position: relative;
 
 		&::after {
@@ -28,15 +28,8 @@
 	}
 	&__image-icon {
 		fill: $white;
-		width: 48px;
-		height: 48px;
-
-		.pg-svg__background {
-			fill: $white;
-		}
-		.pg-svg__foreground {
-			fill: $gray-300;
-		}
+		width: 64px;
+		height: 64px;
 	}
 
 	&:hover &__image::after {

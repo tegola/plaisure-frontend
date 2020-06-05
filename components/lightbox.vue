@@ -221,6 +221,7 @@ export default {
 	transition: opacity 200ms;
 	display: flex;
 	flex-direction: column;
+	outline: none;
 
 	// Header
 	&__header {

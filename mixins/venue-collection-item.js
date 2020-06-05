@@ -74,11 +74,13 @@ export default {
 					break
 
 				case 'bingo':
+				case 'casino':
 				case 'family_entertainment_center':
 					machineNames = ['wifi', 'air_conditioning', 'private_parking']
 					break
 
 				case 'adult_gaming_center':
+				case 'card_room':
 				case 'vlt':
 					machineNames = ['smoking_area', 'private_room', 'wifi']
 					break
@@ -101,7 +103,7 @@ export default {
 		iconComponent () {
 			const name = this.firstCategoryMachineName.replace(/_/g, '-')
 
-			return require(`@/assets/svg/category-icons/${name}.svg?inline`)
+			return require(`@/assets/svg/collection-item-category-icons/${name}.svg?inline`)
 		},
 
 		photo () {

@@ -5,11 +5,11 @@
 		<!-- Filters -->
 		<div v-if="currentView === 'list' || isLargeScreen" class="bg-light pt-3 pb-1">
 			<div class="container">
-				<div class="row">
+				<div class="row form-row">
 					<b-form-group
 						:label="$t('pages.explore.form.location.label')"
 						label-sr-only
-						class="col-sm">
+						class="mb-2 mb-md-0 col-md">
 						<div class="pg-explore-page__search-field">
 							<pg-icon
 								icon="search"
@@ -37,10 +37,20 @@
 						</div>
 					</b-form-group>
 					<b-form-group
+						:label="$t('pages.explore.form.category.label')"
+						label-sr-only
+						class="mb-0 col-7 col-md-4 col-lg-3">
+						<b-form-select
+							:options="categoryOptions"
+							:value="searchParams.category"
+							@input="onCategoryChange"
+						/>
+					</b-form-group>
+					<b-form-group
 						v-if="searchMode === 'center'"
 						:label="$t('pages.explore.form.distance')"
 						label-sr-only
-						class="col-sm-3">
+						class="mb-0 col-5 col-md-2">
 						<b-form-select
 							:options="radiusOptions"
 							:value="searchParams.radius"
@@ -48,16 +58,6 @@
 						/>
 					</b-form-group>
 				</div>
-				<b-form-group
-					:label="$t('pages.explore.form.category')"
-					label-sr-only>
-					<b-form-checkbox-group
-						:stacked="isSmallScreen"
-						:options="categoryOptions"
-						:checked="searchParams.categories"
-						@change="onCategoryChange"
-					/>
-				</b-form-group>
 				<hr v-if="hasSearchParams" class="mb-0">
 				<!--
 				<b-form-group :label="$t('pages.explore.form.amenities')">
@@ -222,7 +222,7 @@ import {
 import {
 	BFormGroup,
 	BFormSelect,
-	BFormCheckboxGroup,
+	// BFormCheckboxGroup,
 	BNav,
 	BNavItem,
 	BTooltip
@@ -245,7 +245,7 @@ export default {
 		PgMapInfoWindow,
 		BFormGroup,
 		BFormSelect,
-		BFormCheckboxGroup,
+		// BFormCheckboxGroup,
 		BNav,
 		BNavItem,
 		BTooltip,
@@ -272,6 +272,8 @@ export default {
 				page: 1,
 				query: '',
 				country: this.$i18n.region,
+				// categories: [],
+				category: null,
 				radius: searchRadiuses[0],
 				c_lat: null,
 				c_lng: null,
@@ -418,18 +420,24 @@ export default {
 		},
 
 		categoryOptions () {
-			return this.categoriesForCountry(this.searchParams.country)
-				.slice() // make a copy
-				.sort((a, b) => {
-					a = this.$t(`data.categories.${a.machine_name}`)
-					b = this.$t(`data.categories.${b.machine_name}`)
+			return [
+				{
+					value: null,
+					text: this.$t('pages.explore.form.category.any')
+				},
+				...this.categoriesForCountry(this.searchParams.country)
+					.slice() // make a copy
+					.sort((a, b) => { // sort by translated name
+						a = this.$t(`data.categories.${a.machine_name}`)
+						b = this.$t(`data.categories.${b.machine_name}`)
 
-					return a > b ? 1 : -1
-				})
-				.map(category => ({
-					value: category.id,
-					text: this.$t(`data.categories.${category.machine_name}`)
-				}))
+						return a > b ? 1 : -1
+					})
+					.map(category => ({ // map to data accepted by the widget
+						value: category.id,
+						text: this.$t(`data.categories.${category.machine_name}`)
+					}))
+			]
 		},
 
 		/*
@@ -502,7 +510,7 @@ export default {
 		},
 
 		setSearchParams (params) {
-			const searchParams = this.searchParams
+			// const searchParams = this.searchParams
 			const country = params.country || this.country
 
 			// Reset page if not specified otherwise, so any filter change would
@@ -510,6 +518,7 @@ export default {
 			if (!params.page) { params.page = 1 }
 
 			// Set categories
+			/*
 			if (
 				country !== searchParams.country ||
 				((!searchParams.categories || !searchParams.categories.length) &&
@@ -528,6 +537,18 @@ export default {
 
 					return !!cat
 				})
+			}
+			*/
+
+			// Set category (make sure is available for the country)
+			if (params.category) {
+				const cat = this.categoriesForCountry(country).find(
+					category => category.id === params.category
+				)
+
+				if (!cat) {
+					params.category = null
+				}
 			}
 
 			// Force set country
@@ -666,6 +687,7 @@ export default {
 			})
 		},
 
+		/*
 		async onCategoryChange (value) {
 			if (!value.length) {
 				value = this.categoriesForCountry(this.country).map(
@@ -679,20 +701,18 @@ export default {
 				categories: value
 			})
 		},
+		*/
+		onCategoryChange (value) {
+			this.setSearchParams({
+				category: value
+			})
+		},
 
 		// Map -----------------------------------------------------------------
 		mapMarkerIcon (venue, index) {
-			const variant = venue.id === this.selectedVenueId ? 'inverse' : 'normal'
-			const firstCategoryMachineName =
-				venue.categories && venue.categories.length
-					? venue.categories[0].machine_name
-					: null
-			const glyph =
-				index < 25 && firstCategoryMachineName
-					? firstCategoryMachineName
-					: 'collapsed'
+			const type = venue.id === this.selectedVenueId ? 'selected' : 'normal'
 
-			return `/img/map/pin-${variant}/${glyph}.svg`
+			return `/img/map/pin-${type}.svg`
 		},
 
 		selectMarker (venue) {

@@ -1,18 +1,17 @@
  ✔ IMPORTANTE: limitare le informazioni al caricamento di /user, l'utente non deve ricevere tutti i dati @done (19-09-12 19:42)
- ☐ IMPORTANTE: trovare il modo di disabilitare l'accesso esterno alle api pubbliche (es. http://localhost:8888/api/venues/7NQlVQRny1) facendo accedere solo lo stesso dominio (CORS?)
+ ✔ IMPORTANTE: trovare il modo di disabilitare l'accesso esterno alle api pubbliche (es. http://localhost:8888/api/venues/7NQlVQRny1) facendo accedere solo lo stesso dominio (CORS?) @done(20-06-02 16:07)
  ☐ In caso di carta non funzionante Stripe punta a /user/billing, ma lì non ci sono i campi per cambiare carta
- ☐ Assicurarsi che /user/venues non sia visibile a chi non è owner
+ ✔ Assicurarsi che /user/venues non sia visibile a chi non è owner @done(20-06-02 16:06)
  ✔ Caricare la libreria di Stripe solo quando serve @done (20-01-05 16:53)
  ☐ Aggiustare "registrati come owner" quando l'utente è già registrato e renderlo owner in qualche modo
- ☐ Disattivare il reporting delle eccezioni di OAuth
  ☐ Ricerca con cluster di marker numerati nella mappa
  ☐ Importer per Coral
  ☐ Affiliazione Eurobet e Snai
  ☐ Email di benvenuto (verifica) all'utente dopo la registrazione
  ☐ Aggiungere i link a terms of service e privacy policy (footer, registrazione utente e modifica piano)
  ☐ Aggiungere pezzi per permettere alle sale premium di salire nella ricerca o essere più visibili
- ☐ Dettaglio: scorrimento foto come sale in home page + "altre foto"
- ☐ Porting delle funzionalità di localizzazione in home nella pagina explore
+ ✔ Dettaglio: scorrimento foto come sale in home page + "altre foto" @done(20-06-02 16:06)
+ ✔ Porting delle funzionalità di localizzazione in home nella pagina explore @done(20-06-02 16:06)
  ✔ Riattivare la validazione degli orari una volta che il gruppo di campi riempie un array di ore solo per i giorni dove ci sono effettivamente @done (19-12-01 22:44)
  ☐ Edit sala: focus all'elemento giusto quando c'è errore
  ☐ Edit sala: drag della mappa più che del marker
@@ -27,6 +26,7 @@
  ☐ Rimpiazzare gli alert con i dialoghi bootstrap
  ☐ Rimpiazzare il toast di notifica fatti con card con i toast di bootstrap
  ☐ Upgrade a Laravel 7 e vedere cosa si può usare delle novità
+ ☐ Dettaglio: puntare i vari link di edit alle sezioni esatte dell'edit attività
 
  ☐ Cookie law + GDPR + disabilitare analytics quando l'utente non accetta
  ☐ Fatturazione utente (IVA) per nazione
@@ -40,7 +40,7 @@ Profilo utente:
 Generale:
  ☐ Aggiungere il lazy load alla galleria foto
  ☐ Possibilità di inserire le descrizioni alle foto
- ☐ Animazioni e indicaioni grafiche (cursore o handle di spostamento) nell'ordinamento delle foto
+ ☐ Animazioni e indicazioni grafiche (cursore o handle di spostamento) nell'ordinamento delle foto
  ☐ Catena/Franchise (Punto Snai, Eurobet, ecc.)
  ☐ Supporto per i jackpot (inserimento, filtro nella lista)
  ☐ Supporto promozioni (es: caffè gratis, bevande gratis, stuzzichini, orari per pranzo e cena, concorso, ecc.) - Cambia anche l'elemento nella lista
@@ -135,18 +135,13 @@ Per andare online su plaisure.com:
   ✔ Cambiare env da test a production (così vengono usati i piani di produzione in stripe) @done (19-05-01 19:00)
   ✔ Disabilitare mailtrap @done (19-04-22 19:21)
 
-Per il prossimo deploy (analytics + nuova gestione attività):
-  ✔ PHP 7.2 sul server @done (20-05-10 23:28)
-	☐ Attivare php 7.2 per backend
-	☐ Controllare che ci sia una versione nuova di node (14) per far funzionare le modifiche fatte
-	☐ Controllare che ci sia yarn
-  ☐ sostituire MAIL_DRIVER CON MAIL_MAILER nel file env ONLINE
-  ☐ Inserire view id giusto nel file env ONLINE
-  ☐ Togliere APP_LOCALE dal file env ONLINE
-  ☐ Copiare le credenziali json nella directory di storage
+Per il prossimo deploy (dati di gamingdirectory.com):
+	☐ Controllare che yarn funzioni
+	☐ Aggiungere le categorie casino e card_room (oppure lanciare i seeder)
   ☐ Deploy
 	☐ @high Provare CORS
-  ☐ Lanciare artisan analytics:import --days(15)
+	☐ Lanciare artisan venues:import gaming-directory-com
+	☐ Lanciare artisan venues:from-imports --brand="gaming-directory-com" --skip-timestamps
 
 Dopo OGNI deploy backend:
   ☐ /opt/plesk/php/7.2/bin/php /usr/lib64/plesk-9.0/composer.phar install

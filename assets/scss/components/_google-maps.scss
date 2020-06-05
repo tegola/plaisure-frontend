@@ -16,6 +16,9 @@
 	.gm-style-iw-d {
 		overflow: auto !important;
 	}
+	.gm-style-iw-t::after {
+		top: -1px;
+	}
 }
 
 // Autocomplete

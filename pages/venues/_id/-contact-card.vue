@@ -1,36 +1,35 @@
 <template>
-	<div class="card contact-card">
+	<b-card no-body>
 		<pg-image-frame
 			:src="mapImgUrl"
 			ratio="16:9"
-			class="contact-card-map"
-			content-class="contact-card-map-content">
-			<img
-				:src="`/img/map/pin-normal/${venue.categories[0].machine_name}.svg`"
-				class="contact-card-map-marker">
+			class="map"
+			content-class="map__content">
+			<pg-icon icon="pin" class="map__pin" />
+			<div class="map__pin-shadow" />
 		</pg-image-frame>
 
-		<div class="list-group list-group-flush">
+		<b-list-group flush>
 			<!-- Address -->
-			<div class="list-group-item contact-card-list-item">
+			<b-list-group-item class="list-item">
 				<nuxt-link v-if="showEditAction" :to="editRoute" rel="nofollow" class="float-right">{{ $t('pages.venue_detail.common.edit') }}</nuxt-link>
 
-				<pg-icon icon="directions" class="contact-card-list-item-icon" />
+				<pg-icon icon="directions" class="list-item__icon" />
 				<div class="mb-2">
 					<strong>{{ venue.name }}</strong>
 					<div v-for="(line, index) in addressLines" :key="index">{{ line }}</div>
 				</div>
 				<p class="mb-0"><a v-track-link :href="googleMapsUrl" target="_blank">{{ $t('pages.venue_detail.card.directions') }}</a></p>
-			</div>
+			</b-list-group-item>
 
 			<!-- Business hours -->
-			<div class="list-group-item contact-card-list-item">
+			<b-list-group-item class="list-item">
 				<nuxt-link v-if="showEditAction" :to="editRoute" class="float-right">{{ $t('pages.venue_detail.common.edit') }}</nuxt-link>
-				<pg-icon :class="['contact-card-list-item-icon', venue.business_hours.length ? null : 'text-muted']" icon="clock-outline" />
+				<pg-icon :class="['list-item__icon', venue.business_hours.length ? null : 'text-muted']" icon="clock-outline" />
 
 				<template v-if="venue.business_hours.length">
-					<a :class="isOpen ? 'text-success' : 'text-danger'" href="#" @click.prevent="toggleHours">
-						{{ isOpen ? $t('pages.venue_detail.card.open_now') : $t('pages.venue_detail.card.closed_now') }}<pg-icon :icon="hoursExpanded ? 'chevron-up' : 'chevron-down'" class="ml-1 contact-card-chevron-icon" />
+					<a :class="isOpen ? 'text-success' : 'text-danger'" href="#" @click.prevent="hoursExpanded = !hoursExpanded">
+						{{ isOpen ? $t('pages.venue_detail.card.open_now') : $t('pages.venue_detail.card.closed_now') }}<pg-icon :icon="hoursExpanded ? 'chevron-up' : 'chevron-down'" class="ml-1 list-item__chevron-icon" />
 					</a>
 					<table v-if="hoursExpanded">
 						<tr v-for="row in businessHoursRows" :key="row.day">
@@ -44,12 +43,12 @@
 					</table>
 				</template>
 				<p v-else class="mb-0 text-muted">{{ $t('pages.venue_detail.card.no_hours') }}</p>
-			</div>
+			</b-list-group-item>
 
 			<!-- Contacts -->
-			<div class="list-group-item contact-card-list-item">
+			<b-list-group-item class="list-item">
 				<nuxt-link v-if="showEditAction" :to="editRoute" class="float-right">{{ $t('pages.venue_detail.common.edit') }}</nuxt-link>
-				<pg-icon :class="['contact-card-list-item-icon', hasContacts ? null : 'text-muted']" icon="phone" />
+				<pg-icon :class="['list-item__icon', hasContacts ? null : 'text-muted']" icon="phone" />
 
 				<ul v-if="hasContacts" class="list-unstyled mb-0">
 					<li v-if="venue.contacts.phone"><a :href="`tel://${venue.contacts.phone}`">{{ venue.contacts.phone }}</a></li>
@@ -58,24 +57,25 @@
 					<li v-if="twitterUrl"><a v-track-link :href="twitterUrl" target="_blank">@{{ venue.contacts.twitter }}</a> <span class="text-muted">(Twitter)</span></li>
 				</ul>
 				<p v-else class="mb-0 text-muted">{{ $t('pages.venue_detail.card.no_contact') }}</p>
-			</div>
+			</b-list-group-item>
 
 			<!-- URLs -->
-			<div class="list-group-item contact-card-list-item">
+			<b-list-group-item class="list-item">
 				<nuxt-link v-if="showEditAction" :to="editRoute" class="float-right">{{ $t('pages.venue_detail.common.edit') }}</nuxt-link>
-				<pg-icon :class="['contact-card-list-item-icon', hasUrls ? null : 'text-muted']" icon="globe" />
+				<pg-icon :class="['list-item__icon', hasUrls ? null : 'text-muted']" icon="globe" />
 				<ul v-if="hasUrls" class="list-unstyled mb-0">
 					<li v-if="venue.urls.site"><a v-track-link :href="venue.urls.site" target="_blank">{{ readableSiteUrl }}</a></li>
 					<li v-if="venue.urls.facebook"><a v-track-link :href="venue.urls.facebook" target="_blank">Facebook</a></li>
 				</ul>
 				<p v-else class="mb-0 text-muted">{{ $t('pages.venue_detail.card.no_urls') }}</p>
-			</div>
-		</div>
-	</div>
+			</b-list-group-item>
+		</b-list-group>
+	</b-card>
 </template>
 
 <script>
 import { capitalize } from 'lodash'
+import { BCard, BListGroup, BListGroupItem } from 'bootstrap-vue'
 import { isVenueOpen } from '@/utilities'
 
 const indexToDayName = (index, locale) => {
@@ -90,6 +90,12 @@ const indexToDayName = (index, locale) => {
 
 export default {
 	name: 'PgVenueDetailPageContactCard',
+
+	components: {
+		BCard,
+		BListGroup,
+		BListGroupItem
+	},
 
 	props: {
 		venue: {
@@ -108,16 +114,6 @@ export default {
 
 	data () {
 		return {
-			mapOptions: {
-				styles: [
-					{
-						// No labels on POI
-						featureType: 'poi',
-						elementType: 'labels.text',
-						stylers: [{ visibility: 'off' }]
-					}
-				]
-			},
 			hoursExpanded: false
 		}
 	},
@@ -213,12 +209,98 @@ export default {
 
 			return parser.hostname.replace('www.', '')
 		}
-	},
-
-	methods: {
-		toggleHours () {
-			this.hoursExpanded = !this.hoursExpanded
-		}
 	}
 }
 </script>
+
+<style lang="scss" scoped>
+// Contact card
+.card {
+	border: 0;
+	font-size: $font-size-sm;
+}
+.map {
+	border-radius: $card-border-radius;
+	background-size: 200%;
+
+	/deep/ &__content {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	&__pin {
+		width: 2.5rem;
+		height: 2.5rem;
+		margin-top: -2rem;
+		color: $fuchsia-500;
+		stroke: $fuchsia-600;
+		stroke-width: 0.5;
+		z-index: 1;
+	}
+	&__pin-shadow {
+		position: absolute;
+		width: 1rem;
+		height: 0.35rem;
+		border-radius: 50%;
+		margin-top: 0.05rem;
+		background: radial-gradient(rgba($black, 0.3), rgba($black, 0) 66%);
+	}
+}
+.list-item {
+	margin-left: 2rem;
+	padding: 1rem 0;
+	position: relative;
+
+	&:first-child {
+		border-top: 0;
+	}
+
+	&:hover {
+		z-index: 0; // Override bootstrap default zindex that hides borders
+	}
+
+	&__icon {
+		position: absolute;
+		left: -1.75rem;
+	}
+	&__chevron-icon {
+		height: 0.75rem;
+		width: 0.75rem;
+		vertical-align: -0.125rem;
+	}
+}
+@include media-breakpoint-up(sm) {
+	.map {
+		background-size: 150%;
+	}
+}
+@include media-breakpoint-up(md) {
+	.map {
+		background-size: 100%;
+	}
+}
+@include media-breakpoint-up(lg) {
+	.card {
+		&:after {
+			display: block;
+			position: absolute;
+			content: '';
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			border: $card-border-width solid $card-border-color;
+			border-radius: $card-border-radius;
+			pointer-events: none;
+		}
+	}
+	.map {
+		background-size: 200%;
+		@include border-bottom-radius(0);
+	}
+	.list-item {
+		margin-left: $grid-gutter-width * 1.75;
+		padding-right: 1.25rem;
+	}
+}
+</style>

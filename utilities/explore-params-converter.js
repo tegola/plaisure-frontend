@@ -60,7 +60,8 @@ export const queryToSearchParams = (input) => {
 	// t = types = categories
 	// e.g. t=1,2,3
 	if (input.t) {
-		output.categories = input.t.split(',').map(i => parseInt(i))
+		// output.categories = input.t.split(',').map(i => parseInt(i))
+		output.category = parseInt(input.t)
 	}
 
 	return output
@@ -97,8 +98,13 @@ export const toQueryParams = (input) => {
 	}
 
 	// categories = types = t
+	/*
 	if (input.categories && input.categories.length) {
 		output.t = input.categories.join(',')
+	}
+	*/
+	if (input.category) {
+		output.t = input.category
 	}
 
 	// view = v (to query params only)

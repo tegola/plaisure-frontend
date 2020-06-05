@@ -22,7 +22,7 @@ export default {
 			return ['pg-home-page__token', `pg-home-page__token--${this.type}`]
 		},
 		svg () {
-			return require(`@/assets/svg/category-icons/${this.icon}.svg?inline`)
+			return require(`@/assets/svg/home-token-icons/${this.icon}.svg?inline`)
 		}
 	}
 }

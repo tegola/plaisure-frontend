@@ -26,13 +26,17 @@ export default function ({ $axios, app, redirect }) {
 		// Find localized redirect path
 		const path = auth.$storage.getUniversal('redirect') || auth.options.redirect.home
 		const route = router.match(path)
+		const baseRouteName = app.getRouteBaseName(route)
 
 		// Remove current redirect
 		auth.$storage.setUniversal('redirect', null)
 
 		// Redirect to localized path
 		router.push({
-			path: app.localePath(route.path, language),
+			path: app.localePath({
+				name: baseRouteName,
+				query: route.query
+			}, language),
 			params: route.params,
 			query: route.query
 		})

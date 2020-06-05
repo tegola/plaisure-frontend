@@ -263,7 +263,10 @@ export default {
 					}
 				},
 				distance: 'Distance',
-				category: 'Type',
+				category: {
+					label: 'Type',
+					any: 'Any type'
+				},
 				amenities: 'Amenities',
 				view: {
 					list: 'List',
@@ -820,6 +823,8 @@ export default {
 			adult_gaming_center: 'Adult gaming centre',
 			betting_shop: 'Betting shop',
 			bingo: 'Bingo hall',
+			card_room: 'Card room',
+			casino: 'Casino',
 			family_entertainment_center: 'Family entertainment centre',
 			vlt: 'VLT game room'
 		},

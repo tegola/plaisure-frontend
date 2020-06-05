@@ -270,7 +270,10 @@ export default {
 					}
 				},
 				distance: 'Distanza',
-				category: 'Tipo',
+				category: {
+					label: 'Tipo',
+					any: 'Qualsiasi tipo'
+				},
 				amenities: 'Comodità',
 				view: {
 					list: 'Lista',
@@ -833,6 +836,8 @@ export default {
 			adult_gaming_center: 'Sala giochi per adulti',
 			betting_shop: 'Agenzia scommesse',
 			bingo: 'Sala bingo',
+			card_room: 'Poker room',
+			casino: 'Casinò',
 			family_entertainment_center: 'Intrattenimento per famiglie',
 			vlt: 'Sala slot VLT'
 		},
