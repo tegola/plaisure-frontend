@@ -142,6 +142,7 @@ Per il prossimo deploy (dati di gamingdirectory.com):
 	☐ @high Provare CORS
 	☐ Lanciare artisan venues:import gaming-directory-com
 	☐ Lanciare artisan venues:from-imports --brand="gaming-directory-com" --skip-timestamps
+	☐ Lanciare artisan sitemap:generate
 
 Dopo OGNI deploy backend:
   ☐ /opt/plesk/php/7.2/bin/php /usr/lib64/plesk-9.0/composer.phar install
