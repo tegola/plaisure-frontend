@@ -247,7 +247,7 @@ export default {
 						name: 'venues-explore',
 						query: toQueryParams({
 							country: this.$i18n.region,
-							categories: [category.id],
+							category: category.id,
 							ne_lat: this.$constants[defaultBoundsKey].ne.lat,
 							ne_lng: this.$constants[defaultBoundsKey].ne.lng,
 							sw_lat: this.$constants[defaultBoundsKey].sw.lat,

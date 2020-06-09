@@ -6,7 +6,6 @@
  ☐ Aggiustare "registrati come owner" quando l'utente è già registrato e renderlo owner in qualche modo
  ☐ Ricerca con cluster di marker numerati nella mappa
  ☐ Importer per Coral
- ☐ Affiliazione Eurobet e Snai
  ☐ Email di benvenuto (verifica) all'utente dopo la registrazione
  ☐ Aggiungere i link a terms of service e privacy policy (footer, registrazione utente e modifica piano)
  ☐ Aggiungere pezzi per permettere alle sale premium di salire nella ricerca o essere più visibili
@@ -30,6 +29,9 @@
 
  ☐ Cookie law + GDPR + disabilitare analytics quando l'utente non accetta
  ☐ Fatturazione utente (IVA) per nazione
+ ☐ Impostare il paese allo scrolling della mappa per prendere solo le categorie necessarie
+ ☐ Aggiungere un modo per nascondere certe categorie a certi country
+ ☐ Rimuovere categorie e città dalla home, visto che ora possiamo cercare in tutto il mondo e non ha senso localizzare per lingua
 
 Profilo utente:
  ☐ Aggiungere gestione recensioni personali
