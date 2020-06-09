@@ -10,6 +10,8 @@ export default {
 
 	components: {
 		PgRegisterPage
-	}
+	},
+
+	middleware: 'guest'
 }
 </script>
