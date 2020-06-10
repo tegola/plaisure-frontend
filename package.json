@@ -31,6 +31,7 @@
     "nuxt": "^2.12.2",
     "nuxt-i18n": "^6.12.0",
     "nuxt-mq": "^2.0.1",
+    "nuxt-start": "^2.12.2",
     "vue-geolocation-api": "^0.1.17",
     "vue-notification": "^1.3.16",
     "vue-stripe-elements-plus": "^0.3.0",
@@ -56,9 +57,9 @@
   "ava": {
     "files": [
       "test/**/*"
-		],
-		"require": [
-			"esm"
-		]
+    ],
+    "require": [
+      "esm"
+    ]
   }
 }

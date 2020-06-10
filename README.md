@@ -1,4 +1,4 @@
-# ProntoGioco
+# Plaisure
 
 > My posh Nuxt.js project
 
@@ -15,8 +15,6 @@ $ npm run dev
 $ npm run build
 $ npm start
 
-# generate static project
-$ npm run generate
+# use with startup file
+$ node_modules/.bin/nuxt-start
 ```
-
-For detailed explanation on how things work, checkout [Nuxt.js docs](https://nuxtjs.org).

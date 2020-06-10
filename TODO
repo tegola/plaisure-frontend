@@ -114,9 +114,7 @@ Dopo il primo deploy backend:
   ✔ Aggiornare il file .env con l'id e la chiave del client oauth @done (19-05-01 19:00)
   ✔ Rimandare la sitemap a google (/sitemap.xml invece di /sitemap) @done (19-05-01 19:00)
   ✔ Mapping della cartella storage @done (19-05-01 19:00)
-  ✔ Copia della cartella dei dati da prontogioco.it @done (19-05-01 19:00)
   ✔ artisan migrate @done (19-05-01 19:00)
-  ✔ Aggiungere redir∂ct da prontogioco.it a plaisure.com @done (19-07-18 23:19)
 
  ✔ Migrazione manuale dei dati: @done (19-05-01 19:00)
    UPDATE venues SET country = 'IT'
