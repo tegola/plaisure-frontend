@@ -1,5 +1,5 @@
 <template>
-	<div class="pg-explore-page">
+	<div class="page">
 		<pg-navbar variant="dark" />
 
 		<!-- Filters -->
@@ -10,16 +10,16 @@
 						:label="$t('pages.explore.form.location.label')"
 						label-sr-only
 						class="mb-2 mb-md-0 col-md">
-						<div class="pg-explore-page__search-field">
+						<div class="search-field">
 							<pg-icon
 								icon="search"
-								class="pg-explore-page__search-field-icon"
+								class="search-field__icon"
 							/>
 							<pg-place-textbox
 								ref="searchField"
 								:placeholder="searchFieldPlaceholder"
 								:value="query"
-								class="pg-explore-page__search-field-textbox"
+								class="search-field__textbox"
 								@place-changed="onPlaceChanged"
 							/>
 							<client-only>
@@ -30,7 +30,7 @@
 									:title="$t('pages.explore.form.location.geolocalization')"
 									:aria-label="$t('pages.explore.form.location.geolocalization')"
 									variant="naked"
-									class="pg-explore-page__search-field-button"
+									class="search-field__button"
 									@click.stop="findUserLocation"
 								/>
 							</client-only>
@@ -75,7 +75,7 @@
 
 		<!-- Tabs + result count -->
 		<div ref="tabsAnchor" />
-		<div v-if="hasSearchParams" class="pg-explore-page__view" :class="scrollPastTabs ? 'pg-explore-page__view--stuck' : null">
+		<div v-if="hasSearchParams" class="view" :class="scrollPastTabs ? 'view--stuck' : null">
 			<div class="container">
 				<b-nav tabs class="align-items-center">
 					<b-nav-item :active="currentView === 'list'" @click="switchView('list')">
@@ -134,7 +134,7 @@
 				<pg-venue-list-item
 					:key="`venue-${venue.id}`"
 					:venue="venue"
-					class="pg-explore-page__list-item"
+					class="list-item"
 				/>
 			</template>
 			<div ref="listAnchor" />
@@ -166,7 +166,6 @@
 				v-if="userLocation"
 				:position="userLocation"
 				icon="/img/map/pin-user.svg"
-				title="La tua posizione"
 			/>
 			<pg-map-marker
 				v-for="(venue, index) in venues"
@@ -178,7 +177,7 @@
 					:opened="venue.id === selectedVenueId"
 					@closeclick="selectMarker(null)">
 					<pg-venue-infowindow-item
-						class="pg-explore-page__map-infowindow-content"
+						class="map__infowindow-content"
 						:venue="venue"
 					/>
 				</pg-map-info-window>
@@ -190,7 +189,7 @@
 						id="desktop-refresh-btn"
 						:aria-label="$t('pages.explore.map.search_area')"
 						variant="accent"
-						class="pg-explore-page__map-refresh-btn"
+						class="map__refresh-btn"
 						icon="refresh"
 						@click="onSearchBoundsClick"
 					/>
@@ -202,7 +201,7 @@
 						{{ $t('pages.explore.map.search_area') }}
 					</b-tooltip>
 				</template>
-				<div v-if="isSmallScreen && mapNeedsRefresh" class="container pg-explore-page__map-floating-controls">
+				<div v-if="isSmallScreen && mapNeedsRefresh" class="container map__floating-controls">
 					<pg-button variant="accent" block @click="onSearchBoundsClick">{{ $t('pages.explore.map.search_area') }}</pg-button>
 				</div>
 			</template>
@@ -227,8 +226,8 @@ import {
 	BNavItem,
 	BTooltip
 } from 'bootstrap-vue'
-import PgVenueInfowindowItem from './infowindow-item'
-import PgVenueListItem from './list-item'
+import PgVenueInfowindowItem from './-infowindow-item'
+import PgVenueListItem from './-list-item'
 import PgPlaceTextbox from '@/components/place-textbox'
 import PgNoItems from '@/components/no-items'
 import paramsConverter from '@/utilities/explore-params-converter'
@@ -237,7 +236,7 @@ import { formatGoogleMapsResult } from '@/utilities'
 const searchRadiuses = [10, 20, 30, 50, 100]
 
 export default {
-	name: 'PgExplorePage',
+	name: 'PgExploreVenuesPage',
 
 	components: {
 		PgMap,
@@ -835,52 +834,55 @@ export default {
 }
 </script>
 
-<style lang="scss">
-.pg-explore-page {
+<style lang="scss" scoped>
+.page {
 	min-height: 100vh;
 	display: flex;
 	flex-direction: column;
+}
 
-	// Search + filters
-	&__search-field {
-		display: flex;
-		position: relative;
-	}
-	&__search-field-icon {
+// Search + filters
+.search-field {
+	display: flex;
+	position: relative;
+
+	&__icon {
 		position: absolute;
 		left: $input-padding-x;
 		height: 100%;
 		color: $gray-400;
 		pointer-events: none;
 	}
-	&__search-field-textbox {
+	&__textbox {
 		padding-left: ($input-padding-x * 2) + $icon-size-base;
 		padding-right: ($btn-padding-x * 2) + $icon-size-base;
 	}
-	&__search-field-button {
+	&__button {
 		position: absolute;
 		right: 0;
 	}
+}
 
-	// View type
-	&__view {
-		position: sticky;
-		top: 0;
-		z-index: $zindex-dropdown - 1; // Keep it below dropdowns
-		background-color: $light;
-		border-bottom: 1px solid $gray-200;
+// View type
+.view {
+	position: sticky;
+	top: 0;
+	z-index: $zindex-dropdown - 1; // Keep it below dropdowns
+	background-color: $light;
+	border-bottom: 1px solid $gray-200;
 
-		&--stuck {
-			background-color: $body-bg;
-		}
+	&--stuck {
+		background-color: $body-bg;
 	}
+}
 
-	// Map
-	&__map-infowindow-content {
+// Map
+.map {
+	&__infowindow-content {
 		min-width: 200px;
 		max-width: 280px;
 	}
-	&__map-refresh-btn {
+	&__refresh-btn {
 		position: absolute;
 		top: 101px;
 		right: 10px;
@@ -890,13 +892,13 @@ export default {
 		border-radius: $border-radius-sm;
 		box-shadow: 0 1px 4px -1px rgba(#000, 0.3);
 
-		.pg-button__icon {
+		/deep/ .pg-button__icon {
 			width: 24px;
 			height: 24px;
 			vertical-align: -4px;
 		}
 	}
-	&__map-floating-controls {
+	&__controls {
 		position: fixed;
 		bottom: 0;
 		left: 0;

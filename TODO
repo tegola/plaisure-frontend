@@ -116,33 +116,8 @@ Dopo il primo deploy backend:
   ✔ Mapping della cartella storage @done (19-05-01 19:00)
   ✔ artisan migrate @done (19-05-01 19:00)
 
- ✔ Migrazione manuale dei dati: @done (19-05-01 19:00)
-   UPDATE venues SET country = 'IT'
-   UPDATE concessionaires SET country = 'IT'
-   UPDATE pay_per_view_platforms SET country = 'IT'
-   UPDATE venue_categories SET country = 'IT' WHERE machine_name = 'vlt'
-   UPDATE venue_categories SET machine_name = 'betting_shop' WHERE machine_name = 'betting_agency'
-   INSERT INTO venue_categories (machine_name, name, country) VALUES ('adult_gaming_center', 'Adult gaming centre', 'GB')
-   INSERT INTO venue_categories (machine_name, name, country) VALUES ('family_entertainment_center', 'Family entertainment centre', 'GB');
-
   ✔ Lanciare gli importer @done (19-05-01 19:01)
   ✔ Lanciare la creazione @done (19-05-01 19:01)
-  ✔ Svuotare la cache della home page (per evitare che le query usino il nome vecchio delle categorie) @done (19-05-01 19:00)
-
-Per andare online su plaisure.com:
-  ✔ Cambiare le chiavi di stripe (frontend, backend e webhook) @done (19-05-01 19:00)
-  ✔ Cambiare le chiavi di google maps (frontend) @done (19-05-01 19:00)
-  ✔ Cambiare env da test a production (così vengono usati i piani di produzione in stripe) @done (19-05-01 19:00)
-  ✔ Disabilitare mailtrap @done (19-04-22 19:21)
-
-Per il prossimo deploy (dati di gamingdirectory.com):
-	☐ Controllare che yarn funzioni
-	☐ Aggiungere le categorie casino e card_room (oppure lanciare i seeder)
-  ☐ Deploy
-	☐ @high Provare CORS
-	☐ Lanciare artisan venues:import gaming-directory-com
-	☐ Lanciare artisan venues:from-imports --brand="gaming-directory-com" --skip-timestamps
-	☐ Lanciare artisan sitemap:generate
 
 Dopo OGNI deploy backend:
   ☐ /opt/plesk/php/7.2/bin/php /usr/lib64/plesk-9.0/composer.phar install
@@ -151,6 +126,6 @@ Dopo OGNI deploy backend:
   ☐ /opt/plesk/php/7.2/bin/php artisan migrate --force --seed
 
 Dopo OGNI deploy frontend:
-  ☐ yarn install
+  ☐ npm install
   ☐ npm run build
   ☐ touch tmp/restart.txt
