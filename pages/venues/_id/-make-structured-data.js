@@ -18,19 +18,36 @@ export default (venue) => {
 			'@type': 'GeoCoordinates',
 			latitude: venue.coords.lat,
 			longitude: venue.coords.lng
-		},
-		aggregateRating: {
-			'@type': 'AggregateRating',
-			ratingCount: venue.rating.count,
-			ratingValue: venue.rating.average,
-			reviewCount: venue.review_count
 		}
 	}
 
-	// Conditional fields
-	if (venue.description) { structuredData.description = venue.description }
-	if (venue.contacts.phone) { structuredData.telephone = venue.contacts.phone }
-	if (venue.contacts.email) { structuredData.email = venue.contacts.email }
+	// Rating
+	if (venue.rating.count || venue.review_count) {
+		const rating = {
+			'@type': 'AggregateRating'
+		}
+
+		if (venue.rating.count) {
+			rating.ratingCount = venue.rating.count
+			rating.ratingValue = venue.rating.average
+		}
+		if (venue.review_count) {
+			rating.reviewCount = venue.review_count
+		}
+
+		structuredData.aggregateRating = rating
+	}
+
+	// Description, phone, email
+	if (venue.description) {
+		structuredData.description = venue.description
+	}
+	if (venue.contacts.phone) {
+		structuredData.telephone = venue.contacts.phone
+	}
+	if (venue.contacts.email) {
+		structuredData.email = venue.contacts.email
+	}
 
 	// Photos
 	if (venue.photos.length) {
