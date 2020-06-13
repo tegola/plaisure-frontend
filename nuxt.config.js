@@ -226,7 +226,7 @@ module.exports = {
 	},
 
 	async sitemap () {
-		const cacheTime = 0 // 1000 * 60 * 60 * 24 // 1 day
+		const cacheTime = 1000 * 60 * 60 * 24 // 1 day
 		const sitemaps = []
 
 		// Main, escluding /user and /<lang>/user
