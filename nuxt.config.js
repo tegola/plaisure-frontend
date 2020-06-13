@@ -1,4 +1,4 @@
-// const pkg = require('./package')
+const axios = require('axios')
 
 // Read .env file
 require('dotenv').config()
@@ -86,132 +86,122 @@ module.exports = {
 	** Nuxt.js modules
 	*/
 	modules: [
-		// Doc: https://axios.nuxtjs.org/usage
 		'@nuxtjs/axios',
 		'@nuxtjs/dotenv',
 		'@nuxtjs/style-resources',
 		'@nuxtjs/svg',
 		'vue-geolocation-api/nuxt',
-		[
-			'@nuxtjs/auth',
-			{
-				watchLoggedIn: false, // Managed with the custom plugin below
-				plugins: ['@/plugins/auth-watch.js'],
-				strategies: {
-					local: {
-						endpoints: {
-							login: {
-								url: '/auth/login',
-								method: 'post',
-								propertyName: 'access_token'
-							},
-							logout: {
-								url: '/auth/logout',
-								method: 'post'
-							},
-							user: {
-								url: '/user',
-								method: 'get'
-							}
+		['@nuxtjs/auth', {
+			watchLoggedIn: false, // Managed with the custom plugin below
+			plugins: ['@/plugins/auth-watch.js'],
+			strategies: {
+				local: {
+					endpoints: {
+						login: {
+							url: '/auth/login',
+							method: 'post',
+							propertyName: 'access_token'
+						},
+						logout: {
+							url: '/auth/logout',
+							method: 'post'
+						},
+						user: {
+							url: '/user',
+							method: 'get'
 						}
 					}
 				}
 			}
-		],
-		[
-			'nuxt-i18n',
-			{
-				lazy: true,
-				// seo: false, // https://nuxt-community.github.io/nuxt-i18n/seo.html#improving-performance
-				langDir: 'lang/',
-				locales: [
-					{ code: 'en', iso: 'en-GB', file: 'en', name: 'English' },
-					{ code: 'it', iso: 'it-IT', file: 'it', name: 'Italiano' }
-				],
-				defaultLocale: 'en', // for routing
-				vueI18n: {
-					fallbackLocale: 'en', // for language options
-					numberFormats: {
-						en: {
-							currency: {
-								style: 'currency',
-								currency: 'EUR'
-							}
-						},
-						it: {
-							currency: {
-								style: 'currency',
-								currency: 'EUR'
-							}
+		}],
+		['nuxt-i18n', {
+			lazy: true,
+			// seo: false, // https://nuxt-community.github.io/nuxt-i18n/seo.html#improving-performance
+			langDir: 'lang/',
+			// Also update the sitemap generation when updating this list
+			locales: [
+				{ code: 'en', iso: 'en-GB', file: 'en', name: 'English' },
+				{ code: 'it', iso: 'it-IT', file: 'it', name: 'Italiano' }
+			],
+			defaultLocale: 'en', // for routing
+			vueI18n: {
+				fallbackLocale: 'en', // for language options
+				numberFormats: {
+					en: {
+						currency: {
+							style: 'currency',
+							currency: 'EUR'
 						}
 					},
-					dateTimeFormats: {
-						en: {
-							short: {
-								year: 'numeric',
-								month: '2-digit',
-								day: '2-digit'
-							},
-							long: {
-								year: 'numeric',
-								month: 'long',
-								day: 'numeric'
-							},
-							extraLong: {
-								year: 'numeric',
-								month: 'long',
-								day: 'numeric',
-								weekday: 'long'
-							}
+					it: {
+						currency: {
+							style: 'currency',
+							currency: 'EUR'
+						}
+					}
+				},
+				dateTimeFormats: {
+					en: {
+						short: {
+							year: 'numeric',
+							month: '2-digit',
+							day: '2-digit'
 						},
-						it: {
-							short: {
-								year: 'numeric',
-								month: '2-digit',
-								day: '2-digit'
-							},
-							long: {
-								year: 'numeric',
-								month: 'long',
-								day: 'numeric'
-							},
-							extraLong: {
-								year: 'numeric',
-								month: 'long',
-								day: 'numeric',
-								weekday: 'long'
-							}
+						long: {
+							year: 'numeric',
+							month: 'long',
+							day: 'numeric'
+						},
+						extraLong: {
+							year: 'numeric',
+							month: 'long',
+							day: 'numeric',
+							weekday: 'long'
+						}
+					},
+					it: {
+						short: {
+							year: 'numeric',
+							month: '2-digit',
+							day: '2-digit'
+						},
+						long: {
+							year: 'numeric',
+							month: 'long',
+							day: 'numeric'
+						},
+						extraLong: {
+							year: 'numeric',
+							month: 'long',
+							day: 'numeric',
+							weekday: 'long'
 						}
 					}
 				}
 			}
-		],
-		[
-			'nuxt-mq',
-			{
-				breakpoints: {
-					xs: 576,
-					sm: 768,
-					md: 992,
-					lg: 1200,
-					xl: Infinity
-				},
-				defaultBreakpoint: 'sm' // for SSR
+		}],
+		['nuxt-mq', {
+			breakpoints: {
+				xs: 576,
+				sm: 768,
+				md: 992,
+				lg: 1200,
+				xl: Infinity
+			},
+			defaultBreakpoint: 'sm' // for SSR
+		}],
+		['@nuxtjs/google-analytics', {
+			id: process.env.GOOGLE_ANALYTICS_ID
+			/*
+			// dev: false, // Disable in dev environment,
+			debug: {
+				enabled: true,
+				sendHitTask: true // Needed for testing in dev environn
 			}
-		],
-		[
-			'@nuxtjs/google-analytics',
-			{
-				id: process.env.GOOGLE_ANALYTICS_ID
-				/*
-				// dev: false, // Disable in dev environment,
-				debug: {
-					enabled: true,
-					sendHitTask: true // Needed for testing in dev environn
-				}
-				*/
-			}
-		]
+			*/
+		}],
+		'@nuxtjs/sitemap', // Should stay after nuxt-i18n
+		'@nuxtjs/robots'
 	],
 
 	router: {
@@ -235,6 +225,60 @@ module.exports = {
 		]
 	},
 
+	async sitemap () {
+		const cacheTime = 0 // 1000 * 60 * 60 * 24 // 1 day
+		const sitemaps = []
+
+		// Main, escluding /user and /<lang>/user
+		sitemaps.push({
+			path: '/sitemap-main.xml',
+			i18n: true,
+			cacheTime,
+			filter ({ routes }) {
+				return routes.filter(route => !route.path.match(/^(\/[a-z]{2})?\/user/i))
+			}
+		})
+
+		// Venues for each country
+		// These are loaded at each build
+		const { data: countries } = await axios.get(`${process.env.BACKEND_URL}/sitemap/countries`)
+
+		countries.forEach((country) => {
+			country = country.toLowerCase()
+
+			sitemaps.push({
+				path: `/sitemap-${country}.xml`,
+				i18n: true,
+				cacheTime,
+				exclude: ['/**'], // Only venues here
+				routes: async () => {
+					// This are loaded at each call, maybe?
+					const { data: ids } = await axios.get(
+						`${process.env.BACKEND_URL}/sitemap/venues`,
+						{ params: { country } }
+					)
+
+					return ids.map(id => ({
+						url: `/venues/${id}`,
+						links: ['en', 'it'].map(lang => ({
+							lang,
+							url: lang === 'en' ? `/venues/${id}` : `${lang}/venues/${id}`
+						}))
+					}))
+				}
+			})
+		})
+
+		return {
+			path: '/sitemap.xml',
+			sitemaps
+		}
+	},
+
+	robots: {
+		Sitemap: `${process.env.APP_URL}/sitemap.xml`
+	},
+
 	/*
 	** Build configuration
 	*/
@@ -253,22 +297,6 @@ module.exports = {
 				})
 			}
 		},
-		transpile: [/^vue2-google-maps($|\/)/],
-		templates: [
-			{
-				src: './templates/robots.txt',
-				dst: '../static/robots.txt',
-				options: {
-					sitemapUrl: `${process.env.BACKEND_URL}/sitemap.xml`
-				}
-			},
-			{
-				src: './templates/sitemap.xml',
-				dst: '../static/sitemap.xml',
-				options: {
-					sitemapUrl: `${process.env.BACKEND_URL}/sitemap.xml`
-				}
-			}
-		]
+		transpile: [/^vue2-google-maps($|\/)/]
 	}
 }

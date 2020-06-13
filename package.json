@@ -18,6 +18,8 @@
     "@nuxtjs/axios": "^5.10.3",
     "@nuxtjs/dotenv": "^1.4.0",
     "@nuxtjs/google-analytics": "^2.2.3",
+    "@nuxtjs/robots": "^2.4.2",
+    "@nuxtjs/sitemap": "^2.3.1",
     "@nuxtjs/style-resources": "^1.0.0",
     "@umpirsky/country-list": "git+https://github.com/umpirsky/country-list.git",
     "animejs": "^3.1.0",
