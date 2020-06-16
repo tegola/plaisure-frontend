@@ -314,7 +314,12 @@ export default {
 					maximumAge: 5 * 60 * 1000 // last 5 minutes
 				})
 			} catch (err) {
-				alert(this.$t('pages.home.search.location_error'))
+				this.$bvModal.msgBoxOk(this.$t('pages.home.search.location_error'), {
+					title: this.$t('common.status.error'),
+					centered: true,
+					okTitle: this.$t('common.actions.ok'),
+					okVariant: 'dark'
+				})
 			} finally {
 				this.locating = false
 			}

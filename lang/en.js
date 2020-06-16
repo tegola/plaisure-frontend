@@ -28,6 +28,7 @@ export default {
 			delete: 'Delete',
 			done: 'Done',
 			edit: 'Edit',
+			ok: 'OK',
 			remove: 'Remove',
 			save: 'Save',
 			select: 'Select',

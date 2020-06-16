@@ -31,6 +31,7 @@ export default {
 			delete: 'Elimina',
 			done: 'Fatto',
 			edit: 'Modifica',
+			ok: 'Ok',
 			remove: 'Rimuovi',
 			save: 'Salva',
 			select: 'Scegli',

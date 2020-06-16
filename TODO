@@ -1,5 +1,5 @@
  ✔ IMPORTANTE: limitare le informazioni al caricamento di /user, l'utente non deve ricevere tutti i dati @done (19-09-12 19:42)
- ✔ IMPORTANTE: trovare il modo di disabilitare l'accesso esterno alle api pubbliche (es. http://localhost:8888/api/venues/7NQlVQRny1) facendo accedere solo lo stesso dominio (CORS?) @done(20-06-02 16:07)
+ ☐ IMPORTANTE: trovare il modo di disabilitare l'accesso esterno alle api pubbliche (es. http://localhost:8888/api/venues/7NQlVQRny1) facendo accedere solo lo stesso dominio (middleware?)
  ☐ In caso di carta non funzionante Stripe punta a /user/billing, ma lì non ci sono i campi per cambiare carta
  ✔ Assicurarsi che /user/venues non sia visibile a chi non è owner @done(20-06-02 16:06)
  ✔ Caricare la libreria di Stripe solo quando serve @done (20-01-05 16:53)
@@ -22,7 +22,7 @@
  ☐ Continuare il porting di Fractal a Laravel API Resources
  ☐ Passare la lingua selezionata al client @low
  ☐ Modifica dati utente: aggiungere validazioni lato client in cui non si possono nullare i campi di fatturazione se ci sono sottoscrizioni attive @low
- ☐ Rimpiazzare gli alert con i dialoghi bootstrap
+ Rimpiazzare gli alert con i dialoghi bootstrap
  ☐ Rimpiazzare il toast di notifica fatti con card con i toast di bootstrap
  ☐ Upgrade a Laravel 7 e vedere cosa si può usare delle novità
  ☐ Dettaglio: puntare i vari link di edit alle sezioni esatte dell'edit attività

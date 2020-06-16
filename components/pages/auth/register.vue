@@ -159,7 +159,12 @@ export default {
 
 				if (data.errors.email) {
 					this.$refs.emailInput.focus()
-					alert(this.$t('pages.register.submit_error'))
+					this.$bvModal.msgBoxOk(this.$t('pages.register.submit_error'), {
+						title: this.$t('common.status.error'),
+						centered: true,
+						okTitle: this.$t('common.actions.ok'),
+						okVariant: 'dark'
+					})
 				}
 			} finally {
 				this.loading = false

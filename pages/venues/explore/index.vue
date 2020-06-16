@@ -617,7 +617,12 @@ export default {
 				})
 			} catch (err) {
 				this.userLocation = null
-				alert(this.$t('pages.explore.form.location.geolocalization_error'))
+				this.$bvModal.msgBoxOk(this.$t('explore.form.location.geolocalization_error'), {
+					title: this.$t('common.status.error'),
+					centered: true,
+					okTitle: this.$t('common.actions.ok'),
+					okVariant: 'dark'
+				})
 			} finally {
 				this.locating = false
 			}

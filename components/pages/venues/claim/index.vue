@@ -94,7 +94,12 @@ export default {
 				this.$router.replace(this.localePath('user-venues'))
 			} catch (err) {
 				this.saving = false
-				alert(this.$t('common.status.save_error'))
+				this.$bvModal.msgBoxOk(this.$t('common.status.save_error'), {
+					title: this.$t('common.status.error'),
+					centered: true,
+					okTitle: this.$t('common.actions.ok'),
+					okVariant: 'dark'
+				})
 			}
 		}
 	},
