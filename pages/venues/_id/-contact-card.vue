@@ -182,7 +182,9 @@ export default {
 				const re = /^.*\.facebook\.com\/.*-(\d{5,})\/?$/i
 				const matches = this.venue.urls.facebook.match(re)
 
-				if (matches.length > 1) { handle = matches[matches.length - 1] }
+				if (matches && matches.length > 1) {
+					handle = matches[matches.length - 1]
+				}
 			}
 
 			return handle ? `https://www.messenger.com/t/${handle}` : null
