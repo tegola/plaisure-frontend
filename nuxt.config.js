@@ -88,6 +88,7 @@ module.exports = {
 	modules: [
 		'@nuxtjs/axios',
 		'@nuxtjs/dotenv',
+		'@nuxtjs/sentry',
 		'@nuxtjs/style-resources',
 		'@nuxtjs/svg',
 		'vue-geolocation-api/nuxt',
@@ -277,6 +278,10 @@ module.exports = {
 
 	robots: {
 		Sitemap: `${process.env.APP_URL}/sitemap.xml`
+	},
+
+	sentry: {
+		dsn: process.env.SENTRY_DSN
 	},
 
 	/*
