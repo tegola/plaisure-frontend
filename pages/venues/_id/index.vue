@@ -362,7 +362,7 @@
 								<h6 class="mb-1">{{ $t('pages.venue_detail.report.title') }}</h6>
 								<p>{{ $t('pages.venue_detail.report.intro') }}</p>
 								<pg-button
-									:href="prepareEmailLink(this.$constants.EMAIL_REPORT, $t('pages.venue_detail.report.subject', { name: venue.name, id: venue.id }))"
+									:href="prepareEmailLink($constants.EMAIL_REPORT, $t('pages.venue_detail.report.subject', { name: venue.name, id: venue.id }))"
 									variant="gray-300">
 									{{ $t('pages.venue_detail.report.action') }}
 								</pg-button>
@@ -467,6 +467,39 @@ export default {
 			hoursExpanded: false,
 			reviewFormOpen: false
 		}
+	},
+
+	head () {
+		const venue = this.venue
+		const metadata = {
+			// Don't encode json ld
+			// https://medium.com/@mhagemann/how-to-add-structured-json-ld-data-to-nuxt-js-8bb5f7c8a2d
+			__dangerouslyDisableSanitizers: ['script']
+		}
+
+		// Title
+		metadata.title = `${venue.name} - ${this.subtitle}`
+
+		// Description
+		if (venue.description) {
+			metadata.meta = [
+				{
+					hid: 'description',
+					name: 'description',
+					content: venue.description
+				}
+			]
+		}
+
+		// Structured data
+		metadata.script = [
+			{
+				type: 'application/ld+json',
+				json: makeStructuredData(venue)
+			}
+		]
+
+		return metadata
 	},
 
 	computed: {
@@ -677,39 +710,6 @@ export default {
 			this.reviewFormOpen = false
 			this.loadData()
 		}
-	},
-
-	head () {
-		const venue = this.venue
-		const metadata = {
-			// Don't encode json ld
-			// https://medium.com/@mhagemann/how-to-add-structured-json-ld-data-to-nuxt-js-8bb5f7c8a2d
-			__dangerouslyDisableSanitizers: ['script']
-		}
-
-		// Title
-		metadata.title = `${venue.name} - ${this.subtitle}`
-
-		// Description
-		if (venue.description) {
-			metadata.meta = [
-				{
-					hid: 'description',
-					name: 'description',
-					content: venue.description
-				}
-			]
-		}
-
-		// Structured data
-		metadata.script = [
-			{
-				type: 'application/ld+json',
-				json: makeStructuredData(venue)
-			}
-		]
-
-		return metadata
 	}
 }
 </script>

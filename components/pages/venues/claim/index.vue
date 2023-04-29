@@ -58,11 +58,11 @@ import PgVenueClaimPageItem from './item'
 export default {
 	name: 'PgVenueClaimPage',
 
-	middleware: 'auth',
-
 	components: {
 		PgVenueClaimPageItem
 	},
+
+	middleware: 'auth',
 
 	async asyncData ({ $axios, params }) {
 		const data = await $axios.$get(`/venues/${params.id}/claim`)
@@ -77,6 +77,16 @@ export default {
 			saving: false,
 			error: false,
 			venue: null
+		}
+	},
+
+	head () {
+		if (!this.venue) { return }
+
+		return {
+			title: this.$t('pages.venue_claim.meta_title', {
+				name: this.venue.name
+			})
 		}
 	},
 
@@ -101,16 +111,6 @@ export default {
 					okVariant: 'dark'
 				})
 			}
-		}
-	},
-
-	head () {
-		if (!this.venue) { return }
-
-		return {
-			title: this.$t('pages.venue_claim.meta_title', {
-				name: this.venue.name
-			})
 		}
 	}
 }

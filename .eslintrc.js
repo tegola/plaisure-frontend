@@ -26,7 +26,6 @@ module.exports = {
 		'no-tabs': 0,
 		'vue/html-indent': ['error', 'tab'],
 		'vue/html-closing-bracket-newline': 0,
-		'vue/singleline-html-element-content-newline': 0,
-		'vue/no-v-html': 0
+		'vue/singleline-html-element-content-newline': 0
 	}
 }

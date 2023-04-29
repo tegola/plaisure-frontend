@@ -64,14 +64,18 @@ import { required, email, minLength, sameAs } from 'vuelidate/lib/validators'
 export default {
 	name: 'PgResetPasswordPage',
 
-	middleware: 'guest',
-
 	components: {
 		BFormGroup,
 		BFormInput
 	},
 
 	mixins: [validationMixin],
+
+	middleware: 'guest',
+
+	validate ({ query }) {
+		return query.token && query.email
+	},
 
 	asyncData ({ query }) {
 		return {
@@ -95,10 +99,6 @@ export default {
 		}
 	},
 
-	validate ({ query }) {
-		return query.token && query.email
-	},
-
 	validations: {
 		model: {
 			email: {
@@ -112,6 +112,12 @@ export default {
 			password_confirmation: {
 				sameAsPassword: sameAs('password')
 			}
+		}
+	},
+
+	head () {
+		return {
+			title: this.$t('pages.reset_password.title')
 		}
 	},
 
@@ -142,12 +148,6 @@ export default {
 				this.error = true
 				this.loading = false
 			}
-		}
-	},
-
-	head () {
-		return {
-			title: this.$t('pages.reset_password.title')
 		}
 	}
 }

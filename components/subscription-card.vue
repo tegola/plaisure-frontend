@@ -11,7 +11,7 @@
 		<template v-if="subscription.payment_pending">
 			<hr class="my-0">
 			<div class="card-body text-danger d-flex align-items-center">
-				{{ this.$t('components.subscription_card.error.payment') }}
+				{{ $t('components.subscription_card.error.payment') }}
 				<div>
 					<pg-icon
 						icon="exclamation-circle-outline"
@@ -20,14 +20,14 @@
 				</div>
 			</div>
 		</template>
-		<template v-else-if="lastUpdateDate && endDate" class="card-body">
+		<template v-else-if="lastUpdateDate && endDate">
 			<hr class="my-0">
 			<div class="card-body">
 				<div class="d-flex align-items-center">
 					<pg-icon icon="info" class="mr-3 text-info" />
 					<p class="mb-0 small flex-fill">
-						{{ this.$t('components.subscription_card.cancelled.line1', { cancelDate: formatDate(lastUpdateDate) }) }}<br>
-						{{ this.$t('components.subscription_card.cancelled.line2', { endDate: formatDate(endDate) }) }}
+						{{ $t('components.subscription_card.cancelled.line1', { cancelDate: formatDate(lastUpdateDate) }) }}<br>
+						{{ $t('components.subscription_card.cancelled.line2', { endDate: formatDate(endDate) }) }}
 					</p>
 				</div>
 			</div>

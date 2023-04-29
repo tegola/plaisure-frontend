@@ -52,19 +52,25 @@ import PgNoItems from '@/components/no-items'
 export default {
 	name: 'PgUserFavoritesPage',
 
-	middleware: 'auth',
-
 	components: {
 		BListGroup,
 		PgUserVenueListItem,
 		PgNoItems
 	},
 
+	middleware: 'auth',
+
 	async asyncData ({ $axios }) {
 		const data = await $axios.$get('/user/favorites')
 
 		return {
 			venues: data.data
+		}
+	},
+
+	head () {
+		return {
+			title: this.$t('pages.user.favorites.title')
 		}
 	},
 
@@ -102,12 +108,6 @@ export default {
 					okVariant: 'danger'
 				})
 			}
-		}
-	},
-
-	head () {
-		return {
-			title: this.$t('pages.user.favorites.title')
 		}
 	}
 }

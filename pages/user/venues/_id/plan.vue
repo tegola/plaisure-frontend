@@ -392,16 +392,6 @@ export default {
 
 	mixins: [validationMixin],
 
-	async fetch ({ $axios, params, store }) {
-		const data = await $axios.$get(`/user/venues/${params.id}/subscription`)
-
-		store.commit(
-			'user-venue-detail/setPaymentIntentSecret',
-			data.paymentIntentSecret
-		)
-		store.commit('user-venue-detail/setSubscription', data.subscription)
-	},
-
 	data () {
 		const manropeFont = {
 			family: 'Manrope',
@@ -431,6 +421,26 @@ export default {
 			cardError: null,
 			confirmModalOpen: false,
 			model: null
+		}
+	},
+
+	async fetch ({ $axios, params, store }) {
+		const data = await $axios.$get(`/user/venues/${params.id}/subscription`)
+
+		store.commit(
+			'user-venue-detail/setPaymentIntentSecret',
+			data.paymentIntentSecret
+		)
+		store.commit('user-venue-detail/setSubscription', data.subscription)
+	},
+
+	head () {
+		// Prevent double loading Stripe lib
+		const loadStripe = process.server || (process.client && !window.Stripe)
+
+		return {
+			title: this.$t('pages.user.venues.detail.plan.title'),
+			script: loadStripe ? [{ src: 'https://js.stripe.com/v3/' }] : null
 		}
 	},
 
@@ -851,16 +861,6 @@ export default {
 					okTitle: this.$t('common.actions.close')
 				}
 			)
-		}
-	},
-
-	head () {
-		// Prevent double loading Stripe lib
-		const loadStripe = process.server || (process.client && !window.Stripe)
-
-		return {
-			title: this.$t('pages.user.venues.detail.plan.title'),
-			script: loadStripe ? [{ src: 'https://js.stripe.com/v3/' }] : null
 		}
 	},
 

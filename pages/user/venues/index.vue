@@ -55,19 +55,25 @@ import PgUserVenueListItem from '../-venue-list-item'
 export default {
 	name: 'PgUserVenuesPage',
 
-	middleware: 'auth',
-
 	components: {
 		BListGroup,
 		BListGroupItem,
 		PgUserVenueListItem
 	},
 
+	middleware: 'auth',
+
 	async asyncData ({ $axios }) {
 		const data = await $axios.$get('/user/venues')
 
 		return {
 			venues: data.data
+		}
+	},
+
+	head () {
+		return {
+			title: this.$t('pages.user.venues.index.title')
 		}
 	},
 
@@ -83,12 +89,6 @@ export default {
 					active: true
 				}
 			]
-		}
-	},
-
-	head () {
-		return {
-			title: this.$t('pages.user.venues.index.title')
 		}
 	}
 }

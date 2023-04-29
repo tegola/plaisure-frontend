@@ -29,6 +29,11 @@ export default {
 		}
 	},
 
+	head () {
+		// https://nuxt-community.github.io/nuxt-i18n/seo.html#improving-performance
+		return this.$nuxtI18nSeo()
+	},
+
 	computed: {
 		component () {
 			const routeName = this.$route.name
@@ -39,11 +44,6 @@ export default {
 				? 'pg-venue-closed-error-page'
 				: 'pg-basic-error-page'
 		}
-	},
-
-	head () {
-		// https://nuxt-community.github.io/nuxt-i18n/seo.html#improving-performance
-		return this.$nuxtI18nSeo()
 	}
 }
 </script>

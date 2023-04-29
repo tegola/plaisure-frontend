@@ -14,7 +14,7 @@
 							:state="!$v.model.name.$error"
 							:label="$t('pages.user.info.name')"
 							:invalid-feedback="$t('pages.user.info.name_error')"
-							:description="$v.model.name.$error ? null : $t('pages.user.info.name_hint', { name: this.$constants.APP_NAME })">
+							:description="$v.model.name.$error ? null : $t('pages.user.info.name_hint', { name: $constants.APP_NAME })">
 							<b-form-input v-model="model.name" type="text" autocomplete="name" />
 						</b-form-group>
 						<b-form-group
@@ -61,8 +61,6 @@ import { required, email } from 'vuelidate/lib/validators'
 export default {
 	name: 'PgUserInfoPage',
 
-	middleware: 'auth',
-
 	components: {
 		BFormGroup,
 		BFormInput,
@@ -71,6 +69,8 @@ export default {
 	},
 
 	mixins: [validationMixin],
+
+	middleware: 'auth',
 
 	async asyncData ({ $axios }) {
 		const data = await $axios.$get('/user/edit')
@@ -90,6 +90,12 @@ export default {
 		return {
 			loading: false,
 			model: {}
+		}
+	},
+
+	head () {
+		return {
+			title: this.$t('pages.user.info.title')
 		}
 	},
 
@@ -153,12 +159,6 @@ export default {
 			} finally {
 				this.loading = false
 			}
-		}
-	},
-
-	head () {
-		return {
-			title: this.$t('pages.user.info.title')
 		}
 	},
 

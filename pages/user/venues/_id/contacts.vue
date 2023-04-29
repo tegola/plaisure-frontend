@@ -135,7 +135,7 @@ export default {
 		autoHttps: {
 			bind (el, binding, vnode) {
 				const prefix = 'https://'
-				const re = new RegExp('^http(s?)://', 'i')
+				const re = /^http(s?):\/\//i
 
 				const handler = function (e) {
 					const value = e.target.value

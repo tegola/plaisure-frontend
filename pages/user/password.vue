@@ -49,14 +49,14 @@ import { required, minLength, sameAs } from 'vuelidate/lib/validators'
 export default {
 	name: 'PgUserFormPage',
 
-	middleware: 'auth',
-
 	components: {
 		BFormGroup,
 		BFormInput
 	},
 
 	mixins: [validationMixin],
+
+	middleware: 'auth',
 
 	data () {
 		return {
@@ -65,6 +65,12 @@ export default {
 				new_password: '',
 				new_password_confirmation: ''
 			}
+		}
+	},
+
+	head () {
+		return {
+			title: this.$t('pages.user.password.title')
 		}
 	},
 
@@ -129,12 +135,6 @@ export default {
 			} finally {
 				this.loading = false
 			}
-		}
-	},
-
-	head () {
-		return {
-			title: this.$t('pages.user.password.title')
 		}
 	}
 }

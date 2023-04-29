@@ -231,8 +231,6 @@ import { Map as GMap } from 'vue2-google-maps'
 export default {
 	name: 'PgUserVenueAddPage',
 
-	middleware: 'auth',
-
 	components: {
 		BAspect,
 		BFormGroup,
@@ -244,6 +242,8 @@ export default {
 	},
 
 	mixins: [validationMixin],
+
+	middleware: 'auth',
 
 	async asyncData ({ $axios }) {
 		const data = await $axios.$get('/user/venues/add')
@@ -273,6 +273,12 @@ export default {
 				country: this.$auth.user.country || this.$i18n.isoCode.split('-')[1],
 				category_ids: []
 			}
+		}
+	},
+
+	head () {
+		return {
+			title: this.$t('pages.user.venues.add.meta_title')
 		}
 	},
 
@@ -538,12 +544,6 @@ export default {
 					type: 'danger'
 				})
 			}
-		}
-	},
-
-	head () {
-		return {
-			title: this.$t('pages.user.venues.add.meta_title')
 		}
 	}
 }

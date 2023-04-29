@@ -56,12 +56,6 @@ export default {
 		}
 	},
 
-	computed: {
-		reviews () {
-			return this.venue.reviews
-		}
-	},
-
 	head () {
 		if (!this.venue) { return }
 
@@ -69,6 +63,12 @@ export default {
 			title: this.$t('pages.venue_reviews.meta_title', {
 				name: this.venue.name
 			})
+		}
+	},
+
+	computed: {
+		reviews () {
+			return this.venue.reviews
 		}
 	}
 }

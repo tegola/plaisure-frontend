@@ -31,7 +31,7 @@
     "flickity": "^2.2.1",
     "iso-country-currency": "^0.3.4",
     "npm": "^6.11.2",
-    "nuxt": "^2.12.2",
+    "nuxt": "^2.15.8",
     "nuxt-i18n": "^6.12.0",
     "nuxt-mq": "^2.0.1",
     "nuxt-start": "^2.12.2",
@@ -44,18 +44,18 @@
     "vuelidate": "^0.7.5"
   },
   "devDependencies": {
-    "@nuxtjs/eslint-config": "^2.0.2",
+    "@nuxtjs/eslint-config": "^5.0.0",
     "@nuxtjs/svg": "^0.1.11",
     "ava": "^3.8.2",
     "babel-eslint": "^10.1.0",
-    "eslint": "^7.1.0",
+    "eslint": "^7.13.0",
     "eslint-loader": "^4.0.2",
-    "eslint-plugin-vue": "^6.2.2",
+    "eslint-plugin-vue": "^9.11.0",
     "esm": "^3.2.25",
     "jsdom": "^16.2.2",
-    "node-sass": "^4.11.0",
+    "node-sass": "^7.0.0",
     "nodemon": "^2.0.3",
-    "sass-loader": "^8.0.2"
+    "sass-loader": "^10.4.1"
   },
   "ava": {
     "files": [

@@ -197,7 +197,7 @@ export default {
 	z-index: $zindex-fixed;
 	background-color: rgba($modal-backdrop-bg, $modal-backdrop-opacity);
 	overflow: auto;
-	-webkit-backdrop-filter: blur(20px);
+	backdrop-filter: blur(20px);
 }
 .navbar__drawer-nav {
 	background-color: #fff;

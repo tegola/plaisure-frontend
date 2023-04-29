@@ -63,14 +63,14 @@ import { required, email } from 'vuelidate/lib/validators'
 export default {
 	name: 'PgLoginPage',
 
-	middleware: 'guest',
-
 	components: {
 		BFormGroup,
 		BFormInput
 	},
 
 	mixins: [validationMixin],
+
+	middleware: 'guest',
 
 	data () {
 		return {
@@ -80,6 +80,12 @@ export default {
 				email: '',
 				password: ''
 			}
+		}
+	},
+
+	head () {
+		return {
+			title: this.$t('pages.login.meta_title')
 		}
 	},
 
@@ -107,12 +113,6 @@ export default {
 				this.loading = false
 				this.error = true
 			}
-		}
-	},
-
-	head () {
-		return {
-			title: this.$t('pages.login.meta_title')
 		}
 	},
 
