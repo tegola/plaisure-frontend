@@ -44,13 +44,10 @@
     "vuelidate": "^0.7.5"
   },
   "devDependencies": {
-    "@nuxtjs/eslint-config": "^5.0.0",
+    "@nuxtjs/eslint-config": "^12.0.0",
     "@nuxtjs/svg": "^0.1.11",
     "ava": "^3.8.2",
-    "babel-eslint": "^10.1.0",
-    "eslint": "^7.13.0",
-    "eslint-loader": "^4.0.2",
-    "eslint-plugin-vue": "^9.11.0",
+    "eslint": "^8.39.0",
     "esm": "^3.2.25",
     "jsdom": "^16.2.2",
     "node-sass": "^7.0.0",
