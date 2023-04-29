@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  frontend:
+    container_name: plaisure_frontend
+    build:
+      dockerfile: ./Dockerfile
+      context: .
+      target: develop
+    command: npm run start
+    volumes:
+      - ./:/usr/src/app
+    environment:
+      - VIRTUAL_HOST=plaisure.loc
+    labels:
+      com.dnsdock.alias: plaisure.loc
