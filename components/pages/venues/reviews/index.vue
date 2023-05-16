@@ -1,5 +1,5 @@
 <template>
-	<div class="ap-venue-reviews-page">
+	<div class="pg-venue-reviews-page">
 		<pg-navbar variant="dark" />
 
 		<div class="container my-5">

@@ -1,5 +1,5 @@
 <template>
-	<div class="ap-claim-venue-page">
+	<div class="pg-claim-venue-page">
 		<pg-navbar variant="dark" />
 
 		<div class="container my-5">
