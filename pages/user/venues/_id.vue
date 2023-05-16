@@ -187,10 +187,6 @@ export default {
 			)
 
 			this.$store.commit('user-venue-detail/setVenue', data)
-		},
-
-		onClick () {
-			console.log('menu open', this.menuOpen);
 		}
 	}
 }
