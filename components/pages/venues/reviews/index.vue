@@ -1,5 +1,5 @@
 <template>
-	<div class="ap-venue-reviews-page">
+	<div class="pg-venue-reviews-page">
 		<pg-navbar variant="dark" />
 
 		<div class="container my-5">
@@ -56,12 +56,6 @@ export default {
 		}
 	},
 
-	computed: {
-		reviews () {
-			return this.venue.reviews
-		}
-	},
-
 	head () {
 		if (!this.venue) { return }
 
@@ -69,6 +63,12 @@ export default {
 			title: this.$t('pages.venue_reviews.meta_title', {
 				name: this.venue.name
 			})
+		}
+	},
+
+	computed: {
+		reviews () {
+			return this.venue.reviews
 		}
 	}
 }

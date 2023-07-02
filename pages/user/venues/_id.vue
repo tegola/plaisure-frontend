@@ -12,8 +12,8 @@
 			</div>
 		</div>
 
-		<b-navbar sticky class="subheader" @click="menuOpen = !menuOpen">
-			<div class="container flex-column align-items-stretch">
+		<b-navbar sticky class="subheader">
+			<div class="container flex-column align-items-stretch" @click="menuOpen = !menuOpen">
 				<div v-if="isSmallScreen" class="d-flex justify-content-between align-items-center text-olive-900">
 					<pg-icon :icon="currentMenu.icon" class="subheader__icon" />
 					<h5 class="mb-0 ml-2 mr-auto">{{ currentMenu.label }}</h5>
@@ -54,8 +54,6 @@ import { BNavbar, BNav, BNavItem, BCollapse } from 'bootstrap-vue'
 export default {
 	name: 'PgUserVenueDetailPage',
 
-	middleware: 'auth',
-
 	components: {
 		BNavbar,
 		BNav,
@@ -63,11 +61,7 @@ export default {
 		BCollapse
 	},
 
-	async fetch ({ $axios, params, store }) {
-		const { data } = await $axios.$get(`/user/venues/${params.id}`)
-
-		store.commit('user-venue-detail/setVenue', data)
-	},
+	middleware: 'auth',
 
 	data () {
 		return {
@@ -133,6 +127,18 @@ export default {
 		}
 	},
 
+	async fetch ({ $axios, params, store }) {
+		const { data } = await $axios.$get(`/user/venues/${params.id}`)
+
+		store.commit('user-venue-detail/setVenue', data)
+	},
+
+	head () {
+		return {
+			title: this.$t('pages.user.venues.detail.title')
+		}
+	},
+
 	computed: {
 		...mapState('user-venue-detail', ['venue']),
 
@@ -181,12 +187,6 @@ export default {
 			)
 
 			this.$store.commit('user-venue-detail/setVenue', data)
-		}
-	},
-
-	head () {
-		return {
-			title: this.$t('pages.user.venues.detail.title')
 		}
 	}
 }

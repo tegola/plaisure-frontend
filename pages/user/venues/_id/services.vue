@@ -154,19 +154,19 @@ export default {
 
 	mixins: [validationMixin],
 
-	async fetch ({ $axios, params, store }) {
-		const data = await $axios.$get(`/user/venues/${params.id}/services`)
-
-		store.commit('user-venue-detail/setAmenities', data.amenities)
-		store.commit('user-venue-detail/setVltPlatforms', data.vltPlatforms)
-	},
-
 	data () {
 		return {
 			formGroupProps,
 			amenityIconMap,
 			model: null
 		}
+	},
+
+	async fetch ({ $axios, params, store }) {
+		const data = await $axios.$get(`/user/venues/${params.id}/services`)
+
+		store.commit('user-venue-detail/setAmenities', data.amenities)
+		store.commit('user-venue-detail/setVltPlatforms', data.vltPlatforms)
 	},
 
 	computed: {

@@ -155,12 +155,6 @@ export default {
 		PgNoItems
 	},
 
-	async fetch ({ $axios, params, store }) {
-		const { data } = await $axios.$get(`/user/venues/${params.id}/photos`)
-
-		store.commit('user-venue-detail/setPhotos', data)
-	},
-
 	data () {
 		return {
 			uploaderFiles: [],
@@ -170,6 +164,12 @@ export default {
 			dragEnabled: false,
 			model: null
 		}
+	},
+
+	async fetch ({ $axios, params, store }) {
+		const { data } = await $axios.$get(`/user/venues/${params.id}/photos`)
+
+		store.commit('user-venue-detail/setPhotos', data)
 	},
 
 	computed: {

@@ -49,14 +49,14 @@ import { required, email } from 'vuelidate/lib/validators'
 export default {
 	name: 'PgResetPasswordPage',
 
-	middleware: 'guest',
-
 	components: {
 		BFormGroup,
 		BFormInput
 	},
 
 	mixins: [validationMixin],
+
+	middleware: 'guest',
 
 	data () {
 		return {
@@ -65,6 +65,12 @@ export default {
 			model: {
 				email: ''
 			}
+		}
+	},
+
+	head () {
+		return {
+			title: this.$t('pages.forgot_password.title')
 		}
 	},
 
@@ -84,12 +90,6 @@ export default {
 			this.$v.$reset()
 			this.done = true
 			this.loading = false
-		}
-	},
-
-	head () {
-		return {
-			title: this.$t('pages.forgot_password.title')
 		}
 	},
 

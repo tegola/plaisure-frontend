@@ -48,7 +48,7 @@
 					:loading="reporting"
 					:disabled="reported"
 					@click="report">
-					{{ reported ? this.$t('components.review_item.actions.reported') : this.$t('components.review_item.actions.report') }}
+					{{ reported ? $t('components.review_item.actions.reported') : $t('components.review_item.actions.report') }}
 				</pg-button>
 			</div>
 		</b-collapse>

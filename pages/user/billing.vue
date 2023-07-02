@@ -98,9 +98,9 @@ export default {
 		BFormSelect
 	},
 
-	middleware: 'auth',
-
 	mixins: [validationMixin],
+
+	middleware: 'auth',
 
 	async asyncData ({ $axios }) {
 		const data = await $axios.$get('/user/edit')
@@ -125,6 +125,12 @@ export default {
 		return {
 			loading: false,
 			model: {}
+		}
+	},
+
+	head () {
+		return {
+			title: this.$t('pages.user.billing.title')
 		}
 	},
 
@@ -233,12 +239,6 @@ export default {
 			} finally {
 				this.loading = false
 			}
-		}
-	},
-
-	head () {
-		return {
-			title: this.$t('pages.user.billing.title')
 		}
 	}
 }

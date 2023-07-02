@@ -226,13 +226,6 @@ export default {
 
 	mixins: [validationMixin],
 
-	async fetch ({ $axios, params, store }) {
-		const data = await $axios.$get(`/user/venues/${params.id}/general`)
-
-		store.commit('user-venue-detail/setCategories', data.categories)
-		store.commit('user-venue-detail/setConcessionaires', data.concessionaires)
-	},
-
 	data () {
 		return {
 			formGroupProps,
@@ -241,6 +234,13 @@ export default {
 			searchingMarkerCoords: false,
 			model: null
 		}
+	},
+
+	async fetch ({ $axios, params, store }) {
+		const data = await $axios.$get(`/user/venues/${params.id}/general`)
+
+		store.commit('user-venue-detail/setCategories', data.categories)
+		store.commit('user-venue-detail/setConcessionaires', data.concessionaires)
 	},
 
 	computed: {

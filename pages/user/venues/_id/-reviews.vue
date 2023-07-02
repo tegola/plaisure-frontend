@@ -47,7 +47,7 @@ export default {
 		PgReviewItem
 	},
 
-	data() {
+	data () {
 		return {
 			params: {
 				view: 'all',
@@ -56,28 +56,28 @@ export default {
 		}
 	},
 
+	async fetch ({ $axios, params, store }) {
+		const { data } = await $axios.$get(`/user/venues/${params.id}/reviews`)
+
+		store.commit('user-venue-detail/setReviews', data)
+	},
+
 	computed: {
 		...mapState('user-venue-detail', ['venue', 'reviews']),
 
-		viewOptions() {
+		viewOptions () {
 			return [
 				{ value: 'all', text: this.$t('All') },
 				{ value: 'unanswered', text: this.$t('Unanswered') }
 			]
 		},
 
-		sortOptions() {
+		sortOptions () {
 			return [
 				{ value: 'created_at', text: this.$t('Date') },
 				{ value: 'replied_at', text: this.$t('Last replied') }
 			]
 		}
-	},
-
-	async fetch({ $axios, params, store }) {
-		const { data } = await $axios.$get(`/user/venues/${params.id}/reviews`)
-
-		store.commit('user-venue-detail/setReviews', data)
 	}
 }
 </script>

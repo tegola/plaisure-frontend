@@ -3,18 +3,19 @@
 		<pg-navbar variant="dark" />
 
 		<!-- Filters -->
-		<div v-if="currentView === 'list' || isLargeScreen" class="bg-light pt-3 pb-1">
+		<div
+			v-if="currentView === 'list' || isLargeScreen"
+			class="bg-light pt-3 pb-1"
+		>
 			<div class="container">
 				<div class="row form-row">
 					<b-form-group
 						:label="$t('pages.explore.form.location.label')"
 						label-sr-only
-						class="mb-2 mb-md-0 col-md">
+						class="mb-2 mb-md-0 col-md"
+					>
 						<div class="search-field">
-							<pg-icon
-								icon="search"
-								class="search-field__icon"
-							/>
+							<pg-icon icon="search" class="search-field__icon" />
 							<pg-place-textbox
 								ref="searchField"
 								:placeholder="searchFieldPlaceholder"
@@ -28,7 +29,9 @@
 									:loading="locating"
 									:icon="userLocation ? 'location' : 'location-outline'"
 									:title="$t('pages.explore.form.location.geolocalization')"
-									:aria-label="$t('pages.explore.form.location.geolocalization')"
+									:aria-label="
+										$t('pages.explore.form.location.geolocalization')
+									"
 									variant="naked"
 									class="search-field__button"
 									@click.stop="findUserLocation"
@@ -39,7 +42,8 @@
 					<b-form-group
 						:label="$t('pages.explore.form.category.label')"
 						label-sr-only
-						class="mb-0 col-7 col-md-4 col-lg-3">
+						class="mb-0 col-7 col-md-4 col-lg-3"
+					>
 						<b-form-select
 							:options="categoryOptions"
 							:value="searchParams.category"
@@ -50,7 +54,8 @@
 						v-if="searchMode === 'center'"
 						:label="$t('pages.explore.form.distance')"
 						label-sr-only
-						class="mb-0 col-5 col-md-2">
+						class="mb-0 col-5 col-md-2"
+					>
 						<b-form-select
 							:options="radiusOptions"
 							:value="searchParams.radius"
@@ -75,16 +80,26 @@
 
 		<!-- Tabs + result count -->
 		<div ref="tabsAnchor" />
-		<div v-if="hasSearchParams" class="view" :class="scrollPastTabs ? 'view--stuck' : null">
+		<div
+			v-if="hasSearchParams"
+			class="view"
+			:class="scrollPastTabs ? 'view--stuck' : null"
+		>
 			<div class="container">
 				<b-nav tabs class="align-items-center">
-					<b-nav-item :active="currentView === 'list'" @click="switchView('list')">
+					<b-nav-item
+						:active="currentView === 'list'"
+						@click="switchView('list')"
+					>
 						<pg-icon icon="list" class="mr-1" />
-						{{ $t('pages.explore.form.view.list') }}
+						{{ $t("pages.explore.form.view.list") }}
 					</b-nav-item>
-					<b-nav-item :active="currentView === 'map'" @click="switchView('map')">
+					<b-nav-item
+						:active="currentView === 'map'"
+						@click="switchView('map')"
+					>
 						<pg-icon icon="map" class="mr-1" />
-						{{ $t('pages.explore.form.view.map') }}
+						{{ $t("pages.explore.form.view.map") }}
 					</b-nav-item>
 					<div class="ml-auto small text-muted d-flex align-items-center">
 						<pg-icon
@@ -93,21 +108,25 @@
 							spinning
 							class="mr-1"
 						/>
-						{{ $tc('pages.explore.form.results', pagination.total || null) }}
+						{{ $tc("pages.explore.form.results", pagination.total || null) }}
 					</div>
 				</b-nav>
 			</div>
 		</div>
 
 		<!-- List -->
-		<div v-if="currentView === 'list'" class="container flex-fill d-flex flex-column py-5">
+		<div
+			v-if="currentView === 'list'"
+			class="container flex-fill d-flex flex-column py-5"
+		>
 			<!-- Initial loader (outside the button) -->
 			<div
 				v-if="loading && !venues.length"
 				key="loader"
-				class="my-auto text-center text-muted">
+				class="my-auto text-center text-muted"
+			>
 				<pg-icon icon="circle-outline-notch" spinning />
-				<p class="mb-0">{{ $t('common.status.loading') }}&hellip;</p>
+				<p class="mb-0">{{ $t("common.status.loading") }}&hellip;</p>
 			</div>
 
 			<!-- Search to start -->
@@ -141,11 +160,8 @@
 
 			<!-- Load button -->
 			<div v-if="hasMorePages" class="text-center mt-4">
-				<pg-button
-					variant="primary"
-					:loading="loading"
-					@click="loadMore">
-					{{ $t('pages.explore.list.load_more') }}
+				<pg-button variant="primary" :loading="loading" @click="loadMore">
+					{{ $t("pages.explore.list.load_more") }}
 				</pg-button>
 			</div>
 		</div>
@@ -161,7 +177,8 @@
 			class="flex-fill"
 			@zoom_changed="onMapZoomChange"
 			@bounds_changed="onMapBoundsChange"
-			@click="selectedVenueId = null">
+			@click="selectedVenueId = null"
+		>
 			<pg-map-marker
 				v-if="userLocation"
 				:position="userLocation"
@@ -172,10 +189,12 @@
 				:key="venue.id"
 				:position="venue.coords"
 				:icon="mapMarkerIcon(venue, index)"
-				@click="selectMarker(venue)">
+				@click="selectMarker(venue)"
+			>
 				<pg-map-info-window
 					:opened="venue.id === selectedVenueId"
-					@closeclick="selectMarker(null)">
+					@closeclick="selectMarker(null)"
+				>
 					<pg-venue-infowindow-item
 						class="map__infowindow-content"
 						:venue="venue"
@@ -197,12 +216,18 @@
 						target="desktop-refresh-btn"
 						placement="left"
 						triggers=""
-						show>
-						{{ $t('pages.explore.map.search_area') }}
+						show
+					>
+						{{ $t("pages.explore.map.search_area") }}
 					</b-tooltip>
 				</template>
-				<div v-if="isSmallScreen && mapNeedsRefresh" class="container map__floating-controls">
-					<pg-button variant="accent" block @click="onSearchBoundsClick">{{ $t('pages.explore.map.search_area') }}</pg-button>
+				<div
+					v-if="isSmallScreen && mapNeedsRefresh"
+					class="container map__floating-controls"
+				>
+					<pg-button variant="accent" block @click="onSearchBoundsClick">
+						{{ $t("pages.explore.map.search_area") }}
+					</pg-button>
 				</div>
 			</template>
 		</pg-map>
@@ -340,6 +365,12 @@ export default {
 			mapCenter,
 			mapBounds,
 			mapZoom
+		}
+	},
+
+	head () {
+		return {
+			title: this.searchParams.query || this.$t('pages.explore.meta_title')
 		}
 	},
 
@@ -828,12 +859,6 @@ export default {
 		switchView (view) {
 			this.currentView = view
 			this.updateUrl()
-		}
-	},
-
-	head () {
-		return {
-			title: this.searchParams.query || this.$t('pages.explore.meta_title')
 		}
 	}
 }

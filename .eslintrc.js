@@ -7,16 +7,7 @@ module.exports = {
 	globals: {
 		google: true
 	},
-	parserOptions: {
-		parser: 'babel-eslint'
-	},
-	extends: [
-		'@nuxtjs',
-		'plugin:vue/recommended'
-	],
-	plugins: [
-		'vue'
-	],
+	extends: ['@nuxtjs/eslint-config'],
 	// add your custom rules here
 	rules: {
 		indent: ['error', 'tab', {
@@ -26,7 +17,6 @@ module.exports = {
 		'no-tabs': 0,
 		'vue/html-indent': ['error', 'tab'],
 		'vue/html-closing-bracket-newline': 0,
-		'vue/singleline-html-element-content-newline': 0,
-		'vue/no-v-html': 0
+		'vue/singleline-html-element-content-newline': 0
 	}
 }

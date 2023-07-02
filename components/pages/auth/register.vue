@@ -73,14 +73,14 @@ import { required, email, minLength } from 'vuelidate/lib/validators'
 export default {
 	name: 'PgRegisterPage',
 
-	middleware: 'guest',
-
 	components: {
 		BFormGroup,
 		BFormInput
 	},
 
 	mixins: [validationMixin],
+
+	middleware: 'guest',
 
 	props: {
 		asOwner: {
@@ -115,6 +115,16 @@ export default {
 				required,
 				minLength: minLength(8)
 			}
+		}
+	},
+
+	head () {
+		return {
+			title: this.$t(
+				this.asOwner
+					? 'pages.register.owner.meta_title'
+					: 'pages.register.user.meta_title'
+			)
 		}
 	},
 
@@ -169,16 +179,6 @@ export default {
 			} finally {
 				this.loading = false
 			}
-		}
-	},
-
-	head () {
-		return {
-			title: this.$t(
-				this.asOwner
-					? 'pages.register.owner.meta_title'
-					: 'pages.register.user.meta_title'
-			)
 		}
 	}
 }

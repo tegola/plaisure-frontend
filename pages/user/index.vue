@@ -67,6 +67,12 @@ export default {
 
 	middleware: 'auth',
 
+	head () {
+		return {
+			title: this.$t('pages.user.index.title')
+		}
+	},
+
 	computed: {
 		menus () {
 			const isOwner = this.$auth.user.is_owner
@@ -128,12 +134,6 @@ export default {
 			})
 
 			return menus
-		}
-	},
-
-	head () {
-		return {
-			title: this.$t('pages.user.index.title')
 		}
 	}
 }
