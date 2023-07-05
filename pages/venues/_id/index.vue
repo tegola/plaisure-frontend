@@ -98,7 +98,7 @@
 		</div>
 
 		<!-- Casino cards for small screens -->
-		<div v-if="['xs', 'sm', 'md'].includes($mq)" class="bg-fuchsia-100 py-5">
+		<div v-if="showCasinoCards && ['xs', 'sm', 'md'].includes($mq)" class="bg-fuchsia-100 py-5">
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-8">
@@ -130,8 +130,29 @@
 		</div>
 
 		<div class="container">
+			<!-- Main content -->
 			<div class="row">
-				<div class="col-lg 8">
+				<div class="col-lg-8">
+					<!-- Casino cards for big screens -->
+					<div v-if="showCasinoCards && ['lg', 'xl'].includes($mq)" class="bg-fuchsia-100 mt-4 p-4 rounded">
+						<div class="row align-items-center mb-4">
+							<div class="col-auto">
+								<h5 class="initialism casino-ranking__title">{{ $t('pages.venue_detail.casino_ranking.title') }}</h5>
+							</div>
+							<div class="col">
+								<hr class="casino-ranking__separator">
+							</div>
+						</div>
+						<div class="row">
+							<div v-for="(casino, index) in casinos" :key="index" class="col-lg-6">
+								<pg-casino-card
+									v-bind="casino"
+									:position="index + 1"
+								/>
+							</div>
+						</div>
+					</div>
+
 					<!-- Jackpots -->
 					<template v-if="!venue.has_owner || hasJackpots">
 						<div class="row my-5 pt-2">
@@ -630,6 +651,10 @@ export default {
 			const u = this.$auth.user
 
 			return u && u.venue_ids && u.venue_ids.includes(this.venue.id)
+		},
+
+		showCasinoCards () {
+			return this.$i18n.locale === 'it'
 		},
 
 		showEditAction () {
