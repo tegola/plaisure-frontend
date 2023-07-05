@@ -101,26 +101,10 @@
 				<template #default="{ innerClass }">
 					<div class="container">
 						<div :class="['row', innerClass]">
-							<div class="col-11 col-sm-9 col-md-6 col-lg-4">
+							<div v-for="(casino, index) in casinos" :key="index" class="col-11 col-sm-9 col-md-6 col-lg-4">
 								<pg-casino-card
-									bg-color="#0d2953"
-									position="1"
-									img-src="/img/casino-cards/quigioco-logo.png"
-									name="QuiGioco"
-									welcome="Bonus Registrazione 750€ senza deposito"
-									description="Esse deserunt proident commodo qui ullamco voluptate minim consequat. Ex do occaecat Lorem amet sint minim eiusmod."
-									cta="https://www.quigioco.it/signup?codAffiliato=R1646"
-								/>
-							</div>
-							<div class="col-11 col-sm-9 col-md-6 col-lg-4">
-								<pg-casino-card
-									bg-color="#231f20"
-									position="2"
-									img-src="/img/casino-cards/le-palme-logo.png"
-									name="Casinò Le Palme"
-									welcome="Bonus Registrazione 100 Freespin + 100€ Bonus"
-									description="lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-									cta="https://casinolepalme.it/registrati"
+									v-bind="casino"
+									:position="index + 1"
 								/>
 							</div>
 						</div>
@@ -515,7 +499,27 @@ export default {
 			lightboxIndex: 0,
 			lightboxOpen: false,
 			hoursExpanded: false,
-			reviewFormOpen: false
+			reviewFormOpen: false,
+
+			// Static
+			casinos: [
+				{
+					bgColor: '#0d2953',
+					imgSrc: '/img/casino-cards/quigioco-logo.png',
+					name: 'QuiGioco',
+					welcome: 'Bonus Registrazione 750€ senza deposito',
+					description: 'Esse deserunt proident commodo qui ullamco voluptate minim consequat. Ex do occaecat Lorem amet sint minim eiusmod.',
+					cta: 'https://www.quigioco.it/signup?codAffiliato=R1646'
+				},
+				{
+					bgColor: '#231f20',
+					imgSrc: '/img/casino-cards/le-palme-logo.png',
+					name: 'Casinò Le Palme',
+					welcome: 'Bonus Registrazione 100 Freespin + 100€ Bonus',
+					description: 'lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+					cta: 'https://casinolepalme.it/registrati'
+				}
+			]
 		}
 	},
 
