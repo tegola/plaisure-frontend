@@ -12,7 +12,7 @@
 			<p class="description">{{ description }}</p>
 		</b-card-body>
 		<b-card-body class="pt-0 flex-grow-0">
-			<pg-button variant="accent" block :href="cta" target="_blank">
+			<pg-button v-track-link variant="accent" block :href="cta" target="_blank">
 				{{ $t('pages.venue_detail.casino_ranking.card.register') }}
 			</pg-button>
 		</b-card-body>
@@ -127,7 +127,7 @@ export default {
 	margin-bottom: 0;
 }
 
-@include media-breakpoint-up(lg) {
+@include media-breakpoint-up(md) {
 	.header {
 		&__position {
 			font-size: $font-size-xl;
