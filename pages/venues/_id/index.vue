@@ -81,8 +81,24 @@
 			</div>
 		</div>
 
-		<!-- Casino cards -->
-		<div class="bg-fuchsia-100 py-5">
+		<!-- Main content -->
+
+		<!-- Contact card for small screens -->
+		<div v-if="['xs', 'sm', 'md'].includes($mq)" class="container">
+			<div class="row">
+				<div class="col-lg-8">
+					<pg-contact-card
+						class="contact-card"
+						:venue="venue"
+						:show-edit-action="showEditAction"
+						:edit-route="editRoute"
+					/>
+				</div>
+			</div>
+		</div>
+
+		<!-- Casino cards for small screens -->
+		<div v-if="['xs', 'sm', 'md'].includes($mq)" class="bg-fuchsia-100 py-5">
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-8">
@@ -101,7 +117,7 @@
 				<template #default="{ innerClass }">
 					<div class="container">
 						<div :class="['row', innerClass]">
-							<div v-for="(casino, index) in casinos" :key="index" class="col-11 col-sm-9 col-md-6 col-lg-4">
+							<div v-for="(casino, index) in casinos" :key="index" class="col-10 col-sm-9 col-md-6 col-lg-4">
 								<pg-casino-card
 									v-bind="casino"
 									:position="index + 1"
@@ -113,19 +129,9 @@
 			</pg-scrollable-pane>
 		</div>
 
-		<!-- Main content -->
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-8">
-					<!-- Contact card for small screens -->
-					<pg-contact-card
-						v-if="['xs', 'sm', 'md'].includes($mq)"
-						class="contact-card"
-						:venue="venue"
-						:show-edit-action="showEditAction"
-						:edit-route="editRoute"
-					/>
-
+				<div class="col-lg 8">
 					<!-- Jackpots -->
 					<template v-if="!venue.has_owner || hasJackpots">
 						<div class="row my-5 pt-2">

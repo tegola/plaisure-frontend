@@ -88,16 +88,16 @@ export default {
 		border-radius: 50%;
 		color: $white;
 		display: inline-flex;
-		font-size: $font-size-xl;
+		font-size: $font-size-lg;
 		font-weight: $font-weight-semibold;
-		height: 2rem;
+		height: 1.5rem;
 		justify-content: center;
 		left: 0;
 		line-height: 1;
 		position: absolute;
 		top: 50%;
 		transform: translateY(-50%);
-		width: 2rem;
+		width: 1.5rem;
 	}
 
 	&__logo {
@@ -125,5 +125,15 @@ export default {
 .description {
 	font-size: $font-size-sm;
 	margin-bottom: 0;
+}
+
+@include media-breakpoint-up(lg) {
+	.header {
+		&__position {
+			font-size: $font-size-xl;
+			height: 2rem;
+			width: 2rem;
+		}
+	}
 }
 </style>
