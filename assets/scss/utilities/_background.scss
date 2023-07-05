@@ -1,3 +1,4 @@
+@include bg-variant(".bg-fuchsia-100", $fuchsia-100, true);
 @include bg-variant(".bg-green-100", $green-100, true);
 @include bg-variant(".bg-orange-100", $orange-100, true);
 @include bg-variant(".bg-yellow-200", $yellow-200, true);

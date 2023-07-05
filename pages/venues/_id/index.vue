@@ -81,6 +81,54 @@
 			</div>
 		</div>
 
+		<!-- Casino cards -->
+		<div class="bg-fuchsia-100 py-5">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-8">
+						<div class="row align-items-center mb-4">
+							<div class="col-auto">
+								<h5 class="initialism casino-ranking__title">{{ $t('pages.venue_detail.casino_ranking.title') }}</h5>
+							</div>
+							<div class="col">
+								<hr class="casino-ranking__separator">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<pg-scrollable-pane>
+				<template #default="{ innerClass }">
+					<div class="container">
+						<div :class="['row', innerClass]">
+							<div class="col-11 col-sm-9 col-md-6 col-lg-4">
+								<pg-casino-card
+									bg-color="#0d2953"
+									position="1"
+									img-src="/img/casino-cards/quigioco-logo.png"
+									name="QuiGioco"
+									welcome="Bonus Registrazione 750€ senza deposito"
+									description="Esse deserunt proident commodo qui ullamco voluptate minim consequat. Ex do occaecat Lorem amet sint minim eiusmod."
+									cta="https://www.quigioco.it/signup?codAffiliato=R1646"
+								/>
+							</div>
+							<div class="col-11 col-sm-9 col-md-6 col-lg-4">
+								<pg-casino-card
+									bg-color="#231f20"
+									position="2"
+									img-src="/img/casino-cards/le-palme-logo.png"
+									name="Casinò Le Palme"
+									welcome="Bonus Registrazione 100 Freespin + 100€ Bonus"
+									description="lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+									cta="https://casinolepalme.it/registrati"
+								/>
+							</div>
+						</div>
+					</div>
+				</template>
+			</pg-scrollable-pane>
+		</div>
+
 		<!-- Main content -->
 		<div class="container">
 			<div class="row">
@@ -419,6 +467,7 @@
 <script>
 import { extend } from 'lodash'
 import { getAllInfoByISO } from 'iso-country-currency'
+import PgCasinoCard from './-casino-card'
 import PgContactCard from './-contact-card'
 import makeStructuredData from './-make-structured-data'
 import PgVenueGridItem from '@/components/venue-grid-item'
@@ -434,6 +483,7 @@ export default {
 		PgLightbox,
 		PgReviewForm,
 		PgReviewItem,
+		PgCasinoCard,
 		PgContactCard,
 		PgVenueGridItem
 	},
@@ -758,6 +808,24 @@ export default {
 // Contact card
 .contact-card {
 	margin-top: -($spacer * 5);
+}
+
+// Casino ranking
+.casino-ranking {
+	&__title {
+		font-size: $font-size-xs;
+		color: $fuchsia-500;
+		margin: 0;
+	}
+
+	&__separator {
+		border-top-width: 0;
+		height: $border-width;
+		background-image: repeating-linear-gradient(to right, $fuchsia-500 0%, $fuchsia-500 20%, transparent 20%, transparent 100%);
+		background-repeat: repeat-x;
+		background-size: 11px;
+		margin: 0;
+	}
 }
 
 // Jackpots
