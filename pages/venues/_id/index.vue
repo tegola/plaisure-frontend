@@ -102,13 +102,9 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-8">
-						<div class="row align-items-center mb-4">
-							<div class="col-auto">
-								<h5 class="initialism casino-ranking__title">{{ $t('pages.venue_detail.casino_ranking.title') }}</h5>
-							</div>
-							<div class="col">
-								<hr class="casino-ranking__separator">
-							</div>
+						<div class="d-flex align-items-center mb-4">
+							<h5 class="mr-4 initialism casino-ranking__title">{{ $t('pages.venue_detail.casino_ranking.title') }}</h5>
+							<hr class="flex-fill casino-ranking__separator">
 						</div>
 					</div>
 				</div>
@@ -135,13 +131,9 @@
 				<div class="col-lg-8">
 					<!-- Casino cards for big screens -->
 					<div v-if="showCasinoCards && ['lg', 'xl'].includes($mq)" class="bg-fuchsia-100 mt-4 p-4 rounded">
-						<div class="row align-items-center mb-4">
-							<div class="col-auto">
-								<h5 class="initialism casino-ranking__title">{{ $t('pages.venue_detail.casino_ranking.title') }}</h5>
-							</div>
-							<div class="col">
-								<hr class="casino-ranking__separator">
-							</div>
+						<div class="d-flex align-items-center mb-4">
+							<h5 class="mr-4 initialism casino-ranking__title">{{ $t('pages.venue_detail.casino_ranking.title') }}</h5>
+							<hr class="flex-fill casino-ranking__separator">
 						</div>
 						<div class="row">
 							<div v-for="(casino, index) in casinos" :key="index" class="col-lg-6">
