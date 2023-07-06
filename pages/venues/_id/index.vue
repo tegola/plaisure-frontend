@@ -527,7 +527,7 @@ export default {
 					imgSrc: '/img/casino-cards/quigioco-logo.png',
 					name: 'QuiGioco',
 					welcome: 'Bonus Registrazione 750€ senza deposito',
-					description: 'Esse deserunt proident commodo qui ullamco voluptate minim consequat. Ex do occaecat Lorem amet sint minim eiusmod.',
+					description: "Bonus prima ricarica 1500€. Le migliori Slot su Quigioco: Book of Ra Deluxe, Dolphin's Pearls, Blood Suckers, Gates of Olympus, Fowl Play Gold, Gonzo's Quest Megaways.",
 					cta: 'https://www.quigioco.it/signup?codAffiliato=R1646'
 				},
 				{
@@ -535,7 +535,7 @@ export default {
 					imgSrc: '/img/casino-cards/le-palme-logo.png',
 					name: 'Casinò Le Palme',
 					welcome: 'Bonus Registrazione 100 Freespin + 100€ Bonus',
-					description: 'lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+					description: "Le miglior Slot su Casinò Le Palme: Vinci la Gallina Deluxe, Charming Lady's Boom, Lord of Ocean, Book or Ra Bingo, Great American Wilds.",
 					cta: 'https://casinolepalme.it/registrati'
 				}
 			]

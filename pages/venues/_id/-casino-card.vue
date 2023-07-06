@@ -8,8 +8,8 @@
 		</b-card-body>
 		<b-card-body class="flex-fill">
 			<h3 class="welcome__heading">{{ $t('pages.venue_detail.casino_ranking.card.welcome') }}</h3>
-			<p class="welcome__value" v-html="forceWrap(welcome)" />
-			<p class="description">{{ description }}</p>
+			<p class="welcome__value" v-html="removeOrphans(welcome)" />
+			<p class="description" v-html="removeOrphans(description)" />
 		</b-card-body>
 		<b-card-body class="pt-0 flex-grow-0">
 			<pg-button v-track-link variant="accent" block :href="cta" target="_blank">
@@ -62,7 +62,7 @@ export default {
 	},
 
 	methods: {
-		forceWrap (text) {
+		removeOrphans (text) {
 			return text.trim().replace(/(\S+)\s+(\S+)$/, '$1&nbsp;$2')
 		}
 	}
