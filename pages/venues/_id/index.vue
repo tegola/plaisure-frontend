@@ -82,17 +82,68 @@
 		</div>
 
 		<!-- Main content -->
-		<div class="container">
+
+		<!-- Contact card for small screens -->
+		<div v-if="['xs', 'sm', 'md'].includes($mq)" class="container">
 			<div class="row">
 				<div class="col-lg-8">
-					<!-- Contact card for small screens -->
 					<pg-contact-card
-						v-if="['xs', 'sm', 'md'].includes($mq)"
 						class="contact-card"
 						:venue="venue"
 						:show-edit-action="showEditAction"
 						:edit-route="editRoute"
 					/>
+				</div>
+			</div>
+		</div>
+
+		<!-- Casino cards for small screens -->
+		<div v-if="showCasinoCards && ['xs', 'sm', 'md'].includes($mq)" class="bg-fuchsia-100 py-5">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-8">
+						<div class="d-flex align-items-center mb-4">
+							<h5 class="mr-4 initialism casino-ranking__title">{{ $t('pages.venue_detail.casino_ranking.title') }}</h5>
+							<hr class="flex-fill casino-ranking__separator">
+						</div>
+					</div>
+				</div>
+			</div>
+			<pg-scrollable-pane>
+				<template #default="{ innerClass }">
+					<div class="container">
+						<div :class="['row', innerClass]">
+							<div v-for="(casino, index) in casinos" :key="index" class="col-10 col-sm-9 col-md-6 col-lg-4">
+								<pg-casino-card
+									v-bind="casino"
+									:position="index + 1"
+								/>
+							</div>
+						</div>
+					</div>
+				</template>
+			</pg-scrollable-pane>
+		</div>
+
+		<div class="container">
+			<!-- Main content -->
+			<div class="row">
+				<div class="col-lg-8">
+					<!-- Casino cards for big screens -->
+					<div v-if="showCasinoCards && ['lg', 'xl'].includes($mq)" class="bg-fuchsia-100 mt-4 p-4 rounded">
+						<div class="d-flex align-items-center mb-4">
+							<h5 class="mr-4 initialism casino-ranking__title">{{ $t('pages.venue_detail.casino_ranking.title') }}</h5>
+							<hr class="flex-fill casino-ranking__separator">
+						</div>
+						<div class="row">
+							<div v-for="(casino, index) in casinos" :key="index" class="col-lg-6">
+								<pg-casino-card
+									v-bind="casino"
+									:position="index + 1"
+								/>
+							</div>
+						</div>
+					</div>
 
 					<!-- Jackpots -->
 					<template v-if="!venue.has_owner || hasJackpots">
@@ -419,6 +470,7 @@
 <script>
 import { extend } from 'lodash'
 import { getAllInfoByISO } from 'iso-country-currency'
+import PgCasinoCard from './-casino-card'
 import PgContactCard from './-contact-card'
 import makeStructuredData from './-make-structured-data'
 import PgVenueGridItem from '@/components/venue-grid-item'
@@ -434,6 +486,7 @@ export default {
 		PgLightbox,
 		PgReviewForm,
 		PgReviewItem,
+		PgCasinoCard,
 		PgContactCard,
 		PgVenueGridItem
 	},
@@ -465,7 +518,27 @@ export default {
 			lightboxIndex: 0,
 			lightboxOpen: false,
 			hoursExpanded: false,
-			reviewFormOpen: false
+			reviewFormOpen: false,
+
+			// Static
+			casinos: [
+				{
+					bgColor: '#0d2953',
+					imgSrc: '/img/casino-cards/quigioco-logo.png',
+					name: 'QuiGioco',
+					welcome: 'Bonus Registrazione 750€ senza deposito',
+					description: "Bonus prima ricarica 1500€. Le migliori Slot su Quigioco: Book of Ra Deluxe, Dolphin's Pearls, Blood Suckers, Gates of Olympus, Fowl Play Gold, Gonzo's Quest Megaways.",
+					cta: 'https://www.quigioco.it/signup?codAffiliato=R1646'
+				},
+				{
+					bgColor: '#231f20',
+					imgSrc: '/img/casino-cards/le-palme-logo.png',
+					name: 'Casinò Le Palme',
+					welcome: 'Bonus Registrazione 100 Freespin + 100€ Bonus',
+					description: "Le miglior Slot su Casinò Le Palme: Vinci la Gallina Deluxe, Charming Lady's Boom, Lord of Ocean, Book or Ra Bingo, Great American Wilds.",
+					cta: 'https://casinolepalme.it/registrati'
+				}
+			]
 		}
 	},
 
@@ -570,6 +643,10 @@ export default {
 			const u = this.$auth.user
 
 			return u && u.venue_ids && u.venue_ids.includes(this.venue.id)
+		},
+
+		showCasinoCards () {
+			return this.$i18n.locale === 'it'
 		},
 
 		showEditAction () {
@@ -758,6 +835,24 @@ export default {
 // Contact card
 .contact-card {
 	margin-top: -($spacer * 5);
+}
+
+// Casino ranking
+.casino-ranking {
+	&__title {
+		font-size: $font-size-xs;
+		color: $fuchsia-500;
+		margin: 0;
+	}
+
+	&__separator {
+		border-top-width: 0;
+		height: $border-width;
+		background-image: repeating-linear-gradient(to right, $fuchsia-500 0%, $fuchsia-500 20%, transparent 20%, transparent 100%);
+		background-repeat: repeat-x;
+		background-size: 11px;
+		margin: 0;
+	}
 }
 
 // Jackpots

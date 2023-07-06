@@ -327,6 +327,14 @@ export default {
 				no_contact: 'No contact info',
 				no_urls: 'No site or social network profile'
 			},
+
+			casino_ranking: {
+				title: 'The best online casinos',
+				card: {
+					welcome: 'Welcome bonus',
+					register: 'Register'
+				}
+			},
 			reviews: {
 				title: 'Rating and reviews',
 				count: '1 rating | {count} ratings',

@@ -334,6 +334,13 @@ export default {
 				no_contact: 'Nessuna informazione di contatto',
 				no_urls: 'Nessun sito o pagina social'
 			},
+			casino_ranking: {
+				title: 'I migliori casinò per giocare online',
+				card: {
+					welcome: 'Bonus di benvenuto',
+					register: 'Registrati'
+				}
+			},
 			reviews: {
 				title: 'Valutazioni e recensioni',
 				count: '1 valutazione | {count} valutazioni',
