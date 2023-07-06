@@ -536,7 +536,7 @@ export default {
 					name: 'Casinò Le Palme',
 					welcome: 'Bonus Registrazione 100 Freespin + 100€ Bonus',
 					description: "Le miglior Slot su Casinò Le Palme: Vinci la Gallina Deluxe, Charming Lady's Boom, Lord of Ocean, Book or Ra Bingo, Great American Wilds.",
-					cta: 'https://casinolepalme.it/registrati'
+					cta: 'https://www.casinolepalme.it/registrati'
 				}
 			]
 		}
