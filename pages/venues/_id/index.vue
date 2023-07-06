@@ -850,7 +850,7 @@ export default {
 		height: $border-width;
 		background-image: repeating-linear-gradient(to right, $fuchsia-500 0%, $fuchsia-500 20%, transparent 20%, transparent 100%);
 		background-repeat: repeat-x;
-		background-size: 11px;
+		background-size: 11px $border-width;
 		margin: 0;
 	}
 }
